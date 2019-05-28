@@ -20,4 +20,4 @@ Here I will explain how the formula object works.
 
 ---
 
-[Next vignette: or [4. Post-processing](04-post-processing.html)]
+[Next vignette: [4. Post-processing](04-post-processing.html)]

@@ -34,4 +34,4 @@ title: "Vignette 4: Post-processing"
 
 ---
 
-[Next vignette: or [5. Post-processing](05-advanced-qdecr.html)]
+[Next vignette: [5. Post-processing](05-advanced-qdecr.html)]

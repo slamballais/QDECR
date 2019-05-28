@@ -9,6 +9,7 @@ Vertex-wise analyses in [`R`](https://www.r-project.org/) with the [`QDECR`](htt
 **UNDER CONSTRUCTION!**
 
 Vignettes:
+
 * 1. [Getting started](01-getting-started.html)
 * 2. [Quick start](02-quick-start.html)
 * 3. [Using QDECR](03-using-qdecr.html)
