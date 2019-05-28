@@ -7,10 +7,11 @@ title: "Vignette 1: Getting started"
 # 1.1 Requirements
 
 In order to run QDECR you need to have several things ready:
-* a Unix system;
-* [Freesurfer](https://surfer.nmr.mgh.harvard.edu/) installed;
-* [R](https://www.r-project.org) installed;
-* your images processed through Freesurfer.
+
+* A Unix system.
+* [Freesurfer](https://surfer.nmr.mgh.harvard.edu/) installed.
+* [R](https://www.r-project.org) installed.
+* Your images processed through Freesurfer with the `-qcache` flag.
 
 For the sake of the vignette we will assume that you have done all these.
 

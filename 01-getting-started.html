@@ -335,7 +335,13 @@ $(document).ready(function () {
 <hr />
 <div id="requirements" class="section level1">
 <h1>1.1 Requirements</h1>
-<p>In order to run QDECR you need to have several things ready: * a Unix system; * <a href="https://surfer.nmr.mgh.harvard.edu/">Freesurfer</a> installed; * <a href="https://www.r-project.org">R</a> installed; * your images processed through Freesurfer.</p>
+<p>In order to run QDECR you need to have several things ready:</p>
+<ul>
+<li>A Unix system.</li>
+<li><a href="https://surfer.nmr.mgh.harvard.edu/">Freesurfer</a> installed.</li>
+<li><a href="https://www.r-project.org">R</a> installed.</li>
+<li>Your images processed through Freesurfer with the <code>-qcache</code> flag.</li>
+</ul>
 <p>For the sake of the vignette we will assume that you have done all these.</p>
 <p>In R you first need to install the QDECR package:</p>
 <pre class="r"><code># Install the devtools package
