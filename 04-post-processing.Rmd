@@ -1,0 +1,37 @@
+---
+title: "Vignette 4: Post-processing"
+---
+
+---
+
+# 4.1 Before you get started
+
+---
+
+# 4.2 Loading and saving the data
+
+---
+
+# 4.3 Cluster-wise data
+
+---
+
+# 4.4 Graphics
+
+--- 
+
+# 4.5 Using variable cluster-wise thresholds
+
+---
+
+# 4.6 Comparing variables within a model
+
+---
+
+# 4.7 Comparing variables between models
+
+---
+
+---
+
+[Next vignette: or [5. Post-processing](05-advanced-qdecr.html)]

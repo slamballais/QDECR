@@ -1,0 +1,27 @@
+---
+title: "Vignette 5: Advanced QDECR"
+---
+
+---
+
+# 5.1 Before you get started
+
+---
+
+# 5.2 Understanding the qdecr_fastlm function
+
+---
+
+# 5.3 The qdecr function
+
+---
+
+# 5.4 Modifying the preparation module
+
+--- 
+
+# 5.5 Modifying the analysis module
+
+---
+
+# 5.6 Writing a new wrapper function
