@@ -1,0 +1,19 @@
+---
+title: "Vignette 2: Using QDECR"
+---
+
+---
+
+# 2.1 Before you get started
+
+Here I will discuss some of the research-related things that you need to ask yourself before you can actually get started. I will also refer to some R information.
+
+---
+
+# 2.3 Detailed tutorial for QDECR
+
+## 2.3.1 Specify the formula
+
+Here I will explain how the formula object works.
+
+## 2.3.2 
