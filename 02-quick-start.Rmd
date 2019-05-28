@@ -39,24 +39,24 @@ Here are the arguments we specified:
 * `project`: The name that you want for your output. By default, both `hemi` and the vertex measure get added to it (so `lh.test_project.qdecr_thickness`).
 * `dir_tmp`: **To make `QDECR` run fast, you need to use shared memory.**
 
-There are a bunch of other arguments that you can specify: **I WILL ADD DESCRIPTIONS LATER!**
+There are a bunch of other arguments that you can specify:
 
-* `dir_out`: 
-* `n_cores`: 
-* `target`: 
-* `mcz_thr`: 
-* `mgh`: 
-* `mask`: 
-* `dir_subj`: 
-* `dir_fshome`: 
-* `dir_out_tree`: 
-* `clean_up_bm`: 
-* `clean_up`: 
-* `clobber`: 
-* `verbose`: 
-* `save`: 
-* `save_data`: 
-* `debug`: 
+* `dir_out`: The directory where you want to store the project files.
+* `n_cores`: The number of cores/threads you want to run on.
+* `target`: The target template (default: "fsaverage").
+* `mcz_thr`: The Monte-Carlo simulation threshold (10, 13, 20, 23, default is 30).
+* `mgh`: **still needs to be fixed**
+* `mask`: **still needs to be fixed**
+* `dir_subj`: Character path to `SUBJECTS_DIR` if it's not in your global environment. 
+* `dir_fshome`: Character path to `FREESURFER_HOME` if it's not in your global environment.
+* `dir_out_tree`: If TRUE, `project` will become a new directory within `dir_out`. If FALSE, all files will just be put into `dir_out`.
+* `clean_up_bm`: Default is TRUE; if FALSE, all the vertex-wise data and all residuals for each vertex are NOT deleted from `dir_tmp`. Keep in mind that these can be huge files.
+* `clean_up`: Default is TRUE; if FALSE, all temporary files (except the ones described above) won't get deleted.
+* `clobber`: Default is FALSE; if TRUE, overwrites the output directory.
+* `verbose`: Default is TRUE; returns a lot of messages to keep you up to date what is happening.
+* `save`: If TRUE, the project is saved into an .fst object that you can later load back in.
+* `save_data`: If TRUE (and if SAVE is also TRUE) then you will also save the datasets into the .fst object.
+* `debug`: **still needs to be fixed**
 
 Running `qdecr_fastlm` takes several minutes (unless you have big datasets, then it can take a bit longer).
 

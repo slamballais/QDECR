@@ -349,11 +349,11 @@ $(document).ready(function () {
 <pre class="r"><code>library(QDECR)
 
 out &lt;- qdecr_fastlm(qdecr_thickness ~ age + sex, 
-                    data = data,
-                    id = &quot;id&quot;, 
-                    hemi = &quot;lh&quot;,
-                    project = &quot;test_project&quot;,
-                    dir_tmp = &quot;/dev/shm&quot;)</code></pre>
+  data = data,
+  id = &quot;id&quot;, 
+  hemi = &quot;lh&quot;,
+  project = &quot;test_project&quot;,
+  dir_tmp = &quot;/dev/shm&quot;)</code></pre>
 <p>Here are the arguments we specified:</p>
 <ul>
 <li><code>formula</code>: The formula object is the first argument; we directly input <code>qdecr_thickness ~ age + sex</code>.</li>
@@ -363,24 +363,24 @@ out &lt;- qdecr_fastlm(qdecr_thickness ~ age + sex,
 <li><code>project</code>: The name that you want for your output. By default, both <code>hemi</code> and the vertex measure get added to it (so <code>lh.test_project.qdecr_thickness</code>).</li>
 <li><code>dir_tmp</code>: <strong>To make <code>QDECR</code> run fast, you need to use shared memory.</strong></li>
 </ul>
-<p>There are a bunch of other arguments that you can specify: <strong>I WILL ADD DESCRIPTIONS LATER!</strong></p>
+<p>There are a bunch of other arguments that you can specify:</p>
 <ul>
-<li><code>dir_out</code>:</li>
-<li><code>n_cores</code>:</li>
-<li><code>target</code>:</li>
-<li><code>mcz_thr</code>:</li>
-<li><code>mgh</code>:</li>
-<li><code>mask</code>:</li>
-<li><code>dir_subj</code>:</li>
-<li><code>dir_fshome</code>:</li>
-<li><code>dir_out_tree</code>:</li>
-<li><code>clean_up_bm</code>:</li>
-<li><code>clean_up</code>:</li>
-<li><code>clobber</code>:</li>
-<li><code>verbose</code>:</li>
-<li><code>save</code>:</li>
-<li><code>save_data</code>:</li>
-<li><code>debug</code>:</li>
+<li><code>dir_out</code>: The directory where you want to store the project files.</li>
+<li><code>n_cores</code>: The number of cores/threads you want to run on.</li>
+<li><code>target</code>: The target template (default: “fsaverage”)</li>
+<li><code>mcz_thr</code>: The Monte-Carlo simulation threshold (10, 13)</li>
+<li><code>mgh</code>: <strong>still needs to be fixed</strong></li>
+<li><code>mask</code>: <strong>still needs to be fixed</strong></li>
+<li><code>dir_subj</code>: Character path to <code>SUBJECTS_DIR</code> if it’s not in your global environment.</li>
+<li><code>dir_fshome</code>: Character path to <code>FREESURFER_HOME</code> if it’s not in your global environment.</li>
+<li><code>dir_out_tree</code>: If TRUE, <code>project</code> will become a new directory within <code>dir_out</code>. If FALSE, all files will just be put into <code>dir_out</code>.</li>
+<li><code>clean_up_bm</code>: Default is TRUE; if FALSE, all the vertex-wise data and all residuals for each vertex are NOT deleted from <code>dir_tmp</code>. Keep in mind that these can be huge files.</li>
+<li><code>clean_up</code>: Default is TRUE; if FALSE, all temporary files (except the ones described above) won’t get deleted.</li>
+<li><code>clobber</code>: Default is FALSE; if TRUE, overwrites the output directory.</li>
+<li><code>verbose</code>: Default is TRUE; returns a lot of messages to keep you up to date what is happening.</li>
+<li><code>save</code>: If TRUE, the project is saved into an .fst object that you can later load back in.</li>
+<li><code>save_data</code>: If TRUE (and if SAVE is also TRUE) then you will also save the datasets into the .fst object.</li>
+<li><code>debug</code>: <strong>still needs to be fixed</strong></li>
 </ul>
 <p>Running <code>qdecr_fastlm</code> takes several minutes (unless you have big datasets, then it can take a bit longer).</p>
 </div>
