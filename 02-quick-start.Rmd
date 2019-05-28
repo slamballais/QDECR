@@ -8,8 +8,8 @@ title: "Vignette 2: Quick start"
 
 You will need the following things:
 
-* 1. **All software**: Freesurfer, R, QDECR, etc. (see [Vignette 1](01-getting-started.html)).
-* 2. **Freesurfer data**: Your Freesurfer output  files in a single directory (usually SUBJECTS_DIR).
+* 1. **All software**: Freesurfer, `R`, `QDECR`, etc. (see [Vignette 1](01-getting-started.html)).
+* 2. **Freesurfer data**: Your Freesurfer output  files in a single directory (usually `SUBJECTS_DIR`).
 * 3. **Base data**: Your dataset with covariates, determinants, etc., loaded into R.
 
 # 2.2 Running QDECR
@@ -23,11 +23,11 @@ We will study the association of age (variable: `age`) with cortical thickness, 
 library(QDECR)
 
 out <- qdecr_fastlm(qdecr_thickness ~ age + sex, 
-                    data = data,
-                    id = "id", 
-                    hemi = "lh",
-                    project = "test_project",
-                    dir_tmp = "/dev/shm")
+  data = data,
+  id = "id", 
+  hemi = "lh",
+  project = "test_project",
+  dir_tmp = "/dev/shm")
 ```
 
 Here are the arguments we specified:
@@ -66,24 +66,32 @@ We saved the output in the variable out. Here are some commands that you can use
 
 ```{r eval = FALSE, tidy = FALSE}
 
-# global checks
-out                         # gives a summary
-print(out)                  # same as typing `out`
-summary(out)                # returns all significant clusters
+## Get a global overview
+out
+print(out) #same output
 
-# specific checks
-formula(out)                # returns the formula used
-nobs(out)                   # returns the number of participants
-stacks(out)                 # returns all available contrasts from the model
+## Histogram of the mean vertex data
+hist(out) # per vertex
+hist(out, qtype = "subject") # per subject
 
+## Overview of all significant clusters
+summary(out)
 
+## view the stack/contrast names
+stacks(out)
 
+## Obtain a Freeview plot for a specific stack/contrast
+qdecr_snap(out, 2)
+qdecr_snap(out, 'age') #same output
 
+## Obtain cluster-wise location data
+qdecr_cluster(out)
 
-
+## Obtain Monte-Carlo simulation threshold maps for a contrast
+qdecr_MCZ(out, 2, c(10, 13, 20, 23, 30))
 
 ```
 
 ---
 
-[Next vignette: [3. Using QDECR](03-using-qdecr.html)]
+[Next vignette: [3. Using `QDECR`](03-using-qdecr.html)]
