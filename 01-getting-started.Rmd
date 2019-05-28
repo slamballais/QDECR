@@ -36,3 +36,7 @@ And that's it. You are ready to use QDECR.
 # 1.2 Setting your parameters
 
 Here I discuss how to figure out whether your global variables are set correctly and what you need to have prepared in order to actually run QDECR.
+
+---
+
+[Next vignette: [2. Quick start](02-quick-start.html) or [3. Using QDECR](03-using-qdecr-html)]
