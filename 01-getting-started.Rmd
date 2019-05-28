@@ -1,0 +1,36 @@
+---
+title: "Vignette 1: Getting started"
+---
+
+---
+
+# 1.1 Requirements
+
+In order to run QDECR you need to have several things ready:
+* a Unix system;
+* [Freesurfer](https://surfer.nmr.mgh.harvard.edu/) installed;
+* [R](https://www.r-project.org) installed;
+* your images processed through Freesurfer.
+
+For the sake of the vignette we will assume that you have done all these.
+
+In R you first need to install the QDECR package:
+```{r eval = FALSE, tidy = FALSE}
+# Install the devtools package
+if (!requireNamespace("devtools"))
+  install.packages('devtools')
+
+# Download and install QDECR from Github
+devtools::install_github("slamballais/QDECR")
+
+# Attach the package
+library(QDECR)
+
+```
+
+And that's it. You are ready to use QDECR. 
+
+---
+
+# 1.2 Setting your parameters
+
