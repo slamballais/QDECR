@@ -4,13 +4,19 @@ title: "Vignette 1: Getting started"
 
 ---
 
-# 1.1 Requirements
+# 1.1 What is `QDECR`?
 
-In order to run QDECR you need to have several things ready:
+`QDECR` is a tool that can be used to perform surface-based vertex-wise analyses in `R`. 
+
+---
+
+# 1.2 Requirements
+
+In order to run `QDECR` you need to have several things ready:
 
 * A Unix system.
 * [Freesurfer](https://surfer.nmr.mgh.harvard.edu/) installed.
-* [R](https://www.r-project.org) installed.
+* [`R`](https://www.r-project.org) installed.
 * Your images processed through Freesurfer with the `-qcache` flag.
 
 For the sake of the vignette we will assume that you have done all these.
@@ -29,14 +35,14 @@ library(QDECR)
 
 ```
 
-And that's it. You are ready to use QDECR. 
+And that's it. You are ready to use `QDECR`. 
 
 ---
 
-# 1.2 Setting your parameters
+# 1.3 Setting your parameters
 
-Here I discuss how to figure out whether your global variables are set correctly and what you need to have prepared in order to actually run QDECR.
+Here I discuss how to figure out whether your global variables are set correctly and what you need to have prepared in order to actually run `QDECR`.
 
 ---
 
-[Next vignette: [2. Quick start](02-quick-start.html) or [3. Using QDECR](03-using-qdecr-html)]
+[Next vignette: [2. Quick start](02-quick-start.html) or [3. Using `QDECR`](03-using-qdecr-html)]

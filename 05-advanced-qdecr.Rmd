@@ -1,5 +1,5 @@
 ---
-title: "Vignette 5: Advanced QDECR"
+title: "Vignette 5: Advanced `QDECR`"
 ---
 
 ---
@@ -8,11 +8,11 @@ title: "Vignette 5: Advanced QDECR"
 
 ---
 
-# 5.2 Understanding the qdecr_fastlm function
+# 5.2 Understanding the `qdecr_fastlm` function
 
 ---
 
-# 5.3 The qdecr function
+# 5.3 The `qdecr` function
 
 ---
 

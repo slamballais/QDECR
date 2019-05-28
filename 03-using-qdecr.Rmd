@@ -1,5 +1,5 @@
 ---
-title: "Vignette 3: Using QDECR"
+title: "Vignette 3: Using `QDECR`"
 ---
 
 ---
@@ -10,7 +10,7 @@ Here I will discuss some of the research-related things that you need to ask you
 
 ---
 
-# 3.2 Detailed tutorial for QDECR
+# 3.2 Detailed tutorial for `QDECR`
 
 ## 3.2.1 Specify the formula
 
