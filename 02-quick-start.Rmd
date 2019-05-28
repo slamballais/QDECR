@@ -86,4 +86,4 @@ stacks(out)                 # returns all available contrasts from the model
 
 ---
 
-[Next vignette: [3. Using QDECR](03-using-qdecr-html)]
+[Next vignette: [3. Using QDECR](03-using-qdecr.html)]
