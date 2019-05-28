@@ -7,10 +7,7 @@ navbar:
     - text: "Vignettes"
       menu:
         - text: "1. Getting started"
-          menu:
-            - text: "1.1 Under construction!"
-            - text: "1.2 Under construction!"
-            - text: "1.3 Under construction!"
+          href: 01-getting-started.html
         - text: "2. Using QDECR"
           menu:
             - text: "Under construction!"
