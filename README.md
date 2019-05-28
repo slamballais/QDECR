@@ -9,6 +9,7 @@ This page contains vignettes to guide you through doing vertex-wise analyses usi
 UNDER CONSTRUCTION! WE WILL MAKE SURE THIS PAGE GOES UP FOR OHBM 2019!
 
 * 1. [Getting started](01-getting-started.html) (UNDER CONSTRUCTION!)
-* 2. [Using QDECR](02-using-qdecr.html) (UNDER CONSTRUCTION)
-* 3. [Post-processing](03-post-processing.html) (UNDER CONSTRUCTION)
-* 4. [Developing new methods](04-developing-new-methods.html) (UNDER CONSTRUCTION)
+* 2. [Quick start](02-quick-start.html) (UNDER CONSTRUCTION)
+* 3. [Using QDECR](03-using-qdecr.html) (UNDER CONSTRUCTION)
+* 4. [Post-processing](04-post-processing.html) (UNDER CONSTRUCTION)
+* 5. [Advanced QDECR](05-advanced-qdecr.html) (UNDER CONSTRUCTION)
