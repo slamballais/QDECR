@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Vignette 2: Quick start</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">QDECR</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Vignettes
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-getting-started.html">1. Getting started</a>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">2. Using QDECR</a>
+      <ul class="dropdown-menu" role="menu">
+        <li class="dropdown-header">Under construction!</li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">3. Post-processing</a>
+      <ul class="dropdown-menu" role="menu">
+        <li class="dropdown-header">Under construction!</li>
+      </ul>
+    </li>
+    <li class="dropdown-submenu">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">4. Developing new methods</a>
+      <ul class="dropdown-menu" role="menu">
+        <li class="dropdown-header">Under construction!</li>
+      </ul>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/slamballais/QDECR">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Vignette 2: Quick start</h1>
+
+</div>
+
+
+<div id="preparation" class="section level1">
+<h1>2.1 Preparation</h1>
+<p>You will need the following things:</p>
+<ul>
+<li><ol style="list-style-type: decimal">
+<li><strong>All software</strong>: Freesurfer, R, QDECR, etc. (see <a href="01-getting-started.html">Vignette 1</a>).</li>
+</ol></li>
+<li><ol start="2" style="list-style-type: decimal">
+<li><strong>Freesurfer data</strong>: Your Freesurfer output files in a single directory (usually SUBJECTS_DIR).</li>
+</ol></li>
+<li><ol start="3" style="list-style-type: decimal">
+<li><strong>Base data</strong>: Your dataset with covariates, determinants, etc., loaded into R.</li>
+</ol></li>
+</ul>
+</div>
+<div id="running-qdecr" class="section level1">
+<h1>2.2 Running QDECR</h1>
+<p>For now, lets focus on the application of multiple linear regression to each vertex.</p>
+<p>We will study the association of age (variable: <code>age</code>) with cortical thickness, and adjust for sex (variable: <code>sex</code>). This yields the following formula: <code>qdecr_thickness ~ age + sex</code>. Below is an example of <code>qdecr_fastlm</code>, which lets us do linear regression:</p>
+<pre class="r"><code>library(QDECR)
+
+out &lt;- qdecr_fastlm(qdecr_thickness ~ age + sex, 
+                    data = data,
+                    id = &quot;id&quot;, 
+                    hemi = &quot;lh&quot;,
+                    project = &quot;test_project&quot;,
+                    dir_tmp = &quot;/dev/shm&quot;)</code></pre>
+<p>Here are the arguments we specified:</p>
+<ul>
+<li><code>formula</code>: The formula object is the first argument; we directly input <code>qdecr_thickness ~ age + sex</code>.</li>
+<li><code>data</code>: The data argument requires a <code>data frame</code>, a <code>list</code> of <code>data frames</code> or an imputed object from a package like <code>mice</code>.</li>
+<li><code>id</code>: Here you should put (as a character) the column name in your dataset that contains the identifiers for <code>SUBJECTS_DIR</code>.</li>
+<li><code>hemi</code>: The hemisphere you want to analyze (<code>lh</code> for left, <code>rh</code> for right).</li>
+<li><code>project</code>: The name that you want for your output. By default, both <code>hemi</code> and the vertex measure get added to it (so <code>lh.test_project.qdecr_thickness</code>).</li>
+<li><code>dir_tmp</code>: <strong>To make <code>QDECR</code> run fast, you need to use shared memory.</strong></li>
+</ul>
+<p>There are a bunch of other arguments that you can specify: <strong>I WILL ADD DESCRIPTIONS LATER!</strong></p>
+<ul>
+<li><code>dir_out</code>:</li>
+<li><code>n_cores</code>:</li>
+<li><code>target</code>:</li>
+<li><code>mcz_thr</code>:</li>
+<li><code>mgh</code>:</li>
+<li><code>mask</code>:</li>
+<li><code>dir_subj</code>:</li>
+<li><code>dir_fshome</code>:</li>
+<li><code>dir_out_tree</code>:</li>
+<li><code>clean_up_bm</code>:</li>
+<li><code>clean_up</code>:</li>
+<li><code>clobber</code>:</li>
+<li><code>verbose</code>:</li>
+<li><code>save</code>:</li>
+<li><code>save_data</code>:</li>
+<li><code>debug</code>:</li>
+</ul>
+<p>Running <code>qdecr_fastlm</code> takes several minutes (unless you have big datasets, then it can take a bit longer).</p>
+</div>
+<div id="checking-the-output" class="section level1">
+<h1>2.3 Checking the output</h1>
+<p>We saved the output in the variable out. Here are some commands that you can use to check out what it did:</p>
+<pre class="r"><code># global checks
+out                         # gives a summary
+print(out)                  # same as typing `out`
+summary(out)                # returns all significant clusters
+
+# specific checks
+formula(out)                # returns the formula used
+nobs(out)                   # returns the number of participants
+stacks(out)                 # returns all available contrasts from the model</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
