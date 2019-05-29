@@ -332,17 +332,105 @@ $(document).ready(function () {
 <p>Here I will discuss some of the research-related things that you need to ask yourself before you can actually get started. I will also refer to some R information.</p>
 <hr />
 </div>
-<div id="detailed-tutorial-for-qdecr" class="section level1">
-<h1>3.2 Detailed tutorial for <code>QDECR</code></h1>
-<div id="specify-the-formula" class="section level2">
-<h2>3.2.1 Specify the formula</h2>
-<p>Here I will explain how the formula object works.</p>
+<div id="general-features-of-qdecr" class="section level1">
+<h1>3.1 General features of <code>QDECR</code></h1>
+<p><code>R</code> is a programming language with extensive functionality related to statistical analyses. <code>QDECR</code> is written to capitalize on some of this functionality, including:</p>
+<ul>
+<li>Working with imputed missing data</li>
+<li>Straightforward formula definition</li>
+<li>Usage of interaction terms, splines, polynomial terms, etc.</li>
+<li><code>AsIs</code> (‘as is’) treatment of data within formulas, i.e. being able to manipulate the data while specifying the formula</li>
+</ul>
+<p>All these features can be found in <code>QDECR</code>.</p>
+<p>The core <code>qdecr</code> function follows a number of steps:</p>
+<ol style="list-style-type: decimal">
+<li>Checking the input arguments</li>
+<li>Preparing the statistical model</li>
+<li>Loading the vertex-wise data</li>
+<li>Running the statistical model per vertex</li>
+<li>Applying any corrections over the surface</li>
+<li>Saving out all the statistics</li>
+</ol>
+<hr />
 </div>
-<div id="section" class="section level2">
-<h2>3.2.2</h2>
+<div id="the-arguments-of-qdecr" class="section level1">
+<h1>3.2 The arguments of <code>QDECR</code></h1>
+<div id="list-of-the-arguments-and-explained" class="section level2">
+<h2>3.2.1 List of the arguments, and explained</h2>
+<p>Here I will expand on the list that is present in vignette 2.</p>
+</div>
+<div id="formulas" class="section level2">
+<h2>3.2.2 Formulas</h2>
+<div id="on-formulas" class="section level3">
+<h3>3.2.2.1 On formulas</h3>
+<p>Nearly all statistical model functions in <code>R</code> utilize <code>formula</code> objects. The <code>formula</code> object allows users to generate design matrices for subsequent analysis through straightforward syntax:</p>
+<p><code>Y ~ a + b</code></p>
+<p>Lets deconstruct this:</p>
+<ul>
+<li><code>Y</code>: The outcome (AKA dependent variable AKA label)</li>
+<li><code>~</code>: Denotes the left-hand side versus the right-hand side of the formula</li>
+<li><code>a + b</code>: The additive effect of determinants <code>a</code> and <code>b</code> (AKA independent variables AKA features)</li>
+</ul>
+<p>This format allows users to use simple pseudo-math to generate complicated design matrices. <code>R</code> handles design making for incomplete data, conversion of categorical variables to e.g. dummy variables, etc.</p>
+</div>
+<div id="using-formulas-in-qdecr" class="section level3">
+<h3>3.2.2.2 Using formulas in <code>QDECR</code></h3>
+<p><code>QDECR</code> uses the <code>formula</code> object to allow users to easily create design matrices. It further extends this functionality by explicitly including the vertex measure as a variable in the formula:</p>
+<ul>
+<li>Cortical thickness as outcome: <code>qdecr_thickness ~ a + b</code></li>
+</ul>
+<p>Within <code>QDECR</code> all vertex measures that Freesurfer calculates have default names. This is <code>qdecr_</code> combined with the name of the vertex measure file. A comprehensive list:</p>
+<ul>
+<li>qdecr_thickness</li>
+<li>qdecr_area</li>
+<li>qdecr_area.pial</li>
+<li>qdecr_curv</li>
+<li>qdecr_jacobian_white</li>
+<li>qdecr_pial</li>
+<li>qdecr_sulc</li>
+<li>qdecr_volume</li>
+<li>qdecr_white.H</li>
+<li>qdecr_white.k</li>
+</ul>
+<p>Note that qdecr_w-g.pct does not work yet.</p>
+</div>
+<div id="interaction-terms-splines-polynomials-asis-treatment-etc.-in-qdecr" class="section level3">
+<h3>3.2.2.3 Interaction terms, splines, polynomials, <code>AsIs</code> treatment, etc. in <code>QDECR</code></h3>
+<p><code>R</code> also allows users to apply more complicated formulas:</p>
+<ul>
+<li>Interaction terms: <code>Y ~ a:b</code></li>
+<li>Main effects and interaction: <code>Y ~ a * b</code> [equivalent to <code>Y ~ a + b + a:b</code>]</li>
+<li>Polynomials: <code>Y ~ a + poly(b, 2, raw = TRUE)</code> [equivalent to <code>Y ~ a + b + b^2</code>]</li>
+<li>Orthogonal polynomials: <code>Y ~ a + poly(b, 2)</code></li>
+<li>Splines (e.g. from the <code>splines</code> package): <code>Y ~ bs(a, 3)</code></li>
+</ul>
+<p>Furthermore, <code>R</code> features <code>AsIs</code> treatment of objects, meaning that variables can be manipulated within the <code>formula</code> object itself using <code>I()</code>. This allows users to do all kinds of things in the formula itself, including:</p>
+<ul>
+<li>Quadratic terms: <code>Y ~ a + I(a^2)</code></li>
+<li>Standardizing a variable: <code>Y ~ I(scale(a))</code></li>
+<li>Combining variables: <code>Y ~ I(a + 2*b)</code></li>
+</ul>
+<p>By extension, <code>QDECR</code> has all these features.</p>
+</div>
+</div>
+<div id="imputed-datasets" class="section level2">
+<h2>3.2.3 Imputed datasets</h2>
+<div id="on-missingness-and-imputation" class="section level3">
+<h3>3.2.3.1 On missingness and imputation</h3>
+</div>
+<div id="imputed-datasets-in-qdecr" class="section level3">
+<h3>3.2.3.2 Imputed datasets in <code>QDECR</code></h3>
+</div>
+</div>
+<div id="parallel-performance" class="section level2">
+<h2>3.2.4 Parallel performance</h2>
+<hr />
+</div>
+</div>
+<div id="common-errors-and-mistakes" class="section level1">
+<h1>3.3 Common errors and mistakes</h1>
 <hr />
 <p>[Next vignette: <a href="04-post-processing.html">4. Post-processing</a>]</p>
-</div>
 </div>
 
 

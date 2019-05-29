@@ -10,13 +10,102 @@ Here I will discuss some of the research-related things that you need to ask you
 
 ---
 
-# 3.2 Detailed tutorial for `QDECR`
+# 3.1 General features of `QDECR`
 
-## 3.2.1 Specify the formula
+`R` is a programming language with extensive functionality related to statistical analyses. `QDECR` is written to capitalize on some of this functionality, including:
 
-Here I will explain how the formula object works.
+* Working with imputed missing data
+* Straightforward formula definition
+* Usage of interaction terms, splines, polynomial terms, etc.
+* `AsIs` ('as is') treatment of data within formulas, i.e. being able to manipulate the data while specifying the formula
 
-## 3.2.2 
+All these features can be found in `QDECR`.
+
+The core `qdecr` function follows a number of steps:
+
+1. Checking the input arguments
+2. Preparing the statistical model
+3. Loading the vertex-wise data
+4. Running the statistical model per vertex
+5. Applying any corrections over the surface
+6. Saving out all the statistics
+
+---
+
+# 3.2 The arguments of `QDECR`
+
+## 3.2.1 List of the arguments, and explained
+
+Here I will expand on the list that is present in vignette 2.
+
+## 3.2.2 Formulas
+
+### 3.2.2.1 On formulas
+
+Nearly all statistical model functions in `R` utilize `formula` objects. The `formula` object allows users to generate design matrices for subsequent analysis through straightforward syntax:
+
+`Y ~ a + b`
+
+Lets deconstruct this:
+
+* `Y`: The outcome (AKA dependent variable AKA label)
+* `~`: Denotes the left-hand side versus the right-hand side of the formula
+* `a + b`: The additive effect of determinants `a` and `b` (AKA independent variables AKA features)
+
+This format allows users to use simple pseudo-math to generate complicated design matrices. `R` handles design making for incomplete data, conversion of categorical variables to e.g. dummy variables, etc.
+
+### 3.2.2.2 Using formulas in `QDECR`
+
+`QDECR` uses the `formula` object to allow users to easily create design matrices. It further extends this functionality by explicitly including the vertex measure as a variable in the formula:
+
+* Cortical thickness as outcome: `qdecr_thickness ~ a + b`
+
+Within `QDECR` all vertex measures that Freesurfer calculates have default names. This is `qdecr_` combined with the name of the vertex measure file. A comprehensive list:
+
+* qdecr_thickness
+* qdecr_area
+* qdecr_area.pial
+* qdecr_curv
+* qdecr_jacobian_white
+* qdecr_pial
+* qdecr_sulc
+* qdecr_volume
+* qdecr_white.H
+* qdecr_white.k
+
+Note that qdecr_w-g.pct does not work yet.
+
+### 3.2.2.3 Interaction terms, splines, polynomials, `AsIs` treatment, etc. in `QDECR`
+
+`R` also allows users to apply more complicated formulas:
+
+* Interaction terms: `Y ~ a:b`
+* Main effects and interaction: `Y ~ a * b` [equivalent to `Y ~ a + b + a:b`]
+* Polynomials: `Y ~ a + poly(b, 2, raw = TRUE)` [equivalent to `Y ~ a + b + b^2`]
+* Orthogonal polynomials: `Y ~ a + poly(b, 2)`
+* Splines (e.g. from the `splines` package): `Y ~ bs(a, 3)`
+
+Furthermore, `R` features `AsIs` treatment of objects, meaning that variables can be manipulated within the `formula` object itself using `I()`. This allows users to do all kinds of things in the formula itself, including:
+
+* Quadratic terms: `Y ~ a + I(a^2)`
+* Standardizing a variable: `Y ~ I(scale(a))`
+* Combining variables: `Y ~ I(a + 2*b)`
+
+By extension, `QDECR` has all these features.
+
+## 3.2.3 Imputed datasets
+
+### 3.2.3.1 On missingness and imputation
+
+### 3.2.3.2 Imputed datasets in `QDECR`
+
+## 3.2.4 Parallel performance
+
+---
+
+# 3.3 Common errors and mistakes
+
+
 
 ---
 
