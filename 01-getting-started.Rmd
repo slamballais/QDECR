@@ -19,7 +19,7 @@ In order to run `QDECR` you need to have several things ready:
 * [`R`](https://www.r-project.org) installed.
 * Your images processed through Freesurfer with the `-qcache` flag.
 
-To install R on Ubuntu, [follow this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04) and [run step 1 of this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-packages-using-devtools-on-ubuntu-16-04).
+To install R on Ubuntu 18.04, [follow this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04) and [run step 1 of this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-packages-using-devtools-on-ubuntu-18-04).
 
 For the sake of the vignette we will assume that you have done all these.
 
