@@ -19,6 +19,8 @@ In order to run `QDECR` you need to have several things ready:
 * [`R`](https://www.r-project.org) installed.
 * Your images processed through Freesurfer with the `-qcache` flag.
 
+To install R on Ubuntu, [follow this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04) and [run step 1 of this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-packages-using-devtools-on-ubuntu-16-04).
+
 For the sake of the vignette we will assume that you have done all these.
 
 In R you first need to install the QDECR package:
@@ -45,4 +47,4 @@ Here I discuss how to figure out whether your global variables are set correctly
 
 ---
 
-[Next vignette: [2. Quick start](02-quick-start.html) or [3. Using `QDECR`](03-using-qdecr-html)]
+[Next vignette: [2. Quick start](02-quick-start.html) or [3. Using `QDECR`](03-using-qdecr.html)]
