@@ -23,6 +23,19 @@ To install Freesurfer, [follow this tutorial](https://stackoverflow.com/question
 
 To install R on Ubuntu 18.04, [follow this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04) and [run step 1 of this tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-r-packages-using-devtools-on-ubuntu-18-04).
 
+Another error may pop up down the line. Try opening `freeview` on the command line:
+```{bash eval = FALSE, tidy = FALSE}
+slamballais@scs:~$ freeview
+freeview.bin:  error while loading shared libraries: libpng12.so.0: cannot open shared object file: No such file or directory.
+```
+
+For Ubuntu 16.10 and higher this is a problem, as `libpng12.so.0` does not support those. There is an easy workaround:
+```{bash eval = FALSE, tidy = FALSE}
+wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb \
+  && sudo dpkg -i /tmp/libpng12.deb \
+  && rm /tmp/libpng12.deb
+```
+
 For the sake of the vignette we will assume that you have done all these.
 
 In R you first need to install the QDECR package:

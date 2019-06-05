@@ -343,6 +343,13 @@ $(document).ready(function () {
 </ul>
 <p>To install Freesurfer, <a href="https://stackoverflow.com/questions/32530340/freesurfer-installed-on-ubuntu">follow this tutorial</a>, but change the <code>wget</code> command to the most up-to-date version of Freesurfer (<em>the tutorial downloads Freesurfer 5.3.0 which is NOT the newest version</em>).</p>
 <p>To install R on Ubuntu 18.04, <a href="https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04">follow this tutorial</a> and <a href="https://www.digitalocean.com/community/tutorials/how-to-install-r-packages-using-devtools-on-ubuntu-18-04">run step 1 of this tutorial</a>.</p>
+<p>Another error may pop up down the line. Try opening <code>freeview</code> on the command line:</p>
+<pre class="bash"><code>slamballais@scs:~$ freeview
+freeview.bin:  error while loading shared libraries: libpng12.so.0: cannot open shared object file: No such file or directory.</code></pre>
+<p>For Ubuntu 16.10 and higher this is a problem, as <code>libpng12.so.0</code> does not support those. There is an easy workaround:</p>
+<pre class="bash"><code>wget -q -O /tmp/libpng12.deb http://mirrors.kernel.org/ubuntu/pool/main/libp/libpng/libpng12-0_1.2.54-1ubuntu1_amd64.deb \
+  &amp;&amp; sudo dpkg -i /tmp/libpng12.deb \
+  &amp;&amp; rm /tmp/libpng12.deb</code></pre>
 <p>For the sake of the vignette we will assume that you have done all these.</p>
 <p>In R you first need to install the QDECR package:</p>
 <pre class="r"><code># Install the devtools package
