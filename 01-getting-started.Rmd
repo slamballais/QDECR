@@ -124,6 +124,10 @@ If these return empty strings, we highly recommend that you set up these variabl
 
 The Freesurfer output directories should all be located in the same place, ideally the path that is stored by `SUBJECTS_DIR` (but this is optional). As of version 0.7.0 it is not possible to run analyses on participants spread over multiple directories.
 
+## 1.4.3 Shared memory (/dev/shm)
+
+**We highly recommend using shared memory for QDECR!** As QDECR relies on file-backed matrices, we need to read and write a significant number of times to files. To avoid super slow analyses, it is advised to specify `dir_tmp = /dev/shm` in QDECR (see the next vignette).
+
 ---
 
 [Next vignette: [2. Quick start](02-quick-start.html) or [3. Using `QDECR`](03-using-qdecr.html)]

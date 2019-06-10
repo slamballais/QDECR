@@ -43,7 +43,7 @@ Here are the arguments we specified:
 * `id`: Here you should put (as a character) the column name in your dataset that contains the identifiers for `SUBJECTS_DIR`.
 * `hemi`: The hemisphere you want to analyze (`lh` for left, `rh` for right). 
 * `project`: The name that you want for your output. By default, both `hemi` and the vertex measure get added to it (so `lh.test_project.qdecr_thickness`).
-* `dir_tmp`: **To make `QDECR` run fast, you need to use shared memory.**
+* `dir_tmp`: **To make `QDECR` run fast, you need to use shared memory! Not using shared memory will make things super slow!**
 
 There are a bunch of other arguments that you can specify:
 

@@ -526,6 +526,10 @@ Sys.getenv(&quot;SUBJECTS_DIR&quot;)</code></pre>
 <div id="freesurfer-output-in-subjects_dir" class="section level2">
 <h2>1.4.2 Freesurfer output in SUBJECTS_DIR</h2>
 <p>The Freesurfer output directories should all be located in the same place, ideally the path that is stored by <code>SUBJECTS_DIR</code> (but this is optional). As of version 0.7.0 it is not possible to run analyses on participants spread over multiple directories.</p>
+</div>
+<div id="shared-memory-devshm" class="section level2">
+<h2>1.4.3 Shared memory (/dev/shm)</h2>
+<p><strong>We highly recommend using shared memory for QDECR!</strong> As QDECR relies on file-backed matrices, we need to read and write a significant number of times to files. To avoid super slow analyses, it is advised to specify <code>dir_tmp = /dev/shm</code> in QDECR (see the next vignette).</p>
 <hr />
 <p>[Next vignette: <a href="02-quick-start.html">2. Quick start</a> or <a href="03-using-qdecr.html">3. Using <code>QDECR</code></a>]</p>
 </div>

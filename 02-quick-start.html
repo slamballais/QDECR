@@ -481,7 +481,7 @@ out &lt;- qdecr_fastlm(qdecr_thickness ~ age + sex,
 <li><code>id</code>: Here you should put (as a character) the column name in your dataset that contains the identifiers for <code>SUBJECTS_DIR</code>.</li>
 <li><code>hemi</code>: The hemisphere you want to analyze (<code>lh</code> for left, <code>rh</code> for right).</li>
 <li><code>project</code>: The name that you want for your output. By default, both <code>hemi</code> and the vertex measure get added to it (so <code>lh.test_project.qdecr_thickness</code>).</li>
-<li><code>dir_tmp</code>: <strong>To make <code>QDECR</code> run fast, you need to use shared memory.</strong></li>
+<li><code>dir_tmp</code>: <strong>To make <code>QDECR</code> run fast, you need to use shared memory! Not using shared memory will make things super slow!</strong></li>
 </ul>
 <p>There are a bunch of other arguments that you can specify:</p>
 <ul>
