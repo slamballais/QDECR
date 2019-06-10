@@ -16,7 +16,6 @@ Imports:
     doParallel (>= 1.0.14),
     foreach (>= 1.4.4),
     fst (>= 0.9.0), 
-    magick (>= 2.0),
     Matrix (>= 1.2.12),
     methods,
     mi (>= 1.0),
@@ -25,4 +24,6 @@ Imports:
     parallel,
     RcppEigen (>= 0.3.3.4.0),
     survival (>= 2.41.3)
+Suggests:
+    magick (>= 2.0)
 RoxygenNote: 6.1.1
