@@ -518,6 +518,12 @@ freeview.bin:  error while loading shared libraries: libpng12.so.0: cannot open 
 <div id="setting-global-variables" class="section level2">
 <h2>1.4.1 Setting global variables</h2>
 <p>QDECR assumes that you have set several global variables, namely <code>SUBJECTS_DIR</code> and <code>FREESURFER_HOME</code>. This is typically done when you configure Freesurfer, as described <a href="https://surfer.nmr.mgh.harvard.edu/fswiki/SetupConfiguration_Linux">here</a>.</p>
+<p>If you haven’t set the global variables yet and will use QDECR on from the command line, then you can modify your .bashrc file. The .bashrc file runs every time you open a terminal. Simply run:</p>
+<pre class="bash"><code>echo &#39;export FREESURFER_HOME=/usr/local/freesurfer&#39; &gt;&gt; ~/.bashrc 
+echo &#39;source $FREESURFER_HOME/SetUpFreeSurfer.sh&#39; &gt;&gt; ~/.bashrc</code></pre>
+<p>If you want to directly use RStudio instead (so if you do not open it from the command line), use:</p>
+<pre class="bash"><code>echo &#39;export FREESURFER_HOME=/usr/local/freesurfer&#39; &gt;&gt; ~/.profile
+echo &#39;source $FREESURFER_HOME/SetUpFreeSurfer.sh&#39; &gt;&gt; ~/.profile</code></pre>
 <p>You can check whether these variables are set by running the following <code>R</code> code:</p>
 <pre class="r"><code>Sys.getenv(&quot;FREESURFER_HOME&quot;)
 Sys.getenv(&quot;SUBJECTS_DIR&quot;)</code></pre>

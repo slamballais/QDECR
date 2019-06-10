@@ -112,6 +112,18 @@ library(QDECR)
 
 QDECR assumes that you have set several global variables, namely `SUBJECTS_DIR` and `FREESURFER_HOME`. This is typically done when you configure Freesurfer, as described [here](https://surfer.nmr.mgh.harvard.edu/fswiki/SetupConfiguration_Linux).
 
+If you haven't set the global variables yet and will use QDECR on from the command line, then you can modify your .bashrc file. The .bashrc file runs every time you open a terminal. Simply run:
+```{bash eval = FALSE}
+echo 'export FREESURFER_HOME=/usr/local/freesurfer' >> ~/.bashrc 
+echo 'source $FREESURFER_HOME/SetUpFreeSurfer.sh' >> ~/.bashrc
+```
+
+If you want to directly use RStudio instead (so if you do not open it from the command line), use:
+```{bash eval = FALSE}
+echo 'export FREESURFER_HOME=/usr/local/freesurfer' >> ~/.profile
+echo 'source $FREESURFER_HOME/SetUpFreeSurfer.sh' >> ~/.profile
+```
+
 You can check whether these variables are set by running the following `R` code:
 ```{r eval = FALSE, tidy = FALSE}
 Sys.getenv("FREESURFER_HOME")
