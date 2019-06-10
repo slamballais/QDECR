@@ -401,13 +401,20 @@ freeview.bin:  error while loading shared libraries: libpng12.so.0: cannot open 
 <pre class="r"><code>library(QDECR)</code></pre>
 <hr />
 </div>
+<div id="other-preparations" class="section level1">
+<h1>1.4 Other preparations</h1>
+</div>
 <div id="setting-global-variables" class="section level1">
-<h1>1.4 Setting global variables</h1>
+<h1>1.4.1 Setting global variables</h1>
 <p>QDECR assumes that you have set several global variables, namely <code>SUBJECTS_DIR</code> and <code>FREESURFER_HOME</code>. This is typically done when you configure Freesurfer, as described <a href="https://surfer.nmr.mgh.harvard.edu/fswiki/SetupConfiguration_Linux">here</a>.</p>
 <p>You can check whether these variables are set by running the following <code>R</code> code:</p>
 <pre class="r"><code>Sys.getenv(&quot;FREESURFER_HOME&quot;)
 Sys.getenv(&quot;SUBJECTS_DIR&quot;)</code></pre>
 <p>If these return empty strings, we highly recommend that you set up these variables (as described <a href="https://surfer.nmr.mgh.harvard.edu/fswiki/SetupConfiguration_Linux">here</a>). However, QDECR also has some arguments that allow you to set them directly.</p>
+</div>
+<div id="freesurfer-output-in-subjects_dir" class="section level1">
+<h1>1.4.2 Freesurfer output in SUBJECTS_DIR</h1>
+<p>The Freesurfer output directories should all be located in the same place, ideally the path that is stored by <code>SUBJECTS_DIR</code> (but this is optional). As of version 0.7.0 it is not possible to run analyses on participants spread over multiple directories.</p>
 <hr />
 <p>[Next vignette: <a href="02-quick-start.html">2. Quick start</a> or <a href="03-using-qdecr.html">3. Using <code>QDECR</code></a>]</p>
 </div>
