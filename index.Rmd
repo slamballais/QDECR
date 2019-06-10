@@ -1,17 +1,44 @@
 ---
-title: "Welcome to QDECR!"
+title: "QDECR"
 ---
 
 ---
 
-Vertex-wise analyses in [`R`](https://www.r-project.org/) with the [`QDECR`](https://github.com/slamballais/QDECR) package.
+# [QDECR](https://github.com/slamballais/QDECR): Vertex-wise analyses in [R](https://www.r-project.org/)
 
-**UNDER CONSTRUCTION!**
+---
 
-Vignettes:
+# Disclaimer
+
+**THIS PACKAGE IS STILL BEING DEVELOPED!** While the main functions work fine, we are still optimizing the code to make it faster, easier to use and have more features. 
+
+# About 
+
+QDECR is an R package to perform vertex-wise analyses on cortical surface maps. It is an attempt to enrich vertex-wise analyses with features commonly found in R, such as easy design matrix creation, using multiply imputed datasets, handling complex formulas, etc. Users familiar with R will immediately notice that the package works similar to most other statistical models in R. 
+
+We are currently at version 0.7.0 (Bimi), which is the version that will be presented during OHBM 2019.
+
+# Tutorials
+
+Users can follow the tutorial below to run their vertex-wise analyses. Please note (2019-06-10): We are still actively expanding the tutorial and so not all features are described just yet!
 
 * 1. [Getting started](01-getting-started.html)
 * 2. [Quick start](02-quick-start.html)
-* 3. [Using `QDECR`](03-using-qdecr.html)
-* 4. [Post-processing](04-post-processing.html)
-* 5. [Advanced `QDECR`](05-advanced-qdecr.html)
+* 3. [Using `QDECR`](03-using-qdecr.html) [**UNDER CONSTRUCTION**]
+* 4. [Post-processing](04-post-processing.html) [**UNDER CONSTRUCTION**]
+* 5. [Advanced `QDECR`](05-advanced-qdecr.html) [**UNDER CONSTRUCTION**]
+
+# Contacting us
+
+* Bugs and use-case questions can be posted on the [Github "Issues" page of the package](https://github.com/slamballais/QDECR/issues).
+* Also feel free to send a tweet (@slamballais) or an email (lamballais.sander[a]gmail.com)
+
+# Contributing
+
+We are always looking for ideas, suggestions and help! We will soon add a step-by-step guide on how you can help.
+
+# License
+
+QDECR is open-source and free to use under the [GPL-3 license](https://en.wikipedia.org/wiki/GNU_General_Public_License).
+
+
