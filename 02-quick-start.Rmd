@@ -10,9 +10,11 @@ You will need the following things:
 
 * 1. **All software**: Freesurfer, `R`, `QDECR`, etc. (see [Vignette 1](01-getting-started.html)).
 * 2. **Freesurfer data**: Your Freesurfer output  files in a single directory (usually `SUBJECTS_DIR`).
-* 3. **Base data**: Your dataset with covariates, determinants, etc., loaded into R.
+* 3. **Phenotype data**: Your dataset with covariates, determinants, etc., loaded into R.
 
 # 2.2 Running QDECR
+
+> **WARNING!!! QDECR lets you run vertex-wise analyses however you want. Keep in mind that [with great power comes great responsibility](https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility).** We provide the tools, and it is up to you to use them sensibly. For example, it can be tempting to add interactions, splines, polynomials, etc., and using liberal correction thresholds without an a priori reason. Please use QDECR responsibly. 
 
 For now, lets focus on the application of multiple linear regression to each vertex. 
 
@@ -58,7 +60,7 @@ There are a bunch of other arguments that you can specify:
 * `save_data`: If TRUE (and if SAVE is also TRUE) then you will also save the datasets into the .fst object.
 * `debug`: **still needs to be fixed**
 
-Running `qdecr_fastlm` takes several minutes (unless you have big datasets, then it can take a bit longer).
+Running `qdecr_fastlm` takes several minutes, anywhere from 10 minutes for small datasets to 30 minutes for large datasets.
 
 # 2.3 Checking the output
 
@@ -80,15 +82,12 @@ summary(out)
 ## view the stack/contrast names
 stacks(out)
 
-## Obtain a Freeview plot for a specific stack/contrast
+## Obtain a Freeview plot for a specific stack/contrast (note: this function requires the `magick` package)
 qdecr_snap(out, 2)
 qdecr_snap(out, 'age') #same output
 
 ## Obtain cluster-wise location data
 qdecr_cluster(out)
-
-## Obtain Monte-Carlo simulation threshold maps for a contrast
-qdecr_MCZ(out, 2, c(10, 13, 20, 23, 30))
 
 ```
 

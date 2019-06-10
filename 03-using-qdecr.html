@@ -309,6 +309,21 @@ $(document).ready(function () {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Conference materials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="qdecr_ohbm2019_poster.pdf">OHBM 2019 Poster (PDF)</a>
+    </li>
+    <li>
+      <a href="qdecr_ohbm2019_brochure.pdf">OHBM 2019 Brochure (PDF)</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -358,11 +373,24 @@ $(document).ready(function () {
 </ol>
 <hr />
 </div>
-<div id="the-arguments-of-qdecr" class="section level1">
-<h1>3.2 The arguments of <code>QDECR</code></h1>
-<div id="list-of-the-arguments-and-explained" class="section level2">
-<h2>3.2.1 List of the arguments, and explained</h2>
-<p>Here I will expand on the list that is present in vignette 2.</p>
+<div id="qdecr-features" class="section level1">
+<h1>3.2 QDECR features</h1>
+<div id="vertex-wise-data" class="section level2">
+<h2>3.2.1 Vertex-wise data</h2>
+<p>Within <code>QDECR</code> all vertex measures that Freesurfer calculates have default names. This is <code>qdecr_</code> combined with the name of the vertex measure file. A comprehensive list:</p>
+<ul>
+<li>qdecr_thickness</li>
+<li>qdecr_area</li>
+<li>qdecr_area.pial</li>
+<li>qdecr_curv</li>
+<li>qdecr_jacobian_white</li>
+<li>qdecr_pial</li>
+<li>qdecr_sulc</li>
+<li>qdecr_volume</li>
+<li>qdecr_white.H</li>
+<li>qdecr_white.k</li>
+</ul>
+<p>Note that qdecr_w-g.pct does not work yet.</p>
 </div>
 <div id="formulas" class="section level2">
 <h2>3.2.2 Formulas</h2>
@@ -384,20 +412,6 @@ $(document).ready(function () {
 <ul>
 <li>Cortical thickness as outcome: <code>qdecr_thickness ~ a + b</code></li>
 </ul>
-<p>Within <code>QDECR</code> all vertex measures that Freesurfer calculates have default names. This is <code>qdecr_</code> combined with the name of the vertex measure file. A comprehensive list:</p>
-<ul>
-<li>qdecr_thickness</li>
-<li>qdecr_area</li>
-<li>qdecr_area.pial</li>
-<li>qdecr_curv</li>
-<li>qdecr_jacobian_white</li>
-<li>qdecr_pial</li>
-<li>qdecr_sulc</li>
-<li>qdecr_volume</li>
-<li>qdecr_white.H</li>
-<li>qdecr_white.k</li>
-</ul>
-<p>Note that qdecr_w-g.pct does not work yet.</p>
 </div>
 <div id="interaction-terms-splines-polynomials-asis-treatment-etc.-in-qdecr" class="section level3">
 <h3>3.2.2.3 Interaction terms, splines, polynomials, <code>AsIs</code> treatment, etc. in <code>QDECR</code></h3>

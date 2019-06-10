@@ -32,11 +32,24 @@ The core `qdecr` function follows a number of steps:
 
 ---
 
-# 3.2 The arguments of `QDECR`
+# 3.2 QDECR features
 
-## 3.2.1 List of the arguments, and explained
+## 3.2.1 Vertex-wise data
 
-Here I will expand on the list that is present in vignette 2.
+Within `QDECR` all vertex measures that Freesurfer calculates have default names. This is `qdecr_` combined with the name of the vertex measure file. A comprehensive list:
+
+* qdecr_thickness
+* qdecr_area
+* qdecr_area.pial
+* qdecr_curv
+* qdecr_jacobian_white
+* qdecr_pial
+* qdecr_sulc
+* qdecr_volume
+* qdecr_white.H
+* qdecr_white.k
+
+Note that qdecr_w-g.pct does not work yet.
 
 ## 3.2.2 Formulas
 
@@ -59,21 +72,6 @@ This format allows users to use simple pseudo-math to generate complicated desig
 `QDECR` uses the `formula` object to allow users to easily create design matrices. It further extends this functionality by explicitly including the vertex measure as a variable in the formula:
 
 * Cortical thickness as outcome: `qdecr_thickness ~ a + b`
-
-Within `QDECR` all vertex measures that Freesurfer calculates have default names. This is `qdecr_` combined with the name of the vertex measure file. A comprehensive list:
-
-* qdecr_thickness
-* qdecr_area
-* qdecr_area.pial
-* qdecr_curv
-* qdecr_jacobian_white
-* qdecr_pial
-* qdecr_sulc
-* qdecr_volume
-* qdecr_white.H
-* qdecr_white.k
-
-Note that qdecr_w-g.pct does not work yet.
 
 ### 3.2.2.3 Interaction terms, splines, polynomials, `AsIs` treatment, etc. in `QDECR`
 
