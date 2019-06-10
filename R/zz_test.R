@@ -118,7 +118,11 @@ qsnap_a <- function(n) paste("--camera Azimuth", n)
 qsnap_e <- function(n) paste("--camera Elevation", n)
 qsnap_zoom <- function(n) paste("--zoom", n)
 
-qdecr_snap <- function(vw, stack = NULL, ext = ".tiff", zoom = 1.4, plot_brain = TRUE, save_plot = TRUE) {
+qdecr_snap <- function(vw, stack = NULL, ext = ".tiff", zoom = 1, plot_brain = TRUE, save_plot = TRUE) {
+  if (!requireNamespace("magick", quietly = TRUE)) {
+    stop("Package \"magick\" needed for this function to work. Please install it. See the introductions on www.qdecr.com",
+         call. = FALSE)
+  }
   if (is.null(stack)) stop("`stack` not defined. Please choose: ", paste(stacks(vw), collapse = ", "))
   if (length(stack) > 1) stop("More than 1 stack specified.")
   if(is.character(stack)) stack <- which(stacks(vw) == stack)
