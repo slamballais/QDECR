@@ -453,15 +453,17 @@ div.tocify {
 <h1>1.2 Requirements</h1>
 <p>In order to run <code>QDECR</code> you need to have several things ready:</p>
 <ul>
-<li>A Unix system.</li>
-<li><a href="https://surfer.nmr.mgh.harvard.edu/">Freesurfer</a> installed.</li>
-<li>Your images processed through Freesurfer with the <code>-qcache</code> flag.</li>
-<li><a href="https://www.r-project.org"><code>R</code></a> installed.</li>
-<li>A lot of other <code>R</code> packages that will be installed automatically.</li>
+<li>A Unix system. [see 1.2.1]</li>
+<li><a href="https://surfer.nmr.mgh.harvard.edu/">Freesurfer</a> installed. [see 1.2.2]</li>
+<li>Your images processed through Freesurfer with the <code>-qcache</code> flag. [see 1.2.3]</li>
+<li><a href="https://www.r-project.org"><code>R</code></a> installed. [see 1.2.4]</li>
+<li>A lot of other <code>R</code> packages that will be installed automatically. [see 1.2.4 or 1.3]</li>
+<li>Make sure your target template (usually fsaverage) is in your <code>SUBJECTS_DIR</code> (directory with all your Freesurfer output). [see 1.2.5]</li>
 </ul>
 <p>We also highly suggest:</p>
 <ul>
-<li><a href="https://www.imagemagick.org/Magick++/STL.html"><code>Magick++</code></a>; this is required for a specific plotting function (<code>qdecr_snap</code>) that you may or may not need.</li>
+<li>Set <code>FREESURFER_HOME</code> and <code>SUBJECTS_DIR</code>; both can be set manually in QDECR, but it is more convenient. [see 1.4.1]</li>
+<li><a href="https://www.imagemagick.org/Magick++/STL.html"><code>Magick++</code></a>; this is required for a specific plotting function (<code>qdecr_snap</code>) that you may or may not need. [see 1.2.6]</li>
 </ul>
 <div id="unix" class="section level2">
 <h2>1.2.1 Unix</h2>
@@ -491,8 +493,13 @@ freeview.bin:  error while loading shared libraries: libpng12.so.0: cannot open 
 <p>To install R on Ubuntu 18.04, <a href="https://www.digitalocean.com/community/tutorials/how-to-install-r-on-ubuntu-18-04">follow this tutorial</a> and <a href="https://www.digitalocean.com/community/tutorials/how-to-install-r-packages-using-devtools-on-ubuntu-18-04">run step 1 of this tutorial</a>.</p>
 <p>QDECR relies on a lot of other R packages. These will be automatically installed when you install QDECR in R (see step 1.3).</p>
 </div>
+<div id="target-template-in-subjects_dir" class="section level2">
+<h2>1.2.5 Target template in SUBJECTS_DIR</h2>
+<p>We need a target template to work with. After running <code>recon-all</code>, Freesurfer will make a symbolic link to <code>fsaverage</code> in SUBJECTS_DIR for you. However, if you imported data (e.g. if you download data) then you need to create that symbolic link yourself. This can be done easily through:</p>
+<pre class="bash"><code>ln -sf $FREESURFER_HOME/subjects/fsaverage $SUBJECTS_DIR/</code></pre>
+</div>
 <div id="suggestion-install-magick-and-the-r-package-magick" class="section level2">
-<h2>1.2.5 Suggestion: Install Magick++ and the R package <code>magick</code></h2>
+<h2>1.2.6 Suggestion: Install Magick++ and the R package <code>magick</code></h2>
 <p><code>Magick</code> is a tool for image manipulation and is easy to install as described <a href="https://cran.r-project.org/web/packages/magick/vignettes/intro.html#build_from_source">here</a>.</p>
 <p>For Debian/Ubuntu:</p>
 <pre class="bash"><code>sudo apt-get install libmagick++-dev</code></pre>
@@ -527,7 +534,7 @@ echo &#39;source $FREESURFER_HOME/SetUpFreeSurfer.sh&#39; &gt;&gt; ~/.profile</c
 <p>You can check whether these variables are set by running the following <code>R</code> code:</p>
 <pre class="r"><code>Sys.getenv(&quot;FREESURFER_HOME&quot;)
 Sys.getenv(&quot;SUBJECTS_DIR&quot;)</code></pre>
-<p>If these return empty strings, we highly recommend that you set up these variables (as described <a href="https://surfer.nmr.mgh.harvard.edu/fswiki/SetupConfiguration_Linux">here</a>). However, QDECR also has some arguments that allow you to set them directly.</p>
+<p>If these return empty strings, we highly recommend that you set up these variables (as described <a href="https://surfer.nmr.mgh.harvard.edu/fswiki/SetupConfiguration_Linux">here</a>. However, QDECR also has some arguments that allow you to set them directly.</p>
 </div>
 <div id="freesurfer-output-in-subjects_dir" class="section level2">
 <h2>1.4.2 Freesurfer output in SUBJECTS_DIR</h2>
@@ -537,7 +544,7 @@ Sys.getenv(&quot;SUBJECTS_DIR&quot;)</code></pre>
 <h2>1.4.3 Shared memory (/dev/shm)</h2>
 <p><strong>We highly recommend using shared memory for QDECR!</strong> As QDECR relies on file-backed matrices, we need to read and write a significant number of times to files. To avoid super slow analyses, it is advised to specify <code>dir_tmp = /dev/shm</code> in QDECR (see the next vignette).</p>
 <hr />
-<p>[Next vignette: <a href="02-quick-start.html">2. Quick start</a> or <a href="03-using-qdecr.html">3. Using <code>QDECR</code></a>]</p>
+<p>[Next vignette: <a href="02-quick-start.html">2. Quick start</a>]</p>
 </div>
 </div>
 
