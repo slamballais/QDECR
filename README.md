@@ -1,7 +1,13 @@
 # QDECR
 
-**NOTE**
+> Vertex-wise analyses in R
 
-The package will be made available after publication of the design paper or during OHBM 2019. 
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
 
-For more information, please visit the Wiki: https://github.com/slamballais/QDECR/wiki
+# Information
+
+Please visit https://www.qdecr.com
+
+# Requirements & Installation
+
+See https://qdecr.com/01-getting-started.html
