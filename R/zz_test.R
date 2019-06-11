@@ -16,8 +16,6 @@ OR <- function(map1, map2) map1 %OR% map2
 XOR <- function(map1, map2) map1 %XOR% map2
 MASK <- function(map1, map2) map1 %MASK% map2
 
-
-
 # demo_plot <- function(vw, stack = NULL, software = c("tksurfer", "freeview"), verbose = TRUE){
 #   if (is.null(stack)) stop("`stack` not defined. Please choose: ", paste(stacks(vw), collapse = ", "))
 #   software <- match.arg(software)
