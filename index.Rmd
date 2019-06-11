@@ -2,11 +2,7 @@
 title: "QDECR"
 ---
 
----
-
-# [QDECR](https://github.com/slamballais/QDECR): Vertex-wise analyses in [R](https://www.r-project.org/)
-
----
+> Vertex-wise analyses in [R](https://www.r-project.org/)
 
 # Disclaimer
 
