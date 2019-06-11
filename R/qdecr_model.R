@@ -1,5 +1,4 @@
 
-
 qdecr_model <- function(model, md, id, vertex, margs, dir_tmp2){
   
   prepvw <- list(model = model, data = md, id = id, 
@@ -7,23 +6,23 @@ qdecr_model <- function(model, md, id, vertex, margs, dir_tmp2){
   class(prepvw) <- "prepvw"
   
   if (prepvw$model == "QDECR::megha") {
-    QDECR::model_qdecr_megha(prepvw)
+    model_qdecr_megha(prepvw)
   } else if (prepvw$model == "RcppEigen::fastLm") {
       prepvw$so <- c("coef", "se", "t", "p", "resid")
       prepvw$backing <- paste0(dir_tmp2, "_", prepvw$so[1:4], "_backend")
       prepvw$backing_to_remove <- paste0(dir_tmp2, "_", prepvw$so[5], "_backend")
-      QDECR::model_RcppEigen_fastLm(prepvw) 
+      model_RcppEigen_fastLm(prepvw) 
   } else if (prepvw$model == "stats::glm") {
-      QDECR::model_stats_glm(prepvw)
+      model_stats_glm(prepvw)
   } else if (prepvw$model == "stats::lm") {
-      QDECR::model_stats_lm(prepvw)
+      model_stats_lm(prepvw)
   } else if (prepvw$model == "survival::coxph") {
-      QDECR::model_survival_coxph(prepvw)
+      model_survival_coxph(prepvw)
   } else if (prepvw$model == "default") {
       prepvw$so <- c("coef", "se", "t", "p", "resid")
       prepvw$backing <- paste0(dir_tmp2, "_", prepvw$so[1:4], "_backend")
       prepvw$backing_to_remove <- paste0(dir_tmp2, "_", prepvw$so[5], "_backend")
-      QDECR::model_default(prepvw)
+      model_default(prepvw)
   }
 }
 
