@@ -6,7 +6,9 @@
 \usage{
 qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
   n_cores = 1, target = "fsaverage", mcz_thr = 30, mgh = NULL,
-  mask = NULL, dir_subj = Sys.getenv("SUBJECTS_DIR"),
+  mask = NULL, mask_path = file.path(path.package("QDECR"), "extdata",
+  paste0(hemi, ".fsaverage.cortex.mask.mgh")),
+  dir_subj = Sys.getenv("SUBJECTS_DIR"),
   dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
   dir_out_tree = TRUE, clean_up_bm = TRUE, clean_up = TRUE,
   clobber = FALSE, verbose = TRUE, save = TRUE, save_data = TRUE,
@@ -34,6 +36,8 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 \item{mgh}{NOT IMPLEMENTED; path to existing merged mgh file, default is NULL}
 
 \item{mask}{mgh file to mask analysis; default is to use the cortex label from the target}
+
+\item{mask_path}{path to the mask; default is the cortex mask that is provided with the QDECR package}
 
 \item{dir_subj}{directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR}
 

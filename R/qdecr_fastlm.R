@@ -11,6 +11,7 @@
 #' @param mcz_thr the Monte Carlo simulation threshold times 10 (13 = 0.05, 20 = 0.01, 23 = 0.005 30 = 0.001, etc..)
 #' @param mgh NOT IMPLEMENTED; path to existing merged mgh file, default is NULL
 #' @param mask mgh file to mask analysis; default is to use the cortex label from the target
+#' @param mask_path path to the mask; default is the cortex mask that is provided with the QDECR package
 #' @param dir_subj directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR
 #' @param dir_fshome Freesurfer directory; defaults to FREESURFER_HOME
 #' @param dir_tmp directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`
@@ -36,6 +37,7 @@ qdecr_fastlm <- function(formula,
                          mcz_thr = 30,
                          mgh = NULL,
                          mask = NULL,
+                         mask_path = file.path(path.package("QDECR"), "extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh")),
                          dir_subj = Sys.getenv("SUBJECTS_DIR"),
                          dir_fshome = Sys.getenv("FREESURFER_HOME"),
                          dir_tmp = dir_out,
@@ -77,6 +79,7 @@ vw <- qdecr(id = id,
             measure = qqt2,
             mgh = mgh,
             mask = mask,
+            mask_path = mask_path,
             model = "RcppEigen::fastLm",
             project = project,
             vertex = qqt,
