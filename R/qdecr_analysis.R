@@ -1,3 +1,5 @@
+vertexwise <- function(vw, split, ...) UseMethod("vertexwise", vw)
+
 vertexwise.vw_default <- function(model, input, mask, mgh, n_cores, dir_tmp, project) {
     # determine the number of vertices/loops and the number of variables
   n <- nrow(mgh)
@@ -205,5 +207,3 @@ vertexwise.vw_fastlm <- function(model, input, mask, mgh, n_cores, dir_tmp, proj
 #   out <- miceadds::pool_mi(cl, se = sl)
 #   out
 # }
-# 
-# vertexwise <- function(vw, split, ...) UseMethod("vertexwise", vw)
