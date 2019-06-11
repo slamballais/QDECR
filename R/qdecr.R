@@ -38,6 +38,7 @@ qdecr <- function(id,
                   mcz_thr = 30, 
                   mgh = NULL,
                   mask = NULL,
+                  mask_path = file.path(path.package("QDECR"), "extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh")),
                   project,
                   dir_subj = Sys.getenv("SUBJECTS_DIR"),
                   dir_fshome = Sys.getenv("FREESURFER_HOME"),
@@ -101,11 +102,11 @@ qdecr <- function(id,
   
   # Assemble and check input arguments
   vw$input <- qdecr_check(id, md, margs, hemi, vertex, measure, model, target, project, dir_out_tree, clobber, fwhm, n_cores)
-  vw$paths <- check_paths(vw, dir_tmp, dir_subj, dir_out, dir_fshome)
+  vw$mask <- qdecr_check_mask(mask, mask_path)
+  vw$paths <- check_paths(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path)
 
-  # Check model + mask
+  # Check model
   vw$model <- qdecr_model(vw$input$model, vw$input$md, vw$input$id, vw$input$vertex, vw$input$margs, vw$paths$dir_tmp2)
-  vw$mask <- qdecr_check_mask(mask, vw$paths$mask_path)
   
   # Check backing
   qdecr_check_backing(c(vw$model$backing, vw$model$backing_to_remove, vw$paths$backing_mgh), clobber)

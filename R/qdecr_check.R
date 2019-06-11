@@ -140,14 +140,13 @@ check_id <- function(id, md){
   NULL
 }
 
-check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome){
+check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
  check_dir_subj(dir_subj, vw$input$target, vw$input$md, vw$input$id)
  dir_out2 <- check_dir_out(dir_out, vw$input$project, vw$input$project2, vw$input$dir_out_tree, vw$input$clobber)
  if (is.null(dir_fshome) || dir_fshome == "") stop("dir_fshome is not specified. Please set the global variable FREESURFER_HOME.")
 
  final_path <- file.path(dir_out2, vw$input$project2)
  dir_tmp2 <- file.path(dir_tmp, vw$input$project2)
- mask_path <- file.path(dir_subj, "qdec/R/masks", paste0(vw$input$hemi, ".", vw$input$target, ".cortex.mask.mgh"))
  backing_mgh <- paste0(dir_tmp2, "_mgh_backend")
 
  paths <- list()
