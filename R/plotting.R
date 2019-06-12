@@ -8,17 +8,18 @@
 #'
 #'@param vw The output object of a qdecr call (e.g. qdecr_fastlm)
 #'@param stack Either a numeric or a string for your variable (use `stacks(vw)`)
+#'@param mask Logical; if TRUE, only the significant clusters are shown
 #'@return NULL
 #'@export
 
-freeview <- function(vw, stack = NULL) {
+freeview <- function(vw, stack = NULL, mask = TRUE) {
   if (is.null(stack)) stop("`stack` not defined. Please choose: ", paste(stacks(vw), collapse = ", "))
   if (length(stack) > 1) stop("More than 1 stack specified.")
   if(is.character(stack)) stack <- which(stacks(vw) == stack)
   if(is.null(stack) || stack > length(stacks(vw))) stop("specified `stack` is not present in this dataset. Please choose: ", paste(stacks(vw), collapse = ", "))
   
   temp_mgh <- qdecr_read_coef(vw, stack)
-  temp_mgh$x <- temp_mgh$x %MASK% qdecr_read_ocn_mask(vw, stack)
+  if (mask) temp_mgh$x <- temp_mgh$x %MASK% qdecr_read_ocn_mask(vw, stack)
   if (all(temp_mgh$x == 0)) stop("Stack does not contain information (e.g. because of no significant findings), aborting plot.")
   temp_mgh_file <- paste0(vw$paths$dir_tmp2, ".stack", stack, ".temp_mgh.mgh")
   save.mgh(temp_mgh, temp_mgh_file)
@@ -68,10 +69,11 @@ hist.vw <- function(vw, qtype = c("vertex", "subject"), xlab = NULL, main = NULL
 #'@param compose Logical; if TRUE, a single compiled image will be made (requires Magick++)
 #'@param plot_brain Logical; if TRUE, returns a graphical device with the composed images
 #'@param save_plot Logical; if TRUE, saves the composed image
+#'@param mask Logical; if TRUE, only the significant clusters are shown
 #'@return NULL
 #'@export
 
-qdecr_snap <- function(vw, stack = NULL, ext = ".tiff", zoom = 1, compose = TRUE, plot_brain = TRUE, save_plot = TRUE) {
+qdecr_snap <- function(vw, stack = NULL, ext = ".tiff", zoom = 1, compose = TRUE, plot_brain = TRUE, save_plot = TRUE, mask = TRUE) {
   if (is.null(stack)) stop("`stack` not defined. Please choose: ", paste(stacks(vw), collapse = ", "))
   if (length(stack) > 1) stop("More than 1 stack specified.")
   if(is.character(stack)) stack <- which(stacks(vw) == stack)
@@ -101,7 +103,7 @@ qdecr_snap <- function(vw, stack = NULL, ext = ".tiff", zoom = 1, compose = TRUE
   on.exit(file.remove(tfile))
   
   temp_mgh <- qdecr_read_coef(vw, stack)
-  temp_mgh$x <- temp_mgh$x %MASK% qdecr_read_ocn_mask(vw, stack)
+  if (mask) temp_mgh$x <- temp_mgh$x %MASK% qdecr_read_ocn_mask(vw, stack)
   if (all(temp_mgh$x == 0)) stop("Stack does not contain information (e.g. because of no significant findings), aborting plot.")
   temp_mgh_file <- paste0(vw$paths$dir_tmp2, ".stack", stack, ".temp_mgh.mgh")
   save.mgh(temp_mgh, temp_mgh_file)
