@@ -85,7 +85,8 @@ qdecr_snap <- function(vw, stack = NULL, ext = ".tiff", zoom = 1, compose = TRUE
   if (hemi == "rh") snap_order[1:2] <- snap_order[2:1]
   snap_names <- paste0(name, ".", snap_order, ext)
   
-  snap_cmd <- c(qsnap_zoom(zoom),
+  snap_cmd <- c("--viewport 3d",
+                qsnap_zoom(zoom),
                 qsnap(snap_names[1]),
                 qsnap_a(180),
                 qsnap(snap_names[2]),
