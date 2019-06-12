@@ -4,12 +4,14 @@
 \alias{freeview}
 \title{Opens Freeview}
 \usage{
-freeview(vw, stack = NULL)
+freeview(vw, stack = NULL, mask = TRUE)
 }
 \arguments{
 \item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}
 
 \item{stack}{Either a numeric or a string for your variable (use `stacks(vw)`)}
+
+\item{mask}{Logical; if TRUE, only the significant clusters are shown}
 }
 \description{
 Opens Freeview to view the surface of a specific stack/contrast

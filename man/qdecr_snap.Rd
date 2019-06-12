@@ -5,7 +5,7 @@
 \title{Opens Freeview to take snapshots}
 \usage{
 qdecr_snap(vw, stack = NULL, ext = ".tiff", zoom = 1,
-  compose = TRUE, plot_brain = TRUE, save_plot = TRUE)
+  compose = TRUE, plot_brain = TRUE, save_plot = TRUE, mask = TRUE)
 }
 \arguments{
 \item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}
@@ -21,6 +21,8 @@ qdecr_snap(vw, stack = NULL, ext = ".tiff", zoom = 1,
 \item{plot_brain}{Logical; if TRUE, returns a graphical device with the composed images}
 
 \item{save_plot}{Logical; if TRUE, saves the composed image}
+
+\item{mask}{Logical; if TRUE, only the significant clusters are shown}
 }
 \description{
 Opens Freeview to take snapshots and compiles them into a plot
