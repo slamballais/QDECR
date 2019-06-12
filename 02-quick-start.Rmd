@@ -25,9 +25,6 @@ For now, lets focus on the application of multiple linear regression to each ver
 We will study the association of age (variable: `age`) with cortical thickness, and adjust for sex (variable: `sex`). This yields the following formula: `qdecr_thickness ~ age + sex`. Below is an example of `qdecr_fastlm`, which lets us do linear regression:
 
 ```{r eval = FALSE, tidy = FALSE}
-
-library(QDECR)
-
 out <- qdecr_fastlm(qdecr_thickness ~ age + sex, 
   data = data,
   id = "id", 
@@ -82,6 +79,7 @@ hist(out, qtype = "subject") # per subject
 
 ## Overview of all significant clusters
 summary(out)
+summary(out, annot = TRUE) # also provides info on which regions the clusters fall into
 
 ## view the stack/contrast names
 stacks(out)
@@ -89,9 +87,6 @@ stacks(out)
 ## Obtain a Freeview plot for a specific stack/contrast (note: this function requires the `magick` package)
 qdecr_snap(out, 2)
 qdecr_snap(out, 'age') #same output
-
-## Obtain cluster-wise location data
-qdecr_cluster(out)
 
 ```
 

@@ -517,16 +517,14 @@ hist(out, qtype = &quot;subject&quot;) # per subject
 
 ## Overview of all significant clusters
 summary(out)
+summary(out, annot = TRUE) # also provides info on which regions the clusters fall into
 
 ## view the stack/contrast names
 stacks(out)
 
 ## Obtain a Freeview plot for a specific stack/contrast (note: this function requires the `magick` package)
 qdecr_snap(out, 2)
-qdecr_snap(out, &#39;age&#39;) #same output
-
-## Obtain cluster-wise location data
-qdecr_cluster(out)</code></pre>
+qdecr_snap(out, &#39;age&#39;) #same output</code></pre>
 <hr />
 <p>[Next vignette: <a href="03-using-qdecr.html">3. Using <code>QDECR</code></a>]</p>
 </div>
