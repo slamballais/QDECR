@@ -1,3 +1,60 @@
+#'Grabs the formula from qdecr_fastlm output
+#'
+#'Grabs the formula from qdecr_fastlm output
+#'
+#'See above.
+#'
+#'@param vw The output object of a qdecr_fastlm call
+#'@export
+
+formula.vw_fastlm <- function(vw) vw$model$formula
+
+#'Grabs the number of included participants from qdecr_fastlm output
+#'
+#'Grabs the number of included participants from qdecr_fastlm output
+#'
+#'See above.
+#'
+#'@param vw The output object of a qdecr analysis call
+#'@export
+
+nobs.vw_fastlm <- function(vw) vw$results$residuals$nrow
+
+#'Print for vw objects
+#'
+#'Prints a nicely formatted output for vw objects
+#'
+#'This is a standard print format for output of qdecr functions
+#'
+#'@param vw The output object of a qdecr analysis call
+#'@export
+
+print.vw <- function(vw) qdecr_print_describe(vw$describe, verbose = TRUE)
+
+#'Grabs the estimated fwhm from qdecr_fastlm output
+#'
+#'Grabs the estimated fwhm from qdecr_fastlm output
+#'
+#'See above.
+#'
+#'@param vw The output object of a qdecr analysis call
+#'@export
+
+qdecr_fwhm <- function(vw) return(vw$post$fwhm_est)
+
+#'Shows vw stacks
+#'
+#'Shows the names of the stacks of vw objects
+#'
+#'This function shows the stack/contrast names for all the variables
+#'within the qdecr analysis. This functions commonly used for looking
+#'more specifically at variables.
+#'
+#'@param vw The output object of a qdecr analysis call
+#'@export
+
+stacks <- function(vw) vw$stack$names
+
 #'Summarize qdecr_fastlm clusters
 #'
 #'Summarizes the significant clusters obtained from qdecr_fastlm
@@ -139,3 +196,8 @@ qdecr_clusters <- function(vw, name = "aparc.annot") {
   ocn_p
   
 }
+
+
+
+
+
