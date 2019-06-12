@@ -106,7 +106,7 @@ qdecr_snap <- function(vw, stack = NULL, ext = ".tiff", zoom = 1, compose = TRUE
   save.mgh(temp_mgh, temp_mgh_file)
   on.exit(file.remove(temp_mgh_file), add = TRUE)
   
-  cmdStr <- paste0("freeview --surface ", vw$paths$dir_subj, "/fsaverage/surf/", vw$input$hemi, ".inflated:overlay=", temp_mgh_file, " -cmd ", tfile)
+  cmdStr <- paste0("freeview --surface ", vw$paths$dir_subj, "/", vw$input$target, "/surf/", vw$input$hemi, ".inflated:overlay=", temp_mgh_file, " -cmd ", tfile)
   system(cmdStr)
   
   if (compose) {
