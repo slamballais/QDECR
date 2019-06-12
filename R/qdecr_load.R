@@ -11,7 +11,7 @@ qdecr_load <- function(path, reload = FALSE) {
     nc <- nchar(path)
     end <- substring(path, nc, nc)
     if (end == "/") path <- substring(path, 1, nc - 1)
-    path <- paste0(path, "/", path, ".rds")
+    path <- paste0(path, "/", basename(path), ".rds")
   }
   x <- readRDS(path)
   if (reload) x <- reload(x)
