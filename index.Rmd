@@ -24,14 +24,14 @@ Users can follow the tutorial below to run their vertex-wise analyses. Please no
 * 4. [Post-processing](04-post-processing.html) [**UNDER CONSTRUCTION**]
 * 5. [Advanced `QDECR`](05-advanced-qdecr.html) [**UNDER CONSTRUCTION**]
 
-# Contacting us
+# Contact 
 
-* Bugs and use-case questions can be posted on the [Github "Issues" page of the package](https://github.com/slamballais/QDECR/issues).
-* Also feel free to send a tweet (@slamballais) or an email (lamballais.sander[a]gmail.com)
+* For questions related to using the QDECR package, please visit the [Gitter community](https://gitter.im/QDECR/questions)
+* Want to contact the lead authors personally? Check our twitters! @slamballais or @ryanmuetzel
 
 # Contributing
 
-We are always looking for ideas, suggestions and help! We will soon add a step-by-step guide on how you can help.
+We are always looking for ideas, suggestions and help! We are working on a guide on how to contribute, found [here](contribution.html).
 
 # License
 
