@@ -1,4 +1,6 @@
-# Contributing Guidelines
+---
+title: "Contributing"
+---
 
 **Thank you for considering to help out!**
 

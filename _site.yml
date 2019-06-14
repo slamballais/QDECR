@@ -26,7 +26,7 @@ navbar:
       menu:
         - text: "Asking questions"
           href: https://gitter.im/QDECR/questions
-        - text: "Reporting bugs or contributing"
+        - text: "Contributing"
           href: contribution.html
         - text: "About us"
           href: about.html
