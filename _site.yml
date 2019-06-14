@@ -28,8 +28,8 @@ navbar:
           href: https://gitter.im/QDECR/questions
         - text: "Reporting bugs or contributing"
           href: contribution.html
-        - text: "About the authors"
-          href: about-the-authors.html
+        - text: "About us"
+          href: about.html
   right:
     - icon: fa-github
       href: https://github.com/slamballais/QDECR
