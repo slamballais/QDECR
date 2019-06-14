@@ -1,0 +1,24 @@
+---
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+---
+
+# The history of QDECR
+
+(Section on the history of QDECR... To be added :D)
+
+---
+
+# Sander Lamballais
+
+Sander Lamballais is currently a last-year PhD candidate at the Erasmus MC in Rotterdam, the Netherlands. His work focuses on the antecedents and consequences of brain changes across the lifespan.
+
+---
+
+# Ryan Muetzel
+
+Ryan Muetzel is a postdoctoral research at the Erasmus MC in Rotterdam, the Netherlands. He successfully obtained his PhD degree in 2016, for his thesis titled [The Connections Within: Pediatric population-based neuroimaging of brain development](https://www.generationr.nl/wp-content/uploads/2017/03/Proefschrift-Muetzel.compressed.pdf). He has (co-)authored over 60 papers.
