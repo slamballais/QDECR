@@ -421,6 +421,24 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Contact &amp; Help
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="https://gitter.im/QDECR/questions">Asking questions</a>
+    </li>
+    <li>
+      <a href="contribution.html">Reporting bugs or contributing</a>
+    </li>
+    <li>
+      <a href="about-the-authors.html">About the authors</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -466,9 +484,7 @@ div.tocify {
 </blockquote>
 <p>For now, lets focus on the application of multiple linear regression to each vertex.</p>
 <p>We will study the association of age (variable: <code>age</code>) with cortical thickness, and adjust for sex (variable: <code>sex</code>). This yields the following formula: <code>qdecr_thickness ~ age + sex</code>. Below is an example of <code>qdecr_fastlm</code>, which lets us do linear regression:</p>
-<pre class="r"><code>library(QDECR)
-
-out &lt;- qdecr_fastlm(qdecr_thickness ~ age + sex, 
+<pre class="r"><code>out &lt;- qdecr_fastlm(qdecr_thickness ~ age + sex, 
   data = data,
   id = &quot;id&quot;, 
   hemi = &quot;lh&quot;,
