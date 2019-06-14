@@ -22,6 +22,14 @@ navbar:
           href: qdecr_ohbm2019_poster.pdf
         - text: "OHBM 2019 Brochure (PDF)"
           href: qdecr_ohbm2019_brochure.pdf
+    - text: "Contact & Help"
+      menu:
+        - text: "Asking questions"
+          href: https://gitter.im/QDECR/questions
+        - text: "Reporting bugs or contributing"
+          href: contribution.html
+        - text: "About the authors"
+          href: about-the-authors.html
   right:
     - icon: fa-github
       href: https://github.com/slamballais/QDECR
