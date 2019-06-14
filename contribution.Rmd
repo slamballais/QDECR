@@ -1,0 +1,76 @@
+# Contributing Guidelines
+
+**Thank you for considering to help out!**
+
+QDECR started as a side project to make QDEC and mri_glmfit more accessible to members of our department. The desire for additional features kept growing, and so we decided to reprogram everything in R. Over time we have developed QDECR to fit our specific needs, but those may differ from what you - the user - may need. We therefore decided to make QDECR accessible early on, so that it can become a community-driven project.
+
+A quick overview of what you will find in this document:
+
+* [Before Contributing](#before-contributing)
+  - [Code Of Conduct](#code-of-conduct)
+  - [Communication](#communication)
+* [Ways To Contribute](#ways-to-contribute)
+  - [Finding And Reporting Bugs](#finding-and-reporting-bugs)
+  - [Modifying Or Adding Code](#modifying-or-adding-code)
+  - [Suggesting Ideas](#suggesting-ideas)
+  - [Developing Educational Resources](#developing-educational resources)
+* [How To Contribute](#how-to-contribute)
+* [List Of Features To Implement](#list-of-features-to-implement)
+  - [Lower Resource Usage](#lower-resource-usage)
+  - [Permutation Testing](#permutation-testing)
+  - [Mixed Models](#mixed-models)
+  - [Input Agnosticism](#input-agnosticism)
+  
+## Before Contributing
+
+### Code Of Conduct
+
+TO BE DONE
+
+### Communication
+
+I created a [Gitter](https://gitter.im) community for QDECR that can be found [here](https://gitter.im/QDECR/):
+
+* questions: For questions about the package
+* dev: For communication related to contributions (AKA this page!)
+* QDECR: A general room for anything
+
+## Ways To Contribute
+
+### Finding And Reporting Bugs
+
+TO BE DONE
+
+### Modifying Or Adding Code
+
+TO BE DONE
+
+### Suggesting Ideas
+
+TO BE DONE
+
+### Developing Educational Resources
+
+TO BE DONE
+
+## How To Contribute
+
+TO BE DONE
+
+## List Of Features To Implement
+
+### Lower Resource Usage
+
+TO BE DONE
+
+### Permutation Testing
+
+TO BE DONE
+
+### Mixed Models
+
+TO BE DONE
+
+### Input Agnosticism
+
+TO BE DONE
