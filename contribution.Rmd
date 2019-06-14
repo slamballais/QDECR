@@ -25,7 +25,7 @@ A quick overview of what you will find in this document:
 
 ### Code Of Conduct
 
-TO BE DONE
+Working on open source projects is extremely fulfilling, but it does require everyone to work together. As such we work with a [code of conduct (found here)](code-of-conduct.html) for the QDECR project.
 
 ### Communication
 
