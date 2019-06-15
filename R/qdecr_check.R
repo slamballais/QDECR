@@ -113,6 +113,7 @@ check_dir_target <- function(dir_target, target){
   if(!dir.exists(path_target)){
     stop("The provided `target` directory does not seem to exist.")
   }
+  path_target
 }
 
 check_fwhm <- function(fwhm){

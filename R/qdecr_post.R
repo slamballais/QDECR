@@ -2,7 +2,8 @@
 
 
 calc_fwhm <- function(final_path, final_mask_path, est_fwhm_path, hemi, eres, mask = NULL, path_target, verbose = FALSE) {
-  cmdStr <- paste("mris_fwhm", "--i", eres, "--hemi", hemi, "--subject", target, "--prune", "--cortex", "--dat", est_fwhm_path, "--out-mask", final_mask_path)
+  cmdStr <- paste("mris_fwhm", "--i", eres, "--hemi", hemi, "--subject", basename(path_target), "--sd", dirname(path_target), "--prune", "--cortex", "--dat", est_fwhm_path, "--out-mask", final_mask_path)
+  
   if (!is.null(mask)) paste(cmdStr, "--mask", mask)
   message2(verbose = verbose, cmdStr)
   system(cmdStr, ignore.stdout = !verbose)
