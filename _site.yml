@@ -19,9 +19,9 @@ navbar:
     - text: "Conference materials"
       menu:
         - text: "OHBM 2019 Poster (PDF)"
-          href: qdecr_ohbm2019_poster.pdf
+          href: data/qdecr_ohbm2019_poster.pdf
         - text: "OHBM 2019 Brochure (PDF)"
-          href: qdecr_ohbm2019_brochure.pdf
+          href: data/qdecr_ohbm2019_brochure.pdf
     - text: "Contact & Help"
       menu:
         - text: "Asking questions"
