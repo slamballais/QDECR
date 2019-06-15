@@ -2,37 +2,40 @@
 title: "Vignette 4: Post-processing"
 output: 
   html_document:
-    toc: TRUE
-    toc_float: TRUE
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
 ---
 
 ---
 
-# 4.1 Before you get started
+# Before you get started
 
 ---
 
-# 4.2 Loading and saving the data
+# Saving/loading projects
 
 ---
 
-# 4.3 Cluster-wise data
+# Cluster-wise data
 
 ---
 
-# 4.4 Graphics
+# Graphics
 
 --- 
 
-# 4.5 Using variable cluster-wise thresholds
+# Using variable cluster-wise thresholds
 
 ---
 
-# 4.6 Comparing variables within a model
+# Intramodel comparisons
 
 ---
 
-# 4.7 Comparing variables between models
+# Intermodel comparisons
 
 ---
 

@@ -2,30 +2,33 @@
 title: "Vignette 5: Advanced `QDECR`"
 output: 
   html_document:
-    toc: TRUE
-    toc_float: TRUE
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
 ---
 
 ---
 
-# 5.1 Before you get started
+# Before you get started
 
 ---
 
-# 5.2 Understanding the `qdecr_fastlm` function
+# Understanding the `qdecr_fastlm` function
 
 ---
 
-# 5.3 The `qdecr` function
+# The `qdecr` function
 
 ---
 
-# 5.4 Modifying the preparation module
+# Modifying the preparation module
 
 --- 
 
-# 5.5 Modifying the analysis module
+# Modifying the analysis module
 
 ---
 
-# 5.6 Writing a new wrapper function
+# Writing a new wrapper function

@@ -1,35 +1,27 @@
 ---
 title: "Contributing"
+output: 
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
 ---
 
 **Thank you for considering to help out!**
 
 QDECR started as a side project to make QDEC and mri_glmfit more accessible to members of our department. The desire for additional features kept growing, and so we decided to reprogram everything in R. Over time we have developed QDECR to fit our specific needs, but those may differ from what you - the user - may need. We therefore decided to make QDECR accessible early on, so that it can become a community-driven project.
 
-A quick overview of what you will find in this document:
+---
 
-* [Before Contributing](#before-contributing)
-  - [Code Of Conduct](#code-of-conduct)
-  - [Communication](#communication)
-* [Ways To Contribute](#ways-to-contribute)
-  - [Finding And Reporting Bugs](#finding-and-reporting-bugs)
-  - [Modifying Or Adding Code](#modifying-or-adding-code)
-  - [Suggesting Ideas](#suggesting-ideas)
-  - [Developing Educational Resources](#developing-educational resources)
-* [How To Contribute](#how-to-contribute)
-* [List Of Features To Implement](#list-of-features-to-implement)
-  - [Lower Resource Usage](#lower-resource-usage)
-  - [Permutation Testing](#permutation-testing)
-  - [Mixed Models](#mixed-models)
-  - [Input Agnosticism](#input-agnosticism)
-  
-## Before Contributing
+# Before Contributing
 
-### Code Of Conduct
+## Code Of Conduct
 
 Working on open source projects is extremely fulfilling, but it does require everyone to work together. As such we work with a [code of conduct (found here)](code-of-conduct.html) for the QDECR project.
 
-### Communication
+## Communication
 
 I created a [Gitter](https://gitter.im) community for QDECR that can be found [here](https://gitter.im/QDECR/):
 
@@ -37,17 +29,19 @@ I created a [Gitter](https://gitter.im) community for QDECR that can be found [h
 * dev: For communication related to contributions (AKA this page!)
 * QDECR: A general room for anything
 
-## Ways To Contribute
+---
 
-### Finding And Reporting Bugs
+# Ways To Contribute
+
+## Finding And Reporting Bugs
 
 You may notice issues with QDECR that seem unintentional. These can be reported on [the issues page on Github](https://github.com/slamballais/QDECR/issues). 
 
-### Modifying Or Adding Code
+## Modifying Or Adding Code
 
 Users are also free to modify and add code through pull requests.
 
-### Suggesting Ideas
+## Suggesting Ideas
 
 QDECR is a framework that can be extended into many directions. A lot of users have already reported ideas, which we are often happy to implement. However, due to the limited time the main developers we cannot implement all suggestions. We aim to implement features that:
 
@@ -57,7 +51,7 @@ QDECR is a framework that can be extended into many directions. A lot of users h
 
 Users can suggest ideas in the [Gitter community](https://gitter.im/QDECR/). A lot of priority projects can be found below, under [List Of Features To Implement](#list-of-features-to-implement).
 
-### Developing Educational Resources
+## Developing Educational Resources
 
 We originally developed QDECR to help out members of our department who were not familiar with Bash, design matrices, etc. Making QDECR accessible is therefore one of our main goals. We therefore also welcome all resources that will help explain the package to others. Several possibilities:
 
@@ -65,7 +59,9 @@ We originally developed QDECR to help out members of our department who were not
 * Writing blog posts with quick tutorials
 * Help with writing the documentation ([in the dev branch](https://github.com/slamballais/QDECR/tree/dev))
 
-## How To Contribute
+---
+
+# How To Contribute
 
 QDECR generally works with three branches:
 
@@ -83,22 +79,24 @@ The general workflow for contributing:
 * Make sure that any pull request is small and self-contained. To smooth out the process, try breaking up big changes into smaller ones. This helps with keeping an overview of what is ready to be merged and what is not.
 * Feedback on the pull request can take some time and the request may need some iterations of modification. Still, we aim to incorporate all modifications that improve the QDECR project.
 
-## List Of Features To Implement
+---
+
+# List Of Features To Implement
 
 At OHBM 2019 we had both a poster and a software demo for QDECR. During those sessions, many of you had great suggestions on how to improve the project. Below we have outlined some of those suggestions that have a high priority for us.
 
-### Lower Resource Usage
+## Lower Resource Usage
 
 QDECR has always been a typical programming project: first get it working, then get it working smoothly. We have had several iterations of the vertex-wise code and of storing all the data, and we believe several more iterations are needed to optimize speed and reduce RAM burden. We have some solutions that we will try to implement soon, but any suggestions here are welcome.
 
-### Permutation Testing
+## Permutation Testing
 
 QDECR currently only allows for one type of multiple testing correction. Ideally, we would implement full permutation testing, but this is not feasible. Luckily, [several solutions exist to approximate full permutation testing](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5035139/). We aim to implement at least one of these approximations to improve statistical inference.
 
-### Mixed Models
+## Mixed Models
 
 There is a large demand for mixed modeling, for example for longitudinal studies. 
 
-### Input Agnosticism
+## Input Agnosticism
 
 The package is currently written to work with Freesurfer output. However, we have gotten multiple requests to allow for input from other software (CIVET, ANTs) and even other modalities (fMRI). We will likely implement a flexible module that calls functions for reading in the input. Ideally, users should be able to write their own i/o functions that can be used without our interference.

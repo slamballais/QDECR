@@ -284,7 +284,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
+    options.showAndHide = false;
     options.smoothScroll = true;
 
     // tocify
@@ -345,6 +345,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -463,7 +469,7 @@ div.tocify {
 
 <hr />
 <div id="preparation" class="section level1">
-<h1>2.1 Preparation</h1>
+<h1><span class="header-section-number">1</span> Preparation</h1>
 <p>You will need the following things:</p>
 <ul>
 <li><ol style="list-style-type: decimal">
@@ -478,7 +484,7 @@ div.tocify {
 </ul>
 </div>
 <div id="running-qdecr" class="section level1">
-<h1>2.2 Running QDECR</h1>
+<h1><span class="header-section-number">2</span> Running QDECR</h1>
 <blockquote>
 <p><strong>WARNING!!! QDECR lets you run vertex-wise analyses however you want. Keep in mind that <a href="https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility">with great power comes great responsibility</a>.</strong> We provide the tools, and it is up to you to use them sensibly. For example, it can be tempting to add interactions, splines, polynomials, etc., and using liberal correction thresholds without an a priori reason. Please use QDECR responsibly.</p>
 </blockquote>
@@ -521,7 +527,7 @@ div.tocify {
 <p>Running <code>qdecr_fastlm</code> takes several minutes, anywhere from 10 minutes for small datasets to 30 minutes for large datasets.</p>
 </div>
 <div id="checking-the-output" class="section level1">
-<h1>2.3 Checking the output</h1>
+<h1><span class="header-section-number">3</span> Checking the output</h1>
 <p>We saved the output in the variable out. Here are some commands that you can use to check out what it did:</p>
 <pre class="r"><code>## Get a global overview
 out

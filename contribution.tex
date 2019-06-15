@@ -1,0 +1,340 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+    \setmainfont[]{Times New Roman}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Contributing},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\providecommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+
+  \title{Contributing}
+    \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+    \author{}
+    \preauthor{}\postauthor{}
+    \date{}
+    \predate{}\postdate{}
+  
+
+\begin{document}
+\maketitle
+
+\textbf{Thank you for considering to help out!}
+
+QDECR started as a side project to make QDEC and mri\_glmfit more
+accessible to members of our department. The desire for additional
+features kept growing, and so we decided to reprogram everything in R.
+Over time we have developed QDECR to fit our specific needs, but those
+may differ from what you - the user - may need. We therefore decided to
+make QDECR accessible early on, so that it can become a community-driven
+project.
+
+A quick overview of what you will find in this document:
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{before-contributing}{Before Contributing}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \protect\hyperlink{code-of-conduct}{Code Of Conduct}
+  \item
+    \protect\hyperlink{communication}{Communication}
+  \end{itemize}
+\item
+  \protect\hyperlink{ways-to-contribute}{Ways To Contribute}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \protect\hyperlink{finding-and-reporting-bugs}{Finding And Reporting
+    Bugs}
+  \item
+    \protect\hyperlink{modifying-or-adding-code}{Modifying Or Adding
+    Code}
+  \item
+    \protect\hyperlink{suggesting-ideas}{Suggesting Ideas}
+  \item
+    \protect\hyperlink{developing-educationalux5cux2520resources}{Developing
+    Educational Resources}
+  \end{itemize}
+\item
+  \protect\hyperlink{how-to-contribute}{How To Contribute}
+\item
+  \protect\hyperlink{list-of-features-to-implement}{List Of Features To
+  Implement}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \protect\hyperlink{lower-resource-usage}{Lower Resource Usage}
+  \item
+    \protect\hyperlink{permutation-testing}{Permutation Testing}
+  \item
+    \protect\hyperlink{mixed-models}{Mixed Models}
+  \item
+    \protect\hyperlink{input-agnosticism}{Input Agnosticism}
+  \end{itemize}
+\end{itemize}
+
+\hypertarget{before-contributing}{%
+\subsection{Before Contributing}\label{before-contributing}}
+
+\hypertarget{code-of-conduct}{%
+\subsubsection{Code Of Conduct}\label{code-of-conduct}}
+
+Working on open source projects is extremely fulfilling, but it does
+require everyone to work together. As such we work with a
+\href{code-of-conduct.html}{code of conduct (found here)} for the QDECR
+project.
+
+\hypertarget{communication}{%
+\subsubsection{Communication}\label{communication}}
+
+I created a \href{https://gitter.im}{Gitter} community for QDECR that
+can be found \href{https://gitter.im/QDECR/}{here}:
+
+\begin{itemize}
+\tightlist
+\item
+  questions: For questions about the package
+\item
+  dev: For communication related to contributions (AKA this page!)
+\item
+  QDECR: A general room for anything
+\end{itemize}
+
+\hypertarget{ways-to-contribute}{%
+\subsection{Ways To Contribute}\label{ways-to-contribute}}
+
+\hypertarget{finding-and-reporting-bugs}{%
+\subsubsection{Finding And Reporting
+Bugs}\label{finding-and-reporting-bugs}}
+
+You may notice issues with QDECR that seem unintentional. These can be
+reported on \href{https://github.com/slamballais/QDECR/issues}{the
+issues page on Github}.
+
+\hypertarget{modifying-or-adding-code}{%
+\subsubsection{Modifying Or Adding
+Code}\label{modifying-or-adding-code}}
+
+Users are also free to modify and add code through pull requests.
+
+\hypertarget{suggesting-ideas}{%
+\subsubsection{Suggesting Ideas}\label{suggesting-ideas}}
+
+QDECR is a framework that can be extended into many directions. A lot of
+users have already reported ideas, which we are often happy to
+implement. However, due to the limited time the main developers we
+cannot implement all suggestions. We aim to implement features that:
+
+\begin{itemize}
+\tightlist
+\item
+  Help QDECR to become more canonical
+\item
+  Address problems many users have
+\item
+  Open QDECR to new fields of study
+\end{itemize}
+
+Users can suggest ideas in the \href{https://gitter.im/QDECR/}{Gitter
+community}. A lot of priority projects can be found below, under
+\protect\hyperlink{list-of-features-to-implement}{List Of Features To
+Implement}.
+
+\hypertarget{developing-educational-resources}{%
+\subsubsection{Developing Educational
+Resources}\label{developing-educational-resources}}
+
+We originally developed QDECR to help out members of our department who
+were not familiar with Bash, design matrices, etc. Making QDECR
+accessible is therefore one of our main goals. We therefore also welcome
+all resources that will help explain the package to others. Several
+possibilities:
+
+\begin{itemize}
+\tightlist
+\item
+  Expanding the tutorial
+  (\href{https://github.com/slamballais/QDECR/tree/gh-pages}{in the
+  gh-pages branch})
+\item
+  Writing blog posts with quick tutorials
+\item
+  Help with writing the documentation
+  (\href{https://github.com/slamballais/QDECR/tree/dev}{in the dev
+  branch})
+\end{itemize}
+
+\hypertarget{how-to-contribute}{%
+\subsection{How To Contribute}\label{how-to-contribute}}
+
+QDECR generally works with three branches:
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/slamballais/QDECR/tree/master}{\textbf{master}}:
+  The stable version of the package that normal users work with
+\item
+  \href{https://github.com/slamballais/QDECR/tree/dev}{\textbf{dev}}:
+  The development version for modification and pull requests
+\item
+  \href{https://github.com/slamballais/QDECR/tree/gh-pages}{\textbf{gh-pages}}:
+  The code for the website
+\end{itemize}
+
+The general workflow for contributing:
+
+\begin{itemize}
+\tightlist
+\item
+  Consider where you want to contribute:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{QDECR package}: Please branch off
+    \href{https://github.com/slamballais/QDECR/tree/dev}{the dev
+    branch}. This helps us control the release of minor and major
+    changes.
+  \item
+    \textbf{website}: Please branch off the
+    \href{https://github.com/slamballais/QDECR/tree/gh-pages}{gh-pages
+    branch}.
+  \end{itemize}
+\item
+  Look through the issues and see if any match what you want to do. If
+  so, leave a comment there with what you want to do.
+\item
+  If your issue is unique, then open a new issue.
+\item
+  Make sure that any pull request is small and self-contained. To smooth
+  out the process, try breaking up big changes into smaller ones. This
+  helps with keeping an overview of what is ready to be merged and what
+  is not.
+\item
+  Feedback on the pull request can take some time and the request may
+  need some iterations of modification. Still, we aim to incorporate all
+  modifications that improve the QDECR project.
+\end{itemize}
+
+\hypertarget{list-of-features-to-implement}{%
+\subsection{List Of Features To
+Implement}\label{list-of-features-to-implement}}
+
+At OHBM 2019 we had both a poster and a software demo for QDECR. During
+those sessions, many of you had great suggestions on how to improve the
+project. Below we have outlined some of those suggestions that have a
+high priority for us.
+
+\hypertarget{lower-resource-usage}{%
+\subsubsection{Lower Resource Usage}\label{lower-resource-usage}}
+
+QDECR has always been a typical programming project: first get it
+working, then get it working smoothly. We have had several iterations of
+the vertex-wise code and of storing all the data, and we believe several
+more iterations are needed to optimize speed and reduce RAM burden. We
+have some solutions that we will try to implement soon, but any
+suggestions here are welcome.
+
+\hypertarget{permutation-testing}{%
+\subsubsection{Permutation Testing}\label{permutation-testing}}
+
+QDECR currently only allows for one type of multiple testing correction.
+Ideally, we would implement full permutation testing, but this is not
+feasible. Luckily,
+\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5035139/}{several
+solutions exist to approximate full permutation testing}. We aim to
+implement at least one of these approximations to improve statistical
+inference.
+
+\hypertarget{mixed-models}{%
+\subsubsection{Mixed Models}\label{mixed-models}}
+
+There is a large demand for mixed modeling, for example for longitudinal
+studies.
+
+\hypertarget{input-agnosticism}{%
+\subsubsection{Input Agnosticism}\label{input-agnosticism}}
+
+The package is currently written to work with Freesurfer output.
+However, we have gotten multiple requests to allow for input from other
+software (CIVET, ANTs) and even other modalities (fMRI). We will likely
+implement a flexible module that calls functions for reading in the
+input. Ideally, users should be able to write their own i/o functions
+that can be used without our interference.
+
+
+\end{document}

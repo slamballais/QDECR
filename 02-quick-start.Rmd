@@ -2,13 +2,16 @@
 title: "Vignette 2: Quick start"
 output: 
   html_document:
-    toc: TRUE
-    toc_float: TRUE
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: true
+    number_sections: true
 ---
 
 ---
 
-# 2.1 Preparation
+# Preparation
 
 You will need the following things:
 
@@ -16,7 +19,7 @@ You will need the following things:
 * 2. **Freesurfer data**: Your Freesurfer output  files in a single directory (usually `SUBJECTS_DIR`).
 * 3. **Phenotype data**: Your dataset with covariates, determinants, etc., loaded into R.
 
-# 2.2 Running QDECR
+# Running QDECR
 
 > **WARNING!!! QDECR lets you run vertex-wise analyses however you want. Keep in mind that [with great power comes great responsibility](https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility).** We provide the tools, and it is up to you to use them sensibly. For example, it can be tempting to add interactions, splines, polynomials, etc., and using liberal correction thresholds without an a priori reason. Please use QDECR responsibly. 
 
@@ -63,7 +66,7 @@ There are a bunch of other arguments that you can specify:
 
 Running `qdecr_fastlm` takes several minutes, anywhere from 10 minutes for small datasets to 30 minutes for large datasets.
 
-# 2.3 Checking the output
+# Checking the output
 
 We saved the output in the variable out. Here are some commands that you can use to check out what it did:
 
