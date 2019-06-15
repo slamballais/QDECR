@@ -4,7 +4,8 @@ Version 0.7.1 is the first version of QDECR after the public release. It will fe
 
 ## New functions and features
 
-* Added the argument `dir_target`, so that the target can be specified flexibly. 
+* Added the input argument `dir_target`, so that the target can be specified flexibly. 
+* Modularized `qdecr_model` and added the input argument `prep_fun`, so that users can choose and create their own prep functions.
 
 ## Major changes
 
