@@ -19,7 +19,7 @@ output:
 knitr::include_graphics("data/slamballais.jpeg")
 ```
 
-Sander Lamballais is currently a last-year PhD candidate at the Erasmus MC in Rotterdam, the Netherlands. His work focuses on the antecedents and consequences of brain changes across the lifespan.
+Sander Lamballais is currently a last-year PhD candidate at the Erasmus MC in Rotterdam, the Netherlands. His work focuses on the antecedents and consequences of brain changes across the lifespan. In his free time he likes gaming (currently Smash Ult), practising with R and working on hobby projects.
 
 ---
 
