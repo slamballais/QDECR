@@ -35,6 +35,7 @@ qdecr_pre_describe <- function(vw, mask, verbose = TRUE) {
                       c("paths", "Subjects dir", vw$paths$dir_subj),
                       c("paths", "Freesurfer home dir", vw$paths$dir_fshome),
                       c("paths", "Temp dir", vw$paths$dir_tmp),
+                      c("paths", "Target path", vw$paths$path_target),
                       c("paths", "Output dir", vw$paths$dir_out),
                       c("paths", "Path to default mask", if(file.exists(vw$paths$mask_path)) vw$paths$mask_path else "Not found!")
                       )
@@ -87,9 +88,8 @@ qdecr_post_describe <- function(vw, verbose = TRUE) {
                      c("post", "Final mask path", vw$paths$final_mask_path),
                      c("post", "Final N vertices", sum(vw$post$final_mask)),
                      c("post", "Estimated fwhm", vw$post$fwhm_est),
-                     c("post", paste("Mean", vw$input$measure, "per vertex"), mean(vw$post$mgh_description$vertex_mean)),
+                     c("post", paste("Mean", vw$input$measure), mean(vw$post$mgh_description$vertex_mean)),
                      c("post", paste("SD", vw$input$measure, "per vertex"), mean(vw$post$mgh_description$vertex_sd)),
-                     c("post", paste("Mean", vw$input$measure, "per subject"), mean(vw$post$mgh_description$subject_mean)),
                      c("post", paste("SD", vw$input$measure, "per subject"), mean(vw$post$mgh_description$subject_sd))
                      )
   if (verbose) qdecr_print_describe(info, verbose = verbose)
