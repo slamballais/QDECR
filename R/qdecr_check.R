@@ -86,16 +86,12 @@ check_dir_out <- function(dir_out, project, project2, dir_out_tree, clobber){
   dir_out
 }
 
-check_dir_subj <- function(dir_subj, target, md, id){
+check_dir_subj <- function(dir_subj, md, id){
   if(missing(dir_subj)) stop("No `dir_subj` argument provided. \n",
                              "Please provide a path to the directory that contains ",
                              "all the vertex input data.")
   if(!dir.exists(dir_subj))
     stop("The provided `dir_subj` does not seem to exist.")
-  if(!dir.exists(target)){
-    if(!dir.exists(file.path(dir_subj, target)))
-      stop("The provided `target` directory does not seem to exist.")
-  }
   idx <- md[[1]][[id]]
   f <- list.files(dir_subj)
   q <- !idx %in% f
@@ -110,6 +106,13 @@ check_dir_subj <- function(dir_subj, target, md, id){
     }
   }
   NULL
+}
+
+check_dir_target <- function(dir_target, target){
+  path_target <- file.path(dir_target, target)
+  if(!dir.exists(path_target)){
+    stop("The provided `target` directory does not seem to exist.")
+  }
 }
 
 check_fwhm <- function(fwhm){
@@ -140,8 +143,9 @@ check_id <- function(id, md){
   NULL
 }
 
-check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
- check_dir_subj(dir_subj, vw$input$target, vw$input$md, vw$input$id)
+check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_target, dir_fshome, mask_path){
+ check_dir_subj(dir_subj, vw$input$md, vw$input$id)
+ path_target <- check_dir_target(dir_target, vw$input$target)
  dir_out2 <- check_dir_out(dir_out, vw$input$project, vw$input$project2, vw$input$dir_out_tree, vw$input$clobber)
  if (is.null(dir_fshome) || dir_fshome == "") stop("dir_fshome is not specified. Please set the global variable FREESURFER_HOME.")
 
@@ -156,6 +160,8 @@ check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
  paths[["dir_fshome"]] <- dir_fshome
  if(!identical(dir_out, dir_out2)) paths[["orig_dir_out"]] <- dir_out
  paths[["dir_out"]] <- dir_out2
+ paths[["dir_target"]] <- dir_target
+ paths[["path_target"]] <- path_target
  paths[["backing_mgh"]] <- backing_mgh
  paths[["mask_path"]] <- mask_path
  paths[["final_path"]] <- final_path

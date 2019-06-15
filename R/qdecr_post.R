@@ -1,7 +1,7 @@
 
 
 
-calc_fwhm <- function(final_path, final_mask_path, est_fwhm_path, hemi, eres, mask = NULL, target = "fsaverage", verbose = FALSE) {
+calc_fwhm <- function(final_path, final_mask_path, est_fwhm_path, hemi, eres, mask = NULL, path_target, verbose = FALSE) {
   cmdStr <- paste("mris_fwhm", "--i", eres, "--hemi", hemi, "--subject", target, "--prune", "--cortex", "--dat", est_fwhm_path, "--out-mask", final_mask_path)
   if (!is.null(mask)) paste(cmdStr, "--mask", mask)
   message2(verbose = verbose, cmdStr)
@@ -20,8 +20,8 @@ runMriSurfCluster <- function(final_path, dir_fshome, hemi, pval, fwhm, mask_pat
     mczThr =  paste0("th", as.character(mczThr))
   }
 
-  oBaseName <- paste0(final_path, ".stack", stack, ".cache.", mczThr, '.', csdSign, ".sig")
-  if (fwhm < 10) fwhm <- paste0('0', fwhm)
+  oBaseName <- paste(final_path, paste0("stack", stack), "cache", mczThr, csdSign, "sig", sep = ".")
+  if (fwhm < 10) fwhm <- paste0("0", fwhm)
   csd <- file.path(dir_fshome, "average/mult-comp-cor/fsaverage", hemi, paste0("cortex/fwhm", fwhm), csdSign, mczThr, "mc-z.csd")
   cmdStr <- paste("mri_surfcluster",
                   "--in", pval,
