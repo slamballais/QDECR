@@ -69,14 +69,15 @@ We originally developed QDECR to help out members of our department who were not
 
 QDECR generally works with three branches:
 
-* [master](https://github.com/slamballais/QDECR/tree/master): The stable version of the package that normal users work with
-* [dev](https://github.com/slamballais/QDECR/tree/dev): The development version for modification and pull requests
-* [gh-pages](https://github.com/slamballais/QDECR/tree/gh-pages): The code for the website
-
-Depending on what you want to contribute you will probably want to modify the dev or the gh-pages branches. 
+* [**master**](https://github.com/slamballais/QDECR/tree/master): The stable version of the package that normal users work with
+* [**dev**](https://github.com/slamballais/QDECR/tree/dev): The development version for modification and pull requests
+* [**gh-pages**](https://github.com/slamballais/QDECR/tree/gh-pages): The code for the website
 
 The general workflow for contributing:
 
+* Consider where you want to contribute:
+  - **QDECR package**: Please branch off [the dev branch](https://github.com/slamballais/QDECR/tree/dev). This helps us control the release of minor and major changes.
+  - **website**: Please branch off the [gh-pages branch](https://github.com/slamballais/QDECR/tree/gh-pages).
 * Look through the issues and see if any match what you want to do. If so, leave a comment there with what you want to do.
 * If your issue is unique, then open a new issue.
 * Make sure that any pull request is small and self-contained. To smooth out the process, try breaking up big changes into smaller ones. This helps with keeping an overview of what is ready to be merged and what is not.
