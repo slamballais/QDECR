@@ -43,7 +43,6 @@ qdecr <- function(id,
                   dir_subj = Sys.getenv("SUBJECTS_DIR"),
                   dir_fshome = Sys.getenv("FREESURFER_HOME"),
                   dir_tmp = dir_out,
-                  dir_target = dir_subj,
                   dir_out,
                   dir_out_tree = TRUE,
                   clean_up = TRUE,
@@ -52,7 +51,6 @@ qdecr <- function(id,
                   verbose = TRUE,
                   debug = FALSE,
                   n_cores = 1,
-                  prep_fun = "prep_fastlm",
                   sander = FALSE
                   ){
   
@@ -103,12 +101,12 @@ qdecr <- function(id,
   md <- imp2list(data)
   
   # Assemble and check input arguments
-  vw$input <- qdecr_check(id, md, margs, hemi, vertex, measure, model, target, project, dir_out_tree, clobber, fwhm, n_cores, prep_fun)
+  vw$input <- qdecr_check(id, md, margs, hemi, vertex, measure, model, target, project, dir_out_tree, clobber, fwhm, n_cores)
   vw$mask <- qdecr_check_mask(mask, mask_path)
-  vw$paths <- check_paths(vw, dir_tmp, dir_subj, dir_out, dir_target, dir_fshome, mask_path)
+  vw$paths <- check_paths(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path)
 
   # Check model
-  vw$model <- qdecr_model(vw$input$model, vw$input$prep_fun, vw$input$md, vw$input$id, vw$input$vertex, vw$input$margs, vw$paths$dir_tmp2)
+  vw$model <- qdecr_model(vw$input$model, vw$input$md, vw$input$id, vw$input$vertex, vw$input$margs, vw$paths$dir_tmp2)
   
   # Check backing
   qdecr_check_backing(c(vw$model$backing, vw$model$backing_to_remove, vw$paths$backing_mgh), clobber)
@@ -170,7 +168,7 @@ qdecr <- function(id,
   # Estimate smoothness
   message2("Calculating smoothing for multiple testing correction.", 
            verbose = verbose)
-  vw$post$fwhm_est <- calc_fwhm(vw$paths$final_path, vw$paths$final_mask_path, vw$paths$est_fwhm_path, vw$input$hemi, vw$post$eres, mask = vw$mask, path_target = vw$paths$path_target, verbose = verbose)[,]
+  vw$post$fwhm_est <- calc_fwhm(vw$paths$final_path, vw$paths$final_mask_path, vw$paths$est_fwhm_path, vw$input$hemi, vw$post$eres, mask = vw$mask, verbose = verbose)[,]
   if(vw$post$fwhm_est > 30) {
     message2(paste0("Estimated smoothness is ", vw$post$fwhm_est, ", which is really high. Reduced to 30."), verbose = verbose)
     vw$post$fwhm_est <- 30

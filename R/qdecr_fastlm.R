@@ -15,7 +15,6 @@
 #' @param dir_subj directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR
 #' @param dir_fshome Freesurfer directory; defaults to FREESURFER_HOME
 #' @param dir_tmp directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`
-#' @param dir_target directory in which `target` is located (by default `dir_subj`)
 #' @param dir_out_tree if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out
 #' @param clean_up_bm if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp
 #' @param clean_up NOT IMPLEMENTED; will be used for setting cleaning of other files
@@ -24,7 +23,6 @@
 #' @param save if TRUE, saves the output to a .fst file
 #' @param save_data if TRUE, includes the raw data + design matrices in the .fst file
 #' @param debug NOT IMPLEMENTED; will output the maximal log to allow for easy debugging
-#' @param prep_fun Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)
 #' @return returns an object of classes "vw_fastlm" and "vw".
 #' @export
 
@@ -43,7 +41,6 @@ qdecr_fastlm <- function(formula,
                          dir_subj = Sys.getenv("SUBJECTS_DIR"),
                          dir_fshome = Sys.getenv("FREESURFER_HOME"),
                          dir_tmp = dir_out,
-                         dir_target = dir_subj,
                          dir_out_tree = TRUE,
                          clean_up_bm = TRUE,
                          clean_up = TRUE,
@@ -51,8 +48,7 @@ qdecr_fastlm <- function(formula,
                          verbose = TRUE,
                          save = TRUE,
                          save_data = TRUE,
-                         debug = FALSE,
-                         prep_fun = "prep_fastlm"){
+                         debug = FALSE){
 
 # Take apart the formula
 terms <- attr(terms(formula), "factors")
@@ -88,7 +84,6 @@ vw <- qdecr(id = id,
             project = project,
             vertex = qqt,
             dir_tmp = dir_tmp,
-            dir_target = dir_target,
             dir_subj = dir_subj,
             dir_fshome = dir_fshome,
             dir_out_tree = dir_out_tree,
@@ -98,7 +93,6 @@ vw <- qdecr(id = id,
             verbose = verbose,
             debug = debug,
             n_cores = n_cores,
-            prep_fun = prep_fun,
             )
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
