@@ -24,6 +24,7 @@
 #' @param save if TRUE, saves the output to a .fst file
 #' @param save_data if TRUE, includes the raw data + design matrices in the .fst file
 #' @param debug NOT IMPLEMENTED; will output the maximal log to allow for easy debugging
+#' @param prep_fun Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)
 #' @return returns an object of classes "vw_fastlm" and "vw".
 #' @export
 
@@ -50,7 +51,8 @@ qdecr_fastlm <- function(formula,
                          verbose = TRUE,
                          save = TRUE,
                          save_data = TRUE,
-                         debug = FALSE){
+                         debug = FALSE,
+                         prep_fun = "prep_fastlm"){
 
 # Take apart the formula
 terms <- attr(terms(formula), "factors")
@@ -96,6 +98,7 @@ vw <- qdecr(id = id,
             verbose = verbose,
             debug = debug,
             n_cores = n_cores,
+            prep_fun = prep_fun,
             )
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
