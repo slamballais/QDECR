@@ -9,6 +9,8 @@ Version 0.7.1 is the first version of QDECR after the public release. It will fe
 
 ## Major changes
 
+* The internal function to run vertex-wise analyses, called `vertexwise`, now processes regressions in chunks, i.e. more than 1 vertex at a time.
+
 ## Minor changes
 
 ## Bug fixes
