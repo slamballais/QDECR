@@ -54,7 +54,7 @@ qdecr_fastlm <- function(formula,
                          debug = FALSE,
                          prep_fun = "prep_fastlm",
                          analysis_fun = "analysis_chunkedlm",
-                         chunk_size = 1000){
+                         chunk_size = 1000,
                          debug = FALSE){
 
 # Take apart the formula
