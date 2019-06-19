@@ -32,6 +32,7 @@ We also highly suggest:
 
 * Set `FREESURFER_HOME` and `SUBJECTS_DIR`; both can be set manually in QDECR, but it is more convenient. [see 1.4.1]
 * [`Magick++`](https://www.imagemagick.org/Magick++/STL.html); this is required for a specific plotting function (`qdecr_snap`) that you may or may not need. [see 1.2.6]
+* Get a better BLAS library like [`OpenBLAS`](https://www.openblas.net/) [see 1.2.7]
 
 ## Unix
 
@@ -92,6 +93,16 @@ Consequently, in R:
 ```{R eval = FALSE, tidy = FALSE}
 install.packages("magick")
 ```
+
+## Suggestion: OpenBLAS
+
+`QDECR` has to do a lot of linear algebra to run vertex-wise analyses. The good news is that we can speed that up by getting a better back-end library for linear algebra. You'll have to install a BLAS library such as OpenBLAS. For Ubuntu 18.04, that would be:
+
+```{bash eval = FALSE}
+sudo apt-get install libopenblas-base
+```
+
+More information on BLAS libraries in R can be found [here](https://csantill.github.io/RPerformanceWBLAS/).
 
 ---
 
