@@ -15,7 +15,6 @@
 #' @param dir_subj directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR
 #' @param dir_fshome Freesurfer directory; defaults to FREESURFER_HOME
 #' @param dir_tmp directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`
-#' @param dir_target directory in which `target` is located (by default `dir_subj`)
 #' @param dir_out_tree if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out
 #' @param clean_up_bm if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp
 #' @param clean_up NOT IMPLEMENTED; will be used for setting cleaning of other files
@@ -45,7 +44,6 @@ qdecr_fastlm <- function(formula,
                          dir_subj = Sys.getenv("SUBJECTS_DIR"),
                          dir_fshome = Sys.getenv("FREESURFER_HOME"),
                          dir_tmp = dir_out,
-                         dir_target = dir_subj,
                          dir_out_tree = TRUE,
                          clean_up_bm = TRUE,
                          clean_up = TRUE,
@@ -57,6 +55,7 @@ qdecr_fastlm <- function(formula,
                          prep_fun = "prep_fastlm",
                          analysis_fun = "analysis_chunkedlm",
                          chunk_size = 1000){
+                         debug = FALSE){
 
 # Take apart the formula
 terms <- attr(terms(formula), "factors")
@@ -92,7 +91,6 @@ vw <- qdecr(id = id,
             project = project,
             vertex = qqt,
             dir_tmp = dir_tmp,
-            dir_target = dir_target,
             dir_subj = dir_subj,
             dir_fshome = dir_fshome,
             dir_out_tree = dir_out_tree,
