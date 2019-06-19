@@ -30,7 +30,11 @@ analysis_chunkedlm <- function(vw, chunk) {
   XTX <- lapply(vw$model$mm, function(z) chol2inv(chol(crossprod(z))))
   XTXX <- lapply(1:m, function(z) tcrossprod(XTX[[z]], vw$model$mm[[z]]))
   
-  # chunk it
+  # reduce load per core
+  X <- vw$model$mm
+  Ya <- vw$mgh
+  
+  # parallel loop
   cl <- parallel::makeForkCluster(vw$input$n_cores, outfile = "")
   doParallel::registerDoParallel(cl)
   on.exit(parallel::stopCluster(cl))
@@ -42,13 +46,13 @@ analysis_chunkedlm <- function(vw, chunk) {
     
     id <- iv[cstart[i]:cend[i]]
     
-    Y <- t(vw$mgh[id, ])
+    Y <- t(Ya[id, ])
     
     # get coefs
     bhat <- lapply(XTXX, function(z) z %*% Y)
     
     # get residuals
-    res <- lapply(1:m, function(z) Y - vw$model$mm[[z]] %*% bhat[[z]])
+    res <- lapply(1:m, function(z) Y - X[[z]] %*% bhat[[z]])
     
     # get se
     s2 <- lapply(res, function(z) colSums(z^2 / df))
