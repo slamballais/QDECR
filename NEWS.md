@@ -1,23 +1,18 @@
-# QDECR 0.7.1: OHBM (.1)
+# QDECR 0.8.0: Momo
 
-Version 0.7.1 is the first version of QDECR after the public release. It will feature several improvements as well as additional arguments that extend (but not modify) the user experience.
+Version 0.8.0 is the first update after public release. It fixes a bunch of mistakes, introduces further modularization, improves the speed and also reduces the RAM load.
 
 ## New functions and features
 
 * Added the input argument `dir_target`, so that the target can be specified flexibly. 
 * Modularized `qdecr_model` and added the input argument `prep_fun`, so that users can choose and create their own prep functions.
-
-## Major changes
-
-* The internal function to run vertex-wise analyses, called `vertexwise`, now processes regressions in chunks, i.e. more than 1 vertex at a time.
-
-## Minor changes
+* Modularized `qdecr_analysis` and added the input argument `analysis_fun`, so that users can choose and create their own analysis functions.
+* The internal function to run vertex-wise analyses, called `vertexwise`, now processes regressions in chunks, i.e. more than 1 vertex at a time. This has led to a considerable upgrade in speed, especially for smaller datasets. Chunk size can be controlled with `chunk_size`
 
 ## Bug fixes
 
-## Deprecated and defunct
-
-## Documentation
+* We removed lots of unnecessary dependencies.
+* We fixed the referencing to the default mask.
 
 # QDECR 0.7.0: OHBM
 
