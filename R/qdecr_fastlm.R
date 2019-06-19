@@ -23,6 +23,9 @@
 #' @param save if TRUE, saves the output to a .fst file
 #' @param save_data if TRUE, includes the raw data + design matrices in the .fst file
 #' @param debug NOT IMPLEMENTED; will output the maximal log to allow for easy debugging
+#' @param prep_fun Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)
+#' @param analysis_fun Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)
+#' @param chunk_size Integer; the desired chunk size for the chunked lm
 #' @return returns an object of classes "vw_fastlm" and "vw".
 #' @export
 
@@ -37,7 +40,7 @@ qdecr_fastlm <- function(formula,
                          mcz_thr = 30,
                          mgh = NULL,
                          mask = NULL,
-                         mask_path = file.path(path.package("QDECR"), "extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh")),
+                         system.time("extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
                          dir_subj = Sys.getenv("SUBJECTS_DIR"),
                          dir_fshome = Sys.getenv("FREESURFER_HOME"),
                          dir_tmp = dir_out,
@@ -48,6 +51,10 @@ qdecr_fastlm <- function(formula,
                          verbose = TRUE,
                          save = TRUE,
                          save_data = TRUE,
+                         debug = FALSE,
+                         prep_fun = "prep_fastlm",
+                         analysis_fun = "analysis_chunkedlm",
+                         chunk_size = 1000){
                          debug = FALSE){
 
 # Take apart the formula
@@ -93,6 +100,9 @@ vw <- qdecr(id = id,
             verbose = verbose,
             debug = debug,
             n_cores = n_cores,
+            prep_fun = prep_fun,
+            analysis_fun = analysis_fun,
+            chunk_size = chunk_size
             )
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
