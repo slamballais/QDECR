@@ -7,7 +7,6 @@ pool_quick <- function(cm, sm){
   b <- (t(e) %*% e)/(m - 1)
   t <- smn + (1+1/m) * diag(b)
   sp <- sqrt(t)
-  return(list(cp, sp))
 }
 
 # modified miceadds::summary.pool_mi that removed printing
@@ -23,7 +22,7 @@ summary.pool_mi <- function(object, alpha = 0.05, ...) {
 }
 
 quick_pool <- function (qhat, se) {
-### REWRITE OF mice::pool AND mice::mice_df
+  ### REWRITE OF mice::pool AND mice::mice_df
   eps <- 1e-100
   m <- length(qhat)
   k <- length(qhat[[1]])
@@ -32,7 +31,7 @@ quick_pool <- function (qhat, se) {
   
   qhat2 <- do.call("rbind", qhat)
   qbar <- colMeans(qhat2)
-
+  
   e <- sweep(qhat2, 2, qbar, `-`) 
   bm <- colSums(e^2)/(m - 1 + eps)
   t <- um + im * bm
@@ -47,7 +46,44 @@ quick_pool <- function (qhat, se) {
   dfold <- (m - 1 + eps2)/lambda^2
   dfobs <- (dfcom + 1)/(dfcom + 3) * dfcom * (1 - lambda)
   df <- dfold * dfobs/(dfold + dfobs)
+  
+  pval <- 2 * stats::pt(-abs(tval), df = df)
+  
+  list(results = qbar, 
+       se = se2, 
+       t = tval, 
+       p = pval)
+}
 
+quick_pool2 <- function (qhat, se) {
+### REWRITE OF mice::pool AND mice::mice_df to also handle multiple outcomes
+  qhat <- lapply(qhat, as.matrix)
+  se <- lapply(se, as.matrix)
+  
+  eps <- 1e-100
+  m <- length(qhat)
+  dd <- dim(qhat[[1]])
+  im <- (1 + 1/m)
+  um <- Reduce("+", lapply(se, `^`, 2)) / m
+  
+  qbar <- Reduce("+", qhat) / m 
+  qhat2 <- array(unlist(qhat), dim = c(dd, m))
+  
+  e <- sweep(qhat2, c(1,2),  qbar, `-`) 
+  bm <- apply(e^2, c(1,2), sum)/(m - 1 + eps)
+  t <- um + im * bm
+  se2 <- sqrt(t)
+  tval <- qbar/se2
+  
+  lambda <- im * (bm/t)
+  
+  eps2 <- 1e-04
+  dfcom <- 1e+07
+  lambda[lambda < eps2] <- eps2
+  dfold <- (m - 1 + eps2)/lambda^2
+  dfobs <- (dfcom + 1)/(dfcom + 3) * dfcom * (1 - lambda)
+  df <- dfold * dfobs/(dfold + dfobs)
+  
   pval <- 2 * stats::pt(-abs(tval), df = df)
   
   list(results = qbar, 
