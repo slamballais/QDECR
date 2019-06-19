@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -262,6 +265,96 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
+
+</style>
+
+
 
 </head>
 
@@ -269,6 +362,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -363,27 +466,6 @@ $(document).ready(function () {
 
 </div>
 
-<div id="TOC">
-<ul>
-<li><a href="#before-contributing"><span class="toc-section-number">1</span> Before Contributing</a><ul>
-<li><a href="#code-of-conduct"><span class="toc-section-number">1.1</span> Code Of Conduct</a></li>
-<li><a href="#communication"><span class="toc-section-number">1.2</span> Communication</a></li>
-</ul></li>
-<li><a href="#ways-to-contribute"><span class="toc-section-number">2</span> Ways To Contribute</a><ul>
-<li><a href="#finding-and-reporting-bugs"><span class="toc-section-number">2.1</span> Finding And Reporting Bugs</a></li>
-<li><a href="#modifying-or-adding-code"><span class="toc-section-number">2.2</span> Modifying Or Adding Code</a></li>
-<li><a href="#suggesting-ideas"><span class="toc-section-number">2.3</span> Suggesting Ideas</a></li>
-<li><a href="#developing-educational-resources"><span class="toc-section-number">2.4</span> Developing Educational Resources</a></li>
-</ul></li>
-<li><a href="#how-to-contribute"><span class="toc-section-number">3</span> How To Contribute</a></li>
-<li><a href="#list-of-features-to-implement"><span class="toc-section-number">4</span> List Of Features To Implement</a><ul>
-<li><a href="#lower-resource-usage"><span class="toc-section-number">4.1</span> Lower Resource Usage</a></li>
-<li><a href="#permutation-testing"><span class="toc-section-number">4.2</span> Permutation Testing</a></li>
-<li><a href="#mixed-models"><span class="toc-section-number">4.3</span> Mixed Models</a></li>
-<li><a href="#input-agnosticism"><span class="toc-section-number">4.4</span> Input Agnosticism</a></li>
-</ul></li>
-</ul>
-</div>
 
 <p><strong>Thank you for considering to help out!</strong></p>
 <p>QDECR started as a side project to make QDEC and mri_glmfit more accessible to members of our department. The desire for additional features kept growing, and so we decided to reprogram everything in R. Over time we have developed QDECR to fit our specific needs, but those may differ from what you - the user - may need. We therefore decided to make QDECR accessible early on, so that it can become a community-driven project.</p>
@@ -481,6 +563,8 @@ $(document).ready(function () {
 
 
 
+</div>
+</div>
 
 </div>
 

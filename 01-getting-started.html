@@ -477,17 +477,18 @@ div.tocify {
 <h1><span class="header-section-number">2</span> Requirements</h1>
 <p>In order to run <code>QDECR</code> you need to have several things ready:</p>
 <ul>
-<li>A Unix system. [see 1.2.1]</li>
-<li><a href="https://surfer.nmr.mgh.harvard.edu/">Freesurfer</a> installed. [see 1.2.2]</li>
-<li>Your images processed through Freesurfer with the <code>-qcache</code> flag. [see 1.2.3]</li>
-<li><a href="https://www.r-project.org"><code>R</code></a> installed. [see 1.2.4]</li>
-<li>A lot of other <code>R</code> packages that will be installed automatically. [see 1.2.4 or 1.3]</li>
-<li>Make sure your target template (usually fsaverage) is in your <code>SUBJECTS_DIR</code> (directory with all your Freesurfer output). [see 1.2.5]</li>
+<li>A Unix system. [see 2.1]</li>
+<li><a href="https://surfer.nmr.mgh.harvard.edu/">Freesurfer</a> installed. [see 2.2]</li>
+<li>Your images processed through Freesurfer with the <code>-qcache</code> flag. [see 2.3]</li>
+<li><a href="https://www.r-project.org"><code>R</code></a> installed. [see 2.4]</li>
+<li>A lot of other <code>R</code> packages that will be installed automatically. [see 2.4 or 3]</li>
+<li>Make sure your target template (usually fsaverage) is in your <code>SUBJECTS_DIR</code> (directory with all your Freesurfer output). [see 2.5]</li>
 </ul>
 <p>We also highly suggest:</p>
 <ul>
-<li>Set <code>FREESURFER_HOME</code> and <code>SUBJECTS_DIR</code>; both can be set manually in QDECR, but it is more convenient. [see 1.4.1]</li>
-<li><a href="https://www.imagemagick.org/Magick++/STL.html"><code>Magick++</code></a>; this is required for a specific plotting function (<code>qdecr_snap</code>) that you may or may not need. [see 1.2.6]</li>
+<li>Set <code>FREESURFER_HOME</code> and <code>SUBJECTS_DIR</code>; both can be set manually in QDECR, but it is more convenient. [see 4.1]</li>
+<li><a href="https://www.imagemagick.org/Magick++/STL.html"><code>Magick++</code></a>; this is required for a specific plotting function (<code>qdecr_snap</code>) that you may or may not need. [see 2.6]</li>
+<li>Get a better BLAS library like <a href="https://www.openblas.net/"><code>OpenBLAS</code></a> [see 2.7]</li>
 </ul>
 <div id="unix" class="section level2">
 <h2><span class="header-section-number">2.1</span> Unix</h2>
@@ -531,6 +532,12 @@ freeview.bin:  error while loading shared libraries: libpng12.so.0: cannot open 
 <pre class="bash"><code>sudo apt-get install libmagick++-dev</code></pre>
 <p>Consequently, in R:</p>
 <pre class="r"><code>install.packages(&quot;magick&quot;)</code></pre>
+</div>
+<div id="suggestion-openblas" class="section level2">
+<h2><span class="header-section-number">2.7</span> Suggestion: OpenBLAS</h2>
+<p><code>QDECR</code> has to do a lot of linear algebra to run vertex-wise analyses. The good news is that we can speed that up by getting a better back-end library for linear algebra. You’ll have to install a BLAS library such as OpenBLAS. For Ubuntu 18.04, that would be:</p>
+<pre class="bash"><code>sudo apt-get install libopenblas-base</code></pre>
+<p>More information on BLAS libraries in R can be found <a href="https://csantill.github.io/RPerformanceWBLAS/">here</a>.</p>
 <hr />
 </div>
 </div>
