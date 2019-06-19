@@ -104,7 +104,7 @@ vw <- qdecr(id = id,
             n_cores = n_cores,
             prep_fun = prep_fun,
             analysis_fun = analysis_fun,
-            chunk_size
+            chunk_size = chunk_size
             )
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
