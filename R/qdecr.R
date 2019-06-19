@@ -71,9 +71,9 @@ qdecr <- function(id,
   # Intro
   if (verbose) {
     message("\n")
-    catprompt("QDECR v2.0")
-    message("Welcome to QDECR (v2.0)")
-    message("Authors: Ryan Muetzel & Sander Lamballais")
+    catprompt("QDECR v0.8.0")
+    message("Welcome to QDECR (v0.8.0)")
+    message("Authors: Sander Lamballais & Ryan Muetzel")
     message("Website: www.github.com/slamballais/QDECR")
   }
   
