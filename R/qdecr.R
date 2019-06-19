@@ -53,6 +53,8 @@ qdecr <- function(id,
                   debug = FALSE,
                   n_cores = 1,
                   prep_fun = "prep_fastlm",
+                  analysis_fun = "analysis_chunkedlm",
+                  chunk_size = 1000,
                   sander = FALSE
                   ){
   
@@ -143,7 +145,7 @@ qdecr <- function(id,
 
   catprompt("Vertex-wise analyses", verbose = verbose)
   class(vw) <- class(vw$model)
-  vw$results <- vertexwise(vw$model, vw$input, vw$mask, vw$mgh, vw$input$n_cores, vw$paths$dir_tmp, vw$input$project)
+  vw$results <- vertexwise(vw, analysis_fun = analysis_fun, chunk = chunk_size)
   message2("\n\n", verbose = verbose)
 
   ## Part 5: Post-processing
