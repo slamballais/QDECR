@@ -14,7 +14,7 @@ qdecr_check_backing <- function(backing, clobber){
 }
 
 qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
-                        project, dir_out_tree, clobber, fwhm, n_cores){
+                        project, dir_out_tree, clobber, fwhm, n_cores, prep_fun){
 
   # verify that id is correct and exists within data
   check_id(id, md)
@@ -27,6 +27,9 @@ qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
 
   # Check whether the number of cores is correct
   check_cores(n_cores)
+  
+  # Check whether prep_fun exists
+  check_prep_fun(prep_fun)
 
   # Return all output arguments assembled
   input <- list()
@@ -45,6 +48,7 @@ qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
   input[["fwhm"]] <- fwhm
   input[["fwhmc"]] <- paste0("fwhm", fwhm)
   input[["n_cores"]] <- n_cores
+  input[["prep_fun"]] <- prep_fun
   input
 }
 
@@ -165,6 +169,11 @@ check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
  paths[] <- lapply(paths, sub, pattern = "//", replacement = "/", fixed = TRUE)
  paths[] <- lapply(paths, sub, pattern = "/$", replacement = "")
  paths
+}
+
+check_prep_fun <- function(prep_fun){
+  tryCatch(get2(prep_fun), error = function(e) stop("Provided `prep_fun` cannot be found."))
+  invisible(NULL)
 }
 
 check_vertex <- function(vertex, id, md){
