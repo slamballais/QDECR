@@ -259,3 +259,45 @@ save.mgh <-function(vol,fname) {
   #writeBin(vol$x, fid, size = 4, endian = "big")
   writeBin(vol$x, fid, size = 4, endian = "big")
 }
+
+
+#' Create an object that is structured like an mgh object
+#'
+#' @param x the vertex-wise values
+#' @param v (to be added)
+#' @param ndim1 (to be added)
+#' @param ndim2 (to be added)
+#' @param ndim3 (to be added)
+#' @param nframes (to be added)
+#' @param type (to be added)
+#' @param dof (to be added)
+#'
+#' @export
+#'
+
+as_mgh <- function(x, v = NULL, ndim1 = NULL, ndim2 = NULL, ndim3 = NULL, nframes, type, dof) {
+  
+  if (is.vector(x)) {
+    v <- 1L
+    ndim1 <- as.integer(length(x))
+    ndim2 <- 1L
+    ndim3 <- 1L
+    type <- 3L
+    nframes <- 1L
+    dof <- 0L
+  } else {
+    stop("as_mgh only support objects of class `vector` right now.")
+  }
+  
+  out <- list(x = x, 
+              v = v, 
+              ndim1 = ndim1, 
+              ndim2 = ndim2, 
+              ndim3 = ndim3, 
+              nframes = nframes, 
+              type = type, 
+              dof = dof)
+  
+  return(out)
+  
+}
