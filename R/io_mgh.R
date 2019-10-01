@@ -115,7 +115,7 @@ load.annot <- function(input.file) {
        )
 }
 
-#' Save out an MGH file from memory
+#' Save out an MGH file from a big matrix
 #'
 #' @param vol MGH object (as from load.mgh)
 #' @param fname file name to be used to save out the data
@@ -173,6 +173,13 @@ bsfbm2mgh <-function(fbm, fname, filter = NULL) {
   NULL
 }
 
+#' Save out an MGH file from memory
+#'
+#' @param vol MGH object (as from load.mgh)
+#' @param fname file name to be used to save out the data
+#'
+#' @export
+#'
 save.mgh <-function(vol,fname) {
 
   # R translation of save_mgh.m

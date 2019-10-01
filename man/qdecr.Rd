@@ -11,13 +11,14 @@ qdecr(id, data, vertex = "qdecr", margs = NULL,
   "curv", "jacobian_white", "pial", "pial_lgi", "sulc", "volume",
   "w-g.pct.mgh", "white.H", "white.K"), fwhm = ifelse(measure ==
   "pial_lgi", 5, 10), mcz_thr = 30, mgh = NULL, mask = NULL,
-  mask_path = file.path(path.package("QDECR"), "extdata", paste0(hemi,
-  ".fsaverage.cortex.mask.mgh")), project,
+  mask_path = system.file("extdata", paste0(hemi,
+  ".fsaverage.cortex.mask.mgh"), package = "QDECR"), project,
   dir_subj = Sys.getenv("SUBJECTS_DIR"),
   dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
   dir_out, dir_out_tree = TRUE, clean_up = TRUE, clean_up_bm = TRUE,
   clobber = FALSE, verbose = TRUE, debug = FALSE, n_cores = 1,
-  sander = FALSE)
+  prep_fun = "prep_fastlm", analysis_fun = "analysis_chunkedlm",
+  chunk_size = 1000, sander = FALSE)
 }
 \arguments{
 \item{a}{test}

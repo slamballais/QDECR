@@ -6,13 +6,14 @@
 \usage{
 qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
   n_cores = 1, target = "fsaverage", mcz_thr = 30, mgh = NULL,
-  mask = NULL, mask_path = file.path(path.package("QDECR"), "extdata",
-  paste0(hemi, ".fsaverage.cortex.mask.mgh")),
+  mask = NULL, mask_path = system.file("extdata", paste0(hemi,
+  ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
   dir_subj = Sys.getenv("SUBJECTS_DIR"),
   dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
   dir_out_tree = TRUE, clean_up_bm = TRUE, clean_up = TRUE,
   clobber = FALSE, verbose = TRUE, save = TRUE, save_data = TRUE,
-  debug = FALSE)
+  debug = FALSE, prep_fun = "prep_fastlm",
+  analysis_fun = "analysis_chunkedlm", chunk_size = 1000)
 }
 \arguments{
 \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See `?lm`.}
@@ -60,6 +61,12 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 \item{save_data}{if TRUE, includes the raw data + design matrices in the .fst file}
 
 \item{debug}{NOT IMPLEMENTED; will output the maximal log to allow for easy debugging}
+
+\item{prep_fun}{Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)}
+
+\item{analysis_fun}{Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)}
+
+\item{chunk_size}{Integer; the desired chunk size for the chunked lm}
 }
 \value{
 returns an object of classes "vw_fastlm" and "vw".
