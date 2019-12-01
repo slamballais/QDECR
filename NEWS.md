@@ -1,3 +1,8 @@
+# QDECR 0.8.1
+
+## Bug fixes
+* If the estimated smoothness is below 1, we now increase it to 1 to avoid problems down the line.
+
 # QDECR 0.8.0: Momo
 
 Version 0.8.0 is the first update after public release. It fixes a bunch of mistakes, introduces further modularization, improves the speed and also reduces the RAM load.

@@ -176,6 +176,10 @@ qdecr <- function(id,
     message2(paste0("Estimated smoothness is ", vw$post$fwhm_est, ", which is really high. Reduced to 30."), verbose = verbose)
     vw$post$fwhm_est <- 30
   }
+  if(vw$post$fwhm_est < 1) {
+    message2(paste0("Estimated smoothness is ", vw$post$fwhm_est, ", which is really low. Increased to 1."), verbose = verbose)
+    vw$post$fwhm_est <- 1
+  }
 
   catprompt("Clusterwise correction", verbose = verbose)
 
