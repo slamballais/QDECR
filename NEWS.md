@@ -2,6 +2,7 @@
 
 ## Bug fixes
 * If the estimated smoothness is below 1, we now increase it to 1 to avoid problems down the line.
+* Fixed a bug in qdecr_clusters where it assumes that there is always at least 1 cluster significant.
 
 # QDECR 0.8.0: Momo
 
