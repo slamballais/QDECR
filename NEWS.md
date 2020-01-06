@@ -9,8 +9,10 @@
 ## Bug fixes
 * The `fst` package was noted as imported package, but we never implemented functionality from it. Thus, all reference to it was removed.
 
-## New (minor) features
+## New (minor) tweaks
 * The version is now properly displayed when running `qdecr`. This version is updated dynamically using `packageVersion("QDECR")`. The website (www.qdecr.com) was also added.
+* Exported `load.annot` and the `qdecr_read` functions.
+* Renamed the internal `runMriSurfCluster` function to `run_mri_surf_cluster`.
 
 # QDECR 0.8.1
 
