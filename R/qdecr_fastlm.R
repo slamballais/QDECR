@@ -22,8 +22,8 @@
 #' @param clean_up NOT IMPLEMENTED; will be used for setting cleaning of other files
 #' @param clobber if TRUE, ignores already existing directories and writes over them; if FALSE, stops and warns user that a given directory already exists
 #' @param verbose if TRUE, writes out standard log; if FALSE, no output is generated
-#' @param save if TRUE, saves the output to a .fst file
-#' @param save_data if TRUE, includes the raw data + design matrices in the .fst file
+#' @param save if TRUE, saves the output to a .rds file
+#' @param save_data if TRUE, includes the raw data + design matrices in the .rds file
 #' @param debug NOT IMPLEMENTED; will output the maximal log to allow for easy debugging
 #' @param prep_fun Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)
 #' @param analysis_fun Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)

@@ -1,7 +1,7 @@
 Package: QDECR
 Type: Package
 Title: Vertex-wise statistical analysis
-Version: 0.8.1
+Version: 0.8.2
 Authors@R: as.person(c(
     "Ryan Muetzel <r.muetzel@erasmusmc.nl> [aut, cre]",
     "Sander Lamballais <s.lamballaistessensohn@erasmusmc.nl> [aut]"
@@ -14,7 +14,6 @@ Imports:
     bigstatsr (>= 0.6.2),
     doParallel (>= 1.0.14),
     foreach (>= 1.4.4),
-    fst (>= 0.9.0), 
     Matrix (>= 1.2.12),
     methods,
     parallel,

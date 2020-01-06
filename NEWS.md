@@ -1,3 +1,11 @@
+# QDECR 0.8.2
+
+## Bug fixes
+* The `fst` package was noted as imported package, but we never implemented functionality from it. Thus, all reference to it was removed.
+
+## New (minor) features
+* The version is now properly displayed when running `qdecr`. This version is updated dynamically using `packageVersion("QDECR")`. The website (www.qdecr.com) was also added.
+
 # QDECR 0.8.1
 
 ## Bug fixes
