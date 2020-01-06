@@ -1,6 +1,3 @@
-
-
-
 calc_fwhm <- function(final_path, final_mask_path, est_fwhm_path, hemi, eres, mask = NULL, target = "fsaverage", verbose = FALSE) {
   cmdStr <- paste("mris_fwhm", "--i", eres, "--hemi", hemi, "--subject", target, "--prune", "--cortex", "--dat", est_fwhm_path, "--out-mask", final_mask_path)
   if (!is.null(mask)) paste(cmdStr, "--mask", mask)
@@ -11,7 +8,7 @@ calc_fwhm <- function(final_path, final_mask_path, est_fwhm_path, hemi, eres, ma
   return(fwhm)
 }
 
-runMriSurfCluster <- function(final_path, dir_fshome, hemi, pval, fwhm, mask_path = NULL, cwp_thr = 0.025, mcz_thr = 30, csd_sign = "abs", verbose = FALSE, stack, stack_name) {
+run_mri_surf_cluster <- function(final_path, dir_fshome, hemi, pval, fwhm, mask_path = NULL, cwp_thr = 0.025, mcz_thr = 30, csd_sign = "abs", verbose = FALSE, stack, stack_name) {
 
   mcz_thr2 <- paste0("th", mcz_thr)
 

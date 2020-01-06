@@ -188,7 +188,7 @@ qdecr <- function(id,
   # Run clusterwise and move all files to the right directory
   for ( i in seq_along(vw$stack$names)){
     message2("\n", verbose = verbose)
-    runMriSurfCluster(vw$paths$final_path, vw$paths$dir_fshome, vw$input$hemi, vw$stack$p[[i]], vw$post$fwhm_est, 
+    run_mri_surf_cluster(vw$paths$final_path, vw$paths$dir_fshome, vw$input$hemi, vw$stack$p[[i]], vw$post$fwhm_est, 
                       mask_path = vw$paths$final_mask_path, verbose = verbose, mcz_thr = mcz_thr, cwp_thr = cwp_thr,
                       stack = i, stack_name = vw$stack$names[i])
   }
