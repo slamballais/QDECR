@@ -33,9 +33,10 @@ qdecr <- function(id,
                   hemi = c("lh", "rh"),
                   measure = c("thickness", "area", "area.pial", "curv", 
                               "jacobian_white", "pial", "pial_lgi", "sulc", "volume", 
-                              "w-g.pct.mgh", "white.H", "white.K"),
+                              "w_g.pct", "white.H", "white.K"),
                   fwhm = ifelse(measure == "pial_lgi", 5, 10),
                   mcz_thr = 30, 
+                  cwp_thr = 0.025,
                   mgh = NULL,
                   mask = NULL,
                   mask_path = system.file("extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
@@ -176,6 +177,10 @@ qdecr <- function(id,
     message2(paste0("Estimated smoothness is ", vw$post$fwhm_est, ", which is really high. Reduced to 30."), verbose = verbose)
     vw$post$fwhm_est <- 30
   }
+  if(vw$post$fwhm_est < 1) {
+    message2(paste0("Estimated smoothness is ", vw$post$fwhm_est, ", which is really low. Increased to 1."), verbose = verbose)
+    vw$post$fwhm_est <- 1
+  }
 
   catprompt("Clusterwise correction", verbose = verbose)
 
@@ -183,7 +188,7 @@ qdecr <- function(id,
   for ( i in seq_along(vw$stack$names)){
     message2("\n", verbose = verbose)
     runMriSurfCluster(vw$paths$final_path, vw$paths$dir_fshome, vw$input$hemi, vw$stack$p[[i]], vw$post$fwhm_est, 
-                      mask_path = vw$paths$final_mask_path, verbose = verbose, mczThr = mcz_thr, 
+                      mask_path = vw$paths$final_mask_path, verbose = verbose, mcz_thr = mcz_thr, cwp_thr = cwp_thr,
                       stack = i, stack_name = vw$stack$names[i])
   }
   vw$post$final_mask <- load.mgh(vw$paths$final_mask_path)$x

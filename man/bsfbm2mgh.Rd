@@ -2,7 +2,7 @@
 % Please edit documentation in R/io_mgh.R
 \name{bsfbm2mgh}
 \alias{bsfbm2mgh}
-\title{Save out an MGH file from memory}
+\title{Save out an MGH file from a big matrix}
 \usage{
 bsfbm2mgh(fbm, fname, filter = NULL)
 }
@@ -12,5 +12,5 @@ bsfbm2mgh(fbm, fname, filter = NULL)
 \item{vol}{MGH object (as from load.mgh)}
 }
 \description{
-Save out an MGH file from memory
+Save out an MGH file from a big matrix
 }

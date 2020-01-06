@@ -122,6 +122,7 @@ summary.vw_fastlm <- function(vw, verbose = FALSE, annot = FALSE, file = "aparc.
   # Get cluster annotation information
   if (annot) {
     ca <- qdecr_clusters(vw, name = file)
+    if (is.null(ca)) return(cs2)
     ca2 <- lapply(ca, function(x) {
       nr2 <- nrow(x)
       if (nr2 > regions) nr2 <- regions
@@ -156,6 +157,7 @@ qdecr_clusters <- function(vw, name = "aparc.annot") {
     if (any(ocn$x > 0)) annots <- lapply(seq_len(max(ocn$x)), function(i) annot$vd_label[ocn$x == i])
   })
   ocn_annot2 <- do.call(c, ocn_annot[!sapply(ocn_annot, is.null)])
+  if(is.null(ocn_annot2)) return(NULL)
   ocn_annot3 <- lapply(ocn_annot2, table)
   
   ta <- table(annot$vd_label)

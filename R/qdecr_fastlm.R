@@ -8,7 +8,9 @@
 #' @param project the base name you want to assign to the output files
 #' @param n_cores the number of cores to be used
 #' @param target the target template (usually "fsaverage")
+#' @param fwhm full width half max (default = 10 mm, for pial_lgi it is 5 mm)
 #' @param mcz_thr the Monte Carlo simulation threshold times 10 (13 = 0.05, 20 = 0.01, 23 = 0.005 30 = 0.001, etc..)
+#' @param cwp_thr the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)
 #' @param mgh NOT IMPLEMENTED; path to existing merged mgh file, default is NULL
 #' @param mask mgh file to mask analysis; default is to use the cortex label from the target
 #' @param mask_path path to the mask; default is the cortex mask that is provided with the QDECR package
@@ -37,7 +39,9 @@ qdecr_fastlm <- function(formula,
                          project,
                          n_cores = 1,
                          target = "fsaverage",
+                         fwhm = ifelse(measure == "pial_lgi", 5, 10),
                          mcz_thr = 30,
+                         cwp_thr = 0.025,
                          mgh = NULL,
                          mask = NULL,
                          mask_path = system.file("extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
@@ -62,7 +66,7 @@ rt <- rownames(terms)
 ct <- colnames(terms)
 
 # Check if there is a vertex-wise measure present
-qt <- c("qdecr_thickness", "qdecr_area", "qdecr_area.pial", "qdecr_curv", "qdecr_jacobian_white", "qdecr_pial", "qdecr_pial_lgi", "qdecr_sulc", "qdecr_volume", "qdecr_w-g.pct", "qdecr_white.H", "qdecr_white.K")
+qt <- c("qdecr_thickness", "qdecr_area", "qdecr_area.pial", "qdecr_curv", "qdecr_jacobian_white", "qdecr_pial", "qdecr_pial_lgi", "qdecr_sulc", "qdecr_volume", "qdecr_w_g.pct", "qdecr_white.H", "qdecr_white.K")
 if (length(intersect(rt, qt)) == 0) stop("Please specify in the formula one of: ", paste(qt, collapse = ", "))
 
 # Find which one it is
@@ -81,7 +85,9 @@ vw <- qdecr(id = id,
             hemi = hemi,
             dir_out = dir_out,
             target = target,
+            fwhm = fwhm,
             mcz_thr = mcz_thr,
+            cwp_thr = cwp_thr,
             measure = qqt2,
             mgh = mgh,
             mask = mask,
@@ -105,6 +111,12 @@ vw <- qdecr(id = id,
             )
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
+
+stacks_df <- data.frame(stack_number = seq_along(stacks(vw)), stack_name = stacks(vw))
+write.table(stacks_df, file.path(vw$paths$dir_out, "stack_names.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
+
+summary_df <- summary(vw, annot = TRUE)
+write.table(summary_df, file.path(vw$paths$dir_out, "significant_clusters.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
 
 if (save) qdecr_save(vw, save_data = save_data)
 vw
