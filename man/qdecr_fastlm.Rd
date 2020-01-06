@@ -5,8 +5,9 @@
 \title{Vertex-wise linear regression (based on RcppEigen)}
 \usage{
 qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
-  n_cores = 1, target = "fsaverage", mcz_thr = 30, mgh = NULL,
-  mask = NULL, mask_path = system.file("extdata", paste0(hemi,
+  n_cores = 1, target = "fsaverage", fwhm = ifelse(measure ==
+  "pial_lgi", 5, 10), mcz_thr = 30, mgh = NULL, mask = NULL,
+  mask_path = system.file("extdata", paste0(hemi,
   ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
   dir_subj = Sys.getenv("SUBJECTS_DIR"),
   dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
@@ -31,6 +32,8 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 \item{n_cores}{the number of cores to be used}
 
 \item{target}{the target template (usually "fsaverage")}
+
+\item{fwhm}{full width half max (default = 10 mm, for pial_lgi it is 5 mm)}
 
 \item{mcz_thr}{the Monte Carlo simulation threshold times 10 (13 = 0.05, 20 = 0.01, 23 = 0.005 30 = 0.001, etc..)}
 

@@ -8,6 +8,7 @@
 #' @param project the base name you want to assign to the output files
 #' @param n_cores the number of cores to be used
 #' @param target the target template (usually "fsaverage")
+#' @param fwhm full width half max (default = 10 mm, for pial_lgi it is 5 mm)
 #' @param mcz_thr the Monte Carlo simulation threshold times 10 (13 = 0.05, 20 = 0.01, 23 = 0.005 30 = 0.001, etc..)
 #' @param mgh NOT IMPLEMENTED; path to existing merged mgh file, default is NULL
 #' @param mask mgh file to mask analysis; default is to use the cortex label from the target
@@ -37,6 +38,7 @@ qdecr_fastlm <- function(formula,
                          project,
                          n_cores = 1,
                          target = "fsaverage",
+                         fwhm = ifelse(measure == "pial_lgi", 5, 10),
                          mcz_thr = 30,
                          mgh = NULL,
                          mask = NULL,
@@ -81,6 +83,7 @@ vw <- qdecr(id = id,
             hemi = hemi,
             dir_out = dir_out,
             target = target,
+            fwhm = fwhm,
             mcz_thr = mcz_thr,
             measure = qqt2,
             mgh = mgh,
