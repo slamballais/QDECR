@@ -72,10 +72,11 @@ qdecr <- function(id,
   # Intro
   if (verbose) {
     message("\n")
-    catprompt("QDECR v0.8.0")
-    message("Welcome to QDECR (v0.8.0)")
+    catprompt(paste0("QDECR v", packageVersion("QDECR")))
+    message(paste0("Welcome to QDECR (v", packageVersion("QDECR"), ")"))
     message("Authors: Sander Lamballais & Ryan Muetzel")
-    message("Website: www.github.com/slamballais/QDECR")
+    message("Website: www.qdecr.com")
+    message("Repository: www.github.com/slamballais/QDECR")
   }
   
   ## Part 1: All checks and data prep
