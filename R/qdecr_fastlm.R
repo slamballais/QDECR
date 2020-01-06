@@ -9,7 +9,7 @@
 #' @param n_cores the number of cores to be used
 #' @param target the target template (usually "fsaverage")
 #' @param fwhm full width half max (default = 10 mm, for pial_lgi it is 5 mm)
-#' @param mcz_thr the Monte Carlo simulation threshold times 10 (13 = 0.05, 20 = 0.01, 23 = 0.005 30 = 0.001, etc..)
+#' @param mcz_thr A numeric value for the Monte Carlo simulation threshold (default: 0.001). Any of the following are accepted (equivalent values separate by `/`): 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.
 #' @param cwp_thr the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)
 #' @param mgh NOT IMPLEMENTED; path to existing merged mgh file, default is NULL
 #' @param mask mgh file to mask analysis; default is to use the cortex label from the target
@@ -40,7 +40,7 @@ qdecr_fastlm <- function(formula,
                          n_cores = 1,
                          target = "fsaverage",
                          fwhm = ifelse(measure == "pial_lgi", 5, 10),
-                         mcz_thr = 30,
+                         mcz_thr = 0.001,
                          cwp_thr = 0.025,
                          mgh = NULL,
                          mask = NULL,
