@@ -7,7 +7,7 @@
 qdecr_load(path, reload = FALSE)
 }
 \arguments{
-\item{path}{Either the path to the directory, or a direct path to the associated .rds or .fst file}
+\item{path}{Either the path to the directory, or a direct path to the associated .rds file}
 
 \item{reload}{If TRUE, also reloads the vertex-wise matrix (which is HUGE!); default is FALSE}
 }

@@ -61,9 +61,9 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 
 \item{verbose}{if TRUE, writes out standard log; if FALSE, no output is generated}
 
-\item{save}{if TRUE, saves the output to a .fst file}
+\item{save}{if TRUE, saves the output to a .rds file}
 
-\item{save_data}{if TRUE, includes the raw data + design matrices in the .fst file}
+\item{save_data}{if TRUE, includes the raw data + design matrices in the .rds file}
 
 \item{debug}{NOT IMPLEMENTED; will output the maximal log to allow for easy debugging}
 
