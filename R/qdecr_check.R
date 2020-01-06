@@ -144,6 +144,17 @@ check_id <- function(id, md){
   NULL
 }
 
+check_mcz_thr <- function(mcz_thr) {
+  if (!is.numeric) stop("`mcz_thr` is not numeric.")
+  if (mcz_thr %in% c(13, 1.3, 0.05)) 13 else 
+    if (mcz_thr %in% c(20, 2.0, 0.01)) 20 else 
+      if (mcz_thr %in% c(23, 2.3, 0.005)) 23 else 
+        if (mcz_thr %in% c(30, 3.0, 0.001)) 30 else 
+          if (mcz_thr %in% c(33, 3.3, 0.0005)) 33 else 
+            if (mcz_thr %in% c(40, 4.0, 0.0001)) 40 else 
+              stop("`mcz_thr` does not have an accepted value (13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001).")
+}
+
 check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
  check_dir_subj(dir_subj, vw$input$target, vw$input$md, vw$input$id)
  dir_out2 <- check_dir_out(dir_out, vw$input$project, vw$input$project2, vw$input$dir_out_tree, vw$input$clobber)
