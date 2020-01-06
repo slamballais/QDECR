@@ -10,6 +10,7 @@
 #' @param target the target template (usually "fsaverage")
 #' @param fwhm full width half max (default = 10 mm, for pial_lgi it is 5 mm)
 #' @param mcz_thr the Monte Carlo simulation threshold times 10 (13 = 0.05, 20 = 0.01, 23 = 0.005 30 = 0.001, etc..)
+#' @param cwp_thr the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)
 #' @param mgh NOT IMPLEMENTED; path to existing merged mgh file, default is NULL
 #' @param mask mgh file to mask analysis; default is to use the cortex label from the target
 #' @param mask_path path to the mask; default is the cortex mask that is provided with the QDECR package
@@ -40,6 +41,7 @@ qdecr_fastlm <- function(formula,
                          target = "fsaverage",
                          fwhm = ifelse(measure == "pial_lgi", 5, 10),
                          mcz_thr = 30,
+                         cwp_thr = 0.025,
                          mgh = NULL,
                          mask = NULL,
                          mask_path = system.file("extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
@@ -85,6 +87,7 @@ vw <- qdecr(id = id,
             target = target,
             fwhm = fwhm,
             mcz_thr = mcz_thr,
+            cwp_thr = cwp_thr,
             measure = qqt2,
             mgh = mgh,
             mask = mask,

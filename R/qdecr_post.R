@@ -11,33 +11,28 @@ calc_fwhm <- function(final_path, final_mask_path, est_fwhm_path, hemi, eres, ma
   return(fwhm)
 }
 
-runMriSurfCluster <- function(final_path, dir_fshome, hemi, pval, fwhm, mask_path = NULL, cwpThr = 0.025, mczThr = NULL, csdSign = "abs", verbose = FALSE, stack, stack_name) {
+runMriSurfCluster <- function(final_path, dir_fshome, hemi, pval, fwhm, mask_path = NULL, cwp_thr = 0.025, mcz_thr = 30, csd_sign = "abs", verbose = FALSE, stack, stack_name) {
 
-  if (is.null(mczThr)){
-    mczThr = paste0("th", as.character(30))
-  }
-  else {
-    mczThr =  paste0("th", as.character(mczThr))
-  }
+  mcz_thr2 <- paste0("th", mcz_thr)
 
-  oBaseName <- paste0(final_path, ".stack", stack, ".cache.", mczThr, '.', csdSign, ".sig")
-  if (fwhm < 10) fwhm <- paste0('0', fwhm)
-  csd <- file.path(dir_fshome, "average/mult-comp-cor/fsaverage", hemi, paste0("cortex/fwhm", fwhm), csdSign, mczThr, "mc-z.csd")
-  cmdStr <- paste("mri_surfcluster",
-                  "--in", pval,
-                  "--csd", csd, 
-                  "--cwsig", paste0(oBaseName, ".cluster.mgh"),
-                  "--vwsig", paste0(oBaseName, ".voxel.mgh"),
-                  "--sum", paste0(oBaseName, ".cluster.summary"),
-                  "--ocn",  paste0(oBaseName, ".ocn.mgh"),
-                  "--oannot", paste0(oBaseName, ".ocn.annot"),
-                  "--annot", "aparc",
-                  "--csdpdf",  paste0(oBaseName, ".pdf.dat"),
-                  "--cwpvalthresh", cwpThr,
-                  "--o", paste0(oBaseName, ".masked.mgh"),
-                  "--no-fixmni",
-                  "--surf", "white")
-  cmdStr <- if (!is.null(mask_path)) paste(cmdStr, "--mask", mask_path) else paste(cmdStr, "--cortex")
-  system(cmdStr, ignore.stdout = !verbose)
+  o_base_name <- paste0(final_path, ".stack", stack, ".cache.", mcz_thr2, '.', csd_sign, ".sig")
+  if (fwhm < 10) fwhm <- paste0("0", fwhm)
+  csd <- file.path(dir_fshome, "average/mult-comp-cor/fsaverage", hemi, paste0("cortex/fwhm", fwhm), csd_sign, mcz_thr2, "mc-z.csd")
+  cmd_str <- paste("mri_surfcluster",
+                   "--in", pval,
+                   "--csd", csd, 
+                   "--cwsig", paste0(o_base_name, ".cluster.mgh"),
+                   "--vwsig", paste0(o_base_name, ".voxel.mgh"),
+                   "--sum", paste0(o_base_name, ".cluster.summary"),
+                   "--ocn",  paste0(o_base_name, ".ocn.mgh"),
+                   "--oannot", paste0(o_base_name, ".ocn.annot"),
+                   "--annot", "aparc",
+                   "--csdpdf",  paste0(o_base_name, ".pdf.dat"),
+                   "--cwpvalthresh", cwp_thr,
+                   "--o", paste0(o_base_name, ".masked.mgh"),
+                   "--no-fixmni",
+                   "--surf", "white")
+  cmd_str <- if (!is.null(mask_path)) paste(cmd_str, "--mask", mask_path) else paste(cmd_str, "--cortex")
+  system(cmd_str, ignore.stdout = !verbose)
   NULL
 }

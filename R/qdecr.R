@@ -36,6 +36,7 @@ qdecr <- function(id,
                               "w_g.pct", "white.H", "white.K"),
                   fwhm = ifelse(measure == "pial_lgi", 5, 10),
                   mcz_thr = 30, 
+                  cwp_thr = 0.025,
                   mgh = NULL,
                   mask = NULL,
                   mask_path = system.file("extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
@@ -187,7 +188,7 @@ qdecr <- function(id,
   for ( i in seq_along(vw$stack$names)){
     message2("\n", verbose = verbose)
     runMriSurfCluster(vw$paths$final_path, vw$paths$dir_fshome, vw$input$hemi, vw$stack$p[[i]], vw$post$fwhm_est, 
-                      mask_path = vw$paths$final_mask_path, verbose = verbose, mczThr = mcz_thr, 
+                      mask_path = vw$paths$final_mask_path, verbose = verbose, mcz_thr = mcz_thr, cwp_thr = cwp_thr,
                       stack = i, stack_name = vw$stack$names[i])
   }
   vw$post$final_mask <- load.mgh(vw$paths$final_mask_path)$x
