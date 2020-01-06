@@ -66,6 +66,14 @@ load.mgh <- function(input.file) {
          nframes, type = type, dof = dof)
 }
 
+#' Load an .annot file into memory
+#'
+#' @param input.file full path to the .annot file
+#'
+#' @return annot object with data and various header elements
+#'
+#' @export
+#' 
 load.annot <- function(input.file) {
   # rewrite of load.mgh
   to.read <- file(input.file, "rb")
