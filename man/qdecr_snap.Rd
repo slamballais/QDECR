@@ -4,13 +4,16 @@
 \alias{qdecr_snap}
 \title{Opens Freeview to take snapshots}
 \usage{
-qdecr_snap(vw, stack = NULL, ext = ".tiff", zoom = 1,
-  compose = TRUE, plot_brain = TRUE, save_plot = TRUE, mask = TRUE)
+qdecr_snap(vw, stack = NULL, type = c("coef", "se", "t", "p"),
+  ext = ".tiff", zoom = 1, compose = TRUE, plot_brain = TRUE,
+  save_plot = TRUE, sig = TRUE, ...)
 }
 \arguments{
 \item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}
 
 \item{stack}{Either a numeric or a string for your variable (use `stacks(vw)`)}
+
+\item{type}{The type of map to plot (currently for OLS). Default is `coef`, others are `se`, `t` and `p`}
 
 \item{ext}{Extension of the image files that will be stored on disk}
 
@@ -22,7 +25,9 @@ qdecr_snap(vw, stack = NULL, ext = ".tiff", zoom = 1,
 
 \item{save_plot}{Logical; if TRUE, saves the composed image}
 
-\item{mask}{Logical; if TRUE, only the significant clusters are shown}
+\item{sig}{Logical; if TRUE, only the significant clusters are shown}
+
+\item{...}{any arguments that freeview (on command line) normally takes for manipulating surface files}
 }
 \description{
 Opens Freeview to take snapshots and compiles them into a plot

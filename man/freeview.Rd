@@ -4,14 +4,19 @@
 \alias{freeview}
 \title{Opens Freeview}
 \usage{
-freeview(vw, stack = NULL, mask = TRUE)
+freeview(vw, stack = NULL, type = c("coef", "se", "t", "p"),
+  sig = TRUE, ...)
 }
 \arguments{
 \item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}
 
 \item{stack}{Either a numeric or a string for your variable (use `stacks(vw)`)}
 
-\item{mask}{Logical; if TRUE, only the significant clusters are shown}
+\item{type}{The type of map to plot (currently for OLS). Default is `coef`, others are `se`, `t` and `p`}
+
+\item{sig}{Logical; if TRUE (default), only the significant clusters are shown}
+
+\item{...}{any arguments that freeview (on command line) normally takes for manipulating surface files}
 }
 \description{
 Opens Freeview to view the surface of a specific stack/contrast

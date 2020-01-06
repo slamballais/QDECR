@@ -36,3 +36,5 @@ message2 <- function(..., verbose = TRUE) {
   invisible()
 }
 
+collapse <- function(..., collapse = NULL) paste(..., collapse = collapse)
+

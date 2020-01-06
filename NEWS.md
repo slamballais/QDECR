@@ -8,7 +8,8 @@
 
 ## New features
 * Added `cwp_thr` argument to `qdecr_fastlm` and `qdecr` to set the further cluster-wise p-value adjustment (default is 0.025 due to having 2 hemispheres, thus 0.05 / 2).
-* Automatically output two extra files: "significant_clusters.txt" (the output of `summary(vw, annot = TRUE)`) and "stack_names.txt" (the output of `stacks(vw)` and the corresponding stack numbers)
+* Automatically output two extra files: "significant_clusters.txt" (the output of `summary(vw, annot = TRUE)`) and "stack_names.txt" (the output of `stacks(vw)` and the corresponding stack numbers).
+* Modified `freeview` and `qdecr_snap`. The `mask` argument is now called `sig`. Furthermore, the ranges for the overlay colors are determined dynamically. Finally, users can now set any arguments to Freeview for manipulating surface files (see `freeview --help` on the command line).
 
 # QDECR 0.8.0: Momo
 
