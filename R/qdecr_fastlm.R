@@ -62,7 +62,7 @@ rt <- rownames(terms)
 ct <- colnames(terms)
 
 # Check if there is a vertex-wise measure present
-qt <- c("qdecr_thickness", "qdecr_area", "qdecr_area.pial", "qdecr_curv", "qdecr_jacobian_white", "qdecr_pial", "qdecr_pial_lgi", "qdecr_sulc", "qdecr_volume", "qdecr_w-g.pct", "qdecr_white.H", "qdecr_white.K")
+qt <- c("qdecr_thickness", "qdecr_area", "qdecr_area.pial", "qdecr_curv", "qdecr_jacobian_white", "qdecr_pial", "qdecr_pial_lgi", "qdecr_sulc", "qdecr_volume", "qdecr_w_g.pct", "qdecr_white.H", "qdecr_white.K")
 if (length(intersect(rt, qt)) == 0) stop("Please specify in the formula one of: ", paste(qt, collapse = ", "))
 
 # Find which one it is
