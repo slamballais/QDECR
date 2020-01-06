@@ -4,7 +4,11 @@
 * If the estimated smoothness is below 1, we now increase it to 1 to avoid problems down the line.
 * Fixed a bug in qdecr_clusters where it assumes that there is always at least 1 cluster significant.
 * "w-g.pct" files can now be used as a measure by specifying "qdecr_w_g.pct" (underscore instead of hyphen).
-* Added `fwhm` argument to `qdecr_fastlm`.
+* Added `fwhm` argument to `qdecr_fastlm`, which was missing before.
+
+## New features
+* Added `cwp_thr` argument to `qdecr_fastlm` and `qdecr` to set the further cluster-wise p-value adjustment (default is 0.025 due to having 2 hemispheres, thus 0.05 / 2).
+* Automatically output two extra files: "significant_clusters.txt" (the output of `summary(vw, annot = TRUE)`) and "stack_names.txt" (the output of `stacks(vw)` and the corresponding stack numbers)
 
 # QDECR 0.8.0: Momo
 

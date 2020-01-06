@@ -112,6 +112,12 @@ vw <- qdecr(id = id,
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
 
+stacks_df <- data.frame(stack_number = seq_along(stacks(vw)), stack_name = stacks(vw))
+write.table(stacks_df, file.path(vw$paths$dir_out, "stack_names.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
+
+summary_df <- summary(vw, annot = TRUE)
+write.table(summary_df, file.path(vw$paths$dir_out, "significant_clusters.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
+
 if (save) qdecr_save(vw, save_data = save_data)
 vw
 }
