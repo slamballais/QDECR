@@ -43,6 +43,7 @@ qdecr <- function(id,
                   dir_tmp = dir_out,
                   dir_out,
                   dir_out_tree = TRUE,
+                  file_out_tree = !dir_out_tree, 
                   clean_up = TRUE,
                   clean_up_bm = TRUE,
                   clobber = FALSE,
@@ -72,7 +73,7 @@ qdecr <- function(id,
   measure <- match.arg(measure)
   hemi <- match.arg(hemi)
   model <- match.arg(model)
-  
+
   # Check margs
   if (is.null(margs)) stop("`margs` is not defined, so no model can be run.")
   margs <- if (model == "default") qdecr_setnames(margs, deparse(margs[[1]])) else qdecr_setnames(margs, model)
@@ -88,7 +89,7 @@ qdecr <- function(id,
   md <- imp2list(data)
   
   # Assemble and check input arguments
-  vw$input <- qdecr_check(id, md, margs, hemi, vertex, measure, model, target, project, dir_out_tree, clobber, fwhm, n_cores, prep_fun)
+  vw$input <- qdecr_check(id, md, margs, hemi, vertex, measure, model, target, project, dir_out_tree, clobber, fwhm, n_cores, prep_fun, file_out_tree)
   vw$mask <- qdecr_check_mask(mask, mask_path)
   vw$paths <- check_paths(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path)
   mcz_thr <- check_mcz_thr(mcz_thr)
@@ -168,13 +169,13 @@ qdecr <- function(id,
   # Run clusterwise and move all files to the right directory
   for ( i in seq_along(vw$stack$names)){
     message2("\n", verbose = verbose)
-    run_mri_surf_cluster(vw$paths$final_path, vw$paths$dir_fshome, vw$input$hemi, vw$stack$p[[i]], vw$post$fwhm_est, 
-                      mask_path = vw$paths$final_mask_path, verbose = verbose, mcz_thr = mcz_thr, cwp_thr = cwp_thr,
+    run_mri_surf_cluster(vw, vw$stack$p[[i]], vw$post$fwhm_est, mask_path = vw$paths$final_mask_path, 
+                      verbose = verbose, mcz_thr = mcz_thr, cwp_thr = cwp_thr,
                       stack = i, stack_name = vw$stack$names[i])
   }
   vw$post$final_mask <- load.mgh(vw$paths$final_mask_path)$x
   
-    catprompt("Calculating vertex-wise values", verbose = verbose)
+  catprompt("Calculating vertex-wise values", verbose = verbose)
 
   # Do FBM-calculations for plotting histograms and such
   vw$post$mgh_description <- list()

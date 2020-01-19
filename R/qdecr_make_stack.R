@@ -9,7 +9,9 @@ qdecr_make_stack <- function(vw, stats, mcz_thr, clusterfiles = c("cluster.mgh",
     for (n in nn1) stack[[n]] <- list()
     for(i in seq_along(stack$names)){
       for (j in seq_along(nn1)){
-        stack[[nn1[j]]][[stack$names[i]]] <- paste0(vw$paths$final_path, ".stack", i, ".", nn2[j])
+        temp <- paste0("stack", i, ".", nn2[j])
+        fp <- vw$paths$final_path 
+        stack[[nn1[j]]][[stack$names[i]]] <- if(!vw$input$file_out_tree) file.path(fp, temp) else paste(fp, temp, sep = ".")
       }
     }
     stack

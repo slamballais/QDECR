@@ -12,7 +12,8 @@ qdecr_check_backing <- function(backing, clobber){
 }
 
 qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
-                        project, dir_out_tree, clobber, fwhm, n_cores, prep_fun){
+                        project, dir_out_tree, clobber, fwhm, n_cores, prep_fun,
+                        file_out_tree){
 
   # verify that id is correct and exists within data
   check_id(id, md)
@@ -42,6 +43,7 @@ qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
   input[["project"]] <- project
   input[["project2"]] <- paste(hemi, project, measure, sep = ".")
   input[["dir_out_tree"]] <- dir_out_tree
+  input[["file_out_tree"]] <- file_out_tree
   input[["clobber"]] <- clobber
   input[["fwhm"]] <- fwhm
   input[["fwhmc"]] <- paste0("fwhm", fwhm)
@@ -143,7 +145,7 @@ check_id <- function(id, md){
 }
 
 check_mcz_thr <- function(mcz_thr) {
-  if (!is.numeric) stop("`mcz_thr` is not numeric.")
+  if (!is.numeric(mcz_thr)) stop("`mcz_thr` is not numeric.")
   if (mcz_thr %in% c(13, 1.3, 0.05)) 13 else 
     if (mcz_thr %in% c(20, 2.0, 0.01)) 20 else 
       if (mcz_thr %in% c(23, 2.3, 0.005)) 23 else 
@@ -158,7 +160,10 @@ check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
  dir_out2 <- check_dir_out(dir_out, vw$input$project, vw$input$project2, vw$input$dir_out_tree, vw$input$clobber)
  if (is.null(dir_fshome) || dir_fshome == "") stop("dir_fshome is not specified. Please set the global variable FREESURFER_HOME.")
 
- final_path <- file.path(dir_out2, vw$input$project2)
+ final_path <- paste0(dir_out2, "/")
+ if (vw$input$file_out_tree) final_path <- paste0(final_path, vw$input$project2)
+ dat <- if (vw$input$file_out_tree) ".fwhm.dat" else "fwhm.dat"
+ finalmask <- if (vw$input$file_out_tree) ".finalMask.mgh" else "finalMask.mgh"
  dir_tmp2 <- file.path(dir_tmp, vw$input$project2)
  backing_mgh <- paste0(dir_tmp2, "_mgh_backend")
 
@@ -172,8 +177,8 @@ check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
  paths[["backing_mgh"]] <- backing_mgh
  paths[["mask_path"]] <- mask_path
  paths[["final_path"]] <- final_path
- paths[["est_fwhm_path"]] <- paste0(final_path, ".fwhm.dat")
- paths[["final_mask_path"]] <- paste0(final_path, ".finalMask.mgh")
+ paths[["est_fwhm_path"]] <- paste0(final_path, dat)
+ paths[["final_mask_path"]] <- paste0(final_path, finalmask)
  paths[] <- lapply(paths, sub, pattern = "//", replacement = "/", fixed = TRUE)
  paths[] <- lapply(paths, sub, pattern = "/$", replacement = "")
  paths
