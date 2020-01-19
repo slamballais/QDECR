@@ -141,17 +141,11 @@ summary.vw_fastlm <- function(vw, verbose = FALSE, annot = FALSE, file = "aparc.
   cs2
 }
 
-
-
-
 qdecr_clusters <- function(vw, name = "aparc.annot") {
   file <- paste0(vw$input$hemi, ".", name)
   path <- file.path(vw$paths$dir_subj, vw$input$target, "label", file)
-  
   if (!file.exists(path)) stop("Provided annotation file does not exist.")
-  
   annot <- load.annot(path)
-  
   ocn_annot <- lapply(seq_along(vw$stack$names), function(x) {
     ocn <- qdecr_read_ocn(vw, x)
     if (any(ocn$x > 0)) annots <- lapply(seq_len(max(ocn$x)), function(i) annot$vd_label[ocn$x == i])
@@ -159,10 +153,8 @@ qdecr_clusters <- function(vw, name = "aparc.annot") {
   ocn_annot2 <- do.call(c, ocn_annot[!sapply(ocn_annot, is.null)])
   if(is.null(ocn_annot2)) return(NULL)
   ocn_annot3 <- lapply(ocn_annot2, table)
-  
   ta <- table(annot$vd_label)
   nta <- names(ta)
-  
   ocn_annot4 <- lapply(ocn_annot3, function(x) {
     nx <- names(x)
     new <- nta[!nta %in% nx]
@@ -173,17 +165,14 @@ qdecr_clusters <- function(vw, name = "aparc.annot") {
     }
     x
   })
-  
   ocn_annot5 <- lapply(ocn_annot4, function(x) {
     names(x) <- annot$LUT$LUT_labelname[match(names(x), annot$LUT$LUT_value)]
     na_nx <- is.na(names(x))
     if (sum(na_nx) == 1) names(x)[na_nx] <- "missing label"
     x
   })
-  
   ocn_p1 <- lapply(ocn_annot5, function(x) round(prop.table(x) * 100, 2))
   ocn_p2 <- lapply(ocn_annot5, function(x) round(x / ta * 100, 2))
-  
   ocn_p <- lapply(seq_along(ocn_p1), function(i) {
     x <- data.frame(area = names(ocn_p1[[i]]),
                     size = ocn_annot5[[i]],
@@ -193,13 +182,5 @@ qdecr_clusters <- function(vw, name = "aparc.annot") {
     x <- x[x$to_cluster != 0, ]
     x[order(x$to_cluster, decreasing = TRUE), ]
   })
-  
-  # return
   ocn_p
-  
 }
-
-
-
-
-

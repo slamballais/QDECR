@@ -4,8 +4,7 @@
 #' 
 #' This function is the worker function of the \code{QDECR} package. It allows
 #' .mgh format data as input and allows statistical analyses per vertex. A variety
-#' of statistical models have been implemented, such as linear regression and 
-#' GCTA. 
+#' of statistical models have been implemented, such as linear regression.
 #' 
 #' @param a test
 #' @param b test
@@ -20,8 +19,6 @@
 #' @importFrom foreach %dopar%
 #' @importFrom foreach foreach
 # @importFrom methods formalArgs
-
-
 
 qdecr <- function(id,
                   data,
@@ -57,19 +54,7 @@ qdecr <- function(id,
                   chunk_size = 1000,
                   sander = FALSE
                   ){
-  
-  ### GENERAL STRUCTURE: All steps of qdecr are split into specific functions.
-  ### Each function takes a list (of arguments, data, etc.) and outputs a modified
-  ### list (of arguments, data, etc.) that can act as input for the next step.
-  ### A massive further improvement is the `vw` object, which can take ANY
-  ### function and can apply it to all vertices. This allows the user to apply
-  ### ANY statistical model, vertex-wise. Other improvements:
-  ### * qdecr calls without relying on the BigMemory package
-  ### * a more accurate progress bar
-  ### * more expansive contrast options
-  ### * specifying vertex data as outcome or determinant by using a reserved name
 
-  # Intro
   if (verbose) {
     message("\n")
     catprompt(paste0("QDECR v", packageVersion("QDECR")))
@@ -81,11 +66,8 @@ qdecr <- function(id,
   
   ## Part 1: All checks and data prep
   catprompt("Integrity checks", verbose = verbose)
-  
-  # Create a vw object (this step should be more properly formalized with S4 objects
+
   vw <- list()
-  
-  # Check call
   vw$qdecr_call <- match.call()
   measure <- match.arg(measure)
   hemi <- match.arg(hemi)
@@ -128,7 +110,6 @@ qdecr <- function(id,
   message2("Checked all input arguments.", verbose = verbose)
 
   ## Part 2: Load vertex data
-  
   catprompt("Loading vertex data", verbose = verbose)
   vw$input$mgh_ids <- as.character(unlist(vw$input$md[[1]][,vw$input$id, drop = TRUE]))
   
@@ -139,12 +120,10 @@ qdecr <- function(id,
   message2("\n", verbose = verbose)
   
   ## Part 3: Make descriptions, print them if verbose
-  
   catprompt("Pre-analysis overview", verbose = verbose)
   vw$describe <- qdecr_pre_describe(vw, mask, verbose = verbose)
   
   ## Part 4: Analyses
-
   catprompt("Vertex-wise analyses", verbose = verbose)
   class(vw) <- class(vw$model)
   vw$results <- vertexwise(vw, analysis_fun = analysis_fun, chunk = chunk_size)
@@ -196,8 +175,7 @@ qdecr <- function(id,
   vw$post$final_mask <- load.mgh(vw$paths$final_mask_path)$x
   
     catprompt("Calculating vertex-wise values", verbose = verbose)
-  
-  ### FINAL THINGS TO DO:
+
   # Do FBM-calculations for plotting histograms and such
   vw$post$mgh_description <- list()
   vw$post$mgh_description$vertex_mean <- fbm_row_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
@@ -205,7 +183,7 @@ qdecr <- function(id,
   vw$post$mgh_description$subject_mean <- fbm_col_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
   vw$post$mgh_description$subject_sd <- fbm_col_sd(vw$mgh, n_cores, row.mask = vw$post$final_mask)
   
-    catprompt("Summarizing results", verbose = verbose)
+  catprompt("Summarizing results", verbose = verbose)
   
   # Post-describe
   if (sander) return(vw)
@@ -214,19 +192,6 @@ qdecr <- function(id,
   if(clean_up_bm) vw$mgh <- NULL
   
   return(vw)
-  
-  
-  # Save out the .rds files
-  # Make JSON-like output file that contains all info
-  
-  # Move all files to the proper output structure
-  
-  
-  # Clean everything
-  qdecr_clean()
-  
-  return(qout)
-  
 }
 
 

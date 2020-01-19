@@ -1,11 +1,8 @@
-
 qdecr_start_describe <- function() {
-
   emp <- as.matrix(data.frame(type = character(),
                               name = character(),
                               value = character(),
-                              stringsAsFactors = FALSE)
-                   )
+                              stringsAsFactors = FALSE))
   description <- list(call = emp,
                       input = emp,
                       paths = emp,
@@ -18,10 +15,8 @@ qdecr_start_describe <- function() {
 }
 
 qdecr_pre_describe <- function(vw, mask, verbose = TRUE) {
-
   info <- qdecr_start_describe()
   info$input <- rbind(info$input, 
-                      #c("input", "Call", paste(trimws(deparse(vw$qdecr_call)), collapse = "")),
                       c("input", "Hemisphere", vw$input$hemi),
                       c("input", "Project name", vw$input$project),
                       c("input", "Project final name", vw$input$project2), 
@@ -29,36 +24,27 @@ qdecr_pre_describe <- function(vw, mask, verbose = TRUE) {
                       c("input", "Target", vw$input$target), 
                       c("input", "dir_out_tree", vw$input$dir_out_tree),
                       c("input", "clobber", vw$input$clobber),
-                      c("input", "fwhm", vw$input$fwhm)
-                      )
+                      c("input", "fwhm", vw$input$fwhm))
   info$paths <- rbind(info$paths,
                       c("paths", "Subjects dir", vw$paths$dir_subj),
                       c("paths", "Freesurfer home dir", vw$paths$dir_fshome),
                       c("paths", "Temp dir", vw$paths$dir_tmp),
                       c("paths", "Output dir", vw$paths$dir_out),
-                      c("paths", "Path to default mask", if(file.exists(vw$paths$mask_path)) vw$paths$mask_path else "Not found!")
-                      )
+                      c("paths", "Path to default mask", if(file.exists(vw$paths$mask_path)) vw$paths$mask_path else "Not found!"))
   info$data <- rbind(info$data, 
                      c("data", "N subjects", length(unique(vw$input$md[[1]][[vw$input$id]]))),
                      c("data", "N data points", nrow(vw$input$md[[1]])), 
                      c("data", "N datasets", length(vw$input$md)),
-                     c("data", "Vertices loaded", nrow(vw$mgh))
-                     )
-                     
+                     c("data", "Vertices loaded", nrow(vw$mgh)))
   im <- if (vw$input$model != "default") vw$input$model else vw$model$margs[[1]]
-                     
   info$model <- rbind(info$model,
                       c("model", "Model", im), 
                       c("model", "Vertex data", vw$input$measure),
-                      c("model", "Formula", paste(deparse(vw$model$formula), collapse = ""))
-                      )                      
+                      c("model", "Formula", paste(deparse(vw$model$formula), collapse = "")))                      
   info$mask <- rbind(info$mask,
                      c("mask", "Mask origin", if (!is.null(mask)) "User defined." else vw$paths$mask_path),  
-                     c("mask", "Masked vertices", sum(vw$mask))
-                     )       
-  
+                     c("mask", "Masked vertices", sum(vw$mask)))       
   if (verbose) qdecr_print_describe(info, verbose = verbose)
-  
   info
 }
                 
@@ -76,13 +62,9 @@ qdecr_print_describe <- function(info, verbose = TRUE) {
 }
 
 qdecr_post_describe <- function(vw, verbose = TRUE) {
-
   info <- vw$describe
-  
   ls <- length(vw$stack$names)
-  
   info$stack <- rbind(info$stack, cbind(rep("stack", ls), paste("Stack", 1:ls), vw$stack$names))
-
   info$post <- rbind(info$post, 
                      c("post", "Final mask path", vw$paths$final_mask_path),
                      c("post", "Final N vertices", sum(vw$post$final_mask)),
@@ -90,8 +72,7 @@ qdecr_post_describe <- function(vw, verbose = TRUE) {
                      c("post", paste("Mean", vw$input$measure, "per vertex"), mean(vw$post$mgh_description$vertex_mean)),
                      c("post", paste("SD", vw$input$measure, "per vertex"), mean(vw$post$mgh_description$vertex_sd)),
                      c("post", paste("Mean", vw$input$measure, "per subject"), mean(vw$post$mgh_description$subject_mean)),
-                     c("post", paste("SD", vw$input$measure, "per subject"), mean(vw$post$mgh_description$subject_sd))
-                     )
+                     c("post", paste("SD", vw$input$measure, "per subject"), mean(vw$post$mgh_description$subject_sd)))
   if (verbose) qdecr_print_describe(info, verbose = verbose)
   info
 }

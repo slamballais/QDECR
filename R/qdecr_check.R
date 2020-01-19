@@ -1,5 +1,3 @@
-
-
 qdecr_check_backing <- function(backing, clobber){
   for (n in backing){
     n <- paste0(n, ".bk")
@@ -176,7 +174,6 @@ check_paths <- function(vw, dir_tmp, dir_subj, dir_out, dir_fshome, mask_path){
  paths[["final_path"]] <- final_path
  paths[["est_fwhm_path"]] <- paste0(final_path, ".fwhm.dat")
  paths[["final_mask_path"]] <- paste0(final_path, ".finalMask.mgh")
-
  paths[] <- lapply(paths, sub, pattern = "//", replacement = "/", fixed = TRUE)
  paths[] <- lapply(paths, sub, pattern = "/$", replacement = "")
  paths

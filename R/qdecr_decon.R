@@ -31,7 +31,7 @@ do.call2 <- function(what, args, ...) { # Copied from: https://stackoverflow.com
   do.call(what, as.list(args), ...)
 }
 
-get2 <- function(x, ...) { # based on do.call2 above
+get2 <- function(x, ...) {
   if(is.character(x)){
     fn <- strsplit(x, "::")[[1]]
     x <- if(length(fn) == 1) {

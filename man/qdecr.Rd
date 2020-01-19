@@ -46,6 +46,5 @@ Runs vertex-wise analyses using a variety of statistical models
 \details{
 This function is the worker function of the \code{QDECR} package. It allows
 .mgh format data as input and allows statistical analyses per vertex. A variety
-of statistical models have been implemented, such as linear regression and 
-GCTA.
+of statistical models have been implemented, such as linear regression.
 }

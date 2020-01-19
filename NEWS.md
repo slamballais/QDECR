@@ -1,8 +1,8 @@
-# QDECR 0.8.3
+# QDECR 0.8.4
 
 ## Bug fixes
 * Fixed that the model output files (p.mgh, t.mgh, etc) also contained the mcz threshold (e.g. cache.th30).
-
+* Lots of comments removed/modified, and code was cleaned up a bit
 
 # QDECR 0.8.3
 
