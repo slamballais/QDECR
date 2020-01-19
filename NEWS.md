@@ -1,5 +1,11 @@
 # QDECR 0.8.3
 
+## Bug fixes
+* Fixed that the model output files (p.mgh, t.mgh, etc) also contained the mcz threshold (e.g. cache.th30).
+
+
+# QDECR 0.8.3
+
 ## Minor tweaks
 * The `mcz_thr` argument (for `qdecr` and `qdecr_fastlm`) now accepts: 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.
 * A new function `qdecr_mcz_thr` makes sure that the value is converted to 13/20/23/30/33/40. 
