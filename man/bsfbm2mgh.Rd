@@ -12,5 +12,5 @@ bsfbm2mgh(fbm, fname, filter = NULL)
 \item{vol}{MGH object (as from load.mgh)}
 }
 \description{
-Save out an MGH file from a big matrix
+Modified version of save_mgh.m (by Heath Pardoe, 09/12/2013)
 }

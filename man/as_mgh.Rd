@@ -10,19 +10,19 @@ as_mgh(x, v = NULL, ndim1 = NULL, ndim2 = NULL, ndim3 = NULL,
 \arguments{
 \item{x}{the vertex-wise values}
 
-\item{v}{(to be added)}
+\item{v}{Version (default = 1)}
 
-\item{ndim1}{(to be added)}
+\item{ndim1}{Width / 1st dimension}
 
-\item{ndim2}{(to be added)}
+\item{ndim2}{Height / 2nd dimension}
 
-\item{ndim3}{(to be added)}
+\item{ndim3}{Depth / 3rd dimension}
 
-\item{nframes}{(to be added)}
+\item{nframes}{Number of scalar components}
 
-\item{type}{(to be added)}
+\item{type}{Data type, can be UCHAR (0), SHORT (4), INT (1) or FLOAT (3)}
 
-\item{dof}{(to be added)}
+\item{dof}{Degrees of freedom}
 }
 \description{
 Create an object that is structured like an mgh object

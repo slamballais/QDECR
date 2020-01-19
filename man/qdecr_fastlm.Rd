@@ -2,7 +2,7 @@
 % Please edit documentation in R/qdecr_fastlm.R
 \name{qdecr_fastlm}
 \alias{qdecr_fastlm}
-\title{Vertex-wise linear regression (based on RcppEigen)}
+\title{Vertex-wise linear regression}
 \usage{
 qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
   n_cores = 1, target = "fsaverage", fwhm = ifelse(measure ==
@@ -77,5 +77,5 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 returns an object of classes "vw_fastlm" and "vw".
 }
 \description{
-Vertex-wise linear regression (based on RcppEigen)
+Vertex-wise linear regression
 }

@@ -12,5 +12,5 @@ save.mgh(vol, fname)
 \item{fname}{file name to be used to save out the data}
 }
 \description{
-Save out an MGH file from memory
+#' R translation of save_mgh.m (by Heath Pardoe, 09/12/2013)
 }

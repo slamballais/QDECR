@@ -18,14 +18,12 @@ catprompt <- function(string, n = 60, base = "-", center = TRUE, addSpace = TRUE
     phase <- ns - n
     end <- n - start - ns
   }
-  
   br1 <- paste0("\n", paste(rep(base, n), collapse = ""))
   sr <- paste(rep(base, start), collapse = "")
   er <- paste(rep(base, end), collapse = "")
   main <- paste0(sr, string, er)
   if (nchar(main) < n) main <- paste0(main, rep(base, n - nchar(main)))
   br2 <- paste(rep(base, n), collapse = "")
-  
   cat(br1, "\n")
   cat(main, "\n")
   cat(br2, "\n\n")

@@ -1,4 +1,4 @@
-#' Vertex-wise linear regression (based on RcppEigen)
+#' Vertex-wise linear regression
 #'
 #' @param formula an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See `?lm`.
 #' @param data a required argument that contains a data frame, a list of data frames or an imputed object that is supported by the `imp2list` function (mice, mi, etc.).
@@ -75,11 +75,8 @@ qid <- rt %in% qt
 if (sum(terms[qid, ]) > 1) stop("qdecr currently cannot handle interactions or combinations of the vertex terms.")
 qqt <- rt[qid]
 qqt2 <- sub("qdecr_", "", qqt)
-
 ff <- as.formula(deparse(formula))
-
 margs <- c(qdecr_decon(RcppEigen::fastLm()), list(formula = ff, data = data, method = 2))
-
 vw <- qdecr(id = id,
             margs = margs,
             hemi = hemi,
@@ -111,13 +108,10 @@ vw <- qdecr(id = id,
             )
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
-
 stacks_df <- data.frame(stack_number = seq_along(stacks(vw)), stack_name = stacks(vw))
 write.table(stacks_df, file.path(vw$paths$dir_out, "stack_names.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
-
 summary_df <- summary(vw, annot = TRUE)
 write.table(summary_df, file.path(vw$paths$dir_out, "significant_clusters.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
-
 if (save) qdecr_save(vw, save_data = save_data)
 vw
 }
