@@ -11,10 +11,11 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
   ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
   dir_subj = Sys.getenv("SUBJECTS_DIR"),
   dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
-  dir_out_tree = TRUE, clean_up_bm = TRUE, clean_up = TRUE,
-  clobber = FALSE, verbose = TRUE, save = TRUE, save_data = TRUE,
-  debug = FALSE, prep_fun = "prep_fastlm",
-  analysis_fun = "analysis_chunkedlm", chunk_size = 1000)
+  dir_out_tree = TRUE, file_out_tree = !dir_out_tree,
+  clean_up_bm = TRUE, clean_up = TRUE, clobber = FALSE,
+  verbose = TRUE, save = TRUE, save_data = TRUE, debug = FALSE,
+  prep_fun = "prep_fastlm", analysis_fun = "analysis_chunkedlm",
+  chunk_size = 1000)
 }
 \arguments{
 \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See `?lm`.}
@@ -52,6 +53,8 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 \item{dir_tmp}{directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`}
 
 \item{dir_out_tree}{if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out}
+
+\item{file_out_tree}{if TRUE, adds the full project name to the output file names. By default it is the inverse of dir_out_tree}
 
 \item{clean_up_bm}{if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp}
 

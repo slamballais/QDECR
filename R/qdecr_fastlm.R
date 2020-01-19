@@ -18,6 +18,7 @@
 #' @param dir_fshome Freesurfer directory; defaults to FREESURFER_HOME
 #' @param dir_tmp directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`
 #' @param dir_out_tree if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out
+#' @param file_out_tree if TRUE, adds the full project name to the output file names. By default it is the inverse of dir_out_tree
 #' @param clean_up_bm if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp
 #' @param clean_up NOT IMPLEMENTED; will be used for setting cleaning of other files
 #' @param clobber if TRUE, ignores already existing directories and writes over them; if FALSE, stops and warns user that a given directory already exists
@@ -49,6 +50,7 @@ qdecr_fastlm <- function(formula,
                          dir_fshome = Sys.getenv("FREESURFER_HOME"),
                          dir_tmp = dir_out,
                          dir_out_tree = TRUE,
+                         file_out_tree = !dir_out_tree,
                          clean_up_bm = TRUE,
                          clean_up = TRUE,
                          clobber = FALSE,
@@ -74,7 +76,7 @@ if (sum(qt %in% rt) > 1) stop("qdecr currently cannot handle multiple vertex-wis
 qid <- rt %in% qt
 if (sum(terms[qid, ]) > 1) stop("qdecr currently cannot handle interactions or combinations of the vertex terms.")
 qqt <- rt[qid]
-qqt2 <- sub("qdecr_", "", qqt)
+measure <- sub("qdecr_", "", qqt)
 ff <- as.formula(deparse(formula))
 margs <- c(qdecr_decon(RcppEigen::fastLm()), list(formula = ff, data = data, method = 2))
 vw <- qdecr(id = id,
@@ -85,7 +87,7 @@ vw <- qdecr(id = id,
             fwhm = fwhm,
             mcz_thr = mcz_thr,
             cwp_thr = cwp_thr,
-            measure = qqt2,
+            measure = measure,
             mgh = mgh,
             mask = mask,
             mask_path = mask_path,
@@ -96,6 +98,7 @@ vw <- qdecr(id = id,
             dir_subj = dir_subj,
             dir_fshome = dir_fshome,
             dir_out_tree = dir_out_tree,
+            file_out_tree = file_out_tree,
             clean_up = clean_up,
             clean_up_bm = clean_up_bm,
             clobber = clobber,

@@ -15,8 +15,9 @@ qdecr(id, data, vertex = "qdecr", margs = NULL,
   ".fsaverage.cortex.mask.mgh"), package = "QDECR"), project,
   dir_subj = Sys.getenv("SUBJECTS_DIR"),
   dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
-  dir_out, dir_out_tree = TRUE, clean_up = TRUE, clean_up_bm = TRUE,
-  clobber = FALSE, verbose = TRUE, debug = FALSE, n_cores = 1,
+  dir_out, dir_out_tree = TRUE, file_out_tree = !dir_out_tree,
+  clean_up = TRUE, clean_up_bm = TRUE, clobber = FALSE,
+  verbose = TRUE, debug = FALSE, n_cores = 1,
   prep_fun = "prep_fastlm", analysis_fun = "analysis_chunkedlm",
   chunk_size = 1000, sander = FALSE)
 }
