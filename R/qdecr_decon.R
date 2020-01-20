@@ -16,7 +16,7 @@ qdecr_extract <- function(margs, model){
 qdecr_setnames <- function(margs, model){
   m <- names(margs)
   if(is.null(m)) m <- rep("", length(margs))
-  f <- formalArgs(get2(model))
+  f <- methods::formalArgs(get2(model))
   f2 <- formals(get2(model))
   b <- which(m[-1] == "")
   m[b+1] <- f[!f %in% m[-1]][length(b)]

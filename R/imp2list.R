@@ -44,14 +44,14 @@ imp2list.list <- function(obj) {
 imp2list.matrix <- function(obj) imp2list(as.data.frame(obj))
 
 imp2list.mi <- function(obj) {
-  err <- require(mi)
-  if (!err) stop("You are trying to load in an `mi` output object, but `mi` is not installed.")
+  if (!requireNamespace("mi", quietly = TRUE))
+    stop("You are trying to load in an `mi` output object, but `mi` is not installed.")
   mi::complete(obj)
 }
 
 imp2list.mids <- function(obj) {
-  err <- require(mice)
-  if (!err) stop("You are trying to load in an `mice` output object (class `mids`), but `mice` is not installed.")
+  if (!requireNamespace("mice", quietly = TRUE))
+    stop("You are trying to load in an `mice` output object (class `mids`), but `mice` is not installed.")
   lapply(seq_len(obj$m), function(y) mice::complete(obj, y))
 }
 

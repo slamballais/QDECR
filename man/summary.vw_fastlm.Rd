@@ -4,11 +4,11 @@
 \alias{summary.vw_fastlm}
 \title{Summarize qdecr_fastlm clusters}
 \usage{
-\method{summary}{vw_fastlm}(vw, verbose = FALSE, annot = FALSE,
-  file = "aparc.annot", regions = 3)
+\method{summary}{vw_fastlm}(object, verbose = FALSE, annot = FALSE,
+  file = "aparc.annot", regions = 3, ...)
 }
 \arguments{
-\item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}
+\item{object}{The output object of a qdecr call (e.g. qdecr_fastlm)}
 
 \item{verbose}{Logical; if TRUE, it outputs some information of the steps; default is FALSE}
 
@@ -17,6 +17,8 @@
 \item{file}{string; the name of the file within the target template's label directory if annot = TRUE}
 
 \item{regions}{integer; number of regions that should be added if annot = TRUE}
+
+\item{...}{Further arguments for `summary`}
 }
 \description{
 Summarizes the significant clusters obtained from qdecr_fastlm

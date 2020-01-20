@@ -4,10 +4,12 @@
 \alias{print.vw}
 \title{Print for vw objects}
 \usage{
-\method{print}{vw}(vw)
+\method{print}{vw}(x, ...)
 }
 \arguments{
-\item{vw}{The output object of a qdecr analysis call}
+\item{x}{The output object of a qdecr analysis call}
+
+\item{...}{Further arguments for `print`}
 }
 \description{
 Prints a nicely formatted output for vw objects

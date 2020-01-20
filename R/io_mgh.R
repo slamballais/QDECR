@@ -1,11 +1,18 @@
 #' Combine all MGH files into one object
 #'
-#' @param input.list path to parent directory
-#' @param files.list file names within `input.list`
-#'
+#' @param input_path path to parent directory
+#' @param files_list file names within `input.list`
+#' @param mask mask to be used in later steps (i.e. analysis)
+#' @param hemi "lh" or "rh"
+#' @param measure vertex measure (e.g. "thickness")
+#' @param fwhmc the fwhm value in full notation (i.e. 20, 23, 30, etc)
+#' @param target the target template (usually "fsaverage")
+#' @param n_cores the number of cores to be used
+#' @param dir_tmp directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`
+#' @param project the base name you want to assign to the output files
+#' @param backing the path to the backing file
+#' @param verbose if TRUE, writes out standard log; if FALSE, no output is generated
 #' @return matrix with vertex data (columns) for each file (rows)
-#'
-#'
 qdecr_prep_mgh <- function(input_path, 
                            files_list = list.files(input_path),
                            mask, hemi, measure, fwhmc, target, 
@@ -19,9 +26,10 @@ qdecr_prep_mgh <- function(input_path,
   m <- bigstatsr::FBM(temp$ndim1, n, backingfile = backing)
   cl <- if(verbose) parallel::makeForkCluster(n_cores, outfile = "") else parallel::makeForkCluster(n_cores)
   doParallel::registerDoParallel(cl)
-  capture.output(pb <- txtProgressBar(0, n, style = 3), file = "/dev/null")
+  utils::capture.output(pb <- utils::txtProgressBar(0, n, style = 3), file = "/dev/null")
+  i <- NULL
   foreach(i = seq_len(n)) %dopar% {
-    setTxtProgressBar(pb, i)
+    utils::setTxtProgressBar(pb, i)
     m[,i] <- load.mgh(new_files[i])$x
     NULL
   }
@@ -117,8 +125,9 @@ load.annot <- function(input.file) {
 #'
 #' Modified version of save_mgh.m (by Heath Pardoe, 09/12/2013)
 #'
-#' @param vol MGH object (as from load.mgh)
+#' @param fbm a file backed matrix
 #' @param fname file name to be used to save out the data
+#' @param filter a vector of indices of rows to include of fbm
 #'
 #' @export
 #' 

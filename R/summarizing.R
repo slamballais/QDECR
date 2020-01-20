@@ -4,10 +4,12 @@
 #'
 #'See above.
 #'
-#'@param vw The output object of a qdecr_fastlm call
-#'@export
+#' @param x The output object of a qdecr_fastlm call
+#' @param ... Further arguments for `formula`
+#' @method formula vw_fastlm
+#' @export
 
-formula.vw_fastlm <- function(vw) vw$model$formula
+formula.vw_fastlm <- function(x, ...) x$model$formula
 
 #'Grabs the number of included participants from qdecr_fastlm output
 #'
@@ -15,10 +17,13 @@ formula.vw_fastlm <- function(vw) vw$model$formula
 #'
 #'See above.
 #'
-#'@param vw The output object of a qdecr analysis call
-#'@export
+#' @param object The output object of a qdecr analysis call
+#' @param ... Further arguments for `nobs` 
+#' @importFrom stats nobs
+#' @method nobs vw_fastlm
+#' @export
 
-nobs.vw_fastlm <- function(vw) vw$results$residuals$nrow
+nobs.vw_fastlm <- function(object, ...) object$results$residuals$nrow
 
 #'Print for vw objects
 #'
@@ -26,10 +31,12 @@ nobs.vw_fastlm <- function(vw) vw$results$residuals$nrow
 #'
 #'This is a standard print format for output of qdecr functions
 #'
-#'@param vw The output object of a qdecr analysis call
-#'@export
+#' @param x The output object of a qdecr analysis call
+#' @param ... Further arguments for `print`
+#' @method print vw
+#' @export
 
-print.vw <- function(vw) qdecr_print_describe(vw$describe, verbose = TRUE)
+print.vw <- function(x, ...) qdecr_print_describe(x$describe, verbose = TRUE)
 
 #'Grabs the estimated fwhm from qdecr_fastlm output
 #'
@@ -37,8 +44,8 @@ print.vw <- function(vw) qdecr_print_describe(vw$describe, verbose = TRUE)
 #'
 #'See above.
 #'
-#'@param vw The output object of a qdecr analysis call
-#'@export
+#' @param vw The output object of a qdecr analysis call
+#' @export
 
 qdecr_fwhm <- function(vw) return(vw$post$fwhm_est)
 
@@ -50,8 +57,8 @@ qdecr_fwhm <- function(vw) return(vw$post$fwhm_est)
 #'within the qdecr analysis. This functions commonly used for looking
 #'more specifically at variables.
 #'
-#'@param vw The output object of a qdecr analysis call
-#'@export
+#' @param vw The output object of a qdecr analysis call
+#' @export
 
 stacks <- function(vw) vw$stack$names
 
@@ -63,32 +70,34 @@ stacks <- function(vw) vw$stack$names
 #'and provides information per cluster. Additionally, it is possible to obtain annotated
 #'information, given that it is located in the target template's label directory.
 #'
-#'@param vw The output object of a qdecr call (e.g. qdecr_fastlm)
-#'@param verbose Logical; if TRUE, it outputs some information of the steps; default is FALSE
-#'@param annot Logical; if TRUE, `file` will be read in to obtain information on the top regions in that cluster
-#'@param file string; the name of the file within the target template's label directory if annot = TRUE
-#'@param regions integer; number of regions that should be added if annot = TRUE
-#'@return NULL
-#'@export
+#' @param object The output object of a qdecr call (e.g. qdecr_fastlm)
+#' @param verbose Logical; if TRUE, it outputs some information of the steps; default is FALSE
+#' @param annot Logical; if TRUE, `file` will be read in to obtain information on the top regions in that cluster
+#' @param file string; the name of the file within the target template's label directory if annot = TRUE
+#' @param regions integer; number of regions that should be added if annot = TRUE
+#' @param ... Further arguments for `summary`
+#' @return NULL
+#' @method summary vw_fastlm
+#' @export
 #'
-summary.vw_fastlm <- function(vw, verbose = FALSE, annot = FALSE, file = "aparc.annot", regions = 3){
+summary.vw_fastlm <- function(object, verbose = FALSE, annot = FALSE, file = "aparc.annot", regions = 3, ...){
   
   if(!is.numeric(regions)) stop("Provided `annot_length` is not a number.")
   if(!(regions > 0)) stop("Provided `annot_length` is not a positive number.")
   
   # Retrieve the stacks to be loaded
-  s <- vw$stack$names
+  s <- object$stack$names
   
   # Load the cluster/ocn data
   cl <- list()
-  for (i in seq_along(s)) cl[[i]] <- qdecr_read_ocn(vw, i)
+  for (i in seq_along(s)) cl[[i]] <- qdecr_read_ocn(object, i)
   
   # For each stack, deconstruct which indices each cluster is composed of
   for (i in seq_along(s)) cl[[i]] <- lapply(seq_len(max(cl[[i]]$x)), function(x) which(cl[[i]]$x == x))
   
   # Make an empty data frame
   nr <- sum(sapply(cl, length))
-  cm <- paste0("mean_", vw$input$measure)
+  cm <- paste0("mean_", object$input$measure)
   nc <- c("variable", "cluster", "n_vertices", cm, "mean_coefficient", "mean_se")
   cs <- lapply(cl, function(x) {
     y <- as.data.frame(matrix(NA, nrow = length(x), ncol = length(nc)))
@@ -97,13 +106,13 @@ summary.vw_fastlm <- function(vw, verbose = FALSE, annot = FALSE, file = "aparc.
   
   # Get info per stack
   cl2 <- list()
-  ct_m <- rep(FALSE, length(vw$post$final_mask))
+  ct_m <- rep(FALSE, length(object$post$final_mask))
   for (i in seq_along(s)){
     message2(paste0("Summarizing data for `", s[i], "`"), verbose = verbose)
     
     # Load coef and se
-    coo <- qdecr_read_coef(vw, i)$x
-    cse <- qdecr_read_se(vw, i)$x
+    coo <- qdecr_read_coef(object, i)$x
+    cse <- qdecr_read_se(object, i)$x
     
     for (j in seq_along(cl[[i]])){
       ct <- cl[[i]][[j]]
@@ -112,7 +121,7 @@ summary.vw_fastlm <- function(vw, verbose = FALSE, annot = FALSE, file = "aparc.
       cs[[i]][j, "variable"] <- s[i]
       cs[[i]][j, "cluster"] <- j
       cs[[i]][j, "n_vertices"] <- length(ct)
-      cs[[i]][j, cm] <- mean(vw$post$mgh_description$vertex_mean[ct_mask], na.rm = TRUE)
+      cs[[i]][j, cm] <- mean(object$post$mgh_description$vertex_mean[ct_mask], na.rm = TRUE)
       cs[[i]][j, "mean_coefficient"] <- mean(coo[ct])
       cs[[i]][j, "mean_se"] <- mean(cse[ct])
     }
@@ -121,7 +130,7 @@ summary.vw_fastlm <- function(vw, verbose = FALSE, annot = FALSE, file = "aparc.
   
   # Get cluster annotation information
   if (annot) {
-    ca <- qdecr_clusters(vw, name = file)
+    ca <- qdecr_clusters(object, name = file)
     if (is.null(ca)) return(cs2)
     ca2 <- lapply(ca, function(x) {
       nr2 <- nrow(x)
@@ -160,7 +169,7 @@ qdecr_clusters <- function(vw, name = "aparc.annot") {
     new <- nta[!nta %in% nx]
     lnew <- length(new)
     if (lnew > 0) {
-      x <- setNames(c(x, rep(0, lnew)), c(nx, new))
+      x <- stats::setNames(c(x, rep(0, lnew)), c(nx, new))
       x <- x[match(nta, names(x))]
     }
     x

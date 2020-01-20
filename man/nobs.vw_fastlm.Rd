@@ -4,10 +4,12 @@
 \alias{nobs.vw_fastlm}
 \title{Grabs the number of included participants from qdecr_fastlm output}
 \usage{
-\method{nobs}{vw_fastlm}(vw)
+\method{nobs}{vw_fastlm}(object, ...)
 }
 \arguments{
-\item{vw}{The output object of a qdecr analysis call}
+\item{object}{The output object of a qdecr analysis call}
+
+\item{...}{Further arguments for `nobs`}
 }
 \description{
 Grabs the number of included participants from qdecr_fastlm output

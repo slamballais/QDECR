@@ -6,13 +6,13 @@
 #'variable. As it opens Freeview directly, you will have access to all the functions
 #'of Freeview by default. To continue using R, simply close Freeview.
 #'
-#'@param vw The output object of a qdecr call (e.g. qdecr_fastlm)
-#'@param stack Either a numeric or a string for your variable (use `stacks(vw)`)
-#'@param type The type of map to plot (currently for OLS). Default is `coef`, others are `se`, `t` and `p`
-#'@param sig Logical; if TRUE (default), only the significant clusters are shown
-#'@param ... any arguments that freeview (on command line) normally takes for manipulating surface files
-#'@return NULL
-#'@export
+#' @param vw The output object of a qdecr call (e.g. qdecr_fastlm)
+#' @param stack Either a numeric or a string for your variable (use `stacks(vw)`)
+#' @param type The type of map to plot (currently for OLS). Default is `coef`, others are `se`, `t` and `p`
+#' @param sig Logical; if TRUE (default), only the significant clusters are shown
+#' @param ... any arguments that freeview (on command line) normally takes for manipulating surface files
+#' @return NULL
+#' @export
 
 freeview <- function(vw, stack = NULL, type = c("coef", "se", "t", "p"), sig = TRUE, ...) {
   if (is.null(stack)) stop("`stack` not defined. Please choose: ", paste(stacks(vw), collapse = ", "))
@@ -132,20 +132,21 @@ freeview_surf_cmd <- function(surface,
 #'This function works on top of the base `hist` function. It simply makes a histogram
 #'of the mean vertex values either per vertex or per subject (if you specify `qtype = "subject"`)
 #'
-#'@param vw The output object of a qdecr call (e.g. qdecr_fastlm)
-#'@param qtype A string; either "vertex" for vertex-wise means, or "subject" for subject-wise means
-#'@param xlab See `?hist`
-#'@param main see `?hist`
-#'@param ... Further arguments for `hist`
-#'@return see `?hist`
-#'@export
+#' @param x The output object of a qdecr call (e.g. qdecr_fastlm)
+#' @param qtype A string; either "vertex" for vertex-wise means, or "subject" for subject-wise means
+#' @param xlab See `?hist`
+#' @param main see `?hist`
+#' @param ... Further arguments for `hist`
+#' @return see `?hist`
+#' @method hist vw
+#' @export
 #'
-hist.vw <- function(vw, qtype = c("vertex", "subject"), xlab = NULL, main = NULL, ...) {
+hist.vw <- function(x, qtype = c("vertex", "subject"), xlab = NULL, main = NULL, ...) {
   qtype <- match.arg(qtype)
-  x <- if(qtype == "vertex") vw$post$mgh_description$vertex_mean else vw$post$mgh_description$subject_mean
-  if (is.null(xlab)) xlab <- vw$input$measure
+  y <- if(qtype == "vertex") x$post$mgh_description$vertex_mean else x$post$mgh_description$subject_mean
+  if (is.null(xlab)) xlab <- x$input$measure
   if (is.null(main)) main <- qtype
-  hist(x[], xlab = xlab, main = main, ...)
+  graphics::hist(y[], xlab = xlab, main = main, ...)
 }
 
 #'Opens Freeview to take snapshots
@@ -156,18 +157,18 @@ hist.vw <- function(vw, qtype = c("vertex", "subject"), xlab = NULL, main = NULL
 #'and additionally composes the images and plots them. Magick++ is required
 #'for the composing step (see www.qdecr.com).
 #'
-#'@param vw The output object of a qdecr call (e.g. qdecr_fastlm)
-#'@param stack Either a numeric or a string for your variable (use `stacks(vw)`)
-#'@param type The type of map to plot (currently for OLS). Default is `coef`, others are `se`, `t` and `p`
-#'@param ext Extension of the image files that will be stored on disk
-#'@param zoom Float that determines how far the brains are zoomed in
-#'@param compose Logical; if TRUE, a single compiled image will be made (requires Magick++)
-#'@param plot_brain Logical; if TRUE, returns a graphical device with the composed images
-#'@param save_plot Logical; if TRUE, saves the composed image
-#'@param sig Logical; if TRUE, only the significant clusters are shown
-#'@param ... any arguments that freeview (on command line) normally takes for manipulating surface files
-#'@return NULL
-#'@export
+#' @param vw The output object of a qdecr call (e.g. qdecr_fastlm)
+#' @param stack Either a numeric or a string for your variable (use `stacks(vw)`)
+#' @param type The type of map to plot (currently for OLS). Default is `coef`, others are `se`, `t` and `p`
+#' @param ext Extension of the image files that will be stored on disk
+#' @param zoom Float that determines how far the brains are zoomed in
+#' @param compose Logical; if TRUE, a single compiled image will be made (requires Magick++)
+#' @param plot_brain Logical; if TRUE, returns a graphical device with the composed images
+#' @param save_plot Logical; if TRUE, saves the composed image
+#' @param sig Logical; if TRUE, only the significant clusters are shown
+#' @param ... any arguments that freeview (on command line) normally takes for manipulating surface files
+#' @return NULL
+#' @export
 
 qdecr_snap <- function(vw, stack = NULL, type = c("coef", "se", "t", "p"), ext = ".tiff", zoom = 1, compose = TRUE, plot_brain = TRUE, save_plot = TRUE, sig = TRUE, ...) {
   if (is.null(stack)) stop("`stack` not defined. Please choose: ", paste(stacks(vw), collapse = ", "))
@@ -195,7 +196,7 @@ qdecr_snap <- function(vw, stack = NULL, type = c("coef", "se", "t", "p"), ext =
                 qsnap(snap_names[4]),
                 "--quit")
   tfile <- file.path(vw$paths$dir_tmp, "tmp_snapshot_qdecr.txt")
-  write.table(snap_cmd, tfile, quote = F, row.names = F, col.names = F)
+  utils::write.table(snap_cmd, tfile, quote = F, row.names = F, col.names = F)
   on.exit(file.remove(tfile))
   
   type <- match.arg(type)
@@ -271,7 +272,7 @@ qdecr_snap <- function(vw, stack = NULL, type = c("coef", "se", "t", "p"), ext =
     ia1 <- magick::image_append(nn2[1:2])
     ia2 <- magick::image_append(nn2[3:4])
     p <- magick::image_append(c(ia1, ia2), stack = TRUE)
-    if (plot_brain) print(plot(p))
+    if (plot_brain) print(graphics::plot(p))
     if (save_plot) magick::image_write(p, paste0(name, ".", "plot", ext))
     return(p)
   } else {

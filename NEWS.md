@@ -6,6 +6,7 @@
 
 ## Minor Tweaks
 * Added the `file_out_tree` argument, which controls whether output files also contain the full project name. By default, it is the inverse of `dir_out_tree`.
+* Fixed a lot of the documentation.
 
 # QDECR 0.8.3
 

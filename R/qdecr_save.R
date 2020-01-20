@@ -1,6 +1,7 @@
 #' Saves "vw" objects from the QDECR package
 #'
 #' @param vw Object of class "vw". Potentially other classes related to specific methods, e.g. "vw_fastlm"
+#' @param ... other arguments
 #' @return NULL
 #' @export
 

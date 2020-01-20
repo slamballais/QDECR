@@ -7,9 +7,11 @@
 bsfbm2mgh(fbm, fname, filter = NULL)
 }
 \arguments{
+\item{fbm}{a file backed matrix}
+
 \item{fname}{file name to be used to save out the data}
 
-\item{vol}{MGH object (as from load.mgh)}
+\item{filter}{a vector of indices of rows to include of fbm}
 }
 \description{
 Modified version of save_mgh.m (by Heath Pardoe, 09/12/2013)

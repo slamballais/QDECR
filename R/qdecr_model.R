@@ -38,20 +38,20 @@ prep_fastlm <- function(prepvw){
   mx_test[, prepvw$vertex] <- 999
   if (!identical(mx[[nn]], mx_test)) stop ("Somewhere in your formula you specified a special term related to your vertex measure", 
                                            " (interaction, polynomial, AsIs, etc); `qdecr_fastlm` currently does not support this.")
-  y <- model.response(mx[[nn]], "numeric")
+  y <- stats::model.response(mx[[nn]], "numeric")
   if (nrow(mx[[nn]]) != nr) stop("The data that you are putting into the regression has missings! \n",
                                  "QDECR can't handle that yet; we will fix this soon!")
   ys <- if(identical(unname(y), rep(999, nrow(mx[[nn]])))) "LHS" else "RHS"
   if (ys == "LHS") { 
     mx_test2 <- mx_test
-    mx_test2b <- model.matrix(mx_test2, object = mt, contrasts)
+    mx_test2b <- stats::model.matrix(mx_test2, object = mt, stats::contrasts)
     if (Matrix::rankMatrix(mx_test2b) < ncol(mx_test2b)) stop ("The design matrix is NOT full rank. Please check if you have collinear columns in your data.")
   }
-  if (is.empty.model(mt)) stop("The provided model (to fastLm) is empty. Check your data + formula.")
+  if (stats::is.empty.model(mt)) stop("The provided model (to fastLm) is empty. Check your data + formula.")
   mm <- NULL
   prepvw$ff <- "vw_fastlm_slow"
   if (prepvw$vertex %in% colnames(attr(mt, "factors")) || ys == "LHS"){
-    mm <- lapply(mx, model.matrix, object = mt, contrasts)
+    mm <- lapply(mx, stats::model.matrix, object = mt, stats::contrasts)
     ff <- "vw_fastlm"
     vw <- list(mm = mm, mf = mx[[1]], ff = ff, formula = mf$formula, vertex = prepvw$vertex, y = y, ys = ys, method = mf$method, backing = prepvw$backing, backing_to_remove = prepvw$backing_to_remove, so = prepvw$so)
   } else {

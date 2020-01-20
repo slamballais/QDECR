@@ -3,7 +3,7 @@ calc_fwhm <- function(final_path, final_mask_path, est_fwhm_path, hemi, eres, ma
   if (!is.null(mask)) paste(cmdStr, "--mask", mask)
   message2(verbose = verbose, cmdStr)
   system(cmdStr, ignore.stdout = !verbose)
-  fwhm <- read.table(est_fwhm_path)
+  fwhm <- utils::read.table(est_fwhm_path)
   fwhm <- round(fwhm)
   return(fwhm)
 }

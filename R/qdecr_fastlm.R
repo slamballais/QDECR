@@ -1,34 +1,9 @@
 #' Vertex-wise linear regression
 #'
+#' @inheritParams qdecr
 #' @param formula an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See `?lm`.
-#' @param data a required argument that contains a data frame, a list of data frames or an imputed object that is supported by the `imp2list` function (mice, mi, etc.).
-#' @param id the name of the id variable that matches the dataset to the Freesurfer output
-#' @param hemi "lh" or "rh"
-#' @param dir_out the directory where to save the data to (defaults to the current directory)
-#' @param project the base name you want to assign to the output files
-#' @param n_cores the number of cores to be used
-#' @param target the target template (usually "fsaverage")
-#' @param fwhm full width half max (default = 10 mm, for pial_lgi it is 5 mm)
-#' @param mcz_thr A numeric value for the Monte Carlo simulation threshold (default: 0.001). Any of the following are accepted (equivalent values separate by `/`): 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.
-#' @param cwp_thr the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)
-#' @param mgh NOT IMPLEMENTED; path to existing merged mgh file, default is NULL
-#' @param mask mgh file to mask analysis; default is to use the cortex label from the target
-#' @param mask_path path to the mask; default is the cortex mask that is provided with the QDECR package
-#' @param dir_subj directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR
-#' @param dir_fshome Freesurfer directory; defaults to FREESURFER_HOME
-#' @param dir_tmp directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`
-#' @param dir_out_tree if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out
-#' @param file_out_tree if TRUE, adds the full project name to the output file names. By default it is the inverse of dir_out_tree
-#' @param clean_up_bm if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp
-#' @param clean_up NOT IMPLEMENTED; will be used for setting cleaning of other files
-#' @param clobber if TRUE, ignores already existing directories and writes over them; if FALSE, stops and warns user that a given directory already exists
-#' @param verbose if TRUE, writes out standard log; if FALSE, no output is generated
 #' @param save if TRUE, saves the output to a .rds file
 #' @param save_data if TRUE, includes the raw data + design matrices in the .rds file
-#' @param debug NOT IMPLEMENTED; will output the maximal log to allow for easy debugging
-#' @param prep_fun Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)
-#' @param analysis_fun Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)
-#' @param chunk_size Integer; the desired chunk size for the chunked lm
 #' @return returns an object of classes "vw_fastlm" and "vw".
 #' @export
 
@@ -77,7 +52,7 @@ qid <- rt %in% qt
 if (sum(terms[qid, ]) > 1) stop("qdecr currently cannot handle interactions or combinations of the vertex terms.")
 qqt <- rt[qid]
 measure <- sub("qdecr_", "", qqt)
-ff <- as.formula(deparse(formula))
+ff <- stats::as.formula(deparse(formula))
 margs <- c(qdecr_decon(RcppEigen::fastLm()), list(formula = ff, data = data, method = 2))
 vw <- qdecr(id = id,
             margs = margs,
@@ -112,9 +87,9 @@ vw <- qdecr(id = id,
 
 vw$describe$call <- rbind(vw$describe$call, c("call", "qdecr_fastlm call", paste(trimws(deparse(match.call())), collapse = "")))
 stacks_df <- data.frame(stack_number = seq_along(stacks(vw)), stack_name = stacks(vw))
-write.table(stacks_df, file.path(vw$paths$dir_out, "stack_names.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
+utils::write.table(stacks_df, file.path(vw$paths$dir_out, "stack_names.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
 summary_df <- summary(vw, annot = TRUE)
-write.table(summary_df, file.path(vw$paths$dir_out, "significant_clusters.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
+utils::write.table(summary_df, file.path(vw$paths$dir_out, "significant_clusters.txt"), quote = FALSE, row.names = FALSE, sep = "\t")
 if (save) qdecr_save(vw, save_data = save_data)
 vw
 }

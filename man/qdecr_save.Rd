@@ -8,6 +8,8 @@ qdecr_save(vw, ...)
 }
 \arguments{
 \item{vw}{Object of class "vw". Potentially other classes related to specific methods, e.g. "vw_fastlm"}
+
+\item{...}{other arguments}
 }
 \description{
 Saves "vw" objects from the QDECR package

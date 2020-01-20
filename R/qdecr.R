@@ -6,14 +6,36 @@
 #' .mgh format data as input and allows statistical analyses per vertex. A variety
 #' of statistical models have been implemented, such as linear regression.
 #' 
-#' @param a test
-#' @param b test
-#' @param c test
-#' @param d test
-#' @param e test
-#' @param f test
-#' @param g test
-#' @param h test
+#' @param id the name of the id variable that matches the dataset to the Freesurfer output
+#' @param data a required argument that contains a data frame, a list of data frames or an imputed object that is supported by the `imp2list` function (mice, mi, etc.).
+#' @param vertex the preposition to the vertex measure (default: "qdecr_")
+#' @param margs the arguments that should be provided to the function of interest (e.g. stats::lm)
+#' @param model the function to grab the arguments from (this will be removed in a later version)
+#' @param target the target template (default = "fsaverage")
+#' @param hemi hemisphere to analyze ("lh" or "rh")
+#' @param measure the vertex-wise measure to use ("thickness", "area", etc.)
+#' @param fwhm full width half max (default = 10 mm, for pial_lgi it is 5 mm)
+#' @param mcz_thr A numeric value for the Monte Carlo simulation threshold (default: 0.001). Any of the following are accepted (equivalent values separate by `/`): 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.
+#' @param cwp_thr the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)
+#' @param mgh NOT IMPLEMENTED; path to existing merged mgh file, default is NULL
+#' @param mask mgh file to mask analysis; default is to use the cortex label from the target
+#' @param mask_path path to the mask; default is the cortex mask that is provided with the QDECR package
+#' @param project the base name you want to assign to the output files
+#' @param dir_subj directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR
+#' @param dir_fshome Freesurfer directory; defaults to FREESURFER_HOME
+#' @param dir_tmp directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`
+#' @param dir_out the directory where to save the data to (defaults to the current directory)
+#' @param dir_out_tree if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out
+#' @param file_out_tree if TRUE, adds the full project name to the output file names. By default it is the inverse of dir_out_tree
+#' @param clean_up NOT IMPLEMENTED; will be used for setting cleaning of other files
+#' @param clean_up_bm if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp
+#' @param clobber if TRUE, ignores already existing directories and writes over them; if FALSE, stops and warns user that a given directory already exists
+#' @param verbose if TRUE, writes out standard log; if FALSE, no output is generated
+#' @param debug NOT IMPLEMENTED; will output the maximal log to allow for easy debugging
+#' @param n_cores the number of cores to be used
+#' @param prep_fun Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)
+#' @param analysis_fun Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)
+#' @param chunk_size Integer; the desired chunk size for the chunked lm
 #' 
 #' @return out
 #' @importFrom foreach %dopar%
@@ -52,14 +74,13 @@ qdecr <- function(id,
                   n_cores = 1,
                   prep_fun = "prep_fastlm",
                   analysis_fun = "analysis_chunkedlm",
-                  chunk_size = 1000,
-                  sander = FALSE
+                  chunk_size = 1000
                   ){
 
   if (verbose) {
     message("\n")
-    catprompt(paste0("QDECR v", packageVersion("QDECR")))
-    message(paste0("Welcome to QDECR (v", packageVersion("QDECR"), ")"))
+    catprompt(paste0("QDECR v", utils::packageVersion("QDECR")))
+    message(paste0("Welcome to QDECR (v", utils::packageVersion("QDECR"), ")"))
     message("Authors: Sander Lamballais & Ryan Muetzel")
     message("Website: www.qdecr.com")
     message("Repository: www.github.com/slamballais/QDECR")
@@ -187,7 +208,6 @@ qdecr <- function(id,
   catprompt("Summarizing results", verbose = verbose)
   
   # Post-describe
-  if (sander) return(vw)
   vw$describe <- qdecr_post_describe(vw, verbose = verbose)
   vw$summary <- summary(vw, verbose = verbose)
   if(clean_up_bm) vw$mgh <- NULL

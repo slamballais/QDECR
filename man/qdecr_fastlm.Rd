@@ -24,7 +24,7 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 
 \item{id}{the name of the id variable that matches the dataset to the Freesurfer output}
 
-\item{hemi}{"lh" or "rh"}
+\item{hemi}{hemisphere to analyze ("lh" or "rh")}
 
 \item{dir_out}{the directory where to save the data to (defaults to the current directory)}
 
@@ -32,7 +32,7 @@ qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
 
 \item{n_cores}{the number of cores to be used}
 
-\item{target}{the target template (usually "fsaverage")}
+\item{target}{the target template (default = "fsaverage")}
 
 \item{fwhm}{full width half max (default = 10 mm, for pial_lgi it is 5 mm)}
 

@@ -4,10 +4,12 @@
 \alias{formula.vw_fastlm}
 \title{Grabs the formula from qdecr_fastlm output}
 \usage{
-formula.vw_fastlm(vw)
+\method{formula}{vw_fastlm}(x, ...)
 }
 \arguments{
-\item{vw}{The output object of a qdecr_fastlm call}
+\item{x}{The output object of a qdecr_fastlm call}
+
+\item{...}{Further arguments for `formula`}
 }
 \description{
 Grabs the formula from qdecr_fastlm output

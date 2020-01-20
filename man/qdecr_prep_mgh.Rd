@@ -9,9 +9,29 @@ qdecr_prep_mgh(input_path, files_list = list.files(input_path), mask,
   verbose)
 }
 \arguments{
-\item{input.list}{path to parent directory}
+\item{input_path}{path to parent directory}
 
-\item{files.list}{file names within `input.list`}
+\item{files_list}{file names within `input.list`}
+
+\item{mask}{mask to be used in later steps (i.e. analysis)}
+
+\item{hemi}{"lh" or "rh"}
+
+\item{measure}{vertex measure (e.g. "thickness")}
+
+\item{fwhmc}{the fwhm value in full notation (i.e. 20, 23, 30, etc)}
+
+\item{target}{the target template (usually "fsaverage")}
+
+\item{n_cores}{the number of cores to be used}
+
+\item{dir_tmp}{directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`}
+
+\item{project}{the base name you want to assign to the output files}
+
+\item{backing}{the path to the backing file}
+
+\item{verbose}{if TRUE, writes out standard log; if FALSE, no output is generated}
 }
 \value{
 matrix with vertex data (columns) for each file (rows)

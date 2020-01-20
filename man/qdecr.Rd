@@ -19,24 +19,68 @@ qdecr(id, data, vertex = "qdecr", margs = NULL,
   clean_up = TRUE, clean_up_bm = TRUE, clobber = FALSE,
   verbose = TRUE, debug = FALSE, n_cores = 1,
   prep_fun = "prep_fastlm", analysis_fun = "analysis_chunkedlm",
-  chunk_size = 1000, sander = FALSE)
+  chunk_size = 1000)
 }
 \arguments{
-\item{a}{test}
+\item{id}{the name of the id variable that matches the dataset to the Freesurfer output}
 
-\item{b}{test}
+\item{data}{a required argument that contains a data frame, a list of data frames or an imputed object that is supported by the `imp2list` function (mice, mi, etc.).}
 
-\item{c}{test}
+\item{vertex}{the preposition to the vertex measure (default: "qdecr_")}
 
-\item{d}{test}
+\item{margs}{the arguments that should be provided to the function of interest (e.g. stats::lm)}
 
-\item{e}{test}
+\item{model}{the function to grab the arguments from (this will be removed in a later version)}
 
-\item{f}{test}
+\item{target}{the target template (default = "fsaverage")}
 
-\item{g}{test}
+\item{hemi}{hemisphere to analyze ("lh" or "rh")}
 
-\item{h}{test}
+\item{measure}{the vertex-wise measure to use ("thickness", "area", etc.)}
+
+\item{fwhm}{full width half max (default = 10 mm, for pial_lgi it is 5 mm)}
+
+\item{mcz_thr}{A numeric value for the Monte Carlo simulation threshold (default: 0.001). Any of the following are accepted (equivalent values separate by `/`): 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.}
+
+\item{cwp_thr}{the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)}
+
+\item{mgh}{NOT IMPLEMENTED; path to existing merged mgh file, default is NULL}
+
+\item{mask}{mgh file to mask analysis; default is to use the cortex label from the target}
+
+\item{mask_path}{path to the mask; default is the cortex mask that is provided with the QDECR package}
+
+\item{project}{the base name you want to assign to the output files}
+
+\item{dir_subj}{directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR}
+
+\item{dir_fshome}{Freesurfer directory; defaults to FREESURFER_HOME}
+
+\item{dir_tmp}{directory to store the temporary big matrices; useful for shared memory; defaults to `dir_out`}
+
+\item{dir_out}{the directory where to save the data to (defaults to the current directory)}
+
+\item{dir_out_tree}{if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out}
+
+\item{file_out_tree}{if TRUE, adds the full project name to the output file names. By default it is the inverse of dir_out_tree}
+
+\item{clean_up}{NOT IMPLEMENTED; will be used for setting cleaning of other files}
+
+\item{clean_up_bm}{if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp}
+
+\item{clobber}{if TRUE, ignores already existing directories and writes over them; if FALSE, stops and warns user that a given directory already exists}
+
+\item{verbose}{if TRUE, writes out standard log; if FALSE, no output is generated}
+
+\item{debug}{NOT IMPLEMENTED; will output the maximal log to allow for easy debugging}
+
+\item{n_cores}{the number of cores to be used}
+
+\item{prep_fun}{Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)}
+
+\item{analysis_fun}{Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)}
+
+\item{chunk_size}{Integer; the desired chunk size for the chunked lm}
 }
 \value{
 out

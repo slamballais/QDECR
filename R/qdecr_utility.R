@@ -1,11 +1,3 @@
-#' \code{message} function with verbose option
-#'
-#' This is a wrapper for \code{message}. It calls \code{message} if \code{verbose}
-#' is set to true.
-#'
-#' @param verbose Logical. If TRUE, \code{message} is called.
-#' @param ... Any input for \code{message}
-
 catprompt <- function(string, n = 60, base = "-", center = TRUE, addSpace = TRUE, start = 5, verbose = TRUE){
   if(addSpace) string <- paste0(" ", string, " ")
   ns <- nchar(string)

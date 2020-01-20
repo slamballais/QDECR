@@ -4,11 +4,11 @@
 \alias{hist.vw}
 \title{Histograms of the vertex measures}
 \usage{
-\method{hist}{vw}(vw, qtype = c("vertex", "subject"), xlab = NULL,
+\method{hist}{vw}(x, qtype = c("vertex", "subject"), xlab = NULL,
   main = NULL, ...)
 }
 \arguments{
-\item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}
+\item{x}{The output object of a qdecr call (e.g. qdecr_fastlm)}
 
 \item{qtype}{A string; either "vertex" for vertex-wise means, or "subject" for subject-wise means}
 

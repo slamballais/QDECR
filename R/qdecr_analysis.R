@@ -39,10 +39,11 @@ analysis_chunkedlm <- function(vw, chunk) {
   doParallel::registerDoParallel(cl)
   on.exit(parallel::stopCluster(cl))
   
-  capture.output(pb <- txtProgressBar(0, length(cstart), style = 3), file = "/dev/null")
+  utils::capture.output(pb <- utils::txtProgressBar(0, length(cstart), style = 3), file = "/dev/null")
   
+  i <- NULL
   foreach::foreach (i = seq_along(cstart), .combine = "c") %dopar% {
-    setTxtProgressBar(pb, i)
+    utils::setTxtProgressBar(pb, i)
     
     id <- iv[cstart[i]:cend[i]]
     
