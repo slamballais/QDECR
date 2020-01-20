@@ -64,14 +64,16 @@ check_dir_out <- function(dir_out, project, project2, dir_out_tree, clobber){
         stop("The provided `dir_out` does not exist, but neither does it parent.")
       dir.create(dir_out)
   } else {
-    if(clobber == FALSE && dir_out_tree == FALSE)
+    if(!clobber && !dir_out_tree)
       stop("`dir_out` already exists, and both `clobber` and `dir_out_tree` are FALSE. \n",
            "Either set `clobber` = TRUE to overwrite the output directory, \n",
            "or set `dir_out_tree` = TRUE and provide `project` to \n",
            "create a new subdirectory.")
-    if(clobber == TRUE && dir_out_tree == FALSE){
-      unlink(dir_out, recursive = TRUE)
-      dir.create(dir_out)
+    if(clobber && !dir_out_tree){
+      stop("PREVENTATIVE STOP! `clobber` is set to TRUE while ", 
+           "`dir_out_tree` is set to FALSE. This can have disastrous ",
+           "consequences if used incorrectly. As a preventative ",
+           "measure, we do not allow this to be run.")
     }
   }
   if(dir_out_tree){
@@ -79,7 +81,7 @@ check_dir_out <- function(dir_out, project, project2, dir_out_tree, clobber){
       stop("`dir_out_tree` is set to TRUE but no `project` provided.")
     p <- file.path(dir_out, project2)
     if(dir.exists(p)) {
-      if (clobber == FALSE)
+      if (!clobber)
         stop("The output directory ", p, " already exists and `clobber` = FALSE. \n",
              "Set `clobber` = TRUE to overwrite the existing output directory.")
       unlink(p, recursive = TRUE)
