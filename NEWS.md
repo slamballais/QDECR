@@ -2,7 +2,8 @@
 
 ## Bug fixes
 * Fixed that the model output files (p.mgh, t.mgh, etc) also contained the mcz threshold (e.g. cache.th30).
-* Lots of comments removed/modified, and code was cleaned up a bit
+* Lots of comments removed/modified, and code was cleaned up a bit.
+* Wrote in a preventative stop for when `dir_out_tree = FALSE` and `clobber = TRUE` are combined. This can easily delete important directories unintentionally, as has happened to the authors.
 
 ## Minor Tweaks
 * Added the `file_out_tree` argument, which controls whether output files also contain the full project name. By default, it is the inverse of `dir_out_tree`.

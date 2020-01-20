@@ -29,6 +29,12 @@ qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
   
   # Check whether prep_fun exists
   check_prep_fun(prep_fun)
+  
+  # make sure `dir_out_tree` and `clobber` do not interfere
+  if (!dir_out_tree && clobber) stop("PREVENTATIVE STOP! `clobber` is set to TRUE while ", 
+                                     "`dir_out_tree` is set to FALSE. This can have disastrous ",
+                                     "consequences if used incorrectly. As a preventative ",
+                                     "measure, we do not allow this to be run.")
 
   # Return all output arguments assembled
   input <- list()
