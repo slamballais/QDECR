@@ -7,7 +7,7 @@ title: "QDECR"
 # Disclaimer
 
 **THIS PACKAGE IS STILL BEING DEVELOPED!** 
-It currently can run vertex-wise linear regression. We are working on linear mixed models (OHBM 2020). 
+It currently can run vertex-wise linear regression (OHBM 2019). We are working on vertex-wise linear mixed models (OHBM 2020). 
 
 # About 
 
