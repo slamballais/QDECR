@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
 
 <meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -85,6 +85,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -233,7 +234,6 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
-  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -245,6 +245,18 @@ $(document).ready(function () {
   display: none;
 }
 </style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
 
 <!-- code folding -->
 
@@ -363,16 +375,16 @@ $(document).ready(function () {
 </blockquote>
 <div id="disclaimer" class="section level1">
 <h1>Disclaimer</h1>
-<p><strong>THIS PACKAGE IS STILL BEING DEVELOPED!</strong> While the main functions work fine, we are still optimizing the code to make it faster, easier to use and have more features.</p>
+<p><strong>THIS PACKAGE IS STILL BEING DEVELOPED!</strong> It currently can run vertex-wise linear regression. We are working on linear mixed models (OHBM 2020).</p>
 </div>
 <div id="about" class="section level1">
 <h1>About</h1>
 <p>QDECR is an R package to perform vertex-wise analyses on cortical surface maps. It is an attempt to enrich vertex-wise analyses with features commonly found in R, such as easy design matrix creation, using multiply imputed datasets, handling complex formulas, etc. Users familiar with R will immediately notice that the package works similar to most other statistical models in R.</p>
-<p>We are currently at version 0.8.0 (Momo).</p>
+<p>We are currently at version 0.8.4 (Momo).</p>
 </div>
 <div id="tutorials" class="section level1">
 <h1>Tutorials</h1>
-<p>Users can follow the tutorial below to run their vertex-wise analyses. Please note (2019-06-10): We are still actively expanding the tutorial and so not all features are described just yet!</p>
+<p>Users can follow the tutorial below to run their vertex-wise analyses. Please note that the sections are not completed yet.</p>
 <ul>
 <li><ol style="list-style-type: decimal">
 <li><a href="01-getting-started.html">Getting started</a></li>
@@ -424,23 +436,6 @@ $(document).ready(function () {
 
 
 </script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
