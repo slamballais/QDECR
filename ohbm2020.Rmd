@@ -12,7 +12,7 @@ The poster can be accessed [via this link](data/qdecr_lmm.pdf).
 
 # Video
 
-<iframe width="560" height="315" src="http://www.youtube.com/embed/utqh73BSTqA?rel=0" frameborder="0" allowfullscreen></iframe>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/utqh73BSTqA" frameborder="0" allowfullscreen></iframe>
 
 # Frequently Asked Questions
 
