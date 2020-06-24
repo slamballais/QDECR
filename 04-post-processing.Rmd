@@ -13,13 +13,27 @@ output:
 
 # Before you get started
 
+Here I will discuss some of the things you can do one the analysis is done.
+
 ---
 
 # Saving/loading projects
 
+Any analyses that are run with e.g. `qdecr_fastlm` are automatically stored as files on disk. 
+
+To load the project back into R, you can use the `qdecr_load` function:
+
+`vw <- qdecr_load("path/to/project")`
+
+It is also possible to reload the vertex-wise data:
+
+`vw <- reload(vw)`
+
+Do note that this will generate huge temporary files in your `dir_tmp`, so be mindful to remove those afterwards!
+
 ---
 
-# Cluster-wise data
+# Saving/loading .mgh files
 
 ---
 
@@ -28,16 +42,6 @@ output:
 --- 
 
 # Using variable cluster-wise thresholds
-
----
-
-# Intramodel comparisons
-
----
-
-# Intermodel comparisons
-
----
 
 ---
 

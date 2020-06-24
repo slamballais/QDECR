@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
 
 <head>
 
 <meta charset="utf-8" />
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -88,7 +88,6 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -237,6 +236,7 @@ $(document).ready(function () {
   border: none;
   display: inline-block;
   border-radius: 4px;
+  background-color: transparent;
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li {
@@ -249,48 +249,9 @@ $(document).ready(function () {
 }
 </style>
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
 <!-- code folding -->
 
 
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = false;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -304,6 +265,12 @@ $(document).ready(function ()  {
 }
 }
 
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
 
 .toc-content {
   padding-left: 30px;
@@ -425,6 +392,12 @@ div.tocify {
     <li>
       <a href="data/qdecr_ohbm2019_brochure.pdf">OHBM 2019 Brochure (PDF)</a>
     </li>
+    <li>
+      <a href="ohbm2020.html">OHBM 2020 video + FAQ</a>
+    </li>
+    <li>
+      <a href="data/qdecr_lmm.pdf">OHBM 2020 poster (PDF)</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -470,14 +443,21 @@ div.tocify {
 <hr />
 <div id="before-you-get-started" class="section level1">
 <h1><span class="header-section-number">1</span> Before you get started</h1>
+<p>Here I will discuss some of the things you can do one the analysis is done.</p>
 <hr />
 </div>
 <div id="savingloading-projects" class="section level1">
 <h1><span class="header-section-number">2</span> Saving/loading projects</h1>
+<p>Any analyses that are run with e.g. <code>qdecr_fastlm</code> are automatically stored as files on disk.</p>
+<p>To load the project back into R, you can use the <code>qdecr_load</code> function:</p>
+<p><code>vw &lt;- qdecr_load("path/to/project")</code></p>
+<p>It is also possible to reload the vertex-wise data:</p>
+<p><code>vw &lt;- reload(vw)</code></p>
+<p>Do note that this will generate huge temporary files in your <code>dir_tmp</code>, so be mindful to remove those afterwards!</p>
 <hr />
 </div>
-<div id="cluster-wise-data" class="section level1">
-<h1><span class="header-section-number">3</span> Cluster-wise data</h1>
+<div id="savingloading-.mgh-files" class="section level1">
+<h1><span class="header-section-number">3</span> Saving/loading .mgh files</h1>
 <hr />
 </div>
 <div id="graphics" class="section level1">
@@ -486,15 +466,6 @@ div.tocify {
 </div>
 <div id="using-variable-cluster-wise-thresholds" class="section level1">
 <h1><span class="header-section-number">5</span> Using variable cluster-wise thresholds</h1>
-<hr />
-</div>
-<div id="intramodel-comparisons" class="section level1">
-<h1><span class="header-section-number">6</span> Intramodel comparisons</h1>
-<hr />
-</div>
-<div id="intermodel-comparisons" class="section level1">
-<h1><span class="header-section-number">7</span> Intermodel comparisons</h1>
-<hr />
 <hr />
 <p>[Next vignette: <a href="05-advanced-qdecr.html">5. Advanced <code>QDECR</code></a>]</p>
 </div>
@@ -517,6 +488,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = false;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

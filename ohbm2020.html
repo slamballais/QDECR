@@ -11,7 +11,7 @@
 
 
 
-<title>Vignette 2: Quick start</title>
+<title>OHBM 2020</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -312,12 +312,6 @@ div.tocify {
   border-radius: 0px;
 }
 
-.tocify-subheader {
-  display: inline;
-}
-.tocify-subheader .tocify-item {
-  font-size: 0.95em;
-}
 
 </style>
 
@@ -435,93 +429,67 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Vignette 2: Quick start</h1>
+<h1 class="title toc-ignore">OHBM 2020</h1>
 
 </div>
 
 
+<div id="poster" class="section level1">
+<h1>Poster</h1>
+<p>The poster can be accessed <a href="data/qdecr_lmm.pdf">via this link</a>.</p>
+</div>
+<div id="video" class="section level1">
+<h1>Video</h1>
+<iframe width="560" height="315" src="http://www.youtube.com/embed/utqh73BSTqA?rel=0" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+<div id="frequently-asked-questions" class="section level1">
+<h1>Frequently Asked Questions</h1>
+<div id="q-is-the-code-available" class="section level3">
+<h3>Q: Is the code available?</h3>
+<p>A: Not yet! We encountered some problems with the original code, and decided to restart from scratch. This did solve our problems, but we do not want to release the code before all the features are fully tested. We are aiming to release it in the coming months.</p>
 <hr />
-<div id="preparation" class="section level1">
-<h1><span class="header-section-number">1</span> Preparation</h1>
-<p>You will need the following things:</p>
-<ul>
-<li><ol style="list-style-type: decimal">
-<li><strong>All software</strong>: Freesurfer, <code>R</code>, <code>QDECR</code>, etc. (see <a href="01-getting-started.html">Vignette 1</a>).</li>
-</ol></li>
-<li><ol start="2" style="list-style-type: decimal">
-<li><strong>Freesurfer data</strong>: Your Freesurfer output files in a single directory (usually <code>SUBJECTS_DIR</code>).</li>
-</ol></li>
-<li><ol start="3" style="list-style-type: decimal">
-<li><strong>Phenotype data</strong>: Your dataset with covariates, determinants, etc., loaded into R.</li>
-</ol></li>
-</ul>
 </div>
-<div id="running-qdecr" class="section level1">
-<h1><span class="header-section-number">2</span> Running QDECR</h1>
-<blockquote>
-<p><strong>WARNING!!! QDECR lets you run vertex-wise analyses however you want. Keep in mind that <a href="https://en.wikipedia.org/wiki/With_great_power_comes_great_responsibility">with great power comes great responsibility</a>.</strong> We provide the tools, and it is up to you to use them sensibly. For example, it can be tempting to add interactions, splines, polynomials, etc., and using liberal correction thresholds without an a priori reason. Please use QDECR responsibly.</p>
-</blockquote>
-<p>For now, lets focus on the application of multiple linear regression to each vertex.</p>
-<p>We will study the association of age (variable: <code>age</code>) with cortical thickness, and adjust for sex (variable: <code>sex</code>). This yields the following formula: <code>qdecr_thickness ~ age + sex</code>. Below is an example of <code>qdecr_fastlm</code>, which lets us do linear regression:</p>
-<pre class="r"><code>out &lt;- qdecr_fastlm(qdecr_thickness ~ age + sex, 
-  data = data,
-  id = &quot;id&quot;, 
-  hemi = &quot;lh&quot;,
-  project = &quot;test_project&quot;,
-  dir_tmp = &quot;/dev/shm&quot;)</code></pre>
-<p>Here are the arguments we specified:</p>
-<ul>
-<li><code>formula</code>: The formula object is the first argument; we directly input <code>qdecr_thickness ~ age + sex</code>.</li>
-<li><code>data</code>: The data argument requires a <code>data frame</code>, a <code>list</code> of <code>data frames</code> or an imputed object from a package like <code>mice</code>.</li>
-<li><code>id</code>: Here you should put (as a character) the column name in your dataset that contains the identifiers for <code>SUBJECTS_DIR</code>.</li>
-<li><code>hemi</code>: The hemisphere you want to analyze (<code>lh</code> for left, <code>rh</code> for right).</li>
-<li><code>project</code>: The name that you want for your output. By default, both <code>hemi</code> and the vertex measure get added to it (so <code>lh.test_project.qdecr_thickness</code>).</li>
-<li><code>dir_tmp</code>: <strong>To make <code>QDECR</code> run fast, you need to use shared memory! Not using shared memory will make things super slow!</strong></li>
-</ul>
-<p>There are a bunch of other arguments that you can specify:</p>
-<ul>
-<li><code>dir_out</code>: The directory where you want to store the project files.</li>
-<li><code>n_cores</code>: The number of cores/threads you want to run on.</li>
-<li><code>target</code>: The target template (default: “fsaverage”).</li>
-<li><code>mcz_thr</code>: The Monte-Carlo simulation threshold (10, 13, 20, 23, default is 30).</li>
-<li><code>mgh</code>: <strong>still needs to be fixed</strong></li>
-<li><code>mask</code>: <strong>still needs to be fixed</strong></li>
-<li><code>dir_subj</code>: Character path to <code>SUBJECTS_DIR</code> if it’s not in your global environment.</li>
-<li><code>dir_fshome</code>: Character path to <code>FREESURFER_HOME</code> if it’s not in your global environment.</li>
-<li><code>dir_out_tree</code>: If TRUE, <code>project</code> will become a new directory within <code>dir_out</code>. If FALSE, all files will just be put into <code>dir_out</code>.</li>
-<li><code>clean_up_bm</code>: Default is TRUE; if FALSE, all the vertex-wise data and all residuals for each vertex are NOT deleted from <code>dir_tmp</code>. Keep in mind that these can be huge files.</li>
-<li><code>clean_up</code>: Default is TRUE; if FALSE, all temporary files (except the ones described above) won’t get deleted.</li>
-<li><code>clobber</code>: Default is FALSE; if TRUE, overwrites the output directory.</li>
-<li><code>verbose</code>: Default is TRUE; returns a lot of messages to keep you up to date what is happening.</li>
-<li><code>save</code>: If TRUE, the project is saved into an .fst object that you can later load back in.</li>
-<li><code>save_data</code>: If TRUE (and if SAVE is also TRUE) then you will also save the datasets into the .fst object.</li>
-<li><code>debug</code>: <strong>still needs to be fixed</strong></li>
-</ul>
-<p>Running <code>qdecr_fastlm</code> takes several minutes, anywhere from 10 minutes for small datasets to 30 minutes for large datasets.</p>
-</div>
-<div id="checking-the-output" class="section level1">
-<h1><span class="header-section-number">3</span> Checking the output</h1>
-<p>We saved the output in the variable out. Here are some commands that you can use to check out what it did:</p>
-<pre class="r"><code>## Get a global overview
-out
-print(out) #same output
-
-## Histogram of the mean vertex data
-hist(out) # per vertex
-hist(out, qtype = &quot;subject&quot;) # per subject
-
-## Overview of all significant clusters
-summary(out)
-summary(out, annot = TRUE) # also provides info on which regions the clusters fall into
-
-## view the stack/contrast names
-stacks(out)
-
-## Obtain a Freeview plot for a specific stack/contrast (note: this function requires the `magick` package)
-qdecr_snap(out, 2)
-qdecr_snap(out, &#39;age&#39;) #same output</code></pre>
+<div id="q-what-is-qdecr" class="section level3">
+<h3>Q: What is QDECR?</h3>
+<p>A: QDECR is an R package for vertex-wise analyses. We developed it in order to create a vertex-wise analysis tool where we could apply methods that are common in the field of Epidemiology. This includes the use of imputed data, extensive adjustment for confounding variables, etc.</p>
 <hr />
-<p>[Next vignette: <a href="03-using-qdecr.html">3. Using <code>QDECR</code></a>]</p>
+</div>
+<div id="q-what-are-the-requirements-to-use-qdecr" class="section level3">
+<h3>Q: What are the requirements to use QDECR?</h3>
+<p>A: Please see the page on <a href="01-getting-started.html">getting started</a>. In brief, you need a Unix system with FreeSurfer installed, as well as R.</p>
+<hr />
+</div>
+<div id="q-do-i-need-to-know-r-to-use-qdecr" class="section level3">
+<h3>Q: Do I need to know R to use QDECR?</h3>
+<p>A: Yes. QDECR was written because R is commonly used in our department (Epidemiology at the Erasmus MC, Rotterdam, NL). R users should be familiar with the syntax, as QDECR works similar to functions like lm() and lme().</p>
+<hr />
+</div>
+<div id="q-does-qdecr-work-for-other-tools-than-freesurfer-e.g.-civet" class="section level3">
+<h3>Q: Does QDECR work for other tools than FreeSurfer (e.g. Civet)?</h3>
+<p>A: As of right now, it does not. We are actively looking into this.</p>
+<hr />
+</div>
+<div id="q-how-fast-is-the-code" class="section level3">
+<h3>Q: How fast is the code?</h3>
+<p>A: The current version takes about 10 minutes for a population of 2000 individuals with 2 measurements each.</p>
+<hr />
+</div>
+<div id="q-why-have-you-not-implemented-some-feature" class="section level3">
+<h3>Q: Why have you not implemented [some feature]?</h3>
+<p>A: Right now, QDECR is a side-project for us. While we’d love to implement everything as soon as possible, we simply do not have the time. However, you’re always welcome to make suggestions, as that will help us determine what should be on the top of our to-do list!</p>
+<hr />
+</div>
+<div id="q-can-i-tweak-the-code" class="section level3">
+<h3>Q: Can I tweak the code?</h3>
+<p>A: QDECR has a GPL-3 license, and the code is on Github. The mixed modeling version will also be on Github once it is done. Any pull requests are welcome, as long as the changes are positive.</p>
+<hr />
+</div>
+<div id="q-how-can-i-contact-you" class="section level3">
+<h3>Q: How can I contact you?</h3>
+<p>A: The lead developer is Sander Lamballais (<a href="https://sanderlamballais.com" class="uri">https://sanderlamballais.com</a>), whom you can reach through email (Google is your friend) or simply DM on Twitter (<span class="citation">@slamballais</span>).</p>
+<hr />
+</div>
 </div>
 
 
@@ -579,7 +547,7 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = false;
+    options.showAndHide = true;
     options.smoothScroll = true;
 
     // tocify

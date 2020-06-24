@@ -22,6 +22,10 @@ navbar:
           href: data/qdecr_ohbm2019_poster.pdf
         - text: "OHBM 2019 Brochure (PDF)"
           href: data/qdecr_ohbm2019_brochure.pdf
+        - text: "OHBM 2020 video + FAQ"
+          href: ohbm2020.html
+        - text: "OHBM 2020 poster (PDF)"
+          href: data/qdecr_lmm.pdf
     - text: "Contact & Help"
       menu:
         - text: "Asking questions"

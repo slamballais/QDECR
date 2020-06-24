@@ -1,0 +1,62 @@
+---
+title: OHBM 2020
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+---
+
+# Poster
+
+The poster can be accessed [via this link](data/qdecr_lmm.pdf).
+
+# Video
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/utqh73BSTqA?rel=0" frameborder="0" allowfullscreen></iframe>
+
+# Frequently Asked Questions
+
+### Q: Is the code available?
+A: Not yet! We encountered some problems with the original code, and decided to restart from scratch. This did solve our problems, but we do not want to release the code before all the features are fully tested. We are aiming to release it in the coming months.
+
+---
+
+### Q: What is QDECR?
+A: QDECR is an R package for vertex-wise analyses. We developed it in order to create a vertex-wise analysis tool where we could apply methods that are common in the field of Epidemiology. This includes the use of imputed data, extensive adjustment for confounding variables, etc. 
+
+---
+
+### Q: What are the requirements to use QDECR?
+A: Please see the page on [getting started](01-getting-started.html). In brief, you need a Unix system with FreeSurfer installed, as well as R.
+
+--- 
+
+### Q: Do I need to know R to use QDECR?
+A: Yes. QDECR was written because R is commonly used in our department (Epidemiology at the Erasmus MC, Rotterdam, NL). R users should be familiar with the syntax, as QDECR works similar to functions like lm() and lme().
+
+---
+
+### Q: Does QDECR work for other tools than FreeSurfer (e.g. Civet)?
+A: As of right now, it does not. We are actively looking into this.
+
+---
+
+### Q: How fast is the code?
+A: The current version takes about 10 minutes for a population of 2000 individuals with 2 measurements each. 
+
+---
+
+### Q: Why have you not implemented [some feature]?
+A: Right now, QDECR is a side-project for us. While we'd love to implement everything as soon as possible, we simply do not have the time. However, you're always welcome to make suggestions, as that will help us determine what should be on the top of our to-do list!
+
+---
+
+### Q: Can I tweak the code?
+A: QDECR has a GPL-3 license, and the code is on Github. The mixed modeling version will also be on Github once it is done. Any pull requests are welcome, as long as the changes are positive.
+
+---
+
+### Q: How can I contact you?
+A: The lead developer is Sander Lamballais (https://sanderlamballais.com), whom you can reach through email (Google is your friend) or simply DM on Twitter (@slamballais).
+
+---

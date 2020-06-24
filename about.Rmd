@@ -19,7 +19,7 @@ output:
 knitr::include_graphics("data/slamballais.jpeg")
 ```
 
-Sander Lamballais is currently a last-year PhD candidate at the Erasmus MC in Rotterdam, the Netherlands. His work focuses on the antecedents and consequences of brain changes across the lifespan. In his free time he likes gaming (currently Smash Ult), practising with R and working on hobby projects.
+Sander Lamballais is a PhD candidate finalizing his thesis and recently started as a postdoctoral researcher at the Erasmus MC in Rotterdam, the Netherlands. His work has primarily focused on neuroimaging across the lifespan. His currents projects focus on genetic methodology and how to apply new methods to neurogenetics. 
 
 ---
 
@@ -29,4 +29,4 @@ Sander Lamballais is currently a last-year PhD candidate at the Erasmus MC in Ro
 knitr::include_graphics("data/rmuetzel.jpg")
 ```
 
-Ryan Muetzel is a postdoctoral researcher at the Erasmus MC in Rotterdam, the Netherlands. He successfully obtained his PhD degree in 2016, for his thesis titled [The Connections Within: Pediatric population-based neuroimaging of brain development](https://www.generationr.nl/wp-content/uploads/2017/03/Proefschrift-Muetzel.compressed.pdf). He has (co-)authored [over 60 papers](https://www.ncbi.nlm.nih.gov/pubmed/?term=Muetzel%20RL%5BAuthor%5D&cauthor=true&cauthor_uid=31085031).
+Ryan Muetzel is an assistant professor at the Erasmus MC in Rotterdam, the Netherlands. He obtained his PhD degree in 2016, for his thesis titled [The Connections Within: Pediatric population-based neuroimaging of brain development](https://www.generationr.nl/wp-content/uploads/2017/03/Proefschrift-Muetzel.compressed.pdf). He has (co-)authored [over 60 papers](https://www.ncbi.nlm.nih.gov/pubmed/?term=Muetzel%20RL%5BAuthor%5D&cauthor=true&cauthor_uid=31085031).
