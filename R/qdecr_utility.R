@@ -11,7 +11,7 @@
 #' @export
 
 qdecr_update_path <- function(vw, dir_fshome, dir_subj, dir_project = dirname(vw$paths$rds), mask_path = NULL, qdecr_mask = TRUE, overwrite = FALSE) {
-  to_sub <- vw$paths[["final_path"]]
+  to_sub <- vw$paths[["dir_out"]]
   path_names <- names(vw$paths)
   path <- dir_project
   vw$paths <- as.list(sub(to_sub, path, vw$paths))
