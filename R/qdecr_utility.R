@@ -6,11 +6,11 @@
 #' @param dir_project character; path to the project directory (defaults to the parent dir of the .rds file).
 #' @param mask_path character; if specified and QDECR_mask == FALSE, this will become the mask path.
 #' @param qdecr_mask logical (default = TRUE); should the QDECR mask be used as the mask?
-#' @param overwrite logical (default = TRUE); should the project .rds file be overwritten?
+#' @param overwrite logical (default = FALSE); should the project .rds file be overwritten?
 #' @return The vw object, but with updated paths.
 #' @export
 
-qdecr_update_path <- function(vw, dir_fshome, dir_subj, dir_project = dirname(vw$paths$rds), mask_path = NULL, qdecr_mask = TRUE, overwrite = TRUE) {
+qdecr_update_path <- function(vw, dir_fshome, dir_subj, dir_project = dirname(vw$paths$rds), mask_path = NULL, qdecr_mask = TRUE, overwrite = FALSE) {
   to_sub <- vw$paths[["final_path"]]
   path_names <- names(vw$paths)
   path <- dir_project
@@ -26,6 +26,8 @@ qdecr_update_path <- function(vw, dir_fshome, dir_subj, dir_project = dirname(vw
   if (overwrite) {
     message("Overwriting .rds file")
     saveRDS(vw, vw$paths$rds)
+  } else {
+    warning("Note that the paths are updated, but the stored project file is still out of date. Use `overwrite = TRUE` to also update the .rds file.")
   }
   return(vw)
 }

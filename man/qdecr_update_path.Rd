@@ -6,7 +6,7 @@
 \usage{
 qdecr_update_path(vw, dir_fshome, dir_subj,
   dir_project = dirname(vw$paths$rds), mask_path = NULL,
-  qdecr_mask = TRUE, overwrite = TRUE)
+  qdecr_mask = TRUE, overwrite = FALSE)
 }
 \arguments{
 \item{vw}{A `vw` object (QDECR output), e.g. from `qdecr_load`.}
@@ -21,7 +21,7 @@ qdecr_update_path(vw, dir_fshome, dir_subj,
 
 \item{qdecr_mask}{logical (default = TRUE); should the QDECR mask be used as the mask?}
 
-\item{overwrite}{logical (default = TRUE); should the project .rds file be overwritten?}
+\item{overwrite}{logical (default = FALSE); should the project .rds file be overwritten?}
 }
 \value{
 The vw object, but with updated paths.
