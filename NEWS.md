@@ -1,3 +1,10 @@
+# QDECR 0.8.5
+
+## Minor Tweaks
+* Added the `qdecr_update_path` function that lets you update paths of existing projects.
+* Updated `qdecr_load` to detect path discrepancies, and to report them.
+* `qdecr_load` will now store vw$paths$rds, which is the path to the .rds file that was used to load the project.
+
 # QDECR 0.8.4
 
 ## Bug fixes

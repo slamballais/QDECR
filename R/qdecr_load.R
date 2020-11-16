@@ -13,7 +13,14 @@ qdecr_load <- function(path, reload = FALSE) {
     if (end == "/") path <- substring(path, 1, nc - 1)
     path <- paste0(path, "/", basename(path), ".rds")
   }
+  path <- normalizePath(path)
   x <- readRDS(path)
+  x$paths$rds <- path
+  if (dirname(path) != x$paths[["final_path"]])
+    warning("The project seems to be in a different ",
+            "path than where it was originally run! ",
+            "Your paths may be outdated. Use `qdecr_update_path` ",
+            "to update all the paths.")
   if (reload) x <- reload(x)
   x
 }
