@@ -4,8 +4,7 @@
 \alias{freeview}
 \title{Opens Freeview}
 \usage{
-freeview(vw, stack = NULL, type = c("coef", "se", "t", "p"),
-  sig = TRUE, ...)
+freeview(vw, stack = NULL, type = c("coef", "se", "t", "p"), sig = TRUE, ...)
 }
 \arguments{
 \item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}

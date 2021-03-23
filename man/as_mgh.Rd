@@ -4,8 +4,16 @@
 \alias{as_mgh}
 \title{Create an object that is structured like an mgh object}
 \usage{
-as_mgh(x, v = NULL, ndim1 = NULL, ndim2 = NULL, ndim3 = NULL,
-  nframes, type, dof)
+as_mgh(
+  x,
+  v = NULL,
+  ndim1 = NULL,
+  ndim2 = NULL,
+  ndim3 = NULL,
+  nframes,
+  type,
+  dof
+)
 }
 \arguments{
 \item{x}{the vertex-wise values}

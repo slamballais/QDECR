@@ -4,18 +4,38 @@
 \alias{qdecr_fastlm}
 \title{Vertex-wise linear regression}
 \usage{
-qdecr_fastlm(formula, data, id, hemi, dir_out = getwd(), project,
-  n_cores = 1, target = "fsaverage", fwhm = ifelse(measure ==
-  "pial_lgi", 5, 10), mcz_thr = 0.001, cwp_thr = 0.025, mgh = NULL,
-  mask = NULL, mask_path = system.file("extdata", paste0(hemi,
-  ".fsaverage.cortex.mask.mgh"), package = "QDECR"),
+qdecr_fastlm(
+  formula,
+  data,
+  id,
+  hemi,
+  dir_out = getwd(),
+  project,
+  n_cores = 1,
+  target = "fsaverage",
+  fwhm = ifelse(measure == "pial_lgi", 5, 10),
+  mcz_thr = 0.001,
+  cwp_thr = 0.025,
+  mgh = NULL,
+  mask = NULL,
+  mask_path = system.file("extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh"),
+    package = "QDECR"),
   dir_subj = Sys.getenv("SUBJECTS_DIR"),
-  dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
-  dir_out_tree = TRUE, file_out_tree = !dir_out_tree,
-  clean_up_bm = TRUE, clean_up = TRUE, clobber = FALSE,
-  verbose = TRUE, save = TRUE, save_data = TRUE, debug = FALSE,
-  prep_fun = "prep_fastlm", analysis_fun = "analysis_chunkedlm",
-  chunk_size = 1000)
+  dir_fshome = Sys.getenv("FREESURFER_HOME"),
+  dir_tmp = dir_out,
+  dir_out_tree = TRUE,
+  file_out_tree = !dir_out_tree,
+  clean_up_bm = TRUE,
+  clean_up = TRUE,
+  clobber = FALSE,
+  verbose = TRUE,
+  save = TRUE,
+  save_data = TRUE,
+  debug = FALSE,
+  prep_fun = "prep_fastlm",
+  analysis_fun = "analysis_chunkedlm",
+  chunk_size = 1000
+)
 }
 \arguments{
 \item{formula}{an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See `?lm`.}

@@ -12,37 +12,77 @@
 \alias{fbm_col_sd}
 \title{fbm functions from qdecr}
 \usage{
-fbm_row_mean(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_row_mean(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 
-fbm_col_mean(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_col_mean(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 
-fbm_row_is_0(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_row_is_0(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 
-fbm_col_is_0(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_col_is_0(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 
-fbm_row_sum(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_row_sum(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 
-fbm_col_sum(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_col_sum(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 
-fbm_row_sd(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_row_sd(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 
-fbm_col_sd(X, ncores = 1, row.ind = bigstatsr::rows_along(X),
-  col.ind = bigstatsr::cols_along(X), row.mask = NULL,
-  col.mask = NULL)
+fbm_col_sd(
+  X,
+  ncores = 1,
+  row.ind = bigstatsr::rows_along(X),
+  col.ind = bigstatsr::cols_along(X),
+  row.mask = NULL,
+  col.mask = NULL
+)
 }
 \arguments{
 \item{X}{the FBM (file-backed matrix) object}

@@ -4,22 +4,41 @@
 \alias{qdecr}
 \title{Run vertex-wise analyses}
 \usage{
-qdecr(id, data, vertex = "qdecr", margs = NULL,
-  model = c("stats::lm", "QDECR::megha", "RcppEigen::fastLm",
-  "stats::glm", "survival::coxph", "default"), target = "fsaverage",
-  hemi = c("lh", "rh"), measure = c("thickness", "area", "area.pial",
-  "curv", "jacobian_white", "pial", "pial_lgi", "sulc", "volume",
-  "w_g.pct", "white.H", "white.K"), fwhm = ifelse(measure == "pial_lgi",
-  5, 10), mcz_thr = 0.001, cwp_thr = 0.025, mgh = NULL,
-  mask = NULL, mask_path = system.file("extdata", paste0(hemi,
-  ".fsaverage.cortex.mask.mgh"), package = "QDECR"), project,
+qdecr(
+  id,
+  data,
+  vertex = "qdecr",
+  margs = NULL,
+  model = c("stats::lm", "QDECR::megha", "RcppEigen::fastLm", "stats::glm",
+    "survival::coxph", "default"),
+  target = "fsaverage",
+  hemi = c("lh", "rh"),
+  measure = c("thickness", "area", "area.pial", "curv", "jacobian_white", "pial",
+    "pial_lgi", "sulc", "volume", "w_g.pct", "white.H", "white.K"),
+  fwhm = ifelse(measure == "pial_lgi", 5, 10),
+  mcz_thr = 0.001,
+  cwp_thr = 0.025,
+  mgh = NULL,
+  mask = NULL,
+  mask_path = system.file("extdata", paste0(hemi, ".fsaverage.cortex.mask.mgh"),
+    package = "QDECR"),
+  project,
   dir_subj = Sys.getenv("SUBJECTS_DIR"),
-  dir_fshome = Sys.getenv("FREESURFER_HOME"), dir_tmp = dir_out,
-  dir_out, dir_out_tree = TRUE, file_out_tree = !dir_out_tree,
-  clean_up = TRUE, clean_up_bm = TRUE, clobber = FALSE,
-  verbose = TRUE, debug = FALSE, n_cores = 1,
-  prep_fun = "prep_fastlm", analysis_fun = "analysis_chunkedlm",
-  chunk_size = 1000)
+  dir_fshome = Sys.getenv("FREESURFER_HOME"),
+  dir_tmp = dir_out,
+  dir_out,
+  dir_out_tree = TRUE,
+  file_out_tree = !dir_out_tree,
+  clean_up = TRUE,
+  clean_up_bm = TRUE,
+  clobber = FALSE,
+  verbose = TRUE,
+  debug = FALSE,
+  n_cores = 1,
+  prep_fun = "prep_fastlm",
+  analysis_fun = "analysis_chunkedlm",
+  chunk_size = 1000
+)
 }
 \arguments{
 \item{id}{the name of the id variable that matches the dataset to the Freesurfer output}

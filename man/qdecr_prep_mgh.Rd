@@ -4,9 +4,20 @@
 \alias{qdecr_prep_mgh}
 \title{Combine all MGH files into one object}
 \usage{
-qdecr_prep_mgh(input_path, files_list = list.files(input_path), mask,
-  hemi, measure, fwhmc, target, n_cores, dir_tmp, project, backing,
-  verbose)
+qdecr_prep_mgh(
+  input_path,
+  files_list = list.files(input_path),
+  mask,
+  hemi,
+  measure,
+  fwhmc,
+  target,
+  n_cores,
+  dir_tmp,
+  project,
+  backing,
+  verbose
+)
 }
 \arguments{
 \item{input_path}{path to parent directory}

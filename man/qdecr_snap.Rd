@@ -4,9 +4,18 @@
 \alias{qdecr_snap}
 \title{Opens Freeview to take snapshots}
 \usage{
-qdecr_snap(vw, stack = NULL, type = c("coef", "se", "t", "p"),
-  ext = ".tiff", zoom = 1, compose = TRUE, plot_brain = TRUE,
-  save_plot = TRUE, sig = TRUE, ...)
+qdecr_snap(
+  vw,
+  stack = NULL,
+  type = c("coef", "se", "t", "p"),
+  ext = ".tiff",
+  zoom = 1,
+  compose = TRUE,
+  plot_brain = TRUE,
+  save_plot = TRUE,
+  sig = TRUE,
+  ...
+)
 }
 \arguments{
 \item{vw}{The output object of a qdecr call (e.g. qdecr_fastlm)}

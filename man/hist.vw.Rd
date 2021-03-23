@@ -4,8 +4,7 @@
 \alias{hist.vw}
 \title{Histograms of the vertex measures}
 \usage{
-\method{hist}{vw}(x, qtype = c("vertex", "subject"), xlab = NULL,
-  main = NULL, ...)
+\method{hist}{vw}(x, qtype = c("vertex", "subject"), xlab = NULL, main = NULL, ...)
 }
 \arguments{
 \item{x}{The output object of a qdecr call (e.g. qdecr_fastlm)}

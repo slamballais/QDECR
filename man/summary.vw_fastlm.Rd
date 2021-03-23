@@ -4,8 +4,14 @@
 \alias{summary.vw_fastlm}
 \title{Summarize qdecr_fastlm clusters}
 \usage{
-\method{summary}{vw_fastlm}(object, verbose = FALSE, annot = FALSE,
-  file = "aparc.annot", regions = 3, ...)
+\method{summary}{vw_fastlm}(
+  object,
+  verbose = FALSE,
+  annot = FALSE,
+  file = "aparc.annot",
+  regions = 3,
+  ...
+)
 }
 \arguments{
 \item{object}{The output object of a qdecr call (e.g. qdecr_fastlm)}
