@@ -147,7 +147,7 @@ check_id <- function(id, md){
            ".")
     }
   }
-  if (length(unique(md[[1]][,id])) == 1)
+  if (length(unique(md[[1]][,id, drop = TRUE])) == 1)
     stop("The provided `id` column only has 1 unique value in your data, suggesting only 1 person is loaded in.")
   NULL
 }
