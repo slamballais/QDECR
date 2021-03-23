@@ -374,9 +374,6 @@ div.tocify {
     <li>
       <a href="04-post-processing.html">4. Post-processing</a>
     </li>
-    <li>
-      <a href="05-advanced-qdecr.html">5. Advanced QDECR</a>
-    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -528,22 +525,14 @@ div.tocify {
 </div>
 <div id="imputed-datasets" class="section level2">
 <h2><span class="header-section-number">3.3</span> Imputed datasets</h2>
-<div id="missingness" class="section level3">
-<h3><span class="header-section-number">3.3.1</span> Missingness</h3>
-</div>
-<div id="imputed-datasets-1" class="section level3">
-<h3><span class="header-section-number">3.3.2</span> Imputed datasets</h3>
-</div>
+<p>Datasets may contain missing information. The missing information can be imputed under certain conditions. Commonly used R package for imputation are <code>mice</code> and <code>mi</code>. We designed R in such a way that imputed datasets can be used as the input dataset, without any specifications by the user. QDECR currently supports imputed objects from <code>Amelia</code>, <code>mi</code>, <code>mice</code>, and <code>missForest</code>.</p>
 </div>
 <div id="parallel-performance" class="section level2">
 <h2><span class="header-section-number">3.4</span> Parallel performance</h2>
-<hr />
-</div>
-</div>
-<div id="common-problems" class="section level1">
-<h1><span class="header-section-number">4</span> Common problems</h1>
+<p>Users may want to reduce computation time by utilizing multiple processes. QDECR has the <code>n_cores</code> argument that allows users to specify the number of processes (cores/threads) to use. Note that the benefit of using multiple processes is most evident when increasing the number of imputed datasets.</p>
 <hr />
 <p>[Next vignette: <a href="04-post-processing.html">4. Post-processing</a>]</p>
+</div>
 </div>
 
 

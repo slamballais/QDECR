@@ -14,8 +14,6 @@ navbar:
           href: 03-using-qdecr.html
         - text: "4. Post-processing"
           href: 04-post-processing.html
-        - text: "5. Advanced QDECR"
-          href: 05-advanced-qdecr.html
     - text: "Conference materials"
       menu:
         - text: "OHBM 2019 Poster (PDF)"
