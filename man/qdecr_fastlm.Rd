@@ -32,6 +32,7 @@ qdecr_fastlm(
   save = TRUE,
   save_data = TRUE,
   debug = FALSE,
+  custom_measure = NULL,
   prep_fun = "prep_fastlm",
   analysis_fun = "analysis_chunkedlm",
   chunk_size = 1000
@@ -89,6 +90,8 @@ qdecr_fastlm(
 \item{save_data}{if TRUE, includes the raw data + design matrices in the .rds file}
 
 \item{debug}{NOT IMPLEMENTED; will output the maximal log to allow for easy debugging}
+
+\item{custom_measure}{a string that starts with "qdecr_" followed by the name of a surface file that is not created by FreeSurfer by default (e.g. "qdecr_cc" or "qdecr_test"). Note that the surface files MUST be located in the surf subdirectory of each individual's FreeSurfer output, and the files must follow the naming conventions of the other .mgh files (e.g. "lh.test.fwhm10.fsaverage.mgh")}
 
 \item{prep_fun}{Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)}
 
