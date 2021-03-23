@@ -23,7 +23,6 @@ Users can follow the tutorial below to run their vertex-wise analyses. Please no
 * 2. [Quick start](02-quick-start.html)
 * 3. [Using `QDECR`](03-using-qdecr.html) [**UNDER CONSTRUCTION**]
 * 4. [Post-processing](04-post-processing.html) [**UNDER CONSTRUCTION**]
-* 5. [Advanced `QDECR`](05-advanced-qdecr.html) [**UNDER CONSTRUCTION**]
 
 # Contact 
 

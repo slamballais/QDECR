@@ -100,17 +100,16 @@ By extension, `QDECR` has all these features.
 
 ## Imputed datasets
 
-### Missingness
-
-### Imputed datasets
+Datasets may contain missing information. The missing information can be imputed under certain conditions.
+Commonly used R package for imputation are `mice` and `mi`. We designed R in such a way that imputed datasets
+can be used as the input dataset, without any specifications by the user. QDECR currently supports
+imputed objects from `Amelia`, `mi`, `mice`, and `missForest`.
 
 ## Parallel performance
 
----
-
-# Common problems
-
-
+Users may want to reduce computation time by utilizing multiple processes. QDECR has the `n_cores` argument
+that allows users to specify the number of processes (cores/threads) to use. Note that the benefit of using
+multiple processes is most evident when increasing the number of imputed datasets.
 
 ---
 
