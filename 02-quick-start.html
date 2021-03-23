@@ -473,7 +473,7 @@ div.tocify {
 <li><code>id</code>: Here you should put (as a character) the column name in your dataset that contains the identifiers for <code>SUBJECTS_DIR</code>.</li>
 <li><code>hemi</code>: The hemisphere you want to analyze (<code>lh</code> for left, <code>rh</code> for right).</li>
 <li><code>project</code>: The name that you want for your output. By default, both <code>hemi</code> and the vertex measure get added to it (so <code>lh.test_project.qdecr_thickness</code>).</li>
-<li><code>dir_tmp</code>: <strong>To make <code>QDECR</code> run fast, you need to use shared memory! Not using shared memory will make things super slow!</strong></li>
+<li><code>dir_tmp</code>: <strong>To make <code>QDECR</code> run fast, you need to use disk with fast I/O, like shared memory (/dev/shm)!</strong></li>
 </ul>
 <p>There are a bunch of other arguments that you can specify:</p>
 <ul>
@@ -494,7 +494,8 @@ div.tocify {
 <li><code>save_data</code>: If TRUE (and if SAVE is also TRUE) then you will also save the datasets into the .fst object.</li>
 <li><code>debug</code>: <strong>still needs to be fixed</strong></li>
 </ul>
-<p>Running <code>qdecr_fastlm</code> takes several minutes, anywhere from 10 minutes for small datasets to 30 minutes for large datasets.</p>
+<p>Check <code>?qdecr_fastlm</code> for all the arguments.</p>
+<p>Running <code>qdecr_fastlm</code> takes several minutes, anywhere from minutes for small datasets to hours for large and imputed datasets.</p>
 </div>
 <div id="checking-the-output" class="section level1">
 <h1><span class="header-section-number">3</span> Checking the output</h1>

@@ -438,33 +438,47 @@ div.tocify {
 
 
 <hr />
-<div id="before-you-get-started" class="section level1">
-<h1><span class="header-section-number">1</span> Before you get started</h1>
-<p>Here I will discuss some of the things you can do one the analysis is done.</p>
 <hr />
+<div id="default-output-manipulation" class="section level1">
+<h1><span class="header-section-number">1</span> Default output manipulation</h1>
+<p>As mentioned in <a href="02-quick-start.html">vignette 2</a>], there are a number of options to explore the output of an analysis.</p>
+<div id="global-characteristics" class="section level2">
+<h2><span class="header-section-number">1.1</span> Global characteristics</h2>
+<ul>
+<li><code>print(out)</code> (or <code>out</code>): Returns an overview of all the settings of the model. This includes the number of participants and the formula used.</li>
+<li><code>summary</code>: This will return a table that gives an overview of the statistically significant clusters per variable/term in the model. For each cluster, we report the number of vertices, the mean value of the vertex measure (e.g. thickness) in that cluster, the mean regression coefficient, and the mean standard error. Information on the location of the cluster can be obtained with <code>summary(annot = TRUE)</code>, using the an annotation file from the target template (default: <code>file = aparc.annot</code>).</li>
+</ul>
+</div>
+<div id="term-specific-characteristics-stacks" class="section level2">
+<h2><span class="header-section-number">1.2</span> Term-specific characteristics (stacks)</h2>
+<p>Users may want to zoom in on specific variables or terms. To do this, we have to utilize “stacks”: <code>stacks(out)</code>. This will return all the “stacks” in the model.</p>
+<p>A stack is simply a term in the regression model. For example, a continuous variable like age will be stored as a stack called “age”. However, certain variables have multiple levels, and so each contrast needs to be stored separately. For example, a dichotomous variable, e.g. “disease” with levels “Yes” and “No”, will be stored in a stack called “diseaseNo”. A trichotomous version, e.g. “status” with levels “Control”, “MCI”, “AD”, will be stored in two stacks: “statusMCI” and “statusAD”. This has to do with the settings of how R deals with factors. By default, R transforms factors to become dummy-coded, which is reflected in the stacks.</p>
+<p>By calling <code>stacks(out)</code>, users can see which stacks were used in the model. Here are a number of functions that rely on stacks:</p>
+<ul>
+<li><code>freeview(out, "statusAD")</code>: Calls <code>freeview</code> (external window) for the <code>statusAD</code> stack. The <code>freeview</code> tool is a tool from the <code>FreeSurfer</code> suite that allows users to view maps of the brain.</li>
+<li><code>qdecr_snaps(out, "statusAD")</code>: Calls <code>freeview</code> multiple times to generate multiple images, then compiles the images into one file. This function requires the <code>magick</code> package.</li>
+</ul>
+</div>
 </div>
 <div id="savingloading-projects" class="section level1">
 <h1><span class="header-section-number">2</span> Saving/loading projects</h1>
 <p>Any analyses that are run with e.g. <code>qdecr_fastlm</code> are automatically stored as files on disk.</p>
 <p>To load the project back into R, you can use the <code>qdecr_load</code> function:</p>
 <p><code>vw &lt;- qdecr_load("path/to/project")</code></p>
-<p>It is also possible to reload the vertex-wise data:</p>
+<p>It is also possible to reload the vertex-wise data as <code>vw$mgh</code>:</p>
 <p><code>vw &lt;- reload(vw)</code></p>
 <p>Do note that this will generate huge temporary files in your <code>dir_tmp</code>, so be mindful to remove those afterwards!</p>
 <hr />
 </div>
 <div id="savingloading-.mgh-files" class="section level1">
 <h1><span class="header-section-number">3</span> Saving/loading .mgh files</h1>
+<p>Users can also load (and save) individual <code>mgh</code> files. Three functions are currently in use:</p>
+<ul>
+<li><code>load.mgh("path/to/mgh/file")</code>: Loads an .mgh file into R as a list, where the <code>x</code> element contains the vertex-wise values.</li>
+<li><code>as_mgh(x)</code>: Converts a vector <code>x</code> to an object that resembles an .mgh file.</li>
+<li><code>save.mgh(x, "path/to/mgh/file")</code>: Given that <code>x</code> resembles an .mgh file, it will save <code>x</code> to the specified path.</li>
+</ul>
 <hr />
-</div>
-<div id="graphics" class="section level1">
-<h1><span class="header-section-number">4</span> Graphics</h1>
-<hr />
-</div>
-<div id="using-variable-cluster-wise-thresholds" class="section level1">
-<h1><span class="header-section-number">5</span> Using variable cluster-wise thresholds</h1>
-<hr />
-<p>[Next vignette: <a href="05-advanced-qdecr.html">5. Advanced <code>QDECR</code></a>]</p>
 </div>
 
 

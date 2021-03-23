@@ -11,11 +11,25 @@ output:
 
 ---
 
-# Before you get started
-
-Here I will discuss some of the things you can do one the analysis is done.
-
 ---
+
+# Default output manipulation
+
+As mentioned in [vignette 2](02-quick-start.html)], there are a number of options to explore the output of an analysis.
+
+## Global characteristics
+* `print(out)` (or `out`): Returns an overview of all the settings of the model. This includes the number of participants and the formula used.
+* `summary`: This will return a table that gives an overview of the statistically significant clusters per variable/term in the model. For each cluster, we report the number of vertices, the mean value of the vertex measure (e.g. thickness) in that cluster, the mean regression coefficient, and the mean standard error. Information on the location of the cluster can be obtained with `summary(annot = TRUE)`, using the an annotation file from the target template (default: `file = aparc.annot`). 
+
+## Term-specific characteristics (stacks)
+Users may want to zoom in on specific variables or terms. To do this, we have to utilize "stacks": `stacks(out)`. This will return all the "stacks" in the model. 
+
+A stack is simply a term in the regression model. For example, a continuous variable like age will be stored as a stack called "age". However, certain variables have multiple levels, and so each contrast needs to be stored separately. For example, a dichotomous variable, e.g. "disease" with levels "Yes" and "No", will be stored in a stack called "diseaseNo". A trichotomous version, e.g. "status" with levels "Control", "MCI", "AD", will be stored in two stacks: "statusMCI" and "statusAD". This has to do with the settings of how R deals with factors. By default, R transforms factors to become dummy-coded, which is reflected in the stacks.
+
+By calling `stacks(out)`, users can see which stacks were used in the model. Here are a number of functions that rely on stacks:
+
+* `freeview(out, "statusAD")`: Calls `freeview` (external window) for the `statusAD` stack. The `freeview` tool is a tool from the `FreeSurfer` suite that allows users to view maps of the brain.
+* `qdecr_snaps(out, "statusAD")`: Calls `freeview` multiple times to generate multiple images, then compiles the images into one file. This function requires the `magick` package.
 
 # Saving/loading projects
 
@@ -25,7 +39,7 @@ To load the project back into R, you can use the `qdecr_load` function:
 
 `vw <- qdecr_load("path/to/project")`
 
-It is also possible to reload the vertex-wise data:
+It is also possible to reload the vertex-wise data as `vw$mgh`:
 
 `vw <- reload(vw)`
 
@@ -35,14 +49,10 @@ Do note that this will generate huge temporary files in your `dir_tmp`, so be mi
 
 # Saving/loading .mgh files
 
----
+Users can also load (and save) individual `mgh` files. Three functions are currently in use:
 
-# Graphics
+* `load.mgh("path/to/mgh/file")`: Loads an .mgh file into R as a list, where the `x` element contains the vertex-wise values.
+* `as_mgh(x)`: Converts a vector `x` to an object that resembles an .mgh file.
+* `save.mgh(x, "path/to/mgh/file")`: Given that `x` resembles an .mgh file, it will save `x` to the specified path.
 
 --- 
-
-# Using variable cluster-wise thresholds
-
----
-
-[Next vignette: [5. Advanced `QDECR`](05-advanced-qdecr.html)]
