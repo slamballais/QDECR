@@ -44,14 +44,14 @@ prep_fastlm <- function(prepvw){
   ys <- if(identical(unname(y), rep(999, nrow(mx[[nn]])))) "LHS" else "RHS"
   if (ys == "LHS") { 
     mx_test2 <- mx_test
-    mx_test2b <- stats::model.matrix(mx_test2, object = mt, stats::contrasts)
+    mx_test2b <- stats::model.matrix(mx_test2, object = mt)
     if (Matrix::rankMatrix(mx_test2b) < ncol(mx_test2b)) stop ("The design matrix is NOT full rank. Please check if you have collinear columns in your data.")
   }
   if (stats::is.empty.model(mt)) stop("The provided model (to fastLm) is empty. Check your data + formula.")
   mm <- NULL
   prepvw$ff <- "vw_fastlm_slow"
   if (prepvw$vertex %in% colnames(attr(mt, "factors")) || ys == "LHS"){
-    mm <- lapply(mx, stats::model.matrix, object = mt, stats::contrasts)
+    mm <- lapply(mx, stats::model.matrix, object = mt)
     ff <- "vw_fastlm"
     vw <- list(mm = mm, mf = mx[[1]], ff = ff, formula = mf$formula, vertex = prepvw$vertex, y = y, ys = ys, method = mf$method, backing = prepvw$backing, backing_to_remove = prepvw$backing_to_remove, so = prepvw$so)
   } else {
