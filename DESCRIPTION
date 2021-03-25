@@ -1,7 +1,7 @@
 Package: QDECR
 Type: Package
 Title: Vertex-wise statistical analysis
-Version: 0.8.4
+Version: 0.8.5
 Authors@R: as.person(c(
     "Ryan Muetzel <r.muetzel@erasmusmc.nl> [aut, cre]",
     "Sander Lamballais <s.lamballaistessensohn@erasmusmc.nl> [aut]"

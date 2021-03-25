@@ -2,6 +2,7 @@
 #'
 #' @inheritParams qdecr
 #' @param formula an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See `?lm`.
+#' @param custom_measure a string that starts with "qdecr_" followed by the name of a surface file that is not created by FreeSurfer by default (e.g. "qdecr_cc" or "qdecr_test"). Note that the surface files MUST be located in the surf subdirectory of each individual's FreeSurfer output, and the files must follow the naming conventions of the other .mgh files (e.g. "lh.test.fwhm10.fsaverage.mgh")
 #' @param save if TRUE, saves the output to a .rds file
 #' @param save_data if TRUE, includes the raw data + design matrices in the .rds file
 #' @return returns an object of classes "vw_fastlm" and "vw".
@@ -33,6 +34,7 @@ qdecr_fastlm <- function(formula,
                          save = TRUE,
                          save_data = TRUE,
                          debug = FALSE,
+                         custom_measure = NULL,
                          prep_fun = "prep_fastlm",
                          analysis_fun = "analysis_chunkedlm",
                          chunk_size = 1000){
@@ -42,9 +44,21 @@ terms <- attr(terms(formula), "factors")
 rt <- rownames(terms)
 ct <- colnames(terms)
 
-# Check if there is a vertex-wise measure present
+# list of all the vertex-wise measures
 qt <- c("qdecr_thickness", "qdecr_area", "qdecr_area.pial", "qdecr_curv", "qdecr_jacobian_white", "qdecr_pial", "qdecr_pial_lgi", "qdecr_sulc", "qdecr_volume", "qdecr_w_g.pct", "qdecr_white.H", "qdecr_white.K")
-if (length(intersect(rt, qt)) == 0) stop("Please specify in the formula one of: ", paste(qt, collapse = ", "))
+
+# process any custom vertex-wise measures
+if (!is.null(custom_measure)) {
+  if (!is.character(custom_measure)) stop ("The input to the `custom_measure` argument does not seem to be a character vector.")
+  starts_with_qdecr <- grepl("^qdecr_.*", custom_measure)
+  if (any(!starts_with_qdecr)) stop("The provided `custom_measure` does not start with 'qdecr_'.")
+  if (any(custom_measure %in% qt)) stop("The provided `custom_measure` is one of the default maps.")
+  qt <- c(qt, custom_measure)
+}
+
+# Check if there is a vertex-wise measure present
+n_vertex_vars <- length(intersect(rt, qt))
+if (n_vertex_vars == 0) stop("The formula does not contain one of the default FreeSurfer surface measures (e.g. qdecr_thickness). If the user specified a custom surface map, use the `custom_measure` argument.")
 
 # Find which one it is
 if (sum(qt %in% rt) > 1) stop("qdecr currently cannot handle multiple vertex-wise measures in the formula.")

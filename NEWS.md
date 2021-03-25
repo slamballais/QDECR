@@ -1,3 +1,12 @@
+# QDECR 0.8.5
+
+## Bug fixes 
+* Fixed a line in `check_id` to explicitly state `drop = TRUE` in `md[, id, drop = TRUE]`. 
+* Fixed that a call to `model.matrix` would supply `stats::contrasts` in `prep_fastlm`; this led to harmless warnings.
+
+## Minor tweaks
+* To let users analyze custom surface maps, we added the `custom_measure` argument to `qdecr_fastlm`. This argument lets users specify any name for a surface map that they want, provided that [1] it starts with "qdecr_" (e.g. "qdecr_test"), [2] such a file is located in the subj subdirectory of the FreeSurfer output directories, [3] the surface files follow the same naming convention as the other surface maps that FreeSurfer outputs (e.g. "lh.test.fwhm10.fsaverage.mgh").
+
 # QDECR 0.8.4
 
 ## Bug fixes
