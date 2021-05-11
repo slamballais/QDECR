@@ -19,7 +19,9 @@ qdecr_prep_mgh <- function(input_path,
                            n_cores, dir_tmp, project, backing, verbose) {
   measure2 <- measure
   if(measure2 == "w_g.pct") measure2 <- "w-g.pct"
-  new_files <- file.path(input_path, files_list, "surf", paste(hemi, measure, if (fwhmc != "") {fwhmc}, target, "mgh", sep = "."))
+  mgh_file <- paste0(hemi, ".", measure, if (fwhmc != "") {paste0(".", fwhmc)}, ".", target, ".mgh")
+  
+  new_files <- file.path(input_path, files_list, "surf", mgh_file)
   n <- length(new_files)
   temp <- load.mgh(new_files[1])
 
