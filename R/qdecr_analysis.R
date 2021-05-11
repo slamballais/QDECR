@@ -27,9 +27,15 @@ analysis_chunkedlm <- function(vw, chunk) {
   
   # run most of the regression
   if (vw$model$ys != "LHS") stop("The vertex measure has to be on the left hand side for analysis_fastlm.")
-  XTX <- lapply(vw$model$mm, function(z) chol2inv(chol(crossprod(z))))
-  XTXX <- lapply(1:m, function(z) tcrossprod(XTX[[z]], vw$model$mm[[z]]))
-  
+  w <- vw$model$w
+  if (is.null(w)) {
+    XTX <- lapply(vw$model$mm, function(z) chol2inv(chol(crossprod(z))))
+    XTXX <- lapply(1:m, function(z) tcrossprod(XTX[[z]], vw$model$mm[[z]]))
+  } else {
+    XTX <- lapply(vw$model$mm, function(z) chol2inv(chol(crossprod(z, diag(w)) %*% z)))
+    XTXX <- lapply(1:m, function(z) tcrossprod(XTX[[z]], vw$model$mm[[z]]) %*% diag(w))
+  }
+
   # reduce load per core
   X <- vw$model$mm
   Ya <- vw$mgh
@@ -56,7 +62,11 @@ analysis_chunkedlm <- function(vw, chunk) {
     res <- lapply(1:m, function(z) Y - X[[z]] %*% bhat[[z]])
     
     # get se
-    se <- lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(res^2)[[z]]) / df))
+    se <- if (is.null(w)) {
+      lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(res^2)[[z]]) / df))
+    } else {
+      lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(w * res^2)[[z]]) / df))
+    }
     
     # pool and get t
     out <- quick_pool2(bhat, se = se)

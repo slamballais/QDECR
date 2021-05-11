@@ -12,6 +12,7 @@ qdecr_fastlm <- function(formula,
                          data,
                          id,
                          hemi,
+                         weights = NULL,
                          dir_out = getwd(),
                          project,
                          n_cores = 1,
@@ -68,6 +69,7 @@ qqt <- rt[qid]
 measure <- sub("qdecr_", "", qqt)
 ff <- stats::as.formula(deparse(formula))
 margs <- c(qdecr_decon(RcppEigen::fastLm()), list(formula = ff, data = data, method = 2))
+if (!is.null(weights)) margs <- c(margs, list(weights = weights))
 vw <- qdecr(id = id,
             margs = margs,
             hemi = hemi,

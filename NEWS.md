@@ -1,4 +1,9 @@
-# QDECR 0.8.6
+# QDECR 0.9.0: Lausanne
+
+Version 0.9.0 is the first update after publication of the QDECR manuscript in Frontiers in Neuroinformatics. The latter is based in Lausanne. This version introduces weighted regression and a number of minor tweaks. 
+
+## New features
+* `qdecr_fastlm` can now take weights via the `weights` argument, which act as observation weights in the linear regression. This argument works similar to `lm`.
 
 ## Bug fixes
 
