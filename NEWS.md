@@ -1,3 +1,10 @@
+# QDECR 0.8.6
+
+## Bug fixes
+
+* The specified number of cores is checked against `bigstatsr::nb_cores`. However, it seems that it returns 0 cores when only 1 core is found (given that it always omits 1core). We thus rewrote `check_cores` to use `parallel::detectCores`, and to make sure that it cannot return 0 cores.
+* Fixed the text in the error message of `check_cores`.
+
 # QDECR 0.8.5
 
 ## Bug fixes 
