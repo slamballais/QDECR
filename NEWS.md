@@ -7,7 +7,7 @@ Version 0.9.0 is the first update after publication of the QDECR manuscript in F
 
 ## Bug fixes
 
-* The specified number of cores is checked against `bigstatsr::nb_cores` (inside `QDECR:::check_cores`). However, it seems that it returns 0 cores when only 1 core is found (given that it always omits 1core). We thus rewrote `check_cores` to use `parallel::detectCores`, and to make sure that it cannot return 0 cores.
+* The specified number of cores is checked against `bigstatsr::nb_cores` (inside `QDECR:::check_cores`). However, it seems that it returns 0 cores when only 1 core is found (given that it always omits 1 core). We thus rewrote `check_cores` to use `parallel::detectCores`, and to make sure that it cannot return 0 cores.
 * Fixed the text in the error message of `QDECR:::check_cores`.
 * Unsmoothed q-cached surface files can now be analyzed. Normally, QDECR would look for files containing `fwhmX`, where X is the FWHM in mm. However, unsmoothed files do not contain this part. The code was rewritten to check if fwhm == 0, and in those cases it will not insert that into the file names. This was fixed by setting `fwhmc` to "" in `QDECR:::qdecr_check`, and by tweaking `QDECR:::qdecr_prep_mgh`.
 
