@@ -58,9 +58,11 @@ qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
   input
 }
 
-check_cores <- function(n_cores){
-  rec_cores <- bigstatsr::nb_cores()
-  if (n_cores > rec_cores) stop("You specified `", n_cores, "` to be too high. Recommended is ", rec_cores)
+check_cores <- function(n_cores) {
+  if (n_cores < 1) stop("You specified `n_cores` to be smaller than 1. Please choose a number that is 1 or higher.")
+  rec_cores <- parallel::detectCores() - 1
+  if (rec_cores == 0) rec_cores <- 1
+  if (n_cores > rec_cores) stop("You specified `n_cores` to be too high (", n_cores, "). Recommended is ", rec_cores)
   NULL
 }
 
