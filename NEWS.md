@@ -14,6 +14,7 @@ Version 0.9.0 is the first update after publication of the QDECR manuscript in F
 ## Minor tweaks
 * Tweaked the vertex-wise analysis code (`QDECR:::analysis_chunkedlm`) to be faster and be more memory efficient (`se` is now calculated without the intermediate storage of `s2`).
 * Added an extra check in `QDECR:::qdecr_prep_mgh` so that it also checks whether the .mgh files actually exist. It will output which subjects are missing the surface files (if N < 20) or just say that people are missing surface files (if N >= 20). This adds a little bit of runtime, but it pays off.
+* When there is missing data in the design matrix, `QDECR:::qdecr_fastlm` will throw an error (i.e., `na.action = na.fail`). This is to avoid problems downstream. We opted for `na.fail` and not `na.omit`-like behavior, because users who are unaware of missingness would then only find out after running QDECR that they had missingness.
 
 # QDECR 0.8.5
 

@@ -27,7 +27,7 @@ prep_fastlm <- function(prepvw) {
   mx <- lapply(prepvw$data, function(x) {
     mfz$data <- x
     mfz$data[, prepvw$vertex] <- 999
-    do.call2("stats::model.frame", mfz)
+    do.call2("stats::model.frame", c(mfz, list(na.action = na.fail)))
   })
   nn <- length(prepvw$data)
   mt <- attr(mx[[nn]], "terms")
