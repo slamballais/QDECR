@@ -9,6 +9,7 @@ qdecr_fastlm(
   data,
   id,
   hemi,
+  weights = NULL,
   dir_out = getwd(),
   project,
   n_cores = 1,
@@ -46,6 +47,8 @@ qdecr_fastlm(
 \item{id}{the name of the id variable that matches the dataset to the Freesurfer output}
 
 \item{hemi}{hemisphere to analyze ("lh" or "rh")}
+
+\item{weights}{Optinal vector of weights for the observations. See `?lm`.}
 
 \item{dir_out}{the directory where to save the data to (defaults to the current directory)}
 

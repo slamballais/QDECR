@@ -40,7 +40,8 @@ qdecr_pre_describe <- function(vw, mask, verbose = TRUE) {
   info$model <- rbind(info$model,
                       c("model", "Model", im), 
                       c("model", "Vertex data", vw$input$measure),
-                      c("model", "Formula", paste(deparse(vw$model$formula), collapse = "")))                      
+                      c("model", "Formula", paste(deparse(vw$model$formula), collapse = "")),
+                      c("model", "Weights used", if(is.null(vw$model$w)) "No" else "Yes"))                      
   info$mask <- rbind(info$mask,
                      c("mask", "Mask origin", if (!is.null(mask)) "User defined." else vw$paths$mask_path),  
                      c("mask", "Masked vertices", sum(vw$mask)))       
