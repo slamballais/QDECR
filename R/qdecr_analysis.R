@@ -56,8 +56,7 @@ analysis_chunkedlm <- function(vw, chunk) {
     res <- lapply(1:m, function(z) Y - X[[z]] %*% bhat[[z]])
     
     # get se
-    s2 <- lapply(res, function(z) colSums(z^2 / df))
-    se <- lapply(1:m, function(z) do.call("cbind", lapply(s2[[z]], function(q) sqrt(diag(q * XTX[[z]])))))
+    se <- lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(res^2)[[z]]) / df))
     
     # pool and get t
     out <- quick_pool2(bhat, se = se)
