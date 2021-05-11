@@ -6,6 +6,9 @@
 * Fixed the text in the error message of `QDECR:::check_cores`.
 * Unsmoothed q-cached surface files can now be analyzed. Normally, QDECR would look for files containing `fwhmX`, where X is the FWHM in mm. However, unsmoothed files do not contain this part. The code was rewritten to check if fwhm == 0, and in those cases it will not insert that into the file names. This was fixed by setting `fwhmc` to "" in `QDECR:::qdecr_check`.
 
+## Minor tweaks
+* Tweaked the vertex-wise analysis code (`QDECR:::analysis_chunkedlm`) to be faster and be more memory efficient (`se` is now calculated without the intermediate storage of `s2`).
+
 # QDECR 0.8.5
 
 ## Bug fixes 
