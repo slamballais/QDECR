@@ -22,6 +22,17 @@ qdecr_prep_mgh <- function(input_path,
   mgh_file <- paste0(hemi, ".", measure, if (fwhmc != "") {paste0(".", fwhmc)}, ".", target, ".mgh")
   
   new_files <- file.path(input_path, files_list, "surf", mgh_file)
+  
+  new_files_exist <- file.exists(new_files)
+  if (!all(new_files_exist)) {
+    id_nonexist <- which(!new_files_exist)
+    length_non <- length(id_nonexist)
+    if (length_non < 20) stop("The following subjects do not have ", 
+                              mgh_file, ": ", 
+                              paste(files_list[id_nonexist], collapse = ", "))
+    stop("20 or more subjects do not have the ", mgh_file, " file in their FreeSurfer output.")
+  }
+  
   n <- length(new_files)
   temp <- load.mgh(new_files[1])
 
