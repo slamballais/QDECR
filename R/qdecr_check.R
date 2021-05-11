@@ -52,7 +52,7 @@ qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
   input[["file_out_tree"]] <- file_out_tree
   input[["clobber"]] <- clobber
   input[["fwhm"]] <- fwhm
-  input[["fwhmc"]] <- paste0("fwhm", fwhm)
+  input[["fwhmc"]] <- if (fwhm > 0) paste0("fwhm", fwhm) else ""
   input[["n_cores"]] <- n_cores
   input[["prep_fun"]] <- prep_fun
   input
