@@ -63,9 +63,9 @@ analysis_chunkedlm <- function(vw, chunk) {
     
     # get se
     se <- if (is.null(w)) {
-      lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(res^2)[[z]]) / df))
+      lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(res[[z]]^2)) / df))
     } else {
-      lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(w * res^2)[[z]]) / df))
+      lapply(1:m, function(z) sqrt(tcrossprod(diag(XTX[[z]]), colSums(w * res[[z]]^2)) / df))
     }
     
     # pool and get t
