@@ -11,6 +11,7 @@ Version 0.9.0 is the first update after publication of the QDECR manuscript in F
 * [#45](https://github.com/slamballais/QDECR/pull/45): Unsmoothed q-cached surface files can now be analyzed. Normally, QDECR would look for files containing `fwhmX`, where X is the FWHM in mm. However, unsmoothed files do not contain this part. The code was rewritten to check if fwhm == 0, and in those cases it will not insert that into the file names. This was fixed by setting `fwhmc` to "" in `QDECR:::qdecr_check`, and by tweaking `QDECR:::qdecr_prep_mgh` (fixes [#41](https://github.com/slamballais/QDECR/issues/41)).
 * [#51](https://github.com/slamballais/QDECR/pull/51): Added an extra check to avoid multiple levels of parallelism, e.g. `n_cores` > 1 while simultaneously having a parallel BLAS library set up.
 * [40f04d4](https://github.com/slamballais/QDECR/commit/40f04d44c08991b752cf4bf4fd0a9f7c525ca409): Added some functions to the NAMESPACE (stats::na.fail, stats::model.weights).
+* [8f19d58](https://github.com/slamballais/QDECR/commit/8f19d585338a1bb0afc575c0e164ff6b0d90b5b5): Since 4.0.0 it is possible to get a warning message from `readChar`. The `load.annot` function was modified by replacing `readChar` with the equivalent call of `readBin`.
 
 ## Minor tweaks
 * [#46](https://github.com/slamballais/QDECR/pull/46): Tweaked the vertex-wise analysis code (`QDECR:::analysis_chunkedlm`) to be faster and be more memory efficient (`se` is now calculated without the intermediate storage of `s2`) (addresses [#38](https://github.com/slamballais/QDECR/issues/38)).
