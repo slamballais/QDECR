@@ -1,3 +1,12 @@
+## COPIED FROM bigparallelr:::default_nproc_blas
+default_nproc_blas <- function() {
+
+  cl <- parallel::makePSOCKcluster(1)
+  on.exit(parallel::stopCluster(cl), add = TRUE)
+
+  parallel::clusterEvalQ(cl, RhpcBLASctl::blas_get_num_procs())[[1]]
+}
+
 qdecr_check_backing <- function(backing, clobber){
   for (n in backing){
     n <- paste0(n, ".bk")
@@ -52,15 +61,18 @@ qdecr_check <- function(id, md, margs, hemi, vertex, measure, model, target,
   input[["file_out_tree"]] <- file_out_tree
   input[["clobber"]] <- clobber
   input[["fwhm"]] <- fwhm
-  input[["fwhmc"]] <- paste0("fwhm", fwhm)
+  input[["fwhmc"]] <- if (fwhm > 0) paste0("fwhm", fwhm) else ""
   input[["n_cores"]] <- n_cores
   input[["prep_fun"]] <- prep_fun
   input
 }
 
-check_cores <- function(n_cores){
-  rec_cores <- bigstatsr::nb_cores()
-  if (n_cores > rec_cores) stop("You specified `", n_cores, "` to be too high. Recommended is ", rec_cores)
+check_cores <- function(n_cores) {
+  if (n_cores < 1) stop("You specified `n_cores` to be smaller than 1. Please choose a number that is 1 or higher.")
+  rec_cores <- parallel::detectCores() - 1
+  if (rec_cores == 0) rec_cores <- 1
+  if (n_cores > rec_cores) stop("You specified `n_cores` to be too high (", n_cores, "). Recommended is ", rec_cores)
+  if (n_cores > 1 && default_nproc_blas() > 1) stop("`n_cores` > 1, but there already seems to be a parallel BLAS library present. Either set `n_cores` to 1, or set the BLAS library to 1.")
   NULL
 }
 

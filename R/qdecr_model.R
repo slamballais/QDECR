@@ -12,7 +12,9 @@ qdecr_backing_path <- function(prepvw, to_keep, to_remove) {
   return(prepvw)
 }
 
-prep_fastlm <- function(prepvw){
+#' @importFrom stats model.weights na.fail
+
+prep_fastlm <- function(prepvw) {
   to_keep <- c("coef", "se", "t", "p")
   to_remove <- "resid"
   prepvw <- qdecr_backing_path(prepvw, to_keep, to_remove)
@@ -27,10 +29,13 @@ prep_fastlm <- function(prepvw){
   mx <- lapply(prepvw$data, function(x) {
     mfz$data <- x
     mfz$data[, prepvw$vertex] <- 999
-    do.call2("stats::model.frame", mfz)
+    do.call2("stats::model.frame", c(mfz, list(na.action = na.fail)))
   })
   nn <- length(prepvw$data)
   mt <- attr(mx[[nn]], "terms")
+  w <- as.vector(model.weights(mx[[nn]]))
+  if (!is.null(w) && !is.numeric(w)) 
+    stop("'weights' must be a numeric vector")
   mfz2 <- mfz
   mfz2$data <- prepvw$data[[nn]]
   mfz2$data[, prepvw$vertex] <- 888
@@ -53,7 +58,7 @@ prep_fastlm <- function(prepvw){
   if (prepvw$vertex %in% colnames(attr(mt, "factors")) || ys == "LHS"){
     mm <- lapply(mx, stats::model.matrix, object = mt)
     ff <- "vw_fastlm"
-    vw <- list(mm = mm, mf = mx[[1]], ff = ff, formula = mf$formula, vertex = prepvw$vertex, y = y, ys = ys, method = mf$method, backing = prepvw$backing, backing_to_remove = prepvw$backing_to_remove, so = prepvw$so)
+    vw <- list(mm = mm, mf = mx[[1]], ff = ff, formula = mf$formula, vertex = prepvw$vertex, y = y, ys = ys, w = w, method = mf$method, backing = prepvw$backing, backing_to_remove = prepvw$backing_to_remove, so = prepvw$so)
   } else {
     warning("Your formula for `fastLm` contains complicated terms. \n",
             "We will rely on the slower implementation of our fastLm.")

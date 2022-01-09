@@ -2,6 +2,7 @@
 #'
 #' @inheritParams qdecr
 #' @param formula an object of class "formula" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See `?lm`.
+#' @param weights Optinal vector of weights for the observations. See `?lm`. 
 #' @param custom_measure a string that starts with "qdecr_" followed by the name of a surface file that is not created by FreeSurfer by default (e.g. "qdecr_cc" or "qdecr_test"). Note that the surface files MUST be located in the surf subdirectory of each individual's FreeSurfer output, and the files must follow the naming conventions of the other .mgh files (e.g. "lh.test.fwhm10.fsaverage.mgh")
 #' @param save if TRUE, saves the output to a .rds file
 #' @param save_data if TRUE, includes the raw data + design matrices in the .rds file
@@ -12,6 +13,7 @@ qdecr_fastlm <- function(formula,
                          data,
                          id,
                          hemi,
+                         weights = NULL,
                          dir_out = getwd(),
                          project,
                          n_cores = 1,
@@ -68,6 +70,7 @@ qqt <- rt[qid]
 measure <- sub("qdecr_", "", qqt)
 ff <- stats::as.formula(deparse(formula))
 margs <- c(qdecr_decon(RcppEigen::fastLm()), list(formula = ff, data = data, method = 2))
+if (!is.null(weights)) margs <- c(margs, list(weights = weights))
 vw <- qdecr(id = id,
             margs = margs,
             hemi = hemi,

@@ -19,7 +19,20 @@ qdecr_prep_mgh <- function(input_path,
                            n_cores, dir_tmp, project, backing, verbose) {
   measure2 <- measure
   if(measure2 == "w_g.pct") measure2 <- "w-g.pct"
-  new_files <- file.path(input_path, files_list, "surf", paste(hemi, measure, fwhmc, target, "mgh", sep = "."))
+  mgh_file <- paste0(hemi, ".", measure, if (fwhmc != "") {paste0(".", fwhmc)}, ".", target, ".mgh")
+  
+  new_files <- file.path(input_path, files_list, "surf", mgh_file)
+  
+  new_files_exist <- file.exists(new_files)
+  if (!all(new_files_exist)) {
+    id_nonexist <- which(!new_files_exist)
+    length_non <- length(id_nonexist)
+    if (length_non < 20) stop("The following subjects do not have ", 
+                              mgh_file, ": ", 
+                              paste(files_list[id_nonexist], collapse = ", "))
+    stop("20 or more subjects do not have the ", mgh_file, " file in their FreeSurfer output.")
+  }
+  
   n <- length(new_files)
   temp <- load.mgh(new_files[1])
 
@@ -83,13 +96,13 @@ load.annot <- function(input.file) {
   a_ctabversion <- readBin(to.read, size = 4, integer(), endian = "big")
   a_maxstruc <- readBin(to.read, size = 4, integer(), endian = "big")
   a_len <- readBin(to.read, size = 4, integer(), endian = "big")
-  a_fname <- readChar(to.read, a_len)
+  a_fname <- readBin(to.read, size = a_len, character(), endian = "big")
   a_num_entries <- readBin(to.read, size = 4, integer(), endian = "big")
   LUT_Label <- LUT_len <- LUT_labelname <- LUT_red <- LUT_green <- LUT_blue <- LUT_transp <- rep(NA, a_num_entries)
   for (i in seq_len(a_num_entries)) {
     LUT_Label[i] <- readBin(to.read, size = 4, integer(), endian = "big")
     LUT_len[i] <- readBin(to.read, size = 4, integer(), endian = "big")
-    LUT_labelname[i] <- readChar(to.read, LUT_len[i])
+    LUT_labelname[i] <- readBin(to.read, size = LUT_len[i], character(), endian = "big")
     LUT_red[i] <- readBin(to.read, size = 4, integer(), endian = "big")
     LUT_green[i] <- readBin(to.read, size = 4, integer(), endian = "big")
     LUT_blue[i] <- readBin(to.read, size = 4, integer(), endian = "big")
