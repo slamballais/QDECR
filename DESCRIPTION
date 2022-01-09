@@ -9,7 +9,6 @@ Authors@R: as.person(c(
 Description: Whole-brain (hemispehere) analysis of FreeSurfer MGH format data. The package allows application of statistical models per vertex. It can handle imputed data from specific packages (mice, mi, amelia, etc.). Multiple testing correction is achieved using MCZ simulations from FreeSurfer.
 License: GPL-3
 Encoding: UTF-8
-LazyData: true
 Imports:
     bigstatsr (>= 1.5.1),
     doParallel (>= 1.0.14),
