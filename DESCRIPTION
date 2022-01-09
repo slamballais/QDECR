@@ -11,13 +11,14 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    bigstatsr (>= 0.6.2),
+    bigstatsr (>= 1.5.1),
     doParallel (>= 1.0.14),
     foreach (>= 1.4.4),
     Matrix (>= 1.2.12),
     methods,
     parallel,
     RcppEigen (>= 0.3.3.4.0),
+    RhpcBLASctl (>= 0.21.247.1),
     stats (>= 3.4.3)
 Suggests:
     magick (>= 2.0),
