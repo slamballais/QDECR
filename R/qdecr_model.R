@@ -12,6 +12,8 @@ qdecr_backing_path <- function(prepvw, to_keep, to_remove) {
   return(prepvw)
 }
 
+#' @importFrom stats model.weights na.fail
+
 prep_fastlm <- function(prepvw) {
   to_keep <- c("coef", "se", "t", "p")
   to_remove <- "resid"
