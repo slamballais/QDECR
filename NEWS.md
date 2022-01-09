@@ -1,3 +1,16 @@
+# QDECR 0.10.0: Stroopwafel
+
+Version 0.10.0 introduces a number of quality-of-life changes to make life a bit sweeter.
+
+## New features
+
+
+## Minor Tweaks
+
+
+## Bug fixes
+
+
 # QDECR 0.9.0: Lausanne
 
 Version 0.9.0 is the first update after publication of the QDECR manuscript in Frontiers in Neuroinformatics. The latter is based in Lausanne, Switzerland. This version introduces weighted regression and a number of minor tweaks. 
