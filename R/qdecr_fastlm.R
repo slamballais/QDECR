@@ -69,7 +69,7 @@ qid <- rt %in% qt
 if (sum(terms[qid, ]) > 1) stop("qdecr currently cannot handle interactions or combinations of the vertex terms.")
 qqt <- rt[qid]
 measure <- sub("qdecr_", "", qqt)
-ff <- stats::as.formula(deparse(formula))
+ff <- stats::as.formula(paste(deparse(formula), collapse = " "))
 margs <- c(qdecr_decon(RcppEigen::fastLm()), list(formula = ff, data = data, method = 2))
 if (!is.null(weights)) margs <- c(margs, list(weights = weights))
 vw <- qdecr(id = id,
