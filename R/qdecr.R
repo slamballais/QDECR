@@ -13,7 +13,8 @@
 #' @param model the function to grab the arguments from (this will be removed in a later version)
 #' @param target the target template (default = "fsaverage")
 #' @param hemi hemisphere to analyze ("lh" or "rh")
-#' @param measure the vertex-wise measure to use ("thickness", "area", etc.)
+#' @param measure the vertex-wise measure to use ("thickness", "area", etc.) as specified in `measure_choices`
+#' @param measure_choices the possible measures that can be chosen from
 #' @param fwhm full width half max (default = 10 mm, for pial_lgi it is 5 mm)
 #' @param mcz_thr A numeric value for the Monte Carlo simulation threshold (default: 0.001). Any of the following are accepted (equivalent values separate by `/`): 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.
 #' @param cwp_thr the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)
@@ -50,9 +51,10 @@ qdecr <- function(id,
                             "stats::glm", "survival::coxph", "default"),
                   target = "fsaverage", 
                   hemi = c("lh", "rh"),
-                  measure = c("thickness", "area", "area.pial", "curv", 
-                              "jacobian_white", "pial", "pial_lgi", "sulc", "volume", 
-                              "w_g.pct", "white.H", "white.K"),
+                  measure,
+                  measure_choices = c("thickness", "area", "area.pial", "curv", 
+                                      "jacobian_white", "pial", "pial_lgi", "sulc", "volume", 
+                                      "w_g.pct", "white.H", "white.K"),
                   fwhm = ifelse(measure == "pial_lgi", 5, 10),
                   mcz_thr = 0.001, 
                   cwp_thr = 0.025,
@@ -91,7 +93,7 @@ qdecr <- function(id,
 
   vw <- list()
   vw$qdecr_call <- match.call()
-  measure <- match.arg(measure)
+  measure <- match.arg(measure, choices = measure_choices)
   hemi <- match.arg(hemi)
   model <- match.arg(model)
 
@@ -214,6 +216,3 @@ qdecr <- function(id,
   
   return(vw)
 }
-
-
-  
