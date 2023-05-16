@@ -10,6 +10,7 @@ Version 0.10.0 introduces a number of quality-of-life changes to make life a bit
 
 ## Bug fixes
 * [9c101e5](https://github.com/slamballais/QDECR/commit/9c101e5fec5f7a7a4ef5d65ac243a3dc71d129cc): Added a check to make sure that the supplied `formula` is of class `formula`.
+* [96b23ec](https://github.com/slamballais/QDECR/commit/96b23ec3994ea0340535d5b7652c1281bb77881b): Fixed a warning message related to `formula` (addresses [#55](https://github.com/slamballais/QDECR/issues/55)).
 
 # QDECR 0.9.0: Lausanne
 
