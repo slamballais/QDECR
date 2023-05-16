@@ -49,6 +49,8 @@ ct <- colnames(terms)
 
 # list of all the vertex-wise measures
 qt <- c("qdecr_thickness", "qdecr_area", "qdecr_area.pial", "qdecr_curv", "qdecr_jacobian_white", "qdecr_pial", "qdecr_pial_lgi", "qdecr_sulc", "qdecr_volume", "qdecr_w_g.pct", "qdecr_white.H", "qdecr_white.K")
+measure_choices <- sub("qdecr_", "", qt)
+
 
 # process any custom vertex-wise measures
 if (!is.null(custom_measure)) {
@@ -57,6 +59,7 @@ if (!is.null(custom_measure)) {
   if (any(!starts_with_qdecr)) stop("The provided `custom_measure` does not start with 'qdecr_'.")
   if (any(custom_measure %in% qt)) stop("The provided `custom_measure` is one of the default maps.")
   qt <- c(qt, custom_measure)
+  measure_choices <- c(measure_choices, custom_measure)
 }
 
 # Check if there is a vertex-wise measure present
@@ -81,6 +84,7 @@ vw <- qdecr(id = id,
             mcz_thr = mcz_thr,
             cwp_thr = cwp_thr,
             measure = measure,
+            measure_choices = measure_choices,
             mgh = mgh,
             mask = mask,
             mask_path = mask_path,
