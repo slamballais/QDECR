@@ -47,6 +47,9 @@ terms <- attr(terms(formula), "factors")
 rt <- rownames(terms)
 ct <- colnames(terms)
 
+# make sure `qdecr_w-g.pct` isn't used
+if ("qdecr_w - g.pct" %in% rt) stop("The measure `qdecr_w-g.pct` cannot be used; use `qdecr_w_g.pct` instead.")
+
 # list of all the vertex-wise measures
 qt <- c("qdecr_thickness", "qdecr_area", "qdecr_area.pial", "qdecr_curv", "qdecr_jacobian_white", "qdecr_pial", "qdecr_pial_lgi", "qdecr_sulc", "qdecr_volume", "qdecr_w_g.pct", "qdecr_white.H", "qdecr_white.K")
 measure_choices <- sub("qdecr_", "", qt)
