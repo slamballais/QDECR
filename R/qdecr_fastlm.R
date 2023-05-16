@@ -42,6 +42,7 @@ qdecr_fastlm <- function(formula,
                          chunk_size = 1000){
 
 # Take apart the formula
+if (!inherits(formula, "formula")) stop("The supplied formula is not of class `formula`.")
 terms <- attr(terms(formula), "factors")
 rt <- rownames(terms)
 ct <- colnames(terms)
