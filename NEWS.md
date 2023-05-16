@@ -10,7 +10,7 @@ Version 0.10.0 introduces a number of quality-of-life changes to make life a bit
 
 ## Bug fixes
 * [#59](https://github.com/slamballais/QDECR/pull/59): Added a check to make sure that the supplied `formula` is of class `formula`.
-* [#60](https://github.com/slamballais/QDECR/pull/60): Fixed a warning message related to `formula` (addresses [#55](https://github.com/slamballais/QDECR/issues/55)).
+* [#60](https://github.com/slamballais/QDECR/pull/60): Fixed a warning message related to `formula`.
 * [#61](https://github.com/slamballais/QDECR/pull/61): I made an attempt to fix the bug with `custom_measure`. Not sure whether it is actually fixed.
 * [30f6dde](https://github.com/slamballais/QDECR/commit/30f6dde1de297ccfc7fffdb58a36d30da9f6198c): Added a check to make sure `qdecr_w-g.pct` isn't in the formula.
 
