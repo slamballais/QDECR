@@ -141,6 +141,15 @@ qdecr <- function(id,
                            backing = vw$paths$backing_mgh, verbose = verbose)
   message2("\n", verbose = verbose)
   
+  # Do FBM-calculations for plotting histograms and such
+  catprompt("Calculating vertex-wise summary values", verbose = verbose)
+  
+  temp_mgh_summary <- list()
+  temp_mgh_summary$vertex_mean <- fbm_row_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  temp_mgh_summary$vertex_sd <- fbm_row_sd(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  temp_mgh_summary$subject_mean <- fbm_col_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  temp_mgh_summary$subject_sd <- fbm_col_sd(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  
   ## Part 3: Make descriptions, print them if verbose
   catprompt("Pre-analysis overview", verbose = verbose)
   vw$describe <- qdecr_pre_describe(vw, mask, verbose = verbose)
@@ -196,14 +205,14 @@ qdecr <- function(id,
   }
   vw$post$final_mask <- load.mgh(vw$paths$final_mask_path)$x
   
-  catprompt("Calculating vertex-wise values", verbose = verbose)
+  #catprompt("Calculating vertex-wise values", verbose = verbose)
 
   # Do FBM-calculations for plotting histograms and such
-  vw$post$mgh_description <- list()
-  vw$post$mgh_description$vertex_mean <- fbm_row_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
-  vw$post$mgh_description$vertex_sd <- fbm_row_sd(vw$mgh, n_cores, row.mask = vw$post$final_mask)
-  vw$post$mgh_description$subject_mean <- fbm_col_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
-  vw$post$mgh_description$subject_sd <- fbm_col_sd(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  vw$post$mgh_description <- temp_mgh_summary
+  #vw$post$mgh_description$vertex_mean <- fbm_row_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  #vw$post$mgh_description$vertex_sd <- fbm_row_sd(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  #vw$post$mgh_description$subject_mean <- fbm_col_mean(vw$mgh, n_cores, row.mask = vw$post$final_mask)
+  #vw$post$mgh_description$subject_sd <- fbm_col_sd(vw$mgh, n_cores, row.mask = vw$post$final_mask)
   
   catprompt("Summarizing results", verbose = verbose)
   
