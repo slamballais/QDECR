@@ -1,0 +1,16 @@
+{
+  "name": "qdecr-com",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "make:logo": "node tools/make-logo.mjs"
+  },
+  "devDependencies": {
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "fontkitten": "^1.0.3",
+    "sharp": "^0.35.3"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}
