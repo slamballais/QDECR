@@ -3,3 +3,7 @@
 .RData
 .Ruserdata
 QDECR.Rproj
+# Claude Code / AI-assistant working files (never commit)
+CLAUDE.md
+.claude/
+claude-docs/
