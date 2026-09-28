@@ -1,0 +1,5 @@
+# The example's shell and R scripts run inside WSL and on Linux, where a carriage return
+# breaks a script. Keep their line endings as written, whatever core.autocrlf says on a
+# Windows checkout.
+*.sh text eol=lf
+*.R text eol=lf
