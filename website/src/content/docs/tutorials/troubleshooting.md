@@ -12,6 +12,8 @@ Most problems stop QDECR with a message of its own. Search this page for the mes
 
 QDECR's dependencies, such as RcppEigen and bigstatsr, compile C++ code while they install. If the installation stops with compiler errors, R has no compiler: install `r-base-dev` on Debian or Ubuntu, run `xcode-select --install` on macOS, or load a compiler module on a cluster. Then install QDECR again.
 
+If it is `install.packages("pak")` that stops, with `curl/curl.h: No such file or directory`, pak needs libcurl's development files: `libcurl4-openssl-dev` on Debian and Ubuntu.
+
 ### R can't find FreeSurfer
 
 QDECR stops with
@@ -203,7 +205,7 @@ What QDECR 0.9.0 cannot do, or does not do right, and what to do instead.
 - **A custom `mask` is not used for the smoothness.** The models are fitted only inside your mask, but the smoothness is estimated over the whole cortex.
 - **p-values for small samples.** P-values use about 10,000 degrees of freedom whatever the sample size, which makes them too small for samples of a few dozen. See [the model at each vertex](/tutorials/statistics#the-model-at-each-vertex).
 - **Unsigned p-value maps.** The p-value maps hold −log<sub>10</sub>(p) without the sign of the effect. Take the direction from the coefficient or t map.
-- **Grey-to-white contrast.** `qdecr_w_g.pct` looks for files named like `lh.w_g.pct.fwhm10.fsaverage.mgh`, which FreeSurfer does not write. Link each subject's file to that name first, for both hemispheres:
+- **Grey-to-white contrast.** `qdecr_w_g.pct` looks for files named like `lh.w_g.pct.fwhm10.fsaverage.mgh`, which FreeSurfer does not write: `-qcache` names them after the map file `lh.w-g.pct.mgh`, as `lh.w-g.pct.mgh.fwhm10.fsaverage.mgh`. Link each subject's file to the name QDECR expects first, for both hemispheres:
 
 ```bash
 for surf in "$SUBJECTS_DIR"/*/surf; do

@@ -13,7 +13,7 @@ It is for researchers who have already run their MRI scans through FreeSurfer an
 - **Linux or macOS**, or Windows through WSL2. QDECR runs its parallel work in forked processes, which Windows does not have, and it calls FreeSurfer's command-line tools.
 - **FreeSurfer 6.0 or later**, set up so that `FREESURFER_HOME` points at it. QDECR calls `mris_fwhm` and `mri_surfcluster`, reads FreeSurfer's precomputed simulations, and opens Freeview for plots. FreeSurfer needs its free licence file, which you get when you [register](https://surfer.nmr.mgh.harvard.edu/registration.html).
 - **Your subjects processed with `recon-all`, including `-qcache`**, which resamples each subject's measures to the `fsaverage` target and smooths them. QDECR reads the files it writes.
-- **R 3.5.1 or later**, with a compiler for the packages QDECR builds on. A current R 4 release is best.
+- **R 3.6 or later**: the current releases of the packages QDECR builds on need it, and they compile C++ code, so R needs a compiler too. A current R 4 release is best.
 - **Optional:** the `magick` R package, for the snapshots `qdecr_snap()` makes, and a fast [BLAS library](/tutorials/performance#blas).
 
 If your subjects were processed without `-qcache`, run it on its own for each one:
@@ -35,10 +35,10 @@ export FREESURFER_HOME=/usr/local/freesurfer
 source "$FREESURFER_HOME/SetUpFreeSurfer.sh"
 ```
 
-Install R from your distribution or from [CRAN](https://cran.r-project.org/bin/linux/). QDECR's dependencies compile C++ code, so R needs its development tools too. On Debian or Ubuntu:
+Install R from your distribution or from [CRAN](https://cran.r-project.org/bin/linux/). QDECR's dependencies compile C++ code, so R needs its development tools too, and pak, the installer below, needs libcurl's development files. On Debian or Ubuntu:
 
 ```bash
-sudo apt install r-base r-base-dev
+sudo apt install r-base r-base-dev libcurl4-openssl-dev
 ```
 
 For `qdecr_snap()`, add ImageMagick's development files (`libmagick++-dev` on Debian and Ubuntu) and then `install.packages("magick")` in R.
