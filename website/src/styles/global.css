@@ -752,6 +752,20 @@ figcaption {
   }
 }
 
+/* A page with no section around it (the changelog): the text and "On this page". */
+.docs-alone {
+  grid-template-columns: minmax(0, var(--measure)) 13rem;
+  grid-template-areas: 'page toc';
+  justify-content: start;
+}
+
+@media (max-width: 72rem) {
+  .docs-alone {
+    grid-template-columns: minmax(0, var(--measure));
+    grid-template-areas: 'page';
+  }
+}
+
 /* The disclosures that stand in for the side columns on a narrow window. */
 .sidebar-narrow,
 .toc-narrow {
@@ -1014,6 +1028,25 @@ ol.sidebar-items a::before {
 
 .pager-title {
   font-weight: 600;
+}
+
+/* The changelog: a release's name set beside its number, quieter. */
+.release-name {
+  margin-inline-start: 0.3em;
+  color: var(--muted);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.changelog h2 {
+  padding-top: var(--space-m);
+  border-top: 0.0625rem solid var(--rule);
+}
+
+.changelog h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 
 /* The tutorials index. */

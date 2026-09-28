@@ -50,7 +50,7 @@ const builtText = built.toLocaleDateString('en-GB', {
       {
         source && (
           <li>
-            <a href={`${site.editBase}${source}`}>
+            <a href={new URL(source, site.editBase).href}>
               Edit this page<OutIcon />
             </a>
           </li>

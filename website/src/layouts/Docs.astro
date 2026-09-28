@@ -29,7 +29,8 @@ interface Props {
   source?: string | undefined
   /** The section the page belongs to, shown above its title and in search results. */
   section: string
-  sidebar: { label: string; groups: SidebarGroup[] }
+  /** The section's pages. A page that stands alone, like the changelog, has none. */
+  sidebar?: { label: string; groups: SidebarGroup[] } | undefined
   /** The page's headings, for "On this page". */
   headings?: Heading[]
   prev?: Link | undefined
@@ -44,8 +45,8 @@ const toc = buildToc(headings)
 ---
 
 <Base title={title} description={description} source={source}>
-  <div class="shell docs">
-    <Sidebar label={sidebar.label} groups={sidebar.groups} path={path} />
+  <div class={sidebar ? 'shell docs' : 'shell docs docs-alone'}>
+    {sidebar && <Sidebar label={sidebar.label} groups={sidebar.groups} path={path} />}
     <article class="docs-page" data-pagefind-meta={`section:${section}`}>
       <header class="docs-header">
         <p class="docs-section" data-pagefind-ignore>{section}</p>
