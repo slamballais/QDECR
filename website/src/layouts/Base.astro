@@ -94,5 +94,9 @@ const paper = { light: tokens.light['--paper'], dark: tokens.dark['--paper'] }
       <slot />
     </main>
     <SiteFooter path={path} source={source} />
+    <!-- Bundled into a file under /_astro/, never inlined (astro.config.mjs). -->
+    <script>
+      import '../scripts/code-copy'
+    </script>
   </body>
 </html>

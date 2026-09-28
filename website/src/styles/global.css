@@ -47,6 +47,19 @@ main {
   display: none !important;
 }
 
+/* Read by screen readers, not shown: status messages such as "Copied". */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* The skip link moves focus here; the page itself needs no ring for that. */
 main:focus {
   outline: none;
@@ -253,13 +266,17 @@ kbd {
 }
 
 /*
- * A code block: the logo's black, the language label in its top corner, and R's output
- * (lines starting #>) and comments in the muted tone. Long lines scroll inside the block,
- * never the page; the block is focusable by keyboard for that reason (tabindex="0" on the
- * <pre>). The syntax colours are the lattice and heat colours of the logo.
+ * A code block (src/lib/shiki.ts writes the markup): the logo's black, a header row with
+ * the language label and the copy button, and R's output (lines starting #>) and comments
+ * in the muted tone. The header is a row of its own rather than floated over the code, so
+ * the button never covers the end of a first line on a phone. Long lines scroll inside
+ * the block, never the page; the <pre> is focusable by keyboard for that reason. The
+ * syntax colours are the lattice and heat colours of the logo.
  */
 .code-block {
-  position: relative;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
   margin: 0 0 var(--space-m);
   border-radius: var(--radius);
   background: var(--code-bg);
@@ -267,12 +284,18 @@ kbd {
 }
 
 .code-block pre {
+  grid-column: 1 / -1;
   margin: 0;
-  padding: var(--space-m) var(--space-m) var(--space-s);
+  padding: var(--space-2xs) var(--space-m) var(--space-s);
   overflow-x: auto;
   font-size: var(--size-code);
   line-height: 1.6;
   tab-size: 2;
+}
+
+/* No label and no working button: no header row, so the code needs the top padding. */
+.code-block:not(:has(.code-lang, .code-copy:not([hidden]))) pre {
+  padding-top: var(--space-s);
 }
 
 .code-block pre code {
@@ -280,14 +303,31 @@ kbd {
 }
 
 .code-lang {
-  position: absolute;
-  top: var(--space-2xs);
-  right: var(--space-s);
+  grid-column: 1;
+  padding: var(--space-2xs) var(--space-m) 0;
   font-family: var(--mono);
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--code-muted);
+}
+
+.code-copy {
+  grid-column: 2;
+  min-height: var(--target);
+  padding: 0 var(--space-m);
+  border: 0;
+  border-radius: 0 var(--radius) 0 var(--radius);
+  background: transparent;
+  color: var(--code-muted);
+  font-family: var(--sans);
+  font-size: var(--size-small);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.code-copy:hover {
+  color: var(--code-ink);
 }
 
 .code-block .output,
@@ -687,7 +727,8 @@ figcaption {
   .masthead-tools,
   .skip-link,
   .footer-grid nav,
-  .footer-out {
+  .footer-out,
+  .code-copy {
     display: none;
   }
 

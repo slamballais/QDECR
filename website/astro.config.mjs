@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
 import cspGuard from './src/integrations/csp-guard.ts'
+import { codeBlock, syntaxTheme } from './src/lib/shiki.ts'
 
 // Fully static: no adapter and no server runtime. Netlify serves dist/ as it is.
 export default defineConfig({
@@ -19,4 +20,16 @@ export default defineConfig({
     inlineStylesheets: 'never',
   },
   trailingSlash: 'never',
+  markdown: {
+    // Code in Markdown is highlighted into the site's tok-* classes rather than Shiki's
+    // inline colours, which the CSP forbids (src/lib/shiki.ts).
+    shikiConfig: { theme: syntaxTheme, transformers: [codeBlock()] },
+  },
+  vite: {
+    build: {
+      // Vite inlines small scripts and assets into the page. An inline script is blocked
+      // by the CSP, so nothing is inlined; the build check (csp-guard) would catch it.
+      assetsInlineLimit: 0,
+    },
+  },
 })

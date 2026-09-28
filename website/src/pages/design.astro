@@ -14,6 +14,7 @@ import logo from '../assets/logo/qdecr-logo.svg'
 import tokensCss from '../styles/tokens.css?raw'
 import { contrast } from '../lib/contrast'
 import OutIcon from '../components/OutIcon.astro'
+import CodeBlock from '../components/CodeBlock.astro'
 import { site } from '../data/site'
 import { PAIRS, themeTokens } from '../lib/palette'
 
@@ -41,6 +42,25 @@ const groups: [string, string[]][] = [
     ],
   ],
 ]
+const rSample = `
+library(QDECR)
+
+# Cortical thickness against age and sex, left hemisphere
+vw <- qdecr_fastlm(qdecr_thickness ~ age + sex,
+                   data = pheno,
+                   id = "subject",
+                   hemi = "lh",
+                   n_cores = 4)
+
+mean(c(2.4, 2.6))
+#> [1] 2.5
+`
+const shellSample = `
+# FreeSurfer's environment, before starting R
+export FREESURFER_HOME=/usr/local/freesurfer
+source "$FREESURFER_HOME/SetUpFreeSurfer.sh"
+`
+
 const grouped = new Set(groups.flatMap(([, names]) => names))
 const others = Object.keys(light).filter((name) => !grouped.has(name))
 if (others.length) groups.push(['Other', others])
@@ -209,21 +229,12 @@ if (others.length) groups.push(['Other', others])
     <section aria-labelledby="code">
       <h2 id="code">Code</h2>
       <div class="prose">
-        <div class="code-block">
-          <span class="code-lang">R</span>
-          <pre
-            tabindex="0"><code><span class="tok-function">library</span>(QDECR)
-
-<span class="tok-comment"># Cortical thickness against age and sex, left hemisphere</span>
-vw <span class="tok-keyword">&lt;-</span> <span class="tok-function">qdecr_fastlm</span>(qdecr_thickness <span class="tok-keyword">~</span> age <span class="tok-keyword">+</span> sex,
-                   data <span class="tok-keyword">=</span> pheno,
-                   id <span class="tok-keyword">=</span> <span class="tok-string">"subject"</span>,
-                   hemi <span class="tok-keyword">=</span> <span class="tok-string">"lh"</span>,
-                   n_cores <span class="tok-keyword">=</span> <span class="tok-number">4</span>)
-
-<span class="tok-function">mean</span>(<span class="tok-function">c</span>(<span class="tok-number">2.4</span>, <span class="tok-number">2.6</span>))
-<span class="output">#&gt; [1] 2.5</span></code></pre>
-        </div>
+        <p>
+          Highlighted by Shiki at build time into classes the stylesheet colours, so nothing is
+          written inline. The copy button leaves R's output lines behind.
+        </p>
+        <CodeBlock code={rSample} />
+        <CodeBlock lang="bash" code={shellSample} />
       </div>
     </section>
 
