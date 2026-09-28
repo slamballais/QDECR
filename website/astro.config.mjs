@@ -2,6 +2,7 @@
 import { defineConfig } from 'astro/config'
 import cspGuard from './src/integrations/csp-guard.ts'
 import ogImages from './src/integrations/og-images.ts'
+import sitemap from './src/integrations/sitemap.ts'
 import { satteri } from '@astrojs/markdown-satteri'
 import { callouts } from './src/lib/callouts.ts'
 import { codeBlock, syntaxTheme } from './src/lib/shiki.ts'
@@ -13,6 +14,8 @@ export default defineConfig({
     cspGuard(),
     // Draws each page's share card from its title (tools/og.mjs).
     ogImages(),
+    // Lists every indexable page in sitemap.xml, which robots.txt points to.
+    sitemap(),
   ],
   // The canonical host is the apex domain.
   site: 'https://qdecr.com',
