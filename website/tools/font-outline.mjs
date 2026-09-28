@@ -173,7 +173,8 @@ export function typeset(face, text, { weight, size, tracking = 0 }) {
   const axes = { wght: weight }
   const opsz = face.variationAxes.opsz
   if (opsz) axes.opsz = Math.max(opsz.min, Math.min(opsz.max, size))
-  const font = face.getVariation(axes)
+  // A static face (Plex Mono comes one file per weight) has no axes to set.
+  const font = Object.keys(face.variationAxes).length ? face.getVariation(axes) : face
   const scale = size / font.unitsPerEm
   const extra = tracking * size
   let x = 0

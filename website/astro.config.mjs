@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
 import cspGuard from './src/integrations/csp-guard.ts'
+import ogImages from './src/integrations/og-images.ts'
 import { codeBlock, syntaxTheme } from './src/lib/shiki.ts'
 
 // Fully static: no adapter and no server runtime. Netlify serves dist/ as it is.
@@ -8,6 +9,8 @@ export default defineConfig({
   integrations: [
     // Fails the build on any inline script or style the CSP in netlify.toml would block.
     cspGuard(),
+    // Draws each page's share card from its title (tools/og.mjs).
+    ogImages(),
   ],
   // The canonical host is the apex domain.
   site: 'https://qdecr.com',

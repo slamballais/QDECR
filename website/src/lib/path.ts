@@ -7,3 +7,8 @@
 export function servedPath(pathname: string): string {
   return pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/'
 }
+
+/** Where the build writes a page's share card (src/integrations/og-images.ts). */
+export function ogImagePath(path: string): string {
+  return `/og${path === '/' ? '/index' : path}.png`
+}

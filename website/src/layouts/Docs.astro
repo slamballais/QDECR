@@ -40,11 +40,11 @@ interface Props {
 }
 
 const { title, description, source, section, sidebar, headings = [], prev, next, codeTitle = false } = Astro.props
-const path = Astro.url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/'
+const path = servedPath(Astro.url.pathname)
 const toc = buildToc(headings)
 ---
 
-<Base title={title} description={description} source={source}>
+<Base title={title} description={description} source={source} section={section} codeTitle={codeTitle}>
   <div class={sidebar ? 'shell docs' : 'shell docs docs-alone'}>
     {sidebar && <Sidebar label={sidebar.label} groups={sidebar.groups} path={path} />}
     <article class="docs-page" data-pagefind-meta={`section:${section}`}>
