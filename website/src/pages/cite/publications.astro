@@ -5,11 +5,9 @@
 // of their own rather than a list on /cite.
 import Docs from '../../layouts/Docs.astro'
 import OutIcon from '../../components/OutIcon.astro'
-import { hiddenCitations } from '../../data/citations-hidden'
-import citations from '../../data/citations.json'
-import { hideCitations, type CitingWork } from '../../lib/citations'
+import type { CitingWork } from '../../lib/citations'
+import { citingWorks as works } from '../../lib/citations-data'
 
-const works = hideCitations(citations.works, hiddenCitations)
 const years = [...new Set(works.map((work) => work.year))]
 const byYear = years.map((year) => ({ year, works: works.filter((work) => work.year === year) }))
 const headings = years.map((year) => ({ depth: 2, slug: `y${year}`, text: String(year) }))
@@ -33,9 +31,9 @@ function authors(work: CitingWork): string {
 >
   <p>
     The list comes from <a href="https://openalex.org">OpenAlex<OutIcon /></a> and is refreshed every month.
-    A preprint is left out once its published version is listed. If your paper used QDECR and is
-    missing, <a href="https://github.com/slamballais/QDECR/issues">open an issue<OutIcon /></a> with its
-    DOI.
+    A preprint is left out once its published version is listed. A paper that cites QDECR appears
+    once OpenAlex has indexed it; if one is listed wrongly,
+    <a href="https://github.com/slamballais/QDECR/issues">open an issue<OutIcon /></a>.
   </p>
   {
     byYear.map((group) => (

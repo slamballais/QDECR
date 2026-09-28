@@ -44,6 +44,8 @@ export function callouts() {
       const children: PhrasingContent[] = rest ? [{ ...lead, value: rest }, ...first.children.slice(1)] : first.children.slice(1)
       const paragraph: Paragraph = { type: 'paragraph', children }
 
+      // Still a blockquote in the Markdown tree, rendered as an <aside> (hName); the label
+      // is a paragraph rendered as a <span>, so it can sit inside the box as its first line.
       ctx.replaceNode(node, {
         type: 'blockquote',
         data: { hName: 'aside', hProperties: { className, ariaLabel: label } },

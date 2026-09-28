@@ -6,21 +6,20 @@ import Docs from '../layouts/Docs.astro'
 import CodeBlock from '../components/CodeBlock.astro'
 import OutIcon from '../components/OutIcon.astro'
 import { site } from '../data/site'
-import { hiddenCitations } from '../data/citations-hidden'
-import citations from '../data/citations.json'
-import { hideCitations } from '../lib/citations'
+import { citingWorks as works } from '../lib/citations-data'
 import { packageDescription } from '../lib/description'
 
 const { paper } = site
 const version = packageDescription()['Version']
 const year = paper.published.slice(0, 4)
-const works = hideCitations(citations.works, hiddenCitations)
 // The reference in Vancouver style, as one string: Astro drops the spaces between
 // expressions on separate lines.
 const initials = (given: string) => given.replace(/[^A-Z]/g, '')
-const reference = `${paper.authors.map((a) => `${a.family} ${initials(a.given)}`).join(', ')}. ${paper.title}.`
-const issue = `. ${year};${paper.volume}:${paper.article}. `
+const authorsAndTitle = `${paper.authors.map((a) => `${a.family} ${initials(a.given)}`).join(', ')}. ${paper.title}.`
+const yearVolumeArticle = `. ${year};${paper.volume}:${paper.article}. `
 
+// The title is written out rather than taken from paper.title: BibTeX needs the braces
+// around QDECR and R, or styles that lower-case titles print "qdecr" and "r".
 const bibtex = `@article{lamballais${year}qdecr,
   title   = {{QDECR}: A Flexible, Extensible Vertex-Wise Analysis Framework in {R}},
   author  = {${paper.authors.map((a) => `${a.family}, ${a.given}`).join(' and ')}},
@@ -93,7 +92,7 @@ const methods = [
 
   <h2 id="the-paper">The paper</h2>
   <p class="cite-reference">
-    {`${reference} `}<em>{paper.journal}</em>{issue}<a href={paper.url}>doi:{paper.doi}<OutIcon /></a>
+    {`${authorsAndTitle} `}<em>{paper.journal}</em>{yearVolumeArticle}<a href={paper.url}>doi:{paper.doi}<OutIcon /></a>
   </p>
   <p>
     The paper is open access. It describes why QDECR was written, to bring R's modelling, imputed

@@ -17,6 +17,8 @@ export function tables() {
         .find((child) => child.type === 'heading')
       const columns = node.children[0]?.children.map((cell) => ctx.textContent(cell)).join(', ')
       const label = heading ? ctx.textContent(heading) : `Table: ${columns ?? ''}`
+      // Markdown has no plain container node, so the wrapper is a blockquote that renders
+      // as a <div>: hName and hProperties set the element the HTML gets.
       ctx.wrapNode(node, {
         type: 'blockquote',
         data: {

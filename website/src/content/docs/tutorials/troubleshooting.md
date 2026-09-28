@@ -125,10 +125,12 @@ FreeSurfer's simulations exist for these six cluster-forming thresholds only. [C
 ### Nothing to plot
 
 ```text
-Stack does not contain information (e.g. because of no significant findings), aborting plot.
+No information in the stack passed the threshold (i.e. `p_thr` was set too strict), aborting plot.
 ```
 
-`freeview()` and `qdecr_snap()` show the significant clusters of a stack, and this one has none. `summary(out)` lists the stacks that do. To see a map without the clusters, pass `sig = FALSE`.
+`freeview()` and `qdecr_snap()` show the significant clusters of a stack, and this one has none. `summary(out)` lists the stacks that do. To see the whole map instead, pass `sig = FALSE`.
+
+If the message starts with "Stack does not contain information", the map itself is empty: every vertex holds the value that stands for no data. Check that the analysis finished, and that its output directory is still where the result says.
 
 ### R runs out of memory
 

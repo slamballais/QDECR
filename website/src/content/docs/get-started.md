@@ -188,6 +188,6 @@ For each [stack](/glossary#stack), one per coefficient of the model and numbered
 | `finalMask.mgh` | The vertices the analysis covered. |
 | `fwhm.dat` | The estimated [smoothness](/tutorials/statistics#smoothness) of the residuals. |
 
-With `dir_out_tree = FALSE`, the files go straight into `dir_out` instead, each with the project's full name in front, such as `lh.age_sex.thickness.stack2.coef.mgh`.
+Two arguments change this layout. With `dir_out_tree = FALSE`, the files go straight into `dir_out` rather than a directory of their own. `dir_out` must then be a new directory: QDECR will not write into one that exists, and refuses `clobber = TRUE` in this case, so that an analysis can never delete a directory it did not make. `file_out_tree` puts the project's full name in front of each file, as in `lh.age_sex.thickness.stack2.coef.mgh`. It is on whenever `dir_out_tree` is off, and off otherwise, unless you set it.
 
 While it runs, QDECR also writes large temporary files to `dir_tmp`: the vertex data of every subject and the residuals, about 3.3 MB per subject together, so 3.3 GB for 1,000 subjects. They are deleted at the end unless you set `clean_up_bm = FALSE`. [Performance and memory](/tutorials/performance#shared-memory) has the details.

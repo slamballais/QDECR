@@ -22,7 +22,7 @@ The analysis covers the cortex of the [target](/glossary#target), without the me
 To analyse part of the cortex, give a mask of your own: `mask`, with one `TRUE` or `FALSE` per vertex of the target, or `mask_path`, an MGH file of ones and zeros. The models are fitted only where the mask is true, and so only there can clusters form. In 0.9.0 the [smoothness](#smoothness) is still estimated over the whole cortex.
 
 > [!NOTE]
-> QDECR 0.9.0 computes every p-value from a t-distribution with about 10,000 degrees of freedom, whatever the sample size. The t-statistic is right, but for small samples the p-value comes out smaller than `lm()` would give: with 30 subjects, a t of 2.1 gives p = 0.035 instead of 0.044. From a few hundred subjects on, the difference is negligible. The cause is in how QDECR [pools imputed datasets](#pooling-imputed-data), which it also does for a single one.
+> QDECR 0.9.0 computes every p-value from a t-distribution with about 10,000 degrees of freedom, whatever the sample size. The t-statistic is right, but for small samples the p-value comes out smaller than `lm()` would give: with 30 subjects and the model `age + sex`, a t of 2.1 gives p = 0.036 where `lm()` gives 0.045. From a few hundred subjects on, the difference is negligible. The cause is in how QDECR [pools imputed datasets](#pooling-imputed-data), which it also does for a single one.
 
 ## Cluster-wise correction
 
