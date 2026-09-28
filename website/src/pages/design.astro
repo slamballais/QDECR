@@ -4,7 +4,7 @@
  * every primitive in global.css. It is where a change to the tokens gets looked at, in
  * both themes, at 320px and at 400% zoom, and it doubles as the site's style guide.
  *
- * Kept out of search indexes until the Colophon links to it.
+ * The Colophon links to it; it was kept out of search indexes until then.
  *
  * The ratios are measured here from tokens.css at build time, against the same pair list
  * the palette test holds to AA, so the page cannot show a number the test did not check.
@@ -70,7 +70,7 @@ if (others.length) groups.push(['Other', others])
   title="Design system"
   description="The palette, type and components qdecr.com is built from, with the measured contrast of every colour pairing in both themes."
   source="src/pages/design.astro"
-  noindex
+  section="Project"
 >
   <link slot="head" rel="stylesheet" href="/swatches.css" />
 
