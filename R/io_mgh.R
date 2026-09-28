@@ -53,7 +53,7 @@ qdecr_prep_mgh <- function(input_path,
 
 #' Load an MGH file into memory
 #' 
-#' Originally written by Heath Perdoe (09/12/2013)
+#' Originally written by Heath Pardoe (09/12/2013)
 #'
 #' @param input.file full path to the mgh file
 #'
@@ -187,7 +187,7 @@ bsfbm2mgh <-function(fbm, fname, filter = NULL) {
 
 #' Save out an MGH file from memory
 #' 
-#' #' R translation of save_mgh.m (by Heath Pardoe, 09/12/2013)
+#' R translation of save_mgh.m (by Heath Pardoe, 09/12/2013)
 #'
 #' @param vol MGH object (as from load.mgh)
 #' @param fname file name to be used to save out the data

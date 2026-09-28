@@ -325,7 +325,7 @@
       "exported": true,
       "title": "Load an MGH file into memory",
       "source": "R/io_mgh.R",
-      "description": "<p>Originally written by Heath Perdoe (09/12/2013)</p>",
+      "description": "<p>Originally written by Heath Pardoe (09/12/2013)</p>",
       "usage": "load.mgh(input.file)",
       "arguments": [
         {
@@ -578,7 +578,7 @@
         },
         {
           "name": "weights",
-          "html": "<p>Optinal vector of weights for the observations. See <code>?lm</code>.</p>"
+          "html": "<p>Optional vector of weights for the observations. See <code>?lm</code>.</p>"
         },
         {
           "name": "dir_out",
@@ -995,7 +995,7 @@
       "exported": true,
       "title": "Save out an MGH file from memory",
       "source": "R/io_mgh.R",
-      "description": "<p>#' R translation of save_mgh.m (by Heath Pardoe, 09/12/2013)</p>",
+      "description": "<p>R translation of save_mgh.m (by Heath Pardoe, 09/12/2013)</p>",
       "usage": "save.mgh(vol, fname)",
       "arguments": [
         {
