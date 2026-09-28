@@ -34,7 +34,7 @@ mkdir -p "$cache" "$FREESURFER_HOME"
 
 # The server's size for the file is the check that a download is complete; with -C -,
 # curl carries on from where a partial file ends.
-expected=$(curl -sI -L --max-time 60 "$FS_URL" | tr -d '\r' | awk 'tolower($1) == "content-length:" { size = $2 } END { print size }')
+expected=$(curl -sI -L --max-time 60 "$FS_URL" | tr -d '\r' | awk 'tolower($1) == "content-length:" { size = $2 } END { print size }' || true)
 if [ -z "$expected" ]; then
   echo "Could not read the size of $FS_URL; is the FreeSurfer server reachable?" >&2
   exit 1

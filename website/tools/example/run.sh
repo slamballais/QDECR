@@ -22,7 +22,7 @@ if [ ! -f "$FREESURFER_HOME/license.txt" ]; then
   exit 1
 fi
 if [ ! -e "$SUBJECTS_DIR/fsaverage" ]; then
-  ln -s "$FREESURFER_HOME/subjects/fsaverage" "$SUBJECTS_DIR/fsaverage"
+  ln -sfn "$FREESURFER_HOME/subjects/fsaverage" "$SUBJECTS_DIR/fsaverage"
 fi
 
 results="$QDECR_EXAMPLE_ROOT/results"

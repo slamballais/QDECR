@@ -123,8 +123,11 @@ read_cluster_summary <- function(path) {
   if (is.null(rows)) as.data.frame(setNames(replicate(length(columns), logical(0), simplify = FALSE), columns)) else rows
 }
 
-clean_log <- function(lines) {
+clean_log <- function(path) {
   # A progress bar redraws its line with carriage returns; keep what it showed last.
+  # Read whole and split on newlines only: readLines would take each carriage return
+  # as a line ending and keep every redraw.
+  lines <- strsplit(readChar(path, file.size(path), useBytes = TRUE), "\n", fixed = TRUE)[[1]]
   lines <- sub(".*\r", "", lines)
   # Drop the empty run of lines the bar leaves behind.
   lines[!(lines == "" & c(TRUE, lines[-length(lines)] == ""))]
@@ -136,7 +139,7 @@ export_hemisphere <- function(hemi) {
   n6 <- 40962
 
   # -- the text the site quotes --
-  writeLines(clean_log(readLines(file.path(results, paste0(hemi, ".log.txt")))), file.path(output_dir, paste0(hemi, ".log.txt")))
+  writeLines(clean_log(file.path(results, paste0(hemi, ".log.txt"))), file.path(output_dir, paste0(hemi, ".log.txt")))
   for (name in c("print", "stacks", "summary")) {
     file.copy(file.path(staged, paste0(hemi, ".", name, ".txt")), file.path(output_dir, paste0(hemi, ".", name, ".txt")), overwrite = TRUE)
   }
