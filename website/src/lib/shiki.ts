@@ -49,6 +49,7 @@ const LABELS: Record<string, string> = {
   shell: 'Shell',
   console: 'Shell',
   bibtex: 'BibTeX',
+  powershell: 'PowerShell',
   text: '',
   plaintext: '',
   txt: '',
