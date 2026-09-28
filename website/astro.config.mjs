@@ -5,6 +5,7 @@ import ogImages from './src/integrations/og-images.ts'
 import sitemap from './src/integrations/sitemap.ts'
 import { satteri } from '@astrojs/markdown-satteri'
 import { callouts } from './src/lib/callouts.ts'
+import { tables } from './src/lib/tables.ts'
 import { codeBlock, syntaxTheme } from './src/lib/shiki.ts'
 
 // Fully static: no adapter and no server runtime. Netlify serves dist/ as it is.
@@ -31,8 +32,9 @@ export default defineConfig({
   markdown: {
     // Sätteri is Astro's default Markdown processor; it is named here only to add the
     // callouts: GitHub's "> [!NOTE]" blockquotes, rendered as the site's note, tip and
-    // warning boxes (src/lib/callouts.ts).
-    processor: satteri({ mdastPlugins: [callouts()] }),
+    // warning boxes (src/lib/callouts.ts); and to wrap tables so a wide one scrolls on its
+    // own (src/lib/tables.ts).
+    processor: satteri({ mdastPlugins: [callouts(), tables()] }),
     // Code in Markdown is highlighted into the site's tok-* classes rather than Shiki's
     // inline colours, which the CSP forbids (src/lib/shiki.ts).
     shikiConfig: { theme: syntaxTheme, transformers: [codeBlock()] },

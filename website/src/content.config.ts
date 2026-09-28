@@ -24,6 +24,19 @@ const docs = defineCollection({
 })
 
 /**
+ * The project's own pages in Markdown: About, Help and the Colophon. Each stands alone
+ * (no sidebar, no reading order) and is served at /<file name>: about.md is /about.
+ */
+const pages = defineCollection({
+  loader: glob({ base: './src/content/pages', pattern: '*.md' }),
+  schema: z.object({
+    title: z.string(),
+    /** One or two sentences, for search results and link previews. */
+    description: z.string(),
+  }),
+})
+
+/**
  * The changelog: the package's NEWS.md, one level above website/, as a single entry so
  * the whole file renders in one pass. That keeps the heading anchors unique: every
  * release has a "Bug fixes", and rendered apart they would all be #bug-fixes. Each release
@@ -64,4 +77,4 @@ const changelog = defineCollection({
 
 const escape = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
-export const collections = { docs, changelog }
+export const collections = { docs, pages, changelog }
