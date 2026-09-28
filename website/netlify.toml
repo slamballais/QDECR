@@ -119,6 +119,58 @@
   status = 301
   force = true
 
+# Netlify served the old pages without their .html as well, and the OHBM 2020 poster
+# prints qdecr.com/ohbm2020, so the same pages again without the extension. /about is a
+# page of the new site and needs no rule. Forced like the rest; nothing is built at these
+# paths today, but a rule that holds regardless is the safer kind.
+[[redirects]]
+  from = "/01-getting-started"
+  to = "/get-started"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/02-quick-start"
+  to = "/tutorials/quick-start"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/03-using-qdecr"
+  to = "/tutorials/formulas-and-design"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/03-post-processing"
+  to = "/tutorials/inspecting-results"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/04-post-processing"
+  to = "/tutorials/inspecting-results"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contribution"
+  to = "/help#contributing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/code-of-conduct"
+  to = "/help#code-of-conduct"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ohbm2020"
+  to = "/about#archive"
+  status = 301
+  force = true
+
 # ---------- headers ----------
 
 # Everything comes from this origin: pages, fonts, the theme script, the search index. So

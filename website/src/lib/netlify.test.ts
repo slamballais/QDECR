@@ -68,6 +68,16 @@ const OLD_URLS: Record<string, string> = {
   '/data/qdecr_ohbm_brochure.pdf': '/archive/qdecr_ohbm_brochure.pdf',
   // Never existed, but the old site linked to it; the brochure is the file it meant.
   '/data/qdecr_ohbm2019_brochure.pdf': '/archive/qdecr_ohbm_brochure.pdf',
+  // Netlify served the old pages without .html too, and the OHBM 2020 poster prints
+  // qdecr.com/ohbm2020. (/about is a page of the new site, so needs no rule.)
+  '/01-getting-started': '/get-started',
+  '/02-quick-start': '/tutorials/quick-start',
+  '/03-using-qdecr': '/tutorials/formulas-and-design',
+  '/03-post-processing': '/tutorials/inspecting-results',
+  '/04-post-processing': '/tutorials/inspecting-results',
+  '/contribution': '/help#contributing',
+  '/code-of-conduct': '/help#code-of-conduct',
+  '/ohbm2020': '/about#archive',
 }
 
 for (const [from, to] of Object.entries(OLD_URLS)) {
