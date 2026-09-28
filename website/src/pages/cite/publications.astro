@@ -1,0 +1,73 @@
+---
+// Every publication that cites the QDECR paper, by year, from OpenAlex (src/data/
+// citations.json, refreshed monthly by a GitHub Action) less the works hidden by hand in
+// src/data/citations-hidden.ts. Past about five works they get this page
+// of their own rather than a list on /cite.
+import Docs from '../../layouts/Docs.astro'
+import OutIcon from '../../components/OutIcon.astro'
+import { hiddenCitations } from '../../data/citations-hidden'
+import citations from '../../data/citations.json'
+import { hideCitations, type CitingWork } from '../../lib/citations'
+
+const works = hideCitations(citations.works, hiddenCitations)
+const years = [...new Set(works.map((work) => work.year))]
+const byYear = years.map((year) => ({ year, works: works.filter((work) => work.year === year) }))
+const headings = years.map((year) => ({ depth: 2, slug: `y${year}`, text: String(year) }))
+
+/**
+ * The authors as OpenAlex spells them, or the first three and "et al." for a long list.
+ * Names are not abbreviated: that goes wrong on "van der" and the like.
+ */
+function authors(work: CitingWork): string {
+  const names = work.authors
+  return names.length > 4 ? `${names.slice(0, 3).join(', ')} et al.` : names.join(', ')
+}
+---
+
+<Docs
+  title="Publications that cite QDECR"
+  description="Papers and preprints that cite the QDECR paper, newest first, as OpenAlex indexes them."
+  source="src/pages/cite/publications.astro"
+  section="Cite"
+  headings={headings}
+>
+  <p>
+    The list comes from <a href="https://openalex.org">OpenAlex<OutIcon /></a> and is refreshed every month.
+    A preprint is left out once its published version is listed. If your paper used QDECR and is
+    missing, <a href="https://github.com/slamballais/QDECR/issues">open an issue<OutIcon /></a> with its
+    DOI.
+  </p>
+  {
+    byYear.map((group) => (
+      <section>
+        <h2 id={`y${group.year}`}>{group.year}</h2>
+        <ol class="publications">
+          {group.works.map((work) => (
+            <li>
+              <span class="publication-title">
+                {work.doi ? (
+                  <a href={`https://doi.org/${work.doi}`}>
+                    {work.title}
+                    <OutIcon />
+                  </a>
+                ) : (
+                  work.title
+                )}
+              </span>
+              <span class="publication-meta">
+                {authors(work)}
+                {work.venue && (
+                  <>
+                    {' · '}
+                    <em>{work.venue}</em>
+                  </>
+                )}
+                {work.type === 'preprint' && <span class="badge">preprint</span>}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </section>
+    ))
+  }
+</Docs>

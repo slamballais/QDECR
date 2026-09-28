@@ -41,6 +41,8 @@ const toc = buildToc(headings)
 ---
 
 <Base title={title} description={description} source={source} section={section} codeTitle={codeTitle}>
+  <!-- Anything a page adds to <head>, such as its JSON-LD, passed through to Base. -->
+  <slot name="head" slot="head" />
   <div class={sidebar ? 'shell docs' : 'shell docs docs-alone'}>
     {sidebar && <Sidebar label={sidebar.label} groups={sidebar.groups} path={path} />}
     <article class="docs-page" data-pagefind-meta={`section:${section}`}>

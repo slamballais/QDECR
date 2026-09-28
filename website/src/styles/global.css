@@ -1321,3 +1321,37 @@ ol.sidebar-items a::before {
   color: var(--muted);
   font-size: var(--size-small);
 }
+
+/* Cite: the reference set apart, and lists of references with a quieter line under each. */
+.cite-reference {
+  padding: var(--space-s) var(--space-m);
+  border-inline-start: 0.25rem solid var(--accent);
+  background: var(--surface);
+}
+
+.cite-methods,
+.publications {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.cite-methods li + li,
+.publications li + li {
+  margin-top: var(--space-s);
+}
+
+.cite-why,
+.publication-meta {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.publication-title {
+  display: block;
+  font-weight: 600;
+}
+
+.publication-meta .badge {
+  margin-inline-start: var(--space-2xs);
+}

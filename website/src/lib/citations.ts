@@ -51,3 +51,19 @@ export function normaliseCitations(results: readonly OpenAlexWork[]): CitingWork
   }
   return [...byId.values()].sort((a, b) => b.year - a.year || a.title.localeCompare(b.title, 'en'))
 }
+
+/** A citing work kept off the site, and why, so the list can be reviewed later. */
+export interface HiddenCitation {
+  id: string
+  reason: string
+}
+
+/**
+ * The works to list: OpenAlex's, less the ones hidden by hand (src/data/citations-hidden.ts).
+ * OpenAlex counts some works twice (a preprint and its published version) and counts the
+ * paper as citing itself; it has no way to say so, so the fix lives here.
+ */
+export function hideCitations(works: readonly CitingWork[], hidden: readonly HiddenCitation[]): CitingWork[] {
+  const ids = new Set(hidden.map((entry) => entry.id))
+  return works.filter((work) => !ids.has(work.id))
+}

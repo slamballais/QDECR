@@ -16,8 +16,20 @@ export const site = {
    * set this to null and the line says only which release is current.
    */
   nextRelease: '0.10.0' as string | null,
+  /** The paper to cite, as Crossref has it for its DOI. */
   paper: {
     url: 'https://doi.org/10.3389/fninf.2021.561689',
+    doi: '10.3389/fninf.2021.561689',
+    title: 'QDECR: A Flexible, Extensible Vertex-Wise Analysis Framework in R',
+    authors: [
+      { given: 'Sander', family: 'Lamballais', orcid: '0000-0003-3118-6330' },
+      { given: 'Ryan L.', family: 'Muetzel', orcid: '0000-0003-3215-1287' },
+    ],
+    journal: 'Frontiers in Neuroinformatics',
+    volume: '15',
+    /** Frontiers numbers articles rather than pages. */
+    article: '561689',
+    published: '2021-04-22',
   },
 } as const
 

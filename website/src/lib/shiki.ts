@@ -48,6 +48,7 @@ const LABELS: Record<string, string> = {
   sh: 'Shell',
   shell: 'Shell',
   console: 'Shell',
+  bibtex: 'BibTeX',
   text: '',
   plaintext: '',
   txt: '',

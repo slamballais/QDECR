@@ -1,6 +1,6 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-import { normaliseCitations } from './citations.ts'
+import { hideCitations, normaliseCitations, type CitingWork } from './citations.ts'
 
 // Trimmed from what https://api.openalex.org/works?filter=cites:W3158050040 returns.
 const author = (name: string) => ({ author: { id: 'https://openalex.org/A1', display_name: name } })
@@ -68,4 +68,31 @@ test('a work listed twice (two pages of results) is kept once', () => {
 test("stray spaces inside an author's name are closed up", () => {
   const [work] = normaliseCitations([{ ...RESULTS[0]!, authorships: [author('Charlotte AM  Cecil ')] }])
   assert.deepEqual(work!.authors, ['Charlotte AM Cecil'])
+})
+
+const work = (id: string, title: string, type = 'article'): CitingWork => ({
+  id,
+  doi: null,
+  title,
+  year: 2022,
+  authors: ['A. Author'],
+  venue: null,
+  type,
+})
+
+test('hidden works are left out, and the rest keep their order', () => {
+  const works = [
+    work('W4308637228', 'ADHD symptoms and brain morphology'),
+    work('W4225394107', 'ADHD symptoms and brain morphology', 'preprint'),
+    work('W4310281878', 'Poverty, cortical structure'),
+    work('W3158050040', 'QDECR: A Flexible, Extensible Vertex-Wise Analysis Framework in R'),
+  ]
+  const hidden = [
+    { id: 'W4225394107', reason: 'Preprint of W4308637228.' },
+    { id: 'W3158050040', reason: 'The QDECR paper itself.' },
+  ]
+  assert.deepEqual(
+    hideCitations(works, hidden).map((w) => w.id),
+    ['W4308637228', 'W4310281878'],
+  )
 })
