@@ -1,0 +1,708 @@
+/*
+ * The site's base styles: elements, the page frame, and the primitives pages are built
+ * from (buttons, callouts, badges, code blocks). Values come from tokens.css.
+ *
+ * Every size is in rem so the page honours the reader's browser font size, and every
+ * width is fluid, from 320px up, so the layout survives 400% zoom without scrolling
+ * sideways. A fixed pixel width here is a bug. The one place the site uses gradients or
+ * glow is the logo; the pages around it get none.
+ */
+
+/* ---------- base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--size-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* A long function name or an unbroken path must not push the page sideways. */
+  overflow-wrap: break-word;
+  /* At least the window's height, so a short page's footer sits at the bottom. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+main {
+  flex: 1;
+}
+
+/* The hidden attribute wins over any display a component sets. */
+[hidden] {
+  display: none !important;
+}
+
+/* The skip link moves focus here; the page itself needs no ring for that. */
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/*
+ * Motion is limited to colour, and even that goes for readers who ask for less.
+ */
+a,
+button,
+.button {
+  transition:
+    color 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * One focus ring for everything, in heat: the one place orange marks something a reader
+ * does rather than something the brand says. --heat is deepened in the light theme so it
+ * holds 3:1 against every background (palette.test.ts).
+ */
+:focus-visible {
+  outline: 0.1875rem solid var(--heat);
+  outline-offset: 0.125rem;
+  border-radius: 0.125rem;
+}
+
+/* ---------- the frame ---------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--space-m);
+}
+
+@media (max-width: 30rem) {
+  .shell {
+    padding-inline: var(--space-s);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  z-index: 10;
+  padding: var(--space-xs) var(--space-s);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  left: var(--space-xs);
+  top: var(--space-xs);
+}
+
+/* ---------- type ---------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--serif);
+  font-weight: 600;
+  /* Newsreader's optical sizes: tighter, crisper letters as the size goes up. */
+  font-optical-sizing: auto;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  margin: var(--space-l) 0 var(--space-s);
+  text-wrap: balance;
+  /* Room under the masthead when a heading is the target of a #link. */
+  scroll-margin-top: var(--space-m);
+}
+
+h1 {
+  font-size: var(--size-h1);
+  margin-top: 0;
+}
+
+h2 {
+  font-size: var(--size-h2);
+}
+
+h3 {
+  font-size: var(--size-h3);
+}
+
+h4 {
+  font-family: var(--sans);
+  font-size: var(--size-body);
+}
+
+p,
+ul,
+ol,
+dl,
+blockquote,
+figure,
+table,
+pre {
+  margin: 0 0 var(--space-m);
+}
+
+ul,
+ol {
+  padding-inline-start: 1.4em;
+}
+
+li + li {
+  margin-top: var(--space-2xs);
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 0.0625rem;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--accent-strong);
+  text-decoration-thickness: 0.125rem;
+}
+
+strong {
+  font-weight: 600;
+}
+
+small,
+.small {
+  font-size: var(--size-small);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+hr {
+  border: 0;
+  border-top: 0.0625rem solid var(--rule);
+  margin: var(--space-l) 0;
+}
+
+blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--space-m);
+  border-inline-start: 0.1875rem solid var(--rule);
+  color: var(--muted);
+}
+
+/* A comfortable line of running text. Pages put their prose in this. */
+.prose {
+  max-width: var(--measure);
+}
+
+/* ---------- code ---------- */
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--mono);
+  /* Plex Mono is large on the body; this sets it to the same visual size. */
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+  background: var(--sunken);
+  /* Function names like qdecr_fastlm() may break at underscores rather than overflow. */
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  padding: 0.05em 0.35em;
+  border: 0.0625rem solid var(--rule);
+  border-bottom-width: 0.125rem;
+  border-radius: 0.25rem;
+  background: var(--surface);
+}
+
+/*
+ * A code block: the logo's black, the language label in its top corner, and R's output
+ * (lines starting #>) and comments in the muted tone. Long lines scroll inside the block,
+ * never the page; the block is focusable by keyboard for that reason (tabindex="0" on the
+ * <pre>). The syntax colours are the lattice and heat colours of the logo.
+ */
+.code-block {
+  position: relative;
+  margin: 0 0 var(--space-m);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+  color: var(--code-ink);
+}
+
+.code-block pre {
+  margin: 0;
+  padding: var(--space-m) var(--space-m) var(--space-s);
+  overflow-x: auto;
+  font-size: var(--size-code);
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.code-block pre code {
+  font-size: inherit;
+}
+
+.code-lang {
+  position: absolute;
+  top: var(--space-2xs);
+  right: var(--space-s);
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--code-muted);
+}
+
+.code-block .output,
+.code-block .tok-comment {
+  color: var(--code-muted);
+}
+
+.code-block .tok-keyword {
+  color: var(--syntax-keyword);
+}
+
+.code-block .tok-string {
+  color: var(--syntax-string);
+}
+
+.code-block .tok-number {
+  color: var(--syntax-number);
+}
+
+.code-block .tok-function {
+  color: var(--syntax-function);
+}
+
+/* ---------- buttons and icon links ---------- */
+
+/*
+ * Buttons are for the site's own pages; links that leave it get an icon. A button is a
+ * link that looks like a control, at least 44px tall. The primary one is filled.
+ */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: var(--target);
+  padding: 0.5rem 1.1rem;
+  border: 0.125rem solid var(--accent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: var(--accent-strong);
+  border-color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.button-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.button-primary:hover {
+  background: var(--accent-strong);
+  color: var(--on-accent);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin: 0 0 var(--space-m);
+}
+
+/* A square 44px target around a 1.25rem glyph: the GitHub link, the theme toggle. */
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: var(--target);
+  height: var(--target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  color: var(--ink);
+  background: var(--sunken);
+}
+
+.icon-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.out-icon {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-inline-start: 0.2em;
+  vertical-align: 0.05em;
+}
+
+/* The toggle shows the theme a press switches to: a moon on paper, a sun in the dark. */
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-toggle .icon-sun {
+    display: block;
+  }
+
+  :root:not([data-theme='light']) .theme-toggle .icon-moon {
+    display: none;
+  }
+}
+
+:root[data-theme='dark'] .theme-toggle .icon-sun {
+  display: block;
+}
+
+:root[data-theme='dark'] .theme-toggle .icon-moon {
+  display: none;
+}
+
+/* ---------- callouts and badges ---------- */
+
+/*
+ * Three kinds, told apart by the word in the label as well as by colour: note (the accent),
+ * tip (teal-green) and warning (orange). The body stays in ink.
+ */
+.callout {
+  margin: 0 0 var(--space-m);
+  padding: var(--space-s) var(--space-m);
+  border-inline-start: 0.25rem solid var(--callout-edge);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--callout-bg);
+  --callout-edge: var(--accent);
+  --callout-bg: var(--accent-soft);
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.callout-label {
+  display: block;
+  margin-bottom: var(--space-2xs);
+  color: var(--callout-edge);
+  font-size: var(--size-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.callout-tip {
+  --callout-edge: var(--tip);
+  --callout-bg: var(--tip-bg);
+}
+
+.callout-warning {
+  --callout-edge: var(--warn);
+  --callout-bg: var(--warn-bg);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 0.0625rem solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.badge-accent {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ---------- tables and figures ---------- */
+
+/* Wide tables scroll inside this wrapper, not the page. */
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0 0 var(--space-m);
+}
+
+table {
+  border-collapse: collapse;
+  font-size: var(--size-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.table-wrap table {
+  margin: 0;
+}
+
+th,
+td {
+  padding: var(--space-xs) var(--space-s);
+  border-bottom: 0.0625rem solid var(--rule);
+  text-align: start;
+  vertical-align: top;
+}
+
+th {
+  font-weight: 600;
+}
+
+figure {
+  margin-inline: 0;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+figcaption {
+  margin-top: var(--space-xs);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  border-bottom: 0.0625rem solid var(--rule);
+}
+
+/*
+ * One row on a wide window: home, sections, tools. Below 60rem the sections take a row of
+ * their own under the other two and wrap as they need to.
+ */
+.masthead-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-m);
+  padding-block: var(--space-xs);
+}
+
+.masthead-home {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: var(--target);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.masthead-home:hover {
+  color: var(--ink);
+}
+
+.masthead-mark {
+  width: 1.9rem;
+  height: auto;
+  flex: none;
+}
+
+/* The wordmark is set as the logo sets it: Newsreader SemiBold, slightly tracked. */
+.masthead-name {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.masthead-nav {
+  flex: 1;
+}
+
+.masthead-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.masthead-nav li + li {
+  margin-top: 0;
+}
+
+.masthead-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding-inline: 0.6rem;
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: var(--size-small);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.masthead-nav a:hover {
+  color: var(--accent);
+  background: var(--sunken);
+}
+
+.masthead-nav a[aria-current] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.masthead-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-inline-start: auto;
+}
+
+@media (max-width: 60rem) {
+  .masthead-row {
+    padding-block: var(--space-2xs);
+  }
+
+  .masthead-tools {
+    order: 2;
+  }
+
+  .masthead-nav {
+    order: 3;
+    flex-basis: 100%;
+    /* The links' own padding would indent the row; pull it back onto the text edge. */
+    margin-inline-start: -0.6rem;
+  }
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  margin-top: var(--space-xl);
+  padding-block: var(--space-l);
+  border-top: 0.0625rem solid var(--rule);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-l);
+}
+
+.footer-grid ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-grid li + li {
+  margin-top: 0;
+}
+
+/* Text links in the footer are still 44px tall targets. */
+.footer-grid a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  color: var(--muted);
+}
+
+.footer-grid a:hover,
+.footer-grid a[aria-current] {
+  color: var(--accent);
+}
+
+.footer-meta {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+/* ---------- print ---------- */
+
+/* Paper gets the light tokens (tokens.css scopes dark mode to screens), no navigation,
+ * and code blocks that wrap rather than get cut off at the page edge. */
+@media print {
+  .masthead-nav,
+  .masthead-tools,
+  .skip-link,
+  .footer-grid nav,
+  .footer-out {
+    display: none;
+  }
+
+  /* No black panel on paper: code prints as ink in a ruled box. */
+  .code-block {
+    border: 0.0625rem solid var(--rule);
+    background: none;
+    color: var(--ink);
+  }
+
+  .code-block * {
+    color: inherit !important;
+  }
+
+  .code-block pre {
+    white-space: pre-wrap;
+  }
+}

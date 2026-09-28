@@ -1,0 +1,334 @@
+---
+/**
+ * The design system on one page: the palette with its measured contrast, the type, and
+ * every primitive in global.css. It is where a change to the tokens gets looked at, in
+ * both themes, at 320px and at 400% zoom, and it doubles as the site's style guide.
+ *
+ * Kept out of search indexes until the Colophon links to it.
+ *
+ * The ratios are measured here from tokens.css at build time, against the same pair list
+ * the palette test holds to AA, so the page cannot show a number the test did not check.
+ */
+import Base from '../layouts/Base.astro'
+import logo from '../assets/logo/qdecr-logo.svg'
+import tokensCss from '../styles/tokens.css?raw'
+import { contrast } from '../lib/contrast'
+import OutIcon from '../components/OutIcon.astro'
+import { site } from '../data/site'
+import { PAIRS, themeTokens } from '../lib/palette'
+
+const { light, dark } = themeTokens(tokensCss)
+const ratio = (tokens: Record<string, string>, fg: string, bg: string) =>
+  contrast(tokens[fg]!, tokens[bg]!).toFixed(2)
+
+// The swatches, grouped as tokens.css groups them. Anything not named here falls into
+// "Other", so a new token still shows up.
+const groups: [string, string[]][] = [
+  ['Neutrals', ['--paper', '--surface', '--sunken', '--ink', '--muted', '--rule']],
+  ['Accent', ['--accent', '--accent-strong', '--accent-soft', '--on-accent']],
+  ['Heat', ['--brand', '--heat']],
+  ['Callouts', ['--tip', '--tip-bg', '--warn', '--warn-bg']],
+  [
+    'Code',
+    [
+      '--code-bg',
+      '--code-ink',
+      '--code-muted',
+      '--syntax-keyword',
+      '--syntax-string',
+      '--syntax-number',
+      '--syntax-function',
+    ],
+  ],
+]
+const grouped = new Set(groups.flatMap(([, names]) => names))
+const others = Object.keys(light).filter((name) => !grouped.has(name))
+if (others.length) groups.push(['Other', others])
+---
+
+<Base
+  title="Design system"
+  description="The palette, type and components qdecr.com is built from, with the measured contrast of every colour pairing in both themes."
+  source="src/pages/design.astro"
+  noindex
+>
+  <link slot="head" rel="stylesheet" href="/swatches.css" />
+
+  <div class="shell design">
+    <header class="prose">
+      <h1>Design system</h1>
+      <p class="lead">
+        The palette, type and components this site is built from. Switch the theme with the
+        button at the top to see the other half.
+      </p>
+    </header>
+
+    <section aria-labelledby="palette">
+      <h2 id="palette">Palette</h2>
+      <p class="prose">
+        From FreeSurfer's overlay colours, as in the logo: the cool end of the scale, blue to
+        teal, is the accent for links and buttons; the heat end, orange, is kept for the brand
+        and the focus ring and is never text on a light page. Code sits on the logo's black in
+        both themes.
+      </p>
+      {
+        groups.map(([name, tokens]) => (
+          <>
+            <h3>{name}</h3>
+            <ul class="swatches">
+              {tokens.map((token) => (
+                <li>
+                  <span class="swatch" data-bg={token} />
+                  <code class="swatch-name">{token}</code>
+                  <span class="swatch-hex">
+                    {light[token]} · {dark[token]}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </>
+        ))
+      }
+
+      <h3>Contrast</h3>
+      <p class="prose">
+        Every pairing the site paints, measured in both themes. Text needs 4.5:1 (WCAG AA); the
+        focus ring needs 3:1 against what it sits on. A test holds the stylesheet to this
+        table on every run.
+      </p>
+      <div class="table-wrap" tabindex="0" role="region" aria-label="Contrast of every colour pairing">
+        <table class="contrast">
+          <thead>
+            <tr>
+              <th scope="col">Sample</th>
+              <th scope="col">Pairing</th>
+              <th scope="col">Used for</th>
+              <th scope="col">Light</th>
+              <th scope="col">Dark</th>
+              <th scope="col">Needs</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              PAIRS.map(({ fg, bg, min, where }) => (
+                <tr>
+                  <td>
+                    <span class="sample" data-fg={fg} data-bg={bg}>
+                      Aa
+                    </span>
+                  </td>
+                  <td>
+                    <code>{fg}</code> on <code>{bg}</code>
+                  </td>
+                  <td>{where}</td>
+                  <td class="num">{ratio(light, fg, bg)}</td>
+                  <td class="num">{ratio(dark, fg, bg)}</td>
+                  <td class="num">{min}</td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="type">
+      <h2 id="type">Type</h2>
+      <p class="prose">
+        Newsreader, the logo's wordmark, for headings. IBM Plex Sans for text, and IBM Plex
+        Mono for code, where most of a docs page's attention goes. All three are served from
+        this site.
+      </p>
+      <div class="specimen prose">
+        <p class="specimen-display">Vertex-wise statistics</p>
+        <h1 class="as-is">Heading one, the page title</h1>
+        <h2 class="as-is">Heading two, a section</h2>
+        <h3 class="as-is">Heading three, a subsection</h3>
+        <h4 class="as-is">Heading four, a run-in label</h4>
+        <p class="lead">A lead paragraph opens a page in a larger, quieter voice.</p>
+        <p>
+          Body text is set in Plex Sans at 17px on a 1.65 line, held to a measure of about 75
+          characters. It has <strong>strong</strong> and <em>emphasised</em> words, a
+          <a href="#type">link within the page</a>, and inline code such as
+          <code>qdecr_fastlm()</code> or <code>n_cores = 4</code>. Press <kbd>Tab</kbd> to see
+          the focus ring.
+        </p>
+        <p class="small muted">Small, muted text: captions, the footer, secondary detail.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="actions">
+      <h2 id="actions">Buttons and links</h2>
+      <p class="prose">
+        Buttons lead to the site's own pages. Links that leave the site carry an arrow, or are
+        an icon.
+      </p>
+      <div class="button-row">
+        <a class="button button-primary" href="#actions">Get started</a>
+        <a class="button" href="#actions">Read the paper</a>
+      </div>
+      <p>
+        <a href={site.repo}>QDECR on GitHub<OutIcon /></a>
+      </p>
+    </section>
+
+    <section aria-labelledby="callouts">
+      <h2 id="callouts">Callouts and badges</h2>
+      <div class="prose">
+        <aside class="callout" aria-label="Note">
+          <span class="callout-label">Note</span>
+          <p>
+            <code>dir_subj</code> and <code>SUBJECTS_DIR</code> should point at the same place.{' '}
+            <a href="#callouts">A link in a note</a>.
+          </p>
+        </aside>
+        <aside class="callout callout-tip" aria-label="Tip">
+          <span class="callout-label">Tip</span>
+          <p>
+            Set <code>n_cores</code> to the number of physical cores. <a href="#callouts"
+              >A link in a tip</a
+            >.
+          </p>
+        </aside>
+        <aside class="callout callout-warning" aria-label="Warning">
+          <span class="callout-label">Warning</span>
+          <p>
+            Fork clusters need Linux or macOS; on Windows, run R inside WSL2. <a
+              href="#callouts">A link in a warning</a
+            >.
+          </p>
+        </aside>
+        <p>
+          <span class="badge">0.9.0</span>
+          <span class="badge badge-accent">stable</span>
+          <span class="badge">GPL-3</span>
+        </p>
+      </div>
+    </section>
+
+    <section aria-labelledby="code">
+      <h2 id="code">Code</h2>
+      <div class="prose">
+        <div class="code-block">
+          <span class="code-lang">R</span>
+          <pre
+            tabindex="0"><code><span class="tok-function">library</span>(QDECR)
+
+<span class="tok-comment"># Cortical thickness against age and sex, left hemisphere</span>
+vw <span class="tok-keyword">&lt;-</span> <span class="tok-function">qdecr_fastlm</span>(qdecr_thickness <span class="tok-keyword">~</span> age <span class="tok-keyword">+</span> sex,
+                   data <span class="tok-keyword">=</span> pheno,
+                   id <span class="tok-keyword">=</span> <span class="tok-string">"subject"</span>,
+                   hemi <span class="tok-keyword">=</span> <span class="tok-string">"lh"</span>,
+                   n_cores <span class="tok-keyword">=</span> <span class="tok-number">4</span>)
+
+<span class="tok-function">mean</span>(<span class="tok-function">c</span>(<span class="tok-number">2.4</span>, <span class="tok-number">2.6</span>))
+<span class="output">#&gt; [1] 2.5</span></code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="tables">
+      <h2 id="tables">Tables and figures</h2>
+      <div class="prose">
+        <div class="table-wrap" tabindex="0" role="region" aria-label="Example thresholds">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">Argument</th>
+                <th scope="col">Default</th>
+                <th scope="col">What it sets</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><code>fwhm</code></td><td class="num">10</td><td>Smoothing, in mm</td></tr>
+              <tr><td><code>mcz_thr</code></td><td class="num">0.001</td><td>Cluster-forming threshold</td></tr>
+              <tr><td><code>cwp_thr</code></td><td class="num">0.025</td><td>Cluster-wise p threshold</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figure class="design-figure">
+          <img src={logo.src} width={logo.width} height={logo.height} alt="The QDECR logo: a black triangle with glowing orange edges on a blue-to-teal triangular lattice, in an orange-bordered hexagon." />
+          <figcaption>A figure with a caption. The logo is the one place the site uses glow.</figcaption>
+        </figure>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .design {
+    padding-block: var(--space-l) 0;
+  }
+
+  .design section {
+    margin-top: var(--space-xl);
+  }
+
+  /* Columns as wide as fit, down to one on a phone. min() keeps the column shrinkable, or
+   * a fixed minimum would widen the grid past a 320px window. */
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-s);
+    padding: 0;
+    list-style: none;
+  }
+
+  .swatches li {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr;
+    column-gap: var(--space-xs);
+    align-items: center;
+    margin: 0;
+  }
+
+  .swatch {
+    grid-row: span 2;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 0.0625rem solid var(--rule);
+    border-radius: var(--radius);
+  }
+
+  .swatch-name {
+    background: none;
+    padding: 0;
+  }
+
+  .swatch-hex {
+    color: var(--muted);
+    font-family: var(--mono);
+    font-size: 0.8125rem;
+  }
+
+  .sample {
+    display: inline-block;
+    min-width: 2.75rem;
+    padding: 0.2rem 0.5rem;
+    border: 0.0625rem solid var(--rule);
+    border-radius: var(--radius);
+    font-weight: 600;
+    text-align: center;
+  }
+
+  .num {
+    font-family: var(--mono);
+    text-align: end;
+  }
+
+  .specimen-display {
+    font-family: var(--serif);
+    font-size: var(--size-display);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: var(--space-m);
+  }
+
+  .specimen .as-is {
+    margin-top: var(--space-s);
+  }
+
+  .design-figure img {
+    width: 10rem;
+  }
+</style>

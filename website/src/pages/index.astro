@@ -1,0 +1,34 @@
+---
+// The home page's frame. Its real content (the install, the example, the viewer hero)
+// arrives once the example data exists.
+import Base from '../layouts/Base.astro'
+import { site } from '../data/site'
+import { packageDescription } from '../lib/description'
+
+const version = packageDescription()['Version']
+---
+
+<Base source="src/pages/index.astro">
+  <div class="shell home">
+    <h1 class="home-title">Vertex-wise statistics for FreeSurfer, in R</h1>
+    <p class="lead prose">{site.description}</p>
+    <div class="button-row">
+      <a class="button button-primary" href="/get-started">Get started</a>
+      <a class="button" href="/cite">Read the paper</a>
+    </div>
+    <p class="muted small">
+      Stable. Latest release {version}.{site.nextRelease && ` ${site.nextRelease} in development.`}
+    </p>
+  </div>
+</Base>
+
+<style>
+  .home {
+    padding-block: var(--space-xl) var(--space-l);
+  }
+
+  .home-title {
+    max-width: 18ch;
+    font-size: var(--size-display);
+  }
+</style>

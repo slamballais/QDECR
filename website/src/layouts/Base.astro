@@ -1,0 +1,98 @@
+---
+/**
+ * The frame every page sits in: <head>, the skip link, the masthead, the page's own
+ * content, and the footer. Page-specific layouts (the docs layout with its sidebar and
+ * table of contents) wrap this one rather than repeat it.
+ */
+
+// Self-hosted fonts (Fontsource): no requests to a font CDN. Plex Sans and Newsreader are
+// variable, so one file per style covers every weight; Plex Mono comes in the two weights
+// code uses.
+import '@fontsource-variable/ibm-plex-sans'
+import '@fontsource-variable/ibm-plex-sans/wght-italic.css'
+import '@fontsource-variable/newsreader/opsz.css'
+import '@fontsource/ibm-plex-mono/400.css'
+import '@fontsource/ibm-plex-mono/600.css'
+// The latin files of the text and heading faces, preloaded from <head>. Without this the
+// browser only finds them once it has fetched and parsed the stylesheet: a round trip
+// later, and a moment of fallback type. `?url` resolves to the same hashed file the
+// stylesheet references, so nothing is fetched twice. The mono stays lazy: many pages
+// open with prose, not code.
+import plexSansUrl from '@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2?url'
+import newsreaderUrl from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url'
+import tokensCss from '../styles/tokens.css?raw'
+import '../styles/tokens.css'
+import '../styles/global.css'
+import Masthead from '../components/Masthead.astro'
+import SiteFooter from '../components/SiteFooter.astro'
+import { site } from '../data/site'
+import { themeTokens } from '../lib/palette'
+
+interface Props {
+  /** The page's title. " · QDECR" is appended, except on the home page, which has none. */
+  title?: string
+  /** One or two sentences for search results and link previews. */
+  description?: string
+  /** The page's source file, relative to website/, for the footer's "Edit this page". */
+  source?: string
+  /** Keep the page out of search indexes, with no canonical link. */
+  noindex?: boolean
+}
+
+const { title, description = site.description, source, noindex = false } = Astro.props
+
+const pageTitle = title ? `${title} · ${site.name}` : `${site.name} · Vertex-wise analysis of FreeSurfer data in R`
+
+// With build.format 'file', Astro.url.pathname is /cite.html at build time but /cite in
+// dev. Normalise to the URL Netlify serves, or the canonical link and the current-page
+// markers quietly point at the .html variant in production.
+const path = Astro.url.pathname.replace(/(\/index)?\.html$/, '').replace(/\/$/, '') || '/'
+const canonical = new URL(path, site.url).href
+
+// The browser chrome takes the paper colour of each scheme, read from the tokens rather
+// than copied here.
+const tokens = themeTokens(tokensCss)
+const paper = { light: tokens.light['--paper'], dark: tokens.dark['--paper'] }
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <!-- No maximum-scale and no user-scalable=no: pinch zoom stays available. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <!-- Both schemes are styled (tokens.css); saying so also stops browsers darkening the
+         page on their own. theme-color follows the paper token of each scheme. -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content={paper.light} media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content={paper.dark} media="(prefers-color-scheme: dark)" />
+    <!-- Applies a stored light/dark choice before first paint. Synchronous on purpose, and
+         is:inline keeps Astro from bundling (and so deferring) it. -->
+    <script is:inline src="/theme.js"></script>
+
+    <!-- crossorigin is required even for same-origin fonts, or the preload is discarded
+         and the file fetched again. -->
+    <link rel="preload" href={plexSansUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={newsreaderUrl} as="font" type="font/woff2" crossorigin />
+
+    <!-- Rendered from the logo by tools/make-logo.mjs. -->
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <!-- Anything a single page needs in its head, such as an extra stylesheet. -->
+    <slot name="head" />
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <Masthead path={path} />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter path={path} source={source} />
+  </body>
+</html>

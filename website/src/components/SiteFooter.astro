@@ -1,0 +1,65 @@
+---
+/**
+ * The footer on every page: the pages about the project rather than about using it, the
+ * two places off the site a reader most often wants (the code and the paper), and a line
+ * saying which release the site documents and when it was built.
+ */
+import { footerNav, site } from '../data/site'
+import OutIcon from './OutIcon.astro'
+import { commitDate } from '../lib/build'
+import { packageDescription } from '../lib/description'
+
+interface Props {
+  /** The path of the page being shown, normalised (no .html, no trailing slash). */
+  path: string
+  /** The page's source file, relative to website/, for the "Edit this page" link. */
+  source?: string | undefined
+}
+
+const { path, source } = Astro.props
+const pkg = packageDescription()
+const built = commitDate()
+// In a fixed time zone, the maintainer's, so the date does not depend on where the build
+// runs: Netlify's builders are on UTC, which puts a late-evening commit on the day before.
+const builtText = built.toLocaleDateString('en-GB', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  timeZone: 'Europe/Amsterdam',
+})
+---
+
+<footer class="site-footer">
+  <div class="shell footer-grid">
+    <nav class="footer-nav" aria-label="About the project">
+      <ul>
+        {
+          footerNav.map((item) => (
+            <li>
+              <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <ul class="footer-out">
+      <li><a href={site.repo}>Source on GitHub<OutIcon /></a></li>
+      <li><a href={site.paper.url}>The paper<OutIcon /></a></li>
+      {
+        source && (
+          <li>
+            <a href={`${site.editBase}${source}`}>
+              Edit this page<OutIcon />
+            </a>
+          </li>
+        )
+      }
+    </ul>
+    <p class="footer-meta">
+      Documents QDECR {pkg['Version']}. Package licence {pkg['License']}. Updated{' '}
+      <time datetime={built.toISOString()}>{builtText}</time>.
+    </p>
+  </div>
+</footer>
