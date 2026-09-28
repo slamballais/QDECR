@@ -63,15 +63,32 @@ macOS has no `/dev/shm`, the shared memory that makes QDECR much faster on Linux
 
 ### Windows, through WSL2
 
-On Windows, QDECR runs inside the Windows Subsystem for Linux: a real Linux, Ubuntu by default, next to Windows. In PowerShell:
+On Windows, QDECR runs inside the Windows Subsystem for Linux: a real Ubuntu next to Windows, with its own file system and, on Windows 11, its own windows on the Windows desktop. The [example analysis](/tutorials/quick-start) on this site was run this way. In PowerShell:
 
 ```powershell
 wsl --install
 ```
 
-After a restart, open Ubuntu from the Start menu and follow the Linux steps above inside it: FreeSurfer, R and QDECR all go into Ubuntu, not into Windows.
+After a restart, open Ubuntu from the Start menu. FreeSurfer, R and QDECR all go into Ubuntu, not into Windows, and the Linux steps above apply, with a few things that differ:
 
-- Keep FreeSurfer's output inside the Linux file system, such as in your Ubuntu home directory, rather than under `/mnt/c/`. WSL reads Windows drives far more slowly.
+- **Ubuntu in WSL is a minimal image.** FreeSurfer's programs, and the Qt that Freeview brings with it, need libraries it does not have. With R's, in one go:
+
+```bash
+sudo apt install r-base r-base-dev libcurl4-openssl-dev libmagick++-dev \
+  libgomp1 libxt6 libsm6 libice6 libxkbcommon-x11-0 libxcb-icccm4 \
+  libxcb-image0 libxcb-keysyms1 libxcb-render-util0 libxcb-shape0 \
+  libxcb-util1 libxcb-xinerama0 libxcb-xinput0 libxcb-xkb1
+```
+
+- **FreeSurfer's tarball works from your home directory**, unpacked with `tar -xzf`, and needs no `sudo`; its programs find the libraries they bring along relative to themselves. The Ubuntu package works too, but installs into `/usr/local` and needs root. Either way the download is large (9.5 GB for 7.4.1) and the FreeSurfer server slow, so start it early.
+- **Keep the data inside the Linux file system**, such as in your Ubuntu home directory, rather than under `/mnt/c/`: WSL reads Windows drives far more slowly. From Windows, the Linux files are at `\\wsl$\Ubuntu\home\...` in Explorer, which is the easy way to look at snapshots.
+- **WSL gets half of the machine's memory**, and `/dev/shm`, which [Performance and memory](/tutorials/performance#shared-memory) recommends for `dir_tmp`, half of that. For a large study, give WSL more in `%UserProfile%\.wslconfig`, then `wsl --shutdown`:
+
+```ini
+[wsl2]
+memory=24GB
+```
+
 - On Windows 11, Freeview's windows open on the Windows desktop by themselves, so `freeview()` and `qdecr_snap()` work as they do on Linux.
 - An R installed on the Windows side cannot run QDECR, even pointed at the same files.
 
