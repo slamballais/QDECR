@@ -16,9 +16,16 @@
 # Netlify serves dist/404.html for anything that matches neither a file nor a rule below.
 
 # The canonical host is the apex. This reverses the 2021 setup, and links
-# to www.qdecr.com live on in papers and READMEs, so the rule stays for good.
+# to www.qdecr.com live on in papers and READMEs, so the rules stay for good. The http
+# one takes an old http:// link to the apex in one hop rather than two.
 [[redirects]]
   from = "https://www.qdecr.com/*"
+  to = "https://qdecr.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.qdecr.com/*"
   to = "https://qdecr.com/:splat"
   status = 301
   force = true
@@ -121,14 +128,13 @@
 #
 # - script-src 'wasm-unsafe-eval': Pagefind's search runs as WebAssembly, which browsers
 #   treat as eval unless this allows it. It does not allow JavaScript eval.
-# - img-src data: blob: for images a script makes on the page.
 # - The JSON-LD blocks are data, not scripts, and need nothing here.
 #
 # HSTS is set by Netlify itself.
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; img-src 'self' data: blob:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"

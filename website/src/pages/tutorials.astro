@@ -4,18 +4,18 @@ import Docs from '../layouts/Docs.astro'
 import { guidePages, guideSidebar } from '../lib/guide'
 
 const pages = await guidePages()
-const tutorials = pages.filter((page) => page.id.startsWith('tutorials/'))
+const tutorials = pages.filter((page) => page.tutorial)
 const start = pages.find((page) => page.id === 'get-started')
 ---
 
 <Docs
   title="Tutorials"
-  description="Nine tutorials, from a first analysis to the statistics behind it. They build on each other, but each stands on its own too."
+  description="From a first analysis to the statistics behind it. The tutorials build on each other, but each stands on its own too."
   source="src/pages/tutorials.astro"
   section="Guide"
   sidebar={{ label: 'Guide', groups: guideSidebar(pages) }}
-  prev={start && { href: start.href, title: start.title }}
-  next={tutorials[0] && { href: tutorials[0].href, title: tutorials[0].title }}
+  prev={start}
+  next={tutorials[0]}
 >
   <ol class="tutorial-list">
     {

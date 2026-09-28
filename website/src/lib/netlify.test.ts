@@ -42,13 +42,15 @@ test('builds with npm into dist/, on the Node version package.json asks for', ()
   assert.equal(config.build?.environment?.['NODE_VERSION'], floor)
 })
 
-test('www redirects to the apex for good', () => {
-  const rule = redirectFrom('https://www.qdecr.com/*')
-  assert.ok(rule, 'no redirect from https://www.qdecr.com/*')
-  assert.equal(rule.to, 'https://qdecr.com/:splat')
-  assert.equal(rule.status, 301)
-  assert.equal(rule.force, true)
-})
+for (const from of ['https://www.qdecr.com/*', 'http://www.qdecr.com/*']) {
+  test(`${from} redirects to the apex for good`, () => {
+    const rule = redirectFrom(from)
+    assert.ok(rule, `no redirect from ${from}`)
+    assert.equal(rule.to, 'https://qdecr.com/:splat')
+    assert.equal(rule.status, 301)
+    assert.equal(rule.force, true)
+  })
+}
 
 // Every URL of the 2021 site (the website branch), and where its content lives now.
 const OLD_URLS: Record<string, string> = {

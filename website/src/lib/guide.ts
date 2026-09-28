@@ -2,14 +2,16 @@
 // reading order and the sidebar that lists them.
 
 import { getCollection, type CollectionEntry } from 'astro:content'
-import { readingOrder } from './sequence'
+import { readingOrder, type PageLink } from './sequence'
 import type { SidebarGroup } from './sidebar'
 
-export interface GuidePage {
+export interface GuidePage extends PageLink {
   id: string
-  href: string
-  title: string
   order: number
+  /** A numbered tutorial, rather than a page like Get started. */
+  tutorial: boolean
+  /** Its label above the title and on its share card: "Tutorial 7", or "Guide". */
+  section: string
   entry: CollectionEntry<'docs'>
 }
 
@@ -17,23 +19,28 @@ export interface GuidePage {
 export async function guidePages(): Promise<GuidePage[]> {
   const entries = await getCollection('docs')
   return readingOrder(
-    entries.map((entry) => ({
-      id: entry.id,
-      href: `/${entry.id}`,
-      title: entry.data.title,
-      order: entry.data.order,
-      entry,
-    })),
+    entries.map((entry) => {
+      const tutorial = entry.id.startsWith('tutorials/')
+      return {
+        id: entry.id,
+        href: `/${entry.id}`,
+        title: entry.data.title,
+        order: entry.data.order,
+        tutorial,
+        section: tutorial ? `Tutorial ${entry.data.order}` : 'Guide',
+        entry,
+      }
+    }),
   )
 }
 
 /** The guide's sidebar: where to start, then the numbered tutorials. */
 export function guideSidebar(pages: GuidePage[]): SidebarGroup[] {
-  const tutorials = pages.filter((page) => page.id.startsWith('tutorials/'))
+  const tutorials = pages.filter((page) => page.tutorial)
   return [
     {
       label: 'Start here',
-      items: pages.filter((page) => !page.id.includes('/')).map(({ href, title }) => ({ href, label: title })),
+      items: pages.filter((page) => !page.tutorial).map(({ href, title }) => ({ href, label: title })),
     },
     {
       label: 'Tutorials',

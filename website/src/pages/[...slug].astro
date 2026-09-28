@@ -21,14 +21,13 @@ const { page, pages } = Astro.props
 const { entry } = page
 const { Content, headings } = await render(entry)
 const { prev, next } = neighbours(pages, page.id)
-const section = page.id.startsWith('tutorials/') ? `Tutorial ${page.order}` : 'Guide'
 ---
 
 <Docs
   title={entry.data.title}
   description={entry.data.description}
   source={entry.filePath}
-  section={section}
+  section={page.section}
   sidebar={{ label: 'Guide', groups: guideSidebar(pages) }}
   headings={headings}
   prev={prev}

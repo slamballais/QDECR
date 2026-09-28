@@ -16,11 +16,7 @@ import Pager from '../components/Pager.astro'
 import type { SidebarGroup } from '../lib/sidebar'
 import { buildToc, type Heading } from '../lib/toc'
 import { servedPath } from '../lib/path'
-
-interface Link {
-  href: string
-  title: string
-}
+import type { PageLink } from '../lib/sequence'
 
 interface Props {
   title: string
@@ -33,8 +29,8 @@ interface Props {
   sidebar?: { label: string; groups: SidebarGroup[] } | undefined
   /** The page's headings, for "On this page". */
   headings?: Heading[]
-  prev?: Link | undefined
-  next?: Link | undefined
+  prev?: PageLink | undefined
+  next?: PageLink | undefined
   /** Set the title as code: a function name in the reference. */
   codeTitle?: boolean
 }

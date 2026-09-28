@@ -1,6 +1,11 @@
 // The "On this page" list: a page's sections and their subsections, from the headings
 // Astro collects while rendering it.
 
+/** An id for a heading written in code rather than Markdown: "See also" → see-also. */
+export function headingId(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+}
+
 export interface Heading {
   depth: number
   slug: string

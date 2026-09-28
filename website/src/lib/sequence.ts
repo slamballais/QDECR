@@ -2,6 +2,12 @@
 // order. It sets the order of the sidebar and the previous/next links at the foot of each
 // page, so both come from the `order` in each page's front matter.
 
+/** A link to a page by its title: the previous and next links, for one. */
+export interface PageLink {
+  href: string
+  title: string
+}
+
 export interface SequencePage {
   /** The page's id in the docs collection, which is also its path: 'tutorials/plotting'. */
   id: string

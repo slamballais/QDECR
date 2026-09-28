@@ -47,6 +47,7 @@ export const PAIRS: Pair[] = [
   { fg: '--accent-strong', bg: '--paper', min: 4.5, where: 'a link on hover' },
   { fg: '--accent-strong', bg: '--accent-soft', min: 4.5, where: 'a secondary button on hover' },
   { fg: '--accent', bg: '--accent-soft', min: 4.5, where: 'the current page in navigation, links in a note' },
+  { fg: '--muted', bg: '--accent-soft', min: 4.5, where: '"Previous" and "Next" on a hovered page link' },
   { fg: '--on-accent', bg: '--accent', min: 4.5, where: 'primary button text' },
   { fg: '--on-accent', bg: '--accent-strong', min: 4.5, where: 'primary button text on hover' },
   { fg: '--ink', bg: '--accent-soft', min: 4.5, where: 'the body of a note' },

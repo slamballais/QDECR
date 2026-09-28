@@ -827,13 +827,22 @@ figcaption {
   margin-bottom: 0;
 }
 
-.docs-section {
-  margin: 0 0 var(--space-xs);
+/* The small tracked capitals that label a part of the page: the section above a title,
+ * the sidebar's groups, "On this page", a search result's section. */
+.docs-section,
+.sidebar-label,
+.toc-heading,
+.search-results .search-section {
   color: var(--muted);
-  font-size: var(--size-small);
+  font-size: 0.8125rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.docs-section {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--size-small);
 }
 
 .docs-header h1 code {
@@ -876,11 +885,6 @@ figcaption {
 
 .sidebar-label {
   margin: 0 0 var(--space-2xs);
-  color: var(--muted);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .sidebar-label a {
@@ -951,11 +955,6 @@ ol.sidebar-items a::before {
 /* "On this page". */
 .toc-heading {
   margin: 0 0 var(--space-xs);
-  color: var(--muted);
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .toc ul {
@@ -986,12 +985,25 @@ ol.sidebar-items a::before {
   color: var(--accent);
 }
 
-/* On a narrow window the lists are for fingers: every link a full 44px target. */
+/* Where the lists are used with fingers, every link is a full 44px target: on any touch
+ * screen, whatever its width (a tablet in landscape gets the wide layout), and in the
+ * narrow disclosures, which are what a phone shows. With a mouse the wide columns keep
+ * their tighter rhythm. */
 .sidebar-narrow .sidebar-items a,
 .toc-narrow a {
   min-height: var(--target);
   display: flex;
   align-items: center;
+}
+
+@media (pointer: coarse) {
+  .sidebar-items a,
+  .sidebar-label a,
+  .toc a {
+    min-height: var(--target);
+    display: flex;
+    align-items: center;
+  }
 }
 
 /* Previous and next, at the foot of the page. */
@@ -1193,12 +1205,6 @@ ol.sidebar-items a::before {
   margin: var(--space-2xs) 0 0;
   color: var(--muted);
   font-size: var(--size-small);
-}
-
-.search-results .search-section {
-  font-size: 0.8125rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
 }
 
 .search-results mark {

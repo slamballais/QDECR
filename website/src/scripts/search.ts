@@ -2,6 +2,8 @@
 // and lists the results. Results update as the reader types, and the query is kept in the
 // address bar so a search can be linked to and survives going back.
 
+import { servedPath } from '../lib/path'
+
 /** The part of Pagefind's browser API used here. */
 interface Pagefind {
   options(options: { excerptLength?: number }): Promise<void>
@@ -37,16 +39,14 @@ async function load(): Promise<Pagefind | undefined> {
   }
 }
 
-/** Pagefind records the file it indexed; the site serves the page without .html. */
-const pageUrl = (url: string) => url.replace(/(\/index)?\.html$/, '') || '/'
 
 function render(results: ResultData[], total: number, query: string) {
   list.replaceChildren(
     ...results.map((result) => {
       const item = document.createElement('li')
       const link = document.createElement('a')
-      link.href = pageUrl(result.url)
-      link.textContent = result.meta.title ?? pageUrl(result.url)
+      link.href = servedPath(result.url)
+      link.textContent = result.meta.title ?? servedPath(result.url)
       const where = document.createElement('p')
       where.className = 'search-section'
       where.textContent = result.meta.section ?? ''

@@ -3,11 +3,11 @@
 import Docs from '../layouts/Docs.astro'
 import { groups, referenceSidebar, topicHref } from '../lib/reference-data'
 import type { Topic } from '../lib/reference'
+import { headingId } from '../lib/toc'
 
-const slug = (label: string) => label.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
 // A help page can document several functions; the others are named under its title.
 const others = (topic: Topic) => topic.aliases.filter((alias) => alias !== topic.name)
-const headings = groups.map((group) => ({ depth: 2, slug: slug(group.label), text: group.label }))
+const headings = groups.map((group) => ({ depth: 2, slug: headingId(group.label), text: group.label }))
 ---
 
 <Docs
@@ -21,7 +21,7 @@ const headings = groups.map((group) => ({ depth: 2, slug: slug(group.label), tex
   {
     groups.map((group) => (
       <section class="ref-group">
-        <h2 id={slug(group.label)}>{group.label}</h2>
+        <h2 id={headingId(group.label)}>{group.label}</h2>
         <dl class="ref-index">
           {group.topics.map((topic) => (
             <>

@@ -1,14 +1,10 @@
 ---
 /** The previous and next pages in the reading sequence, at the foot of a guide page. */
-
-interface Link {
-  href: string
-  title: string
-}
+import type { PageLink } from '../lib/sequence'
 
 interface Props {
-  prev?: Link | undefined
-  next?: Link | undefined
+  prev?: PageLink | undefined
+  next?: PageLink | undefined
 }
 
 const { prev, next } = Astro.props

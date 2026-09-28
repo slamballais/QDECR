@@ -3,29 +3,22 @@
 // src/lib/inline.ts for why the pages are checked rather than the source).
 
 import type { AstroIntegration } from 'astro'
-import { readdir, readFile } from 'node:fs/promises'
-import { fileURLToPath } from 'node:url'
-import { join, relative } from 'node:path'
 import { findInline } from '../lib/inline.ts'
+import { builtPages } from './built-pages.ts'
 
 export default function cspGuard(): AstroIntegration {
   return {
     name: 'qdecr:csp-guard',
     hooks: {
       'astro:build:done': async ({ dir, logger }) => {
-        const root = fileURLToPath(dir)
-        const files = (await readdir(root, { recursive: true })).filter((file) => file.endsWith('.html'))
-        const failures: string[] = []
-        for (const file of files) {
-          const problems = findInline(await readFile(join(root, file), 'utf8'))
-          for (const problem of problems) failures.push(`${relative(root, join(root, file))}: ${problem}`)
-        }
+        const pages = await builtPages(dir)
+        const failures = pages.flatMap(({ file, html }) => findInline(html).map((problem) => `${file}: ${problem}`))
         if (failures.length) {
           throw new Error(
             `${failures.length} thing(s) the CSP in netlify.toml would block:\n${failures.join('\n')}`,
           )
         }
-        logger.info(`${files.length} pages checked: nothing inline for the CSP to block`)
+        logger.info(`${pages.length} pages checked: nothing inline for the CSP to block`)
       },
     },
   }

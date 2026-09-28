@@ -5,10 +5,11 @@
 // skipped.
 
 import type { AstroIntegration } from 'astro'
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises'
+import { mkdir, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createCardRenderer } from '../../tools/og.mjs'
+import { builtPages } from './built-pages.ts'
 
 /** The content of a <meta> named `key` (by property or name), entities decoded. */
 function meta(html: string, key: string): string | undefined {
@@ -28,10 +29,8 @@ export default function ogImages(): AstroIntegration {
       'astro:build:done': async ({ dir, logger }) => {
         const root = fileURLToPath(dir)
         const render = await createCardRenderer()
-        const pages = (await readdir(root, { recursive: true })).filter((file) => file.endsWith('.html'))
         let drawn = 0
-        for (const page of pages) {
-          const html = await readFile(join(root, page), 'utf8')
+        for (const { html } of await builtPages(dir)) {
           const image = meta(html, 'og:image')
           const title = meta(html, 'og:title')
           if (!image || !title) continue
