@@ -51,6 +51,11 @@ const run = {
   },
   model: { formula: 'qdecr_thickness ~ age + sex', measure: 'thickness', fwhm: 10, mczThr: 30, cwpThr: 0.025, nCores: 4 },
   hemispheres: { lh: hemisphere('lh'), rh: hemisphere('rh') },
+  credit: {
+    licence: 'CC BY-NC-SA 3.0',
+    abide: 'https://fcon_1000.projects.nitrc.org/indi/abide/',
+    pcp: 'http://preprocessed-connectomes-project.org/abide/',
+  },
 }
 
 test('a complete run parses as it is, with both hemispheres', () => {
@@ -69,6 +74,12 @@ test('the sample has to add up: the sexes sum to n', () => {
 test('the model is the one the example fixes: thickness on age and sex, nothing else', () => {
   const model = { ...run.model, formula: 'qdecr_thickness ~ age + sex + site' }
   assert.throws(() => parseExampleRun({ ...run, model }), /the formula must be/)
+})
+
+test('the credit ABIDE requires is part of the run, licence and both projects', () => {
+  const { credit: _credit, ...without } = run
+  assert.throws(() => parseExampleRun(without), /credit/)
+  assert.throws(() => parseExampleRun({ ...run, credit: { ...run.credit, licence: 'CC BY 4.0' } }), /CC BY-NC-SA/)
 })
 
 test('clusters are numbered from 1 within their stack, in order', () => {

@@ -120,6 +120,15 @@ export const exampleRunSchema = z.object({
   }),
   /** Both hemispheres: the analysis is whole-brain, and cwp_thr splits 0.05 over the two. */
   hemispheres: z.object({ lh: hemisphere, rh: hemisphere }),
+  /**
+   * What every page showing the run has to print: the data's licence,
+   * which is not the site's, and the two projects that collected and preprocessed them.
+   */
+  credit: z.object({
+    licence: z.literal('CC BY-NC-SA 3.0', { message: 'ABIDE is shared under CC BY-NC-SA 3.0' }),
+    abide: z.url(),
+    pcp: z.url(),
+  }),
 })
 
 export type ExampleRun = z.infer<typeof exampleRunSchema>
