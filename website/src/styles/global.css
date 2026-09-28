@@ -1296,3 +1296,28 @@ ol.sidebar-items a::before {
     white-space: pre-wrap;
   }
 }
+
+/* The glossary: each term above its definition, the groups apart. */
+.glossary {
+  margin: 0 0 var(--space-l);
+}
+
+.glossary dt {
+  margin-top: var(--space-m);
+  font-weight: 600;
+  /* Room above a term when a link to its anchor scrolls it to the top. */
+  scroll-margin-top: var(--space-m);
+}
+
+.glossary dd {
+  margin: var(--space-2xs) 0 0;
+}
+
+.glossary dd > :last-child {
+  margin-bottom: 0;
+}
+
+.glossary-also {
+  color: var(--muted);
+  font-size: var(--size-small);
+}

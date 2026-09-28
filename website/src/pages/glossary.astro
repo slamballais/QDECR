@@ -1,0 +1,43 @@
+---
+// The glossary, from src/data/glossary.md (src/lib/glossary.ts): one list of words
+// for the code, the docs and this page. Terms are written there, never here.
+import { markdownToHtml } from 'satteri'
+import Docs from '../layouts/Docs.astro'
+import { projectGlossary } from '../lib/glossary'
+import { headingId } from '../lib/toc'
+
+const { groups } = projectGlossary()
+const headings = groups
+  .filter((group) => group.label)
+  .map((group) => ({ depth: 2, slug: headingId(group.label), text: group.label }))
+// A definition is one line of Markdown: inline code, emphasis, the odd link. Curly quotes
+// and dashes, as Astro renders the site's other Markdown.
+const html = (markdown: string) => markdownToHtml(markdown, { features: { smartPunctuation: true } }).html
+---
+
+<Docs
+  title="Glossary"
+  description="The words the documentation uses for FreeSurfer's data, QDECR's models and their results, and what each one means."
+  source="src/data/glossary.md"
+  section="Project"
+  headings={headings}
+>
+  {
+    groups.map((group) => (
+      <section>
+        {group.label && <h2 id={headingId(group.label)}>{group.label}</h2>}
+        <dl class="glossary">
+          {group.terms.map((term) => (
+            <>
+              <dt id={headingId(term.term)}>{term.term}</dt>
+              <dd>
+                <Fragment set:html={html(term.definition)} />
+                {term.avoid.length > 0 && <p class="glossary-also">Also called: {term.avoid.join(', ')}.</p>}
+              </dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    ))
+  }
+</Docs>
