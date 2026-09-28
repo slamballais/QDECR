@@ -41,7 +41,7 @@ candidates="
   libxmu6 libxt6 libxext6 libxrender1 libxi6 libxss1 libsm6 libice6
   libxrandr2 libxinerama1 libxcursor1 libxfixes3 libxcomposite1 libxdamage1 libxtst6
   libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0
-  libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxcb-xfixes0 libxcb-cursor0 libxcb-util1
+  libxcb-shape0 libxcb-xinerama0 libxcb-xkb1 libxcb-xfixes0 libxcb-cursor0 libxcb-util1 libxcb-xinput0
   libxkbcommon-x11-0 libxkbcommon0 libfontconfig1 libfreetype6 libdbus-1-3
   libglib2.0-0t64 libasound2t64 libpulse0 libnss3 libnspr4
   libjpeg-turbo8 libtiff6 libpng16-16t64 libgfortran5

@@ -19,10 +19,17 @@ export SUBJECTS_DIR="$QDECR_EXAMPLE_ROOT/subjects"
 
 # FreeSurfer's own setup, once it is installed: it adds bin/ to the PATH and sets the
 # variables its tools expect. It keeps a SUBJECTS_DIR that is already set. Quiet, because
-# it prints its banner to every script otherwise.
+# it prints its banner to every script otherwise. It is not written for a shell that
+# stops on errors: it reads variables it has not set (FUNCTIONALS_DIR) and runs grep
+# pipelines that find nothing, so the scripts' set -e, -u and pipefail are suspended
+# while it runs and put back as they were.
 if [ -f "$FREESURFER_HOME/SetUpFreeSurfer.sh" ]; then
+  _options="$(set +o | grep -E ' (errexit|nounset|pipefail)$')"
+  set +o errexit +o nounset +o pipefail
   # shellcheck disable=SC1091
   source "$FREESURFER_HOME/SetUpFreeSurfer.sh" > /dev/null
+  eval "$_options"
+  unset _options
 fi
 
 # FreeSurfer 7.4.1, the release the example was run with, and where it comes from.
