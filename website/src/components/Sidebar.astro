@@ -1,0 +1,37 @@
+---
+/**
+ * The docs sidebar: every page of the section, the current one marked. On a wide window it
+ * is a column of its own, sticky as the page scrolls, with the search field on top. On a
+ * narrow one it folds into a disclosure above the page, labelled with what it holds, so
+ * the page's own text comes first and nothing hides behind a menu icon. Both forms are in
+ * the markup and CSS shows one, so neither needs a script.
+ */
+import type { SidebarGroup } from '../lib/sidebar'
+import SidebarList from './SidebarList.astro'
+
+interface Props {
+  /** What the sidebar lists, for its landmark and its narrow summary: "Guide". */
+  label: string
+  groups: SidebarGroup[]
+  path: string
+}
+
+const { label, groups, path } = Astro.props
+const count = groups.reduce((sum, group) => sum + group.items.length, 0)
+---
+
+<div class="sidebar" data-pagefind-ignore="all">
+  <nav class="sidebar-wide" aria-label={label}>
+    <form class="sidebar-search" action="/search" role="search">
+      <label class="visually-hidden" for="sidebar-search">Search the site</label>
+      <input id="sidebar-search" type="search" name="q" placeholder="Search" autocomplete="off" />
+    </form>
+    <SidebarList groups={groups} path={path} />
+  </nav>
+  <details class="sidebar-narrow">
+    <summary>{label}: {count} pages</summary>
+    <nav aria-label={label}>
+      <SidebarList groups={groups} path={path} />
+    </nav>
+  </details>
+</div>

@@ -671,6 +671,436 @@ figcaption {
   }
 }
 
+/* ---------- docs layout ---------- */
+
+/*
+ * Sidebar, page and "On this page" (layouts/Docs.astro). The page column never grows past
+ * the measure; the side columns are in rem, so they grow with the reader's font size and
+ * the breakpoints move with them.
+ */
+.docs {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, var(--measure)) 13rem;
+  grid-template-areas: 'sidebar page toc';
+  justify-content: space-between;
+  column-gap: var(--space-l);
+  padding-top: var(--space-l);
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.docs-page {
+  grid-area: page;
+  min-width: 0;
+}
+
+.toc-wide {
+  grid-area: toc;
+}
+
+/* Both side columns stay in view while the page scrolls, and scroll on their own if they
+ * are taller than the window. */
+.sidebar-wide,
+.toc-wide {
+  position: sticky;
+  top: var(--space-m);
+  align-self: start;
+  max-height: calc(100vh - 2 * var(--space-m));
+  overflow-y: auto;
+  /* Room for the focus ring, which the overflow would otherwise clip. */
+  padding: 0.25rem;
+  margin: -0.25rem;
+}
+
+.sidebar-narrow,
+.toc-narrow {
+  display: none;
+}
+
+@media (max-width: 72rem) {
+  .docs {
+    grid-template-columns: 14rem minmax(0, var(--measure));
+    grid-template-areas: 'sidebar page';
+    justify-content: start;
+  }
+
+  .toc-wide {
+    display: none;
+  }
+
+  .toc-narrow {
+    display: block;
+  }
+}
+
+@media (max-width: 52rem) {
+  .docs {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'sidebar' 'page';
+    padding-top: var(--space-s);
+  }
+
+  .sidebar-wide {
+    display: none;
+  }
+
+  .sidebar-narrow {
+    display: block;
+    margin-bottom: var(--space-m);
+  }
+}
+
+/* The disclosures that stand in for the side columns on a narrow window. */
+.sidebar-narrow,
+.toc-narrow {
+  border: 0.0625rem solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.sidebar-narrow > summary,
+.toc-narrow > summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
+  padding-inline: var(--space-s);
+  font-size: var(--size-small);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sidebar-narrow > summary::-webkit-details-marker,
+.toc-narrow > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A flex summary loses the browser's triangle, so it gets a chevron: down when closed,
+ * up when open. It turns without animation (motion is limited to colour). */
+.sidebar-narrow > summary::after,
+.toc-narrow > summary::after {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-inline-start: auto;
+  border-right: 0.125rem solid currentColor;
+  border-bottom: 0.125rem solid currentColor;
+  transform: translateY(-0.15rem) rotate(45deg);
+}
+
+.sidebar-narrow[open] > summary::after,
+.toc-narrow[open] > summary::after {
+  transform: translateY(0.15rem) rotate(-135deg);
+}
+
+.sidebar-narrow > nav,
+.toc-narrow > nav {
+  padding: 0 var(--space-s) var(--space-s);
+}
+
+.toc-narrow {
+  margin-bottom: var(--space-l);
+}
+
+.docs-header {
+  margin-bottom: var(--space-l);
+}
+
+.docs-header .lead {
+  margin-bottom: 0;
+}
+
+.docs-section {
+  margin: 0 0 var(--space-xs);
+  color: var(--muted);
+  font-size: var(--size-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.docs-header h1 code {
+  padding: 0;
+  background: none;
+  font-size: 0.85em;
+}
+
+.docs-body > :first-child {
+  margin-top: 0;
+}
+
+/* The sidebar's lists. */
+.sidebar-search {
+  margin-bottom: var(--space-m);
+}
+
+.sidebar-search input,
+.search-form input {
+  width: 100%;
+  min-height: var(--target);
+  padding: 0 var(--space-s);
+  border: 0.0625rem solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--size-small);
+}
+
+.sidebar-search input::placeholder,
+.search-form input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.sidebar-group + .sidebar-group {
+  margin-top: var(--space-m);
+}
+
+.sidebar-label {
+  margin: 0 0 var(--space-2xs);
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sidebar-label a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sidebar-label a:hover,
+.sidebar-label a[aria-current] {
+  color: var(--accent);
+}
+
+.sidebar-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  font-size: var(--size-small);
+}
+
+.sidebar-items li + li {
+  margin-top: 0;
+}
+
+.sidebar-items a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 2.25rem;
+  padding: 0.3rem var(--space-xs);
+  border-radius: var(--radius);
+  color: var(--ink);
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+/* Numbered lists count their steps in the margin of each link. */
+ol.sidebar-items a::before {
+  counter-increment: step;
+  content: counter(step);
+  flex: none;
+  min-width: 1.1rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.sidebar-items a:hover {
+  color: var(--accent);
+  background: var(--sunken);
+}
+
+.sidebar-items a[aria-current] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.sidebar-items a[aria-current]::before {
+  color: var(--accent);
+}
+
+.sidebar-items code {
+  padding: 0;
+  background: none;
+  font-size: 0.875rem;
+}
+
+/* "On this page". */
+.toc-heading {
+  margin: 0 0 var(--space-xs);
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--size-small);
+}
+
+.toc ul ul {
+  padding-inline-start: var(--space-s);
+}
+
+.toc li + li,
+.toc ul ul {
+  margin-top: 0;
+}
+
+.toc a {
+  display: block;
+  padding: 0.3rem 0;
+  color: var(--muted);
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  color: var(--accent);
+}
+
+/* On a narrow window the lists are for fingers: every link a full 44px target. */
+.sidebar-narrow .sidebar-items a,
+.toc-narrow a {
+  min-height: var(--target);
+  display: flex;
+  align-items: center;
+}
+
+/* Previous and next, at the foot of the page. */
+.pager {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-s);
+  margin-top: var(--space-xl);
+}
+
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-s) var(--space-m);
+  border: 0.0625rem solid var(--rule);
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+.pager-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.pager-next {
+  grid-column: -2;
+  text-align: end;
+}
+
+.pager-dir {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.pager-title {
+  font-weight: 600;
+}
+
+/* The tutorials index. */
+.tutorial-list {
+  padding-inline-start: 1.6em;
+}
+
+.tutorial-list li + li {
+  margin-top: var(--space-m);
+}
+
+.tutorial-list li::marker {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.tutorial-list a {
+  font-family: var(--serif);
+  font-size: var(--size-h3);
+  font-weight: 600;
+}
+
+.tutorial-list p {
+  margin: var(--space-2xs) 0 0;
+  color: var(--muted);
+}
+
+/* ---------- search ---------- */
+
+.search-page {
+  padding-block: var(--space-l) 0;
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.search-row input {
+  flex: 1 1 12rem;
+  font-size: var(--size-body);
+}
+
+.search-status {
+  min-height: 1.65em;
+  margin-top: var(--space-s);
+}
+
+.search-results {
+  padding: 0;
+  list-style: none;
+}
+
+.search-results li + li {
+  margin-top: var(--space-m);
+}
+
+.search-results a {
+  font-weight: 600;
+}
+
+.search-results p {
+  margin: var(--space-2xs) 0 0;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.search-results .search-section {
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.search-results mark {
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* ---------- footer ---------- */
 
 .site-footer {
@@ -723,12 +1153,19 @@ figcaption {
 /* Paper gets the light tokens (tokens.css scopes dark mode to screens), no navigation,
  * and code blocks that wrap rather than get cut off at the page edge. */
 @media print {
+  .docs {
+    display: block;
+  }
+
   .masthead-nav,
   .masthead-tools,
   .skip-link,
   .footer-grid nav,
   .footer-out,
-  .code-copy {
+  .code-copy,
+  .sidebar,
+  .toc,
+  .pager {
     display: none;
   }
 

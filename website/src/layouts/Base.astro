@@ -27,6 +27,7 @@ import Masthead from '../components/Masthead.astro'
 import SiteFooter from '../components/SiteFooter.astro'
 import { site } from '../data/site'
 import { themeTokens } from '../lib/palette'
+import { servedPath } from '../lib/path'
 
 interface Props {
   /** The page's title. " · QDECR" is appended, except on the home page, which has none. */
@@ -90,7 +91,9 @@ const paper = { light: tokens.light['--paper'], dark: tokens.dark['--paper'] }
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <Masthead path={path} />
-    <main id="main" tabindex="-1">
+    <!-- Pagefind indexes what is inside main on every indexable page; navigation inside it
+         (the docs sidebar and "On this page") opts out with data-pagefind-ignore. -->
+    <main id="main" tabindex="-1" data-pagefind-body={noindex ? undefined : ''}>
       <slot />
     </main>
     <SiteFooter path={path} source={source} />

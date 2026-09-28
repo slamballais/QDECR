@@ -1,0 +1,39 @@
+---
+/**
+ * "On this page": the page's sections, linked. The docs layout places it twice, as a
+ * sticky column beside the text on a wide window and as a closed disclosure under the
+ * page title on a narrow one; CSS shows one or the other. A page with fewer than two
+ * sections gets neither, as a list of one is not worth the room.
+ */
+import type { TocItem } from '../lib/toc'
+import TocList from './TocList.astro'
+
+interface Props {
+  items: TocItem[]
+  variant: 'wide' | 'narrow'
+}
+
+const { items, variant } = Astro.props
+const show = items.length > 1
+---
+
+{
+  show && variant === 'wide' && (
+    <nav class="toc toc-wide" aria-labelledby="toc-heading" data-pagefind-ignore="all">
+      <p class="toc-heading" id="toc-heading">
+        On this page
+      </p>
+      <TocList items={items} />
+    </nav>
+  )
+}
+{
+  show && variant === 'narrow' && (
+    <details class="toc toc-narrow" data-pagefind-ignore="all">
+      <summary>On this page</summary>
+      <nav aria-label="On this page">
+        <TocList items={items} />
+      </nav>
+    </details>
+  )
+}

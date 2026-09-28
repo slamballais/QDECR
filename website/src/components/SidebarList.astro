@@ -1,0 +1,41 @@
+---
+/** The groups of links inside the sidebar, the same in its wide and narrow forms. */
+import type { SidebarGroup } from '../lib/sidebar'
+
+interface Props {
+  groups: SidebarGroup[]
+  /** The path of the page being shown, normalised. */
+  path: string
+}
+
+const { groups, path } = Astro.props
+const current = (href: string) => (href === path ? 'page' : undefined)
+---
+
+{
+  groups.map((group) => {
+    const List = group.numbered ? 'ol' : 'ul'
+    return (
+      <div class="sidebar-group">
+        <p class="sidebar-label">
+          {group.href ? (
+            <a href={group.href} aria-current={current(group.href)}>
+              {group.label}
+            </a>
+          ) : (
+            group.label
+          )}
+        </p>
+        <List class="sidebar-items">
+          {group.items.map((item) => (
+            <li>
+              <a href={item.href} aria-current={current(item.href)}>
+                {item.code ? <code>{item.label}</code> : item.label}
+              </a>
+            </li>
+          ))}
+        </List>
+      </div>
+    )
+  })
+}
