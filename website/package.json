@@ -8,7 +8,9 @@
     "preview": "astro preview",
     "check": "astro check",
     "test": "node --test \"src/**/*.test.ts\"",
-    "make:logo": "node tools/make-logo.mjs"
+    "make:logo": "node tools/make-logo.mjs",
+    "fetch:citations": "node tools/fetch-citations.ts",
+    "make:reference": "Rscript tools/rd-to-json.R"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",

@@ -709,6 +709,7 @@ figcaption {
   align-self: start;
   max-height: calc(100vh - 2 * var(--space-m));
   overflow-y: auto;
+  scrollbar-width: thin;
   /* Room for the focus ring, which the overflow would otherwise clip. */
   padding: 0.25rem;
   margin: -0.25rem;
@@ -1047,6 +1048,78 @@ ol.sidebar-items a::before {
   margin-top: 0;
   padding-top: 0;
   border-top: 0;
+}
+
+/* The reference: the index of help pages, and a help page's arguments. Both are
+ * definition lists set as two columns where there is room and stacked where there is
+ * not; function names never wrap mid-word into the description. */
+.ref-index,
+.ref-arguments {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: var(--space-xs) var(--space-m);
+  margin: 0 0 var(--space-m);
+}
+
+.ref-index dt,
+.ref-arguments dt {
+  font-weight: 600;
+}
+
+.ref-index dd,
+.ref-arguments dd {
+  margin: 0;
+}
+
+.ref-arguments dd > :last-child,
+.ref-text > :last-child {
+  margin-bottom: 0;
+}
+
+.ref-index dt code,
+.ref-arguments dt code {
+  padding: 0;
+  background: none;
+  overflow-wrap: anywhere;
+}
+
+.ref-index .badge {
+  margin-inline-start: var(--space-2xs);
+  font-weight: 400;
+}
+
+.ref-also {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.ref-arguments {
+  padding-bottom: var(--space-s);
+}
+
+.ref-arguments dt,
+.ref-arguments dd {
+  padding-top: var(--space-xs);
+  border-top: 0.0625rem solid var(--rule);
+}
+
+@media (max-width: 36rem) {
+  .ref-index,
+  .ref-arguments {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  .ref-index dd {
+    margin-bottom: var(--space-s);
+  }
+
+  .ref-arguments dd {
+    padding-top: 0;
+    padding-bottom: var(--space-xs);
+    border-top: 0;
+  }
 }
 
 /* The tutorials index. */
