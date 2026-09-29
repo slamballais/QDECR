@@ -13,8 +13,8 @@
 #   from here. The names are the glossary's (src/data/glossary.md).
 # - src/data/example/subjects.csv: the data frame the analysis read.
 # - src/data/example/output/: what R printed, as text, for the site's output blocks: the
-#   run's log, print(out), stacks(out), summary(out, annot = TRUE), and FreeSurfer's own
-#   cluster summary for the age stack.
+#   run's log, head() of the data frame, print(out), stacks(out), summary(out, annot =
+#   TRUE), and FreeSurfer's own cluster summary for the age stack.
 # - src/assets/example/: the histograms and the qdecr_snap() images as PNG.
 # - public/viewer/: for the interactive viewer, the inflated surface
 #   and curvature of fsaverage6, and the age stack's t-statistic and cluster maps on it.
@@ -100,6 +100,11 @@ subjects <- read.csv(file.path(root, "data", "phenotypes.csv"))
 excluded <- read.csv(file.path(root, "data", "excluded.csv"))
 invisible(file.copy(file.path(root, "data", "phenotypes.csv"), file.path(data_dir, "subjects.csv"), overwrite = TRUE))
 
+# The data frame's first rows as the quick start prints them, read the way run.R reads it.
+pheno <- subjects
+pheno$sex <- factor(pheno$sex, levels = c("female", "male"))
+writeLines(capture.output(head(pheno)), file.path(output_dir, "pheno.head.txt"))
+
 dataset <- list(
   name = "ABIDE I, as preprocessed with FreeSurfer 5.1 by the Preprocessed Connectomes Project",
   site = unique(subjects$site),
@@ -176,28 +181,30 @@ read_cluster_summary <- function(path) {
   read.table(text = rows, header = FALSE, stringsAsFactors = FALSE, col.names = cluster_summary_columns)
 }
 
-# The home page's poster: what qdecr_snap() shows for the
-# age stack, its coefficient on the significant clusters, but drawn by Freeview at a
-# size of the site's choosing rather than its default window, twice over, and trimmed
-# to the brain. Lateral and medial views, as <hemi>.age.coef.<view>.png beside the
-# figures. Needs a display, which export.sh provides.
+# The home page's poster: the age stack's -log10(p) on its
+# significant clusters, in Freeview's heat colours, which match the site's orange; the
+# map has no sign, so the page says the effect is thinning. Drawn by Freeview at a size
+# of the site's choosing rather than its default window, twice over, and trimmed to the
+# brain. The colours run from the cluster-forming threshold, p = 0.001 (3 on this scale),
+# to p = 1e-10 (10), where the peaks saturate; Sander picked that range by eye over the
+# full one, which leaves the map almost all red. Lateral and medial views, as
+# <hemi>.age.p.<view>.png beside the figures. Needs a display, which export.sh provides.
+hero_scale <- c(3, 10)
 render_hero <- function(hemi, out, age) {
-  coef <- qdecr_read_coef(out, age)
-  significant <- qdecr_read_ocn_mask(out, age)
-  coef$x[!significant] <- 0
+  p <- qdecr_read_p(out, age)
+  p$x[!qdecr_read_ocn_mask(out, age)] <- 0
   overlay <- tempfile(fileext = ".mgh")
   commands <- tempfile(fileext = ".txt")
   on.exit(unlink(c(overlay, commands)))
-  save.mgh(coef, overlay)
-  shown <- abs(coef$x[significant])
+  save.mgh(p, overlay)
   surface <- sprintf(
     "%s/fsaverage/surf/%s.inflated:overlay=%s:overlay_method=linearopaque:overlay_threshold=%s,%s",
-    Sys.getenv("SUBJECTS_DIR"), hemi, overlay, format(min(shown)), format(max(shown))
+    Sys.getenv("SUBJECTS_DIR"), hemi, overlay, hero_scale[1], hero_scale[2]
   )
   # Freeview's first view is the lateral side of the left hemisphere and the medial side
   # of the right; a half turn shows the other, as in qdecr_snap().
   views <- if (hemi == "lh") c("lateral", "medial") else c("medial", "lateral")
-  shot <- function(view) sprintf("--ss %s 2 1", file.path(assets_dir, sprintf("%s.age.coef.%s.png", hemi, view)))
+  shot <- function(view) sprintf("--ss %s 2 1", file.path(assets_dir, sprintf("%s.age.p.%s.png", hemi, view)))
   writeLines(c("--viewport 3d", "--viewsize 1200 900", "--zoom 1", shot(views[1]), "--camera Azimuth 180", shot(views[2]), "--quit"), commands)
   status <- system2("freeview", c("--surface", shQuote(surface), "-cmd", commands), stdout = FALSE, stderr = FALSE)
   if (status != 0) stop("Freeview failed to draw the ", hemi, " hero images (exit ", status, ")")
