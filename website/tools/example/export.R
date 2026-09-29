@@ -98,7 +98,7 @@ for (d in c(assets_dir, viewer_dir)) writeLines(credit_text, file.path(d, "LICEN
 
 subjects <- read.csv(file.path(root, "data", "phenotypes.csv"))
 excluded <- read.csv(file.path(root, "data", "excluded.csv"))
-file.copy(file.path(root, "data", "phenotypes.csv"), file.path(data_dir, "subjects.csv"), overwrite = TRUE)
+invisible(file.copy(file.path(root, "data", "phenotypes.csv"), file.path(data_dir, "subjects.csv"), overwrite = TRUE))
 
 dataset <- list(
   name = "ABIDE I, as preprocessed with FreeSurfer 5.1 by the Preprocessed Connectomes Project",
@@ -226,7 +226,13 @@ export_hemisphere <- function(hemi) {
       nVertices = row$n_vertices,
       sizeMm2 = round(summary_fs$sizeMm2, 1),
       clusterwiseP = summary_fs$cwp,
-      peak = list(value = round(summary_fs$max, 3), vertex = summary_fs$vtxMax, region = summary_fs$annot),
+      # The peak's -log10(p) is infinite where p underflowed to zero, as it does for the
+      # intercept (thickness is never zero); JSON has no infinity, so that is null.
+      peak = list(
+        value = if (is.finite(summary_fs$max)) round(summary_fs$max, 3) else NA_real_,
+        vertex = summary_fs$vtxMax,
+        region = summary_fs$annot
+      ),
       meanThickness = signif(row$mean_thickness, 4),
       meanCoefficient = signif(row$mean_coefficient, 4),
       meanSe = signif(row$mean_se, 4),
@@ -310,7 +316,7 @@ run <- list(
   hemispheres = hemispheres,
   credit = credit
 )
-jsonlite::write_json(run, file.path(data_dir, "run.json"), auto_unbox = TRUE, pretty = TRUE, digits = NA)
+jsonlite::write_json(run, file.path(data_dir, "run.json"), auto_unbox = TRUE, pretty = TRUE, digits = NA, na = "null")
 
 cat(sprintf(
   "Exported: %d subjects, %d clusters (lh), %d clusters (rh); run.json, %d output files, %d figures, %d viewer files.\n",

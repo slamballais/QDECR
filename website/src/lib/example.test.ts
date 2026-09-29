@@ -70,6 +70,14 @@ test('a complete run parses as it is, with both hemispheres', () => {
   assert.deepEqual(parseExampleRun(run), run)
 })
 
+test('a peak whose p-value underflowed to zero has no −log10(p): null, not a string', () => {
+  const lh = hemisphere('lh')
+  lh.clusters = [{ ...lh.clusters[0]!, peak: { ...lh.clusters[0]!.peak, value: null as unknown as number } }]
+  assert.equal(parseExampleRun({ ...run, hemispheres: { lh, rh: hemisphere('rh') } }).hemispheres.lh.clusters[0]!.peak.value, null)
+  lh.clusters = [{ ...lh.clusters[0]!, peak: { ...lh.clusters[0]!.peak, value: 'Inf' as unknown as number } }]
+  assert.throws(() => parseExampleRun({ ...run, hemispheres: { lh, rh: hemisphere('rh') } }), /peak.value/)
+})
+
 test('a key the schema does not know is an error, so an export cannot drift unnoticed', () => {
   assert.throws(() => parseExampleRun({ ...run, started: '2026-09-28T21:00:00' }), /started/)
   const lh = { ...hemisphere('lh'), call: 'qdecr_fastlm(...)' }

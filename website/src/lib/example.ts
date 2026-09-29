@@ -41,8 +41,11 @@ const cluster = z.strictObject({
   sizeMm2: z.number().min(0),
   /** The cluster-wise p-value, from FreeSurfer's simulations. */
   clusterwiseP: z.number().min(0).max(1),
-  /** The vertex with the strongest signal: the −log10(p) there, its number, and its region. */
-  peak: z.strictObject({ value: z.number(), vertex: z.number().int().min(0), region: z.string() }),
+  /**
+   * The vertex with the strongest signal: the −log10(p) there, its number, and its
+   * region. The value is null where p underflowed to zero, as it does for the intercept.
+   */
+  peak: z.strictObject({ value: z.number().nullable(), vertex: z.number().int().min(0), region: z.string() }),
   /** The mean of the measure over the cluster, and of the model's coefficient and its SE. */
   meanThickness: z.number(),
   meanCoefficient: z.number(),
