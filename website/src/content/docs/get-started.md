@@ -80,7 +80,7 @@ sudo apt install r-base r-base-dev libcurl4-openssl-dev libmagick++-dev \
   libxcb-util1 libxcb-xinerama0 libxcb-xinput0 libxcb-xkb1
 ```
 
-- **FreeSurfer's tarball works from your home directory**, unpacked with `tar -xzf`, and needs no `sudo`; its programs find the libraries they bring along relative to themselves. The Ubuntu package works too, but installs into `/usr/local` and needs root. Either way the download is large (9.5 GB for 7.4.1) and the FreeSurfer server slow, so start it early.
+- **FreeSurfer's tarball works from your home directory**, unpacked with `tar -xzf`, and needs no `sudo`; its programs find the libraries they bring along relative to themselves. Point `FREESURFER_HOME` at the unpacked directory in the two `~/.bashrc` lines above. The Ubuntu package works too, but installs into `/usr/local` and needs root. Either way the download is large (9.5 GB for 7.4.1) and the FreeSurfer server slow, so start it early.
 - **Keep the data inside the Linux file system**, such as in your Ubuntu home directory, rather than under `/mnt/c/`: WSL reads Windows drives far more slowly. From Windows, the Linux files are at `\\wsl$\Ubuntu\home\...` in Explorer, which is the easy way to look at snapshots.
 - **WSL gets half of the machine's memory**, and `/dev/shm`, which [Performance and memory](/tutorials/performance#shared-memory) recommends for `dir_tmp`, half of that. For a large study, give WSL more in `%UserProfile%\.wslconfig`, then `wsl --shutdown`:
 
