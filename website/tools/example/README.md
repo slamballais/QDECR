@@ -39,7 +39,10 @@ put it at `~/license.txt` before `setup-freesurfer.sh`, which copies it). Nothin
   Four columns of ABIDE's phenotype file, shared under the same licence, so that the
   tutorials can show the data frame as it was. The downloaded surface maps stay out.
 - `src/data/example/output/`: what R printed, for the site's output blocks.
-- `src/assets/example/`: the histograms and the `qdecr_snap()` images.
+- `src/assets/example/`: the histograms and the `qdecr_snap()` images, plus the home
+  page's poster: the age stack's coefficient on its significant clusters, drawn by
+  Freeview at 1200 by 900 twice over and trimmed, lateral and medial, as
+  `<hemi>.age.coef.<view>.png`.
 - `public/viewer/`: fsaverage6's inflated surface and curvature, and the age stack's
   t-statistic and cluster maps on it, for the viewer.
 

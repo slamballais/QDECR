@@ -176,6 +176,33 @@ read_cluster_summary <- function(path) {
   read.table(text = rows, header = FALSE, stringsAsFactors = FALSE, col.names = cluster_summary_columns)
 }
 
+# The home page's poster: what qdecr_snap() shows for the
+# age stack, its coefficient on the significant clusters, but drawn by Freeview at a
+# size of the site's choosing rather than its default window, twice over, and trimmed
+# to the brain. Lateral and medial views, as <hemi>.age.coef.<view>.png beside the
+# figures. Needs a display, which export.sh provides.
+render_hero <- function(hemi, out, age) {
+  coef <- qdecr_read_coef(out, age)
+  significant <- qdecr_read_ocn_mask(out, age)
+  coef$x[!significant] <- 0
+  overlay <- tempfile(fileext = ".mgh")
+  commands <- tempfile(fileext = ".txt")
+  on.exit(unlink(c(overlay, commands)))
+  save.mgh(coef, overlay)
+  shown <- abs(coef$x[significant])
+  surface <- sprintf(
+    "%s/fsaverage/surf/%s.inflated:overlay=%s:overlay_method=linearopaque:overlay_threshold=%s,%s",
+    Sys.getenv("SUBJECTS_DIR"), hemi, overlay, format(min(shown)), format(max(shown))
+  )
+  # Freeview's first view is the lateral side of the left hemisphere and the medial side
+  # of the right; a half turn shows the other, as in qdecr_snap().
+  views <- if (hemi == "lh") c("lateral", "medial") else c("medial", "lateral")
+  shot <- function(view) sprintf("--ss %s 2 1", file.path(assets_dir, sprintf("%s.age.coef.%s.png", hemi, view)))
+  writeLines(c("--viewport 3d", "--viewsize 1200 900", "--zoom 1", shot(views[1]), "--camera Azimuth 180", shot(views[2]), "--quit"), commands)
+  status <- system2("freeview", c("--surface", shQuote(surface), "-cmd", commands), stdout = FALSE, stderr = FALSE)
+  if (status != 0) stop("Freeview failed to draw the ", hemi, " hero images (exit ", status, ")")
+}
+
 clean_log <- function(path) {
   # A progress bar redraws its line with carriage returns; keep what it showed last.
   # Read whole and split on newlines only: readLines would take each carriage return
@@ -203,6 +230,7 @@ export_hemisphere <- function(hemi) {
   for (png in list.files(staged, pattern = paste0("^", hemi, "\\..*\\.png$"))) {
     file.copy(file.path(staged, png), file.path(assets_dir, png), overwrite = TRUE)
   }
+  render_hero(hemi, out, age)
 
   # -- the clusters --
   # QDECR's summary gives the means over each cluster and the regions it lies in;
