@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist && node tools/prune-pagefind.mjs",
+    "build": "astro build --force && pagefind --site dist && node tools/prune-pagefind.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "node --test \"src/**/*.test.ts\"",

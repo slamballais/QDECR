@@ -3,6 +3,10 @@
 # src/lib/netlify.test.ts holds this file to the rules the site depends on.
 
 [build]
+  # npm run build is astro build --force, then Pagefind, then a prune of Pagefind's unused
+  # interfaces. --force re-renders every page: Astro caches rendered Markdown in
+  # node_modules/.astro, which Netlify keeps between builds, and a change to one of the
+  # site's Markdown plugins (astro.config.mjs) does not invalidate that cache.
   command = "npm run build"
   publish = "dist"
 
