@@ -221,6 +221,7 @@ for surf in "$SUBJECTS_DIR"/*/surf; do
 done
 ```
 
+- **The mean of the measure in `summary()`.** The `mean_thickness` column (named after the measure) averages the wrong vertices. [Inspecting results](/tutorials/inspecting-results#summaries-of-the-clusters) shows how to work it out.
 - **missForest results.** Pass the completed data, `result$ximp`, rather than the `missForest` object, which 0.9.0 reads wrongly. `aregImpute` objects are not supported at all.
 - **Arguments that do nothing yet.** `mgh`, `clean_up` and `debug` are accepted but not used.
 - **Relative paths.** A result stores its paths as given, so a relative `dir_out` only works from the same working directory. See [Saving and loading](/tutorials/saving-and-loading#saving-and-loading-a-result).

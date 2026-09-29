@@ -15,8 +15,16 @@ export const EXAMPLE_FORMULA = 'qdecr_thickness ~ age + sex'
 /** ABIDE I is shared under this licence, which every derived figure carries. */
 export const EXAMPLE_LICENCE = 'CC BY-NC-SA 3.0'
 
-/** Where the site credits the data in full: the licence, the papers, the funding. */
-export const EXAMPLE_CREDIT_HREF = '/colophon#the-example-data'
+/**
+ * The short credit a figure or table of the example data carries: who
+ * collected and who preprocessed the data, then the licence, linked to where the site
+ * credits them in full, with the papers and the funding. ExampleCredit.astro and the
+ * figures plugin both print it as "<text>, <licence as link>."
+ */
+export const EXAMPLE_CREDIT = {
+  text: 'Data: ABIDE I, preprocessed by the PCP',
+  href: '/colophon#the-example-data',
+} as const
 
 const stack = z.strictObject({
   /** Its number in stacks(out), which names the files: stack2.coef.mgh. */
@@ -49,7 +57,11 @@ const cluster = z.strictObject({
    * region. The value is null where p underflowed to zero, as it does for the intercept.
    */
   peak: z.strictObject({ value: z.number().nullable(), vertex: z.number().int().min(0), region: z.string() }),
-  /** The mean of the measure over the cluster, and of the model's coefficient and its SE. */
+  /**
+   * The mean of the measure over the cluster, and of the model's coefficient and its SE,
+   * from summary(). QDECR 0.9.0 gets the first wrong (it averages misaligned vertices), so
+   * no page shows it.
+   */
   meanThickness: z.number(),
   meanCoefficient: z.number(),
   meanSe: z.number(),
@@ -75,8 +87,8 @@ const hemisphere = z
     clusters: z.array(cluster),
   })
   .superRefine((hemi, ctx) => {
-    // mri_surfcluster numbers a stack's clusters 1, 2, 3 from the largest; the export
-    // keeps that order, and the pages count on it.
+    // mri_surfcluster numbers a stack's clusters 1, 2, 3; the export keeps that order, and
+    // the pages count on it.
     const seen = new Map<string, number>()
     for (const c of hemi.clusters) {
       const expected = (seen.get(c.stack) ?? 0) + 1

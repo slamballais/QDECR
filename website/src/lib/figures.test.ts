@@ -7,7 +7,7 @@ import { figures } from './figures.ts'
 const render = (markdown: string) =>
   markdownToHtml(markdown, { mdastPlugins: [figures()] }).html.replace(/>\s+</g, '><').trim()
 
-const CREDIT = 'Data: ABIDE I, <a href="/colophon#the-example-data">CC BY-NC-SA 3.0</a>.'
+const CREDIT = 'Data: ABIDE I, preprocessed by the PCP, <a href="/colophon#the-example-data">CC BY-NC-SA 3.0</a>.'
 
 test('an image alone in its paragraph, with a title, becomes a figure captioned by the title', () => {
   assert.equal(

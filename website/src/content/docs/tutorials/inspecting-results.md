@@ -47,9 +47,9 @@ summary(out, annot = TRUE)
 | Column | What it holds |
 |---|---|
 | `variable` | The stack the cluster belongs to. |
-| `cluster` | Its number within the stack, from the largest. The [cluster map](/glossary#cluster-map) uses the same numbers. |
+| `cluster` | Its number within the stack, as `mri_surfcluster` numbers them. The [cluster map](/glossary#cluster-map) uses the same numbers. |
 | `n_vertices` | How many vertices it covers. |
-| `mean_thickness` | The mean thickness over those vertices; the column is named after the vertex measure. |
+| `mean_thickness` | Meant to be the mean thickness over those vertices, but wrong in 0.9.0: see below. The column is named after the vertex measure. |
 | `mean_coefficient` | The mean of the stack's coefficient over the cluster, in the measure's units per unit of the predictor: here, mm per year of age. |
 | `mean_se` | The mean of its standard error. |
 | `top_region1`, ... | The regions the cluster covers most, each with two percentages: how much of the cluster lies in the region, then how much of the region the cluster covers. |
@@ -61,6 +61,17 @@ The regions come from the Desikan-Killiany atlas, `aparc.annot` in the target's 
 ```r
 summary(out, annot = TRUE, file = "aparc.a2009s.annot", regions = 5)
 ```
+
+> [!WARNING]
+> In 0.9.0 the `mean_` column of the measure averages the wrong vertices: `summary()` lines up the per-vertex means, which cover only the vertices in the mask, with a list of every vertex of the hemisphere. The number is close to right for a cluster that covers most of the cortex, as here, and can be far off for a small one. Work it out yourself instead:
+>
+> ```r
+> vertex_mean <- numeric(length(out$post$final_mask))
+> vertex_mean[as.logical(out$post$final_mask)] <- out$post$mgh_description$vertex_mean
+> mean(vertex_mean[qdecr_read_ocn(out, "age")$x == 1])  # cluster 1 of age
+> ```
+>
+> The other columns are right.
 
 `summary()` returns a data frame, so it can be filtered, sorted or saved like any other. QDECR already saves the one with `annot = TRUE` in the output directory, as the tab-separated `significant_clusters.txt`.
 
@@ -97,7 +108,7 @@ The header above it records the settings: `CSD thresh 3.000000` is the [cluster-
 hist(out)
 ```
 
-![A histogram of the mean thickness at each vertex, from 1.2 to 4.4 mm, peaking just under 3](../../../assets/example/lh.hist-vertex.png "The mean thickness of each of the 149,953 vertices in the mask, across the 99 subjects.")
+![A histogram of the mean thickness at each vertex, mostly between 1.5 and 4 mm, peaking just under 3](../../../assets/example/lh.hist-vertex.png "The mean thickness of each of the 149,953 vertices in the mask, across the 99 subjects.")
 
 Thickness runs from about 1.5 to 4 mm across the cortex, which is right for adult and adolescent brains. Values near zero would mean vertices outside the cortex had crept into the mask; a second peak, a group of vertices unlike the rest.
 

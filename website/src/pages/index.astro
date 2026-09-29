@@ -22,7 +22,7 @@ const install = `install.packages("pak")
 pak::pak("slamballais/QDECR")
 library(QDECR)`
 
-const example = `out <- qdecr_fastlm(qdecr_thickness ~ age + sex, data = pheno,
+const exampleCode = `out <- qdecr_fastlm(qdecr_thickness ~ age + sex, data = pheno,
                     id = "id", hemi = "lh", project = "age_sex")
 out
 summary(out, annot = TRUE)
@@ -36,7 +36,7 @@ const ageClusters = (['lh', 'rh'] as const).flatMap((hemi) =>
 const count = (n: number) => Math.round(n).toLocaleString('en-GB')
 // Astro drops the space between an expression and text on the next line, so sentences
 // that end a line on a value are built whole.
-const run = `run with QDECR ${exampleRun.software.qdecr} in ${count(hemispheres.lh.seconds)} seconds a hemisphere on ${exampleRun.model.nCores} cores`
+const runDetails = `run with QDECR ${exampleRun.software.qdecr} in ${count(hemispheres.lh.seconds)} seconds a hemisphere on ${exampleRun.model.nCores} cores`
 // Whole years, as the quick start gives them: 6 to 31.
 const ages = `${Math.floor(dataset.age.min)} to ${Math.floor(dataset.age.max)}`
 // A true minus sign, not a hyphen.
@@ -144,7 +144,7 @@ const jsonLd = {
         <p class="muted small">
           One hemisphere, with <code>pheno</code> a data frame of your subjects.
         </p>
-        <CodeBlock code={example} />
+        <CodeBlock code={exampleCode} />
       </div>
     </section>
 
@@ -152,7 +152,7 @@ const jsonLd = {
       <h2 id="home-results">What it gives you</h2>
       <p class="prose">
         One analysis from the <a href="/tutorials/quick-start">quick start</a>: cortical thickness against age
-        and sex in {dataset.n} typically developing participants of ABIDE I, {run}.
+        and sex in {dataset.n} typically developing participants of ABIDE I, {runDetails}.
       </p>
       <div class="gallery">
         <figure class="gallery-item gallery-wide">

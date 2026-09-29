@@ -10,16 +10,15 @@
 
 import { defineMdastPlugin } from 'satteri'
 import type { Image, PhrasingContent } from 'mdast'
-import { EXAMPLE_CREDIT_HREF, EXAMPLE_LICENCE } from './example.ts'
+import { EXAMPLE_CREDIT, EXAMPLE_LICENCE } from './example.ts'
 
 /** Where tools/example/export.R writes the figures. */
 const EXAMPLE_ASSET = /(^|\/)assets\/example\//
 
-/** The credit, linking to the Colophon's section on the example data. ExampleCredit.astro
- * says the same for the .astro pages. */
+/** The credit, as ExampleCredit.astro prints it on the .astro pages. */
 const credit = (): PhrasingContent[] => [
-  { type: 'text', value: 'Data: ABIDE I, ' },
-  { type: 'link', url: EXAMPLE_CREDIT_HREF, children: [{ type: 'text', value: EXAMPLE_LICENCE }] },
+  { type: 'text', value: `${EXAMPLE_CREDIT.text}, ` },
+  { type: 'link', url: EXAMPLE_CREDIT.href, children: [{ type: 'text', value: EXAMPLE_LICENCE }] },
   { type: 'text', value: '.' },
 ]
 
@@ -27,22 +26,22 @@ export function figures() {
   return defineMdastPlugin({
     name: 'qdecr:figures',
     paragraph(node, ctx) {
-      const only = node.children.length === 1 ? node.children[0] : undefined
-      if (only?.type !== 'image') {
+      const loneImage = node.children.length === 1 ? node.children[0] : undefined
+      if (loneImage?.type !== 'image') {
         const inline = node.children.find((child): child is Image => child.type === 'image' && EXAMPLE_ASSET.test(child.url))
         if (inline) throw new Error(`${inline.url} is from the example data and needs its credit: put it in a paragraph of its own.`)
         return
       }
       const caption: PhrasingContent[] = []
-      if (only.title) caption.push({ type: 'text', value: only.title })
-      if (EXAMPLE_ASSET.test(only.url)) {
+      if (loneImage.title) caption.push({ type: 'text', value: loneImage.title })
+      if (EXAMPLE_ASSET.test(loneImage.url)) {
         if (caption.length) caption.push({ type: 'text', value: ' ' })
         caption.push(...credit())
       }
       // Still a paragraph in the Markdown tree, rendered as a <figure> (hName); the caption
       // is an emphasis rendered as <figcaption>. The title moves into the caption rather
       // than stay as a tooltip that says it again.
-      const image: Image = { type: 'image', url: only.url, alt: only.alt ?? '' }
+      const image: Image = { type: 'image', url: loneImage.url, alt: loneImage.alt ?? '' }
       ctx.replaceNode(node, {
         type: 'paragraph',
         data: { hName: 'figure' },
