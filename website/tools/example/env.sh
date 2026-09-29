@@ -32,10 +32,13 @@ if [ -f "$FREESURFER_HOME/SetUpFreeSurfer.sh" ]; then
   unset _options
 fi
 
-# FreeSurfer 7.4.1, the release the example was run with, and where it comes from.
+# FreeSurfer 7.4.1, the release the example was run with, where it comes from, and the
+# tarball's size, which tells a complete download from a cut-off one without asking the
+# server (which does not always answer).
 export FS_VERSION="7.4.1"
 export FS_TARBALL="freesurfer-linux-ubuntu22_amd64-${FS_VERSION}.tar.gz"
 export FS_URL="https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/${FS_VERSION}/${FS_TARBALL}"
+export FS_TARBALL_BYTES=9484461482
 
 # ABIDE I as the Preprocessed Connectomes Project shares it: a public S3
 # bucket with the phenotype file and, per subject, the output of FreeSurfer 5.1 with

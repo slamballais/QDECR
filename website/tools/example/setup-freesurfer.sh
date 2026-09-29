@@ -32,22 +32,18 @@ mkdir -p "$cache" "$FREESURFER_HOME"
 
 # ---------- download ----------
 
-# The server's size for the file is the check that a download is complete; with -C -,
-# curl carries on from where a partial file ends.
-expected=$(curl -sI -L --max-time 60 "$FS_URL" | tr -d '\r' | awk 'tolower($1) == "content-length:" { size = $2 } END { print size }' || true)
-if [ -z "$expected" ]; then
-  echo "Could not read the size of $FS_URL; is the FreeSurfer server reachable?" >&2
-  exit 1
-fi
+# The tarball's known size (env.sh) is the check that a download is complete, so a
+# complete one needs no server at all; with -C -, curl carries on from where a partial
+# file ends.
 have=0
 [ -f "$tarball" ] && have=$(stat -c %s "$tarball")
-if [ "$have" -lt "$expected" ]; then
-  echo "Fetching FreeSurfer $FS_VERSION ($((expected / 1024 / 1024)) MB; $((have / 1024 / 1024)) MB so far) into $cache"
+if [ "$have" -lt "$FS_TARBALL_BYTES" ]; then
+  echo "Fetching FreeSurfer $FS_VERSION ($((FS_TARBALL_BYTES / 1024 / 1024)) MB; $((have / 1024 / 1024)) MB so far) into $cache"
   curl -L -C - --retry 10 --retry-delay 15 --retry-all-errors -o "$tarball" "$FS_URL"
+  have=$(stat -c %s "$tarball")
 fi
-have=$(stat -c %s "$tarball")
-if [ "$have" -ne "$expected" ]; then
-  echo "$tarball is $have bytes, the server says $expected: the download is incomplete or the file changed." >&2
+if [ "$have" -ne "$FS_TARBALL_BYTES" ]; then
+  echo "$tarball is $have bytes, not the $FS_TARBALL_BYTES of FreeSurfer $FS_VERSION: the download is incomplete or the file changed." >&2
   exit 1
 fi
 
