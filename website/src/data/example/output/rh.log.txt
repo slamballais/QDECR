@@ -1,0 +1,342 @@
+------------------------------------------------------------ 
+----------------------- QDECR v0.9.0 ----------------------- 
+------------------------------------------------------------ 
+
+Welcome to QDECR (v0.9.0)
+Authors: Sander Lamballais & Ryan Muetzel
+Website: www.qdecr.com
+Repository: www.github.com/slamballais/QDECR
+
+------------------------------------------------------------ 
+--------------------- Integrity checks --------------------- 
+------------------------------------------------------------ 
+
+Checked all input arguments.
+
+------------------------------------------------------------ 
+------------------- Loading vertex data -------------------- 
+------------------------------------------------------------ 
+
+starting worker pid=1853 on localhost:11477 at 10:45:25.706
+starting worker pid=1854 on localhost:11477 at 10:45:25.718
+starting worker pid=1855 on localhost:11477 at 10:45:25.731
+starting worker pid=1856 on localhost:11477 at 10:45:25.744
+loaded QDECR and set parent environment
+loaded QDECR and set parent environment
+loaded QDECR and set parent environment
+loaded QDECR and set parent environment
+  |==============================================================================================================================================================================================| 100%
+
+------------------------------------------------------------ 
+------------------ Pre-analysis overview ------------------- 
+------------------------------------------------------------ 
+
+[input] Hemisphere:                    [rh]
+[input] Project name:                  [age_sex]
+[input] Project final name:            [rh.age_sex.thickness]
+[input] Number of cores:               [4]
+[input] Target:                        [fsaverage]
+[input] dir_out_tree:                  [TRUE]
+[input] clobber:                       [TRUE]
+[input] fwhm:                          [10]
+[paths] Subjects dir:                  [/home/slamballais/qdecr-example/subjects]
+[paths] Freesurfer home dir:           [/home/slamballais/qdecr-example/freesurfer]
+[paths] Temp dir:                      [/dev/shm]
+[paths] Output dir:                    [/home/slamballais/qdecr-example/results/rh.age_sex.thickness]
+[paths] Path to default mask:          [/home/slamballais/R/x86_64-pc-linux-gnu-library/4.5/QDECR/extdata/rh.fsaverage.cortex.mask.mgh]
+[data ] N subjects:                    [99]
+[data ] N data points:                 [99]
+[data ] N datasets:                    [1]
+[data ] Vertices loaded:               [163842]
+[model] Model:                         [RcppEigen::fastLm]
+[model] Vertex data:                   [thickness]
+[model] Formula:                       [qdecr_thickness ~ age + sex]
+[model] Weights used:                  [No]
+[mask ] Mask origin:                   [/home/slamballais/R/x86_64-pc-linux-gnu-library/4.5/QDECR/extdata/rh.fsaverage.cortex.mask.mgh]
+[mask ] Masked vertices:               [149926]
+
+------------------------------------------------------------ 
+------------------- Vertex-wise analyses ------------------- 
+------------------------------------------------------------ 
+
+starting worker pid=1861 on localhost:11477 at 10:45:27.657
+starting worker pid=1862 on localhost:11477 at 10:45:27.671
+starting worker pid=1863 on localhost:11477 at 10:45:27.685
+starting worker pid=1864 on localhost:11477 at 10:45:27.697
+loaded QDECR and set parent environment
+loaded QDECR and set parent environment
+loaded QDECR and set parent environment
+loaded QDECR and set parent environment
+  |==============================================================================================================================================================================================| 100%
+
+Converting coefficients, p-values, etc to .mgh format
+Converting residual data to .mgh format
+
+------------------------------------------------------------ 
+------------------ Estimating smoothness ------------------- 
+------------------------------------------------------------ 
+
+Calculating smoothing for multiple testing correction.
+mris_fwhm --i /dev/shm/rh.age_sex.thickness_resid_backend.mgh --hemi rh --subject fsaverage --prune --cortex --dat /home/slamballais/qdecr-example/results/rh.age_sex.thickness/fwhm.dat --out-mask /home/slamballais/qdecr-example/results/rh.age_sex.thickness/finalMask.mgh
+fsaverage rh white
+Number of vertices 163842
+Number of faces    327680
+Total area         65020.855469
+GroupSurface 82167.578125
+AvgVtxArea       0.396851
+AvgVtxDist       0.717994
+StdVtxDist       0.193570
+Found 149926 voxels in mask
+Pruning voxels by thr: 1.175494e-38
+Saving final mask to /home/slamballais/qdecr-example/results/rh.age_sex.thickness/finalMask.mgh
+Polynomial detrending, order = 0
+Computing spatial AR1 
+ar1mn = 0.995951, ar1std = 0.00107468, ar1max = 0.999944
+avg vertex dist 0.717994
+avg vertex dist 0.717994
+fwhm = 14.920116
+
+------------------------------------------------------------ 
+------------------ Clusterwise correction ------------------ 
+------------------------------------------------------------ 
+
+csd->threshsign = 0
+thsign = abs, id = 0
+version 7.4.1
+hemi           = rh
+srcid          = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.p.mgh 
+srcsubjid      = fsaverage
+srcsurf        = white
+srcframe       = 0
+thsign         = abs
+thmin          = 3
+thmax          = -1
+fdr            = -1
+minarea        = 0
+xfmfile        = talairach.xfm
+nth         = -1
+outid    = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.cache.th30.abs.sig.masked.mgh MGH
+ocnid    = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.cache.th30.abs.sig.ocn.mgh MGH
+sumfile  = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.cache.th30.abs.sig.cluster.summary
+subjectsdir    = /home/slamballais/qdecr-example/subjects
+FixMNI = 0
+Found 149926 vertices in mask
+Found 149926 vertices in mask
+Found 149926 points in clabel.
+------------- XFM matrix (RAS2RAS) ---------------
+/home/slamballais/qdecr-example/subjects/fsaverage/mri/transforms/talairach.xfm
+ 1.00000   0.00000   0.00000   0.00000;
+ 0.00000   1.00000   0.00000   0.00000;
+ 0.00000   0.00000   1.00000   0.00000;
+ 0.00000   0.00000   0.00000   1.00000;
+mri_surfcluster supposed to be reproducible but seed not set
+----------------------------------------------------
+Reading source surface /home/slamballais/qdecr-example/subjects/fsaverage/surf/rh.white
+Done reading source surface
+Reading annotation /home/slamballais/qdecr-example/subjects/fsaverage/label/rh.aparc.annot
+Computing metric properties
+Loading source values
+number of voxels in search space = 149926
+Done loading source values (nvtxs = 163842)
+overall max = inf at vertex 16
+overall min = 0 at vertex 27
+surface nvertices 163842
+metric props tot surface area 65020.855469
+group_avg_vtxarea_loaded 1
+masked surface area 76330.593750
+Computing voxel-wise significance
+CSDpvalMaxSigMap(): found 149926/163842 above 0, max=inf
+NOT Adjusting threshold for 1-tailed test
+thminadj = 3
+Searching for Clusters ...
+thmin=3.000000 (3.000000), thmax=-1.000000 (-1), thsignid=0, minarea=0.000000
+Found 1 clusters
+Max cluster size 76330.593750
+Pruning by CW P-Value 0.025
+Saving thresholded output to  /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.cache.th30.abs.sig.masked.mgh
+Saving cluster numbers to /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.cache.th30.abs.sig.ocn.mgh
+Saving cluster pval /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.cache.th30.abs.sig.cluster.mgh
+Constructing output annotation
+Writing annotation /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack1.cache.th30.abs.sig.ocn.annot
+
+csd->threshsign = 0
+thsign = abs, id = 0
+version 7.4.1
+hemi           = rh
+srcid          = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.p.mgh 
+srcsubjid      = fsaverage
+srcsurf        = white
+srcframe       = 0
+thsign         = abs
+thmin          = 3
+thmax          = -1
+fdr            = -1
+minarea        = 0
+xfmfile        = talairach.xfm
+nth         = -1
+outid    = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.masked.mgh MGH
+ocnid    = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.ocn.mgh MGH
+sumfile  = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.cluster.summary
+subjectsdir    = /home/slamballais/qdecr-example/subjects
+FixMNI = 0
+Found 149926 vertices in mask
+Found 149926 vertices in mask
+Found 149926 points in clabel.
+------------- XFM matrix (RAS2RAS) ---------------
+/home/slamballais/qdecr-example/subjects/fsaverage/mri/transforms/talairach.xfm
+ 1.00000   0.00000   0.00000   0.00000;
+ 0.00000   1.00000   0.00000   0.00000;
+ 0.00000   0.00000   1.00000   0.00000;
+ 0.00000   0.00000   0.00000   1.00000;
+mri_surfcluster supposed to be reproducible but seed not set
+----------------------------------------------------
+Reading source surface /home/slamballais/qdecr-example/subjects/fsaverage/surf/rh.white
+Done reading source surface
+Reading annotation /home/slamballais/qdecr-example/subjects/fsaverage/label/rh.aparc.annot
+Computing metric properties
+Loading source values
+number of voxels in search space = 149926
+Done loading source values (nvtxs = 163842)
+overall max = 29.4569 at vertex 48870
+overall min = 0 at vertex 27
+surface nvertices 163842
+metric props tot surface area 65020.855469
+group_avg_vtxarea_loaded 1
+masked surface area 76330.593750
+Computing voxel-wise significance
+CSDpvalMaxSigMap(): found 124859/163842 above 0, max=inf
+NOT Adjusting threshold for 1-tailed test
+thminadj = 3
+Searching for Clusters ...
+thmin=3.000000 (3.000000), thmax=-1.000000 (-1), thsignid=0, minarea=0.000000
+Found 3 clusters
+Max cluster size 61169.425781
+Pruning by CW P-Value 0.025
+Saving thresholded output to  /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.masked.mgh
+Saving cluster numbers to /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.ocn.mgh
+Saving cluster pval /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.cluster.mgh
+Constructing output annotation
+Writing annotation /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.ocn.annot
+
+csd->threshsign = 0
+thsign = abs, id = 0
+version 7.4.1
+hemi           = rh
+srcid          = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.p.mgh 
+srcsubjid      = fsaverage
+srcsurf        = white
+srcframe       = 0
+thsign         = abs
+thmin          = 3
+thmax          = -1
+fdr            = -1
+minarea        = 0
+xfmfile        = talairach.xfm
+nth         = -1
+outid    = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.cache.th30.abs.sig.masked.mgh MGH
+ocnid    = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.cache.th30.abs.sig.ocn.mgh MGH
+sumfile  = /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.cache.th30.abs.sig.cluster.summary
+subjectsdir    = /home/slamballais/qdecr-example/subjects
+FixMNI = 0
+Found 149926 vertices in mask
+Found 149926 vertices in mask
+Found 149926 points in clabel.
+------------- XFM matrix (RAS2RAS) ---------------
+/home/slamballais/qdecr-example/subjects/fsaverage/mri/transforms/talairach.xfm
+ 1.00000   0.00000   0.00000   0.00000;
+ 0.00000   1.00000   0.00000   0.00000;
+ 0.00000   0.00000   1.00000   0.00000;
+ 0.00000   0.00000   0.00000   1.00000;
+mri_surfcluster supposed to be reproducible but seed not set
+----------------------------------------------------
+Reading source surface /home/slamballais/qdecr-example/subjects/fsaverage/surf/rh.white
+Done reading source surface
+Reading annotation /home/slamballais/qdecr-example/subjects/fsaverage/label/rh.aparc.annot
+Computing metric properties
+Loading source values
+number of voxels in search space = 149926
+Done loading source values (nvtxs = 163842)
+overall max = 4.41225 at vertex 34017
+overall min = 0 at vertex 27
+surface nvertices 163842
+metric props tot surface area 65020.855469
+group_avg_vtxarea_loaded 1
+masked surface area 76330.593750
+Computing voxel-wise significance
+CSDpvalMaxSigMap(): found 2196/163842 above 0, max=0.718285
+NOT Adjusting threshold for 1-tailed test
+thminadj = 3
+Searching for Clusters ...
+thmin=3.000000 (3.000000), thmax=-1.000000 (-1), thsignid=0, minarea=0.000000
+Found 6 clusters
+Max cluster size 107.459564
+Pruning by CW P-Value 0.025
+Saving thresholded output to  /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.cache.th30.abs.sig.masked.mgh
+Saving cluster numbers to /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.cache.th30.abs.sig.ocn.mgh
+Saving cluster pval /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.cache.th30.abs.sig.cluster.mgh
+Constructing output annotation
+Writing annotation /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack3.cache.th30.abs.sig.ocn.annot
+
+------------------------------------------------------------ 
+-------------- Calculating vertex-wise values -------------- 
+------------------------------------------------------------ 
+
+------------------------------------------------------------ 
+------------------- Summarizing results -------------------- 
+------------------------------------------------------------ 
+
+[input] Hemisphere:                          [rh]
+[input] Project name:                        [age_sex]
+[input] Project final name:                  [rh.age_sex.thickness]
+[input] Number of cores:                     [4]
+[input] Target:                              [fsaverage]
+[input] dir_out_tree:                        [TRUE]
+[input] clobber:                             [TRUE]
+[input] fwhm:                                [10]
+[paths] Subjects dir:                        [/home/slamballais/qdecr-example/subjects]
+[paths] Freesurfer home dir:                 [/home/slamballais/qdecr-example/freesurfer]
+[paths] Temp dir:                            [/dev/shm]
+[paths] Output dir:                          [/home/slamballais/qdecr-example/results/rh.age_sex.thickness]
+[paths] Path to default mask:                [/home/slamballais/R/x86_64-pc-linux-gnu-library/4.5/QDECR/extdata/rh.fsaverage.cortex.mask.mgh]
+[data ] N subjects:                          [99]
+[data ] N data points:                       [99]
+[data ] N datasets:                          [1]
+[data ] Vertices loaded:                     [163842]
+[model] Model:                               [RcppEigen::fastLm]
+[model] Vertex data:                         [thickness]
+[model] Formula:                             [qdecr_thickness ~ age + sex]
+[model] Weights used:                        [No]
+[mask ] Mask origin:                         [/home/slamballais/R/x86_64-pc-linux-gnu-library/4.5/QDECR/extdata/rh.fsaverage.cortex.mask.mgh]
+[mask ] Masked vertices:                     [149926]
+[stack] Stack 1:                             [(Intercept)]
+[stack] Stack 2:                             [age]
+[stack] Stack 3:                             [sexmale]
+[post ] Final mask path:                     [/home/slamballais/qdecr-example/results/rh.age_sex.thickness/finalMask.mgh]
+[post ] Final N vertices:                    [149926]
+[post ] Estimated fwhm:                      [15]
+[post ] Mean thickness per vertex:           [2.81898243747351]
+[post ] SD thickness per vertex:             [0.356125454690036]
+[post ] Mean thickness per subject:          [2.81898243747351]
+[post ] SD thickness per subject:            [0.529816856946839]
+Summarizing data for `(Intercept)`
+Summarizing data for `age`
+Summarizing data for `sexmale`
+Opening Freeview on the command line. Pop-up incoming.
+Call: freeview --surface /home/slamballais/qdecr-example/subjects/fsaverage/surf/rh.inflated:overlay=/dev/shm/rh.age_sex.thickness.stack2.temp_mgh.mgh:overlay_method=linearopaque:overlay_threshold=0.0077525582164526,0.0578029379248619 -cmd /dev/shm/tmp_snapshot_qdecr.txt 
+/dev/shm/tmp_snapshot_qdecr.txt contains: --viewport 3d --zoom 1 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.medial.tiff --camera Azimuth 180 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.lateral.tiff --camera Elevation 90 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.superior.tiff --camera Elevation 180 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.inferior.tiff --quit 
+ERROR: label name '3rd-Ventricle' is duplicated!
+ERROR: label name '3rd-Ventricle' is duplicated!
+CTABfindDuplicateNames: 1 duplicate names found in:
+  /tmp/FreeSurferColorLUT.txt
+Executing commands from /dev/shm/tmp_snapshot_qdecr.txt
+Opening Freeview on the command line. Pop-up incoming.
+Call: freeview --surface /home/slamballais/qdecr-example/subjects/fsaverage/surf/rh.inflated:overlay=/dev/shm/rh.age_sex.thickness.stack2.temp_mgh.mgh:overlay_method=linearopaque:overlay_threshold=3.29153752326965,11.4532842636108 -cmd /dev/shm/tmp_snapshot_qdecr.txt 
+/dev/shm/tmp_snapshot_qdecr.txt contains: --viewport 3d --zoom 1 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.medial.tiff --camera Azimuth 180 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.lateral.tiff --camera Elevation 90 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.superior.tiff --camera Elevation 180 --ss /home/slamballais/qdecr-example/results/rh.age_sex.thickness.stack2.inferior.tiff --quit 
+ERROR: label name '3rd-Ventricle' is duplicated!
+ERROR: label name '3rd-Ventricle' is duplicated!
+CTABfindDuplicateNames: 1 duplicate names found in:
+  /tmp/FreeSurferColorLUT.txt
+Executing commands from /dev/shm/tmp_snapshot_qdecr.txt
+No snapshot for rh.sexmale.coef: No information in the stack passed the threshold (i.e. `p_thr` was set too strict), aborting plot.
+
+rh: done in 62 s; 2 significant clusters.

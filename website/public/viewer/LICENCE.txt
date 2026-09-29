@@ -1,0 +1,10 @@
+The files in this directory are derived from ABIDE I, as preprocessed by the
+Preprocessed Connectomes Project, and carry that data's licence, CC BY-NC-SA 3.0,
+whatever the site's own.
+
+ABIDE: https://fcon_1000.projects.nitrc.org/indi/abide/
+  Di Martino A, Yan C-G, Li Q, et al. (2014). The autism brain imaging data exchange: towards a large-scale evaluation of the intrinsic brain architecture in autism. Molecular Psychiatry 19, 659-667. https://doi.org/10.1038/mp.2013.78
+PCP: http://preprocessed-connectomes-project.org/abide/
+  Craddock C, Benhajali Y, Chu C, et al. (2013). The Neuro Bureau Preprocessing Initiative: open sharing of preprocessed neuroimaging data and derivatives. Frontiers in Neuroinformatics, Neuroinformatics 2013. https://doi.org/10.3389/conf.fninf.2013.09.00041
+
+Primary support for the work by Adriana Di Martino was provided by the NIMH (K23MH087770) and the Leon Levy Foundation. Primary support for the work by Michael P. Milham and the INDI team was provided by gifts from Joseph P. Healy and the Stavros Niarchos Foundation to the Child Mind Institute, as well as by an NIMH award to MPM (R03MH096321).

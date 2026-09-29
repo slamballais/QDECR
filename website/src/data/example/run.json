@@ -1,0 +1,231 @@
+{
+  "date": "2026-09-29",
+  "dataset": {
+    "name": "ABIDE I, as preprocessed with FreeSurfer 5.1 by the Preprocessed Connectomes Project",
+    "site": "NYU",
+    "n": 99,
+    "sex": {
+      "female": 26,
+      "male": 73
+    },
+    "age": {
+      "min": 6.5,
+      "max": 31.8,
+      "mean": 15.7,
+      "median": 14.4
+    },
+    "excluded": [
+      {
+        "id": "NYU_0051071",
+        "reason": "anatomical scan failed the PCP quality check"
+      }
+    ]
+  },
+  "software": {
+    "qdecr": "0.9.0",
+    "r": "R version 4.5.2 (2025-10-31)",
+    "freesurfer": "freesurfer-linux-ubuntu22_x86_64-7.4.1-20230614-7eb8460",
+    "os": "Ubuntu 26.04 LTS",
+    "platform": "Windows Subsystem for Linux 2"
+  },
+  "model": {
+    "formula": "qdecr_thickness ~ age + sex",
+    "measure": "thickness",
+    "fwhm": 10,
+    "clusterFormingThreshold": 0.001,
+    "clusterwiseThreshold": 0.025,
+    "nCores": 4
+  },
+  "hemispheres": {
+    "lh": {
+      "project": "lh.age_sex.thickness",
+      "vertices": {
+        "loaded": 163842,
+        "analysed": 149953
+      },
+      "smoothness": 15,
+      "seconds": 60.8,
+      "stacks": [
+        {
+          "number": 1,
+          "name": "(Intercept)"
+        },
+        {
+          "number": 2,
+          "name": "age"
+        },
+        {
+          "number": 3,
+          "name": "sexmale"
+        }
+      ],
+      "clusters": [
+        {
+          "stack": "(Intercept)",
+          "cluster": 1,
+          "nVertices": 149953,
+          "sizeMm2": 76467.1,
+          "clusterwiseP": 0.0001,
+          "peak": {
+            "value": null,
+            "vertex": 2,
+            "region": "superiorfrontal"
+          },
+          "meanThickness": 2.806,
+          "meanCoefficient": 3.212,
+          "meanSe": 0.101,
+          "regions": [
+            {
+              "name": "superiorfrontal",
+              "ofCluster": 8.12,
+              "ofRegion": 100
+            },
+            {
+              "name": "precentral",
+              "ofCluster": 7.16,
+              "ofRegion": 100
+            },
+            {
+              "name": "superiorparietal",
+              "ofCluster": 6.97,
+              "ofRegion": 100
+            }
+          ]
+        },
+        {
+          "stack": "age",
+          "cluster": 1,
+          "nVertices": 113272,
+          "sizeMm2": 59037.4,
+          "clusterwiseP": 0.0001,
+          "peak": {
+            "value": 27.163,
+            "vertex": 31360,
+            "region": "inferiorparietal"
+          },
+          "meanThickness": 2.807,
+          "meanCoefficient": -0.02877,
+          "meanSe": 0.005052,
+          "regions": [
+            {
+              "name": "superiorfrontal",
+              "ofCluster": 9.87,
+              "ofRegion": 91.78
+            },
+            {
+              "name": "superiorparietal",
+              "ofCluster": 9.07,
+              "ofRegion": 98.25
+            },
+            {
+              "name": "inferiorparietal",
+              "ofCluster": 6.92,
+              "ofRegion": 99.63
+            }
+          ]
+        }
+      ]
+    },
+    "rh": {
+      "project": "rh.age_sex.thickness",
+      "vertices": {
+        "loaded": 163842,
+        "analysed": 149926
+      },
+      "smoothness": 15,
+      "seconds": 62.2,
+      "stacks": [
+        {
+          "number": 1,
+          "name": "(Intercept)"
+        },
+        {
+          "number": 2,
+          "name": "age"
+        },
+        {
+          "number": 3,
+          "name": "sexmale"
+        }
+      ],
+      "clusters": [
+        {
+          "stack": "(Intercept)",
+          "cluster": 1,
+          "nVertices": 149926,
+          "sizeMm2": 76330.6,
+          "clusterwiseP": 0.0001,
+          "peak": {
+            "value": null,
+            "vertex": 16,
+            "region": "posteriorcingulate"
+          },
+          "meanThickness": 2.814,
+          "meanCoefficient": 3.228,
+          "meanSe": 0.1006,
+          "regions": [
+            {
+              "name": "superiorfrontal",
+              "ofCluster": 7.92,
+              "ofRegion": 100
+            },
+            {
+              "name": "precentral",
+              "ofCluster": 7.14,
+              "ofRegion": 100
+            },
+            {
+              "name": "superiorparietal",
+              "ofCluster": 6.82,
+              "ofRegion": 100
+            }
+          ]
+        },
+        {
+          "stack": "age",
+          "cluster": 1,
+          "nVertices": 117846,
+          "sizeMm2": 61169.4,
+          "clusterwiseP": 0.0001,
+          "peak": {
+            "value": 29.457,
+            "vertex": 48870,
+            "region": "rostralmiddlefrontal"
+          },
+          "meanThickness": 2.815,
+          "meanCoefficient": -0.02918,
+          "meanSe": 0.005026,
+          "regions": [
+            {
+              "name": "superiorfrontal",
+              "ofCluster": 9.63,
+              "ofRegion": 95.59
+            },
+            {
+              "name": "superiorparietal",
+              "ofCluster": 8.67,
+              "ofRegion": 100
+            },
+            {
+              "name": "inferiorparietal",
+              "ofCluster": 7.94,
+              "ofRegion": 96.68
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "credit": {
+    "licence": "CC BY-NC-SA 3.0",
+    "abide": {
+      "url": "https://fcon_1000.projects.nitrc.org/indi/abide/",
+      "cite": "Di Martino A, Yan C-G, Li Q, et al. (2014). The autism brain imaging data exchange: towards a large-scale evaluation of the intrinsic brain architecture in autism. Molecular Psychiatry 19, 659-667. https://doi.org/10.1038/mp.2013.78"
+    },
+    "pcp": {
+      "url": "http://preprocessed-connectomes-project.org/abide/",
+      "cite": "Craddock C, Benhajali Y, Chu C, et al. (2013). The Neuro Bureau Preprocessing Initiative: open sharing of preprocessed neuroimaging data and derivatives. Frontiers in Neuroinformatics, Neuroinformatics 2013. https://doi.org/10.3389/conf.fninf.2013.09.00041"
+    },
+    "funding": "Primary support for the work by Adriana Di Martino was provided by the NIMH (K23MH087770) and the Leon Levy Foundation. Primary support for the work by Michael P. Milham and the INDI team was provided by gifts from Joseph P. Healy and the Stavros Niarchos Foundation to the Child Mind Institute, as well as by an NIMH award to MPM (R03MH096321)."
+  }
+}

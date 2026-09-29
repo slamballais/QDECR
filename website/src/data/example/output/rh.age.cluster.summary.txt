@@ -1,0 +1,42 @@
+# Cluster Growing Summary (mri_surfcluster)
+# 7.4.1
+# 7.4.1
+# CreationTime 2026/09/29-08:45:51-GMT
+# cmdline mri_surfcluster --in /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.p.mgh --csd /home/slamballais/qdecr-example/freesurfer/average/mult-comp-cor/fsaverage/rh/cortex/fwhm15/abs/th30/mc-z.csd --cwsig /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.cluster.mgh --vwsig /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.voxel.mgh --sum /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.cluster.summary --ocn /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.ocn.mgh --oannot /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.ocn.annot --annot aparc --cwpvalthresh 0.025 --o /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.cache.th30.abs.sig.masked.mgh --no-fixmni --surf white --mask /home/slamballais/qdecr-example/results/rh.age_sex.thickness/finalMask.mgh 
+# cwd /mnt/c/Users/lamba/Documents/claude/QDECR
+# sysname  Linux
+# hostname asusrogsander
+# machine  x86_64
+# FixVertexAreaFlag 1
+# FixSurfClusterArea 1
+# 
+# Input      /home/slamballais/qdecr-example/results/rh.age_sex.thickness/stack2.p.mgh
+# Frame Number      0
+# srcsubj fsaverage
+# hemi rh
+# surface white
+# group_avg_surface_area 82167.6
+# group_avg_vtxarea_loaded 1
+# annot aparc
+# SUBJECTS_DIR /home/slamballais/qdecr-example/subjects
+# SearchSpace_mm2 76330.6
+# SearchSpace_vtx 149926
+# Bonferroni 0
+# Minimum Threshold 3
+# Maximum Threshold infinity
+# Threshold Sign    abs
+# AdjustThreshWhenOneTail 1
+# CW PValue Threshold: 0.025 
+# Area Threshold    0 mm^2
+# CSD thresh  3.000000
+# CSD nreps    10000
+# CSD simtype  null-z
+# CSD contrast NA
+# CSD confint  90.000000
+# Overall max 29.4569 at vertex 48870
+# Overall min 0 at vertex 27
+# NClusters          1
+# FixMNI = 0
+# 
+# ClusterNo  Max   VtxMax   Size(mm^2)  MNIX   MNIY   MNIZ    CWP    CWPLow    CWPHi   NVtxs    WghtVtx   Annot
+   1       29.4569   48870  61169.43     23.5   53.2   11.8  0.00010  0.00000  0.00020  117846  1035078.56  rostralmiddlefrontal
