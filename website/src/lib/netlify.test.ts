@@ -115,6 +115,21 @@ test('the CSP allows this origin only and nothing inline', () => {
   }
 })
 
+test("images may be data: URLs, for the viewer, and nothing else is widened for it", () => {
+  const csp = headersFor('/*')['Content-Security-Policy'] ?? ''
+  const directive = (name: string) =>
+    csp
+      .split(';')
+      .map((part) => part.trim().split(/\s+/))
+      .find(([key]) => key === name)
+      ?.slice(1)
+  // NiiVue draws its font and its lighting from images it carries as data: URLs.
+  assert.deepEqual(directive('img-src'), ["'self'", 'data:'])
+  // Its WebGL needs nothing here, and it runs no workers: scripts stay as Pagefind needs.
+  assert.deepEqual(directive('script-src'), ["'self'", "'wasm-unsafe-eval'"])
+  assert.equal(directive('worker-src'), undefined)
+})
+
 test('the other security headers are set on every page', () => {
   const values = headersFor('/*')
   assert.equal(values['X-Frame-Options'], 'DENY')

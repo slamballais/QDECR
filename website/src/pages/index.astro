@@ -2,10 +2,11 @@
 // The home page: what QDECR is and who it is for, the install and a
 // first analysis, what it finds on real data, what it can do, and how to cite it. Every
 // result shown comes from the example analysis, read from run.json. The
-// poster will become an interactive viewer.
+// poster turns into a 3D viewer of the same map on request (Viewer.astro).
 import { Image, Picture } from 'astro:assets'
 import Base from '../layouts/Base.astro'
 import CodeBlock from '../components/CodeBlock.astro'
+import Viewer from '../components/Viewer.astro'
 import ExampleCredit from '../components/ExampleCredit.astro'
 import PaperReference from '../components/PaperReference.astro'
 import { site } from '../data/site'
@@ -112,17 +113,19 @@ const jsonLd = {
         </p>
       </div>
       <figure class="home-poster">
-        <Picture
-          src={posterImage}
-          formats={['avif', 'webp']}
-          widths={[480, 720, 960, 1400]}
-          sizes="(min-width: 60rem) 34rem, calc(100vw - 2rem)"
-          alt="The left hemisphere of the brain seen from the side, inflated so that the folds lie flat, coloured red to yellow over most of its surface."
-          loading="eager"
-          fetchpriority="high"
-        />
+        <Viewer scale={poster.scale}>
+          <Picture
+            src={posterImage}
+            formats={['avif', 'webp']}
+            widths={[480, 720, 960, 1400]}
+            sizes="(min-width: 60rem) 34rem, calc(100vw - 2rem)"
+            alt="The left hemisphere of the brain seen from the side, inflated so that the folds lie flat, coloured red to yellow over most of its surface."
+            loading="eager"
+            fetchpriority="high"
+          />
+        </Viewer>
         <figcaption>
-          Where the cortex thins with age, in {dataset.n} people aged {ages}: the left hemisphere's
+          Where the cortex thins with age, in {dataset.n} people aged {ages}: the <span data-viewer-hemi>left</span> hemisphere's
           significant cluster, red at p = 10<sup>−{poster.scale.from}</sup> and yellow from p =
           10<sup>−{poster.scale.to}</sup>. <a href="/tutorials/quick-start">The analysis</a>. <ExampleCredit />
         </figcaption>

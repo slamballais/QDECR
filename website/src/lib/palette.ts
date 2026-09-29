@@ -67,4 +67,6 @@ export const PAIRS: Pair[] = [
   { fg: '--heat', bg: '--surface', min: 3, where: 'the focus ring on a raised panel' },
   { fg: '--heat', bg: '--sunken', min: 3, where: 'the focus ring on a sunken panel' },
   { fg: '--heat', bg: '--code-bg', min: 3, where: 'the focus ring inside a code block' },
+  { fg: '--on-poster', bg: '--poster-bg', min: 4.5, where: "the home page viewer's button on the poster" },
+  { fg: '--heat', bg: '--poster-bg', min: 3, where: 'the focus ring on the poster and the 3D viewer' },
 ]

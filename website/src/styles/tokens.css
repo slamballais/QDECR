@@ -39,6 +39,11 @@
   --warn: #9a4700;
   --warn-bg: #fbe9d9;
 
+  /* The home page's poster and 3D viewer: Freeview draws on black, so the frame is black
+   * in both themes, and what sits on it is white. */
+  --poster-bg: #000000;
+  --on-poster: #ffffff;
+
   /* Code blocks sit on the logo's black in both themes, with the lattice and heat
    * colours for syntax, so a page of code reads as the same world as the logo. */
   --code-bg: #101317;
@@ -111,6 +116,8 @@
     --tip-bg: #11281f;
     --warn: #ffa35a;
     --warn-bg: #2c1c0e;
+    --poster-bg: #000000;
+    --on-poster: #ffffff;
     --code-bg: #050608;
     --code-ink: #e8e4da;
     --code-muted: #949ba4;
@@ -140,6 +147,8 @@
     --tip-bg: #11281f;
     --warn: #ffa35a;
     --warn-bg: #2c1c0e;
+    --poster-bg: #000000;
+    --on-poster: #ffffff;
     --code-bg: #050608;
     --code-ink: #e8e4da;
     --code-muted: #949ba4;

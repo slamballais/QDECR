@@ -180,13 +180,17 @@
 #
 # - script-src 'wasm-unsafe-eval': Pagefind's search runs as WebAssembly, which browsers
 #   treat as eval unless this allows it. It does not allow JavaScript eval.
+# - img-src data:: the home page's 3D viewer (NiiVue, bundled, loaded on request) draws
+#   its font and its lighting from images it carries inside its script as data: URLs. An
+#   image cannot run code, so this lets nothing else in. Its surfaces come from /viewer/,
+#   this origin, and it runs no workers, so nothing else is widened for it.
 # - The JSON-LD blocks are data, not scripts, and need nothing here.
 #
 # HSTS is set by Netlify itself.
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
