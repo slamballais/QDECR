@@ -1,0 +1,23 @@
+# The link check before a release (tools/qa/README.md). lychee reads the pages from the
+# local server (npm run serve), which answers as Netlify does, and checks every link on
+# them: those inside the site, anchors included, and those that leave it.
+
+# Links written as https://qdecr.com/... (the canonical links, the share cards) are
+# checked against the build being released, not the site that is live now.
+remap = ["^https://qdecr\\.com(/.*)?$ http://localhost:8888$1"]
+
+# An #anchor must exist on the page it points into.
+include_fragments = "anchor-only"
+
+# Publishers and Cloudflare-fronted sites (openalex.org) answer a client that is not a
+# browser with 403, however healthy the link. lychee cannot accept a status for some hosts
+# only, so this holds for every link; the site itself never answers 403, and a DOI that no
+# longer resolves is a 404 from doi.org, which still fails.
+accept = "200..=299, 403"
+
+# mailto: links name an address; there is nothing to fetch.
+exclude = ["^mailto:"]
+
+max_concurrency = 8
+timeout = 30
+max_retries = 2

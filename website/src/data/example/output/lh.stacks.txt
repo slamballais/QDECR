@@ -1,0 +1,1 @@
+[1] "(Intercept)" "age"         "sexmale"    

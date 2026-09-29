@@ -13,5 +13,5 @@ load.mgh(input.file)
 mgh object with data and various header elements
 }
 \description{
-Originally written by Heath Perdoe (09/12/2013)
+Originally written by Heath Pardoe (09/12/2013)
 }

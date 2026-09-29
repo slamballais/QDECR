@@ -48,7 +48,7 @@ qdecr_fastlm(
 
 \item{hemi}{hemisphere to analyze ("lh" or "rh")}
 
-\item{weights}{Optinal vector of weights for the observations. See `?lm`.}
+\item{weights}{Optional vector of weights for the observations. See `?lm`.}
 
 \item{dir_out}{the directory where to save the data to (defaults to the current directory)}
 

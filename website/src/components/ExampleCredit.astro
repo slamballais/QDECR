@@ -1,0 +1,9 @@
+---
+/**
+ * The credit every figure or number from the example data carries, for
+ * the .astro pages; src/lib/figures.ts adds the same to a Markdown figure's caption.
+ */
+import { EXAMPLE_CREDIT, EXAMPLE_LICENCE } from '../lib/example'
+---
+
+{`${EXAMPLE_CREDIT.text}, `}<a href={EXAMPLE_CREDIT.href}>{EXAMPLE_LICENCE}</a>.

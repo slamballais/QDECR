@@ -1,0 +1,30 @@
+---
+// The tutorials, in order, each with what it covers.
+import Docs from '../layouts/Docs.astro'
+import { guidePages, guideSidebar } from '../lib/guide'
+
+const pages = await guidePages()
+const tutorials = pages.filter((page) => page.tutorial)
+const start = pages.find((page) => page.id === 'get-started')
+---
+
+<Docs
+  title="Tutorials"
+  description="From a first analysis to the statistics behind it. The tutorials build on each other, but each stands on its own too."
+  source="src/pages/tutorials.astro"
+  section="Guide"
+  sidebar={{ label: 'Guide', groups: guideSidebar(pages) }}
+  prev={start}
+  next={tutorials[0]}
+>
+  <ol class="tutorial-list">
+    {
+      tutorials.map((page) => (
+        <li>
+          <a href={page.href}>{page.title}</a>
+          <p>{page.entry.data.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+</Docs>

@@ -1,0 +1,32 @@
+---
+// Search across the site, answered by Pagefind in the browser: `npm run build` indexes
+// the pages into dist/pagefind/ after Astro has written them, and src/scripts/search.ts
+// queries that index. Nothing leaves the site. The form works as a plain GET, so the
+// sidebar's search field and a bookmarked /search?q=... land here with the query filled in.
+//
+// Pagefind's own interface is not used: it brings its own look and sets inline styles,
+// which the CSP forbids.
+import Base from '../layouts/Base.astro'
+---
+
+<Base title="Search" description="Search the QDECR documentation." noindex>
+  <div class="shell search-page prose">
+    <h1>Search</h1>
+    <form class="search-form" action="/search" role="search">
+      <label for="search-query">Search the guide, the tutorials and the reference</label>
+      <div class="search-row">
+        <input id="search-query" type="search" name="q" autocomplete="off" spellcheck="false" />
+        <button class="button button-primary" type="submit">Search</button>
+      </div>
+    </form>
+    <p class="search-status muted" role="status" aria-live="polite"></p>
+    <ol class="search-results"></ol>
+    <noscript>
+      <p>Search runs in the browser and needs JavaScript. The guide's sidebar lists every page.</p>
+    </noscript>
+  </div>
+  {/* Inside <Base>: a script after it would be written after </html>, which is invalid. */}
+  <script>
+    import '../scripts/search'
+  </script>
+</Base>

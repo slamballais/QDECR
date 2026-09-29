@@ -1,0 +1,169 @@
+---
+// The home page's poster, which the reader can turn into a 3D viewer (step 7 of the
+// plan). The poster is the page: it loads first, and is all a reader without JavaScript or
+// WebGL 2 sees. "Explore in 3D" loads NiiVue and the surfaces only when pressed
+// (src/scripts/viewer.ts), and the viewer draws the poster's map, from the poster's side,
+// in the same frame, so nothing on the page moves when it takes over.
+//
+// The poster goes in the slot, and sets the frame's size: the viewer's canvas lies over it.
+// A caption naming the hemisphere can mark the name with data-viewer-hemi, and the
+// script keeps it to the hemisphere shown.
+import type { Scale } from '../lib/viewer'
+
+interface Props {
+  /** The poster's colour scale, in −log10(p), which the viewer draws with too. */
+  scale: Scale
+}
+
+const { scale } = Astro.props
+---
+
+<div class="viewer" data-viewer data-scale-from={scale.from} data-scale-to={scale.to}>
+  <div class="viewer-stage">
+    <slot />
+    <canvas
+      class="viewer-canvas"
+      role="img"
+      hidden
+      aria-label="The left hemisphere in 3D. Drag, or use the arrow keys, to turn it."></canvas>
+    <!-- Hidden until the script shows it, so a reader without JavaScript never meets a
+         control that does nothing. -->
+    <button type="button" class="viewer-open button" hidden>Explore in 3D</button>
+  </div>
+  <div class="viewer-controls" hidden>
+    <div class="viewer-group" role="group" aria-label="Hemisphere">
+      <button type="button" class="viewer-toggle" data-hemi="lh" aria-pressed="true">Left</button>
+      <button type="button" class="viewer-toggle" data-hemi="rh" aria-pressed="false">Right</button>
+    </div>
+    <div class="viewer-group" role="group" aria-label="Turn to">
+      <button type="button" class="viewer-toggle" data-side="lateral">Lateral</button>
+      <button type="button" class="viewer-toggle" data-side="medial">Medial</button>
+    </div>
+  </div>
+  <p class="viewer-status" role="status"></p>
+</div>
+
+<script>
+  import '../scripts/viewer'
+</script>
+
+<style>
+  /* The poster's own black is the frame, in both themes, and the poster its size. */
+  .viewer-stage {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-l);
+    background: var(--poster-bg);
+  }
+
+  .viewer-stage :global(img) {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  /* The canvas lies over the poster, which keeps the frame open once the viewer is live:
+   * hidden, not removed, so nothing on the page moves. */
+  .viewer-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .viewer-canvas:active {
+    cursor: grabbing;
+  }
+
+  .viewer-canvas:focus-visible {
+    outline-offset: -0.25rem;
+  }
+
+  .is-live .viewer-stage :global(img) {
+    visibility: hidden;
+  }
+
+  /* On the poster, in both themes: its own black and white. */
+  .viewer-open {
+    position: absolute;
+    right: var(--space-s);
+    bottom: var(--space-s);
+    border-color: var(--on-poster);
+    background: var(--poster-bg);
+    color: var(--on-poster);
+  }
+
+  .viewer-open:hover {
+    border-color: var(--on-poster);
+    background: var(--poster-bg);
+    color: var(--on-poster);
+    text-decoration: underline;
+  }
+
+  .viewer-open[aria-busy='true'] {
+    cursor: progress;
+  }
+
+  .viewer-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-m);
+    margin-top: var(--space-xs);
+  }
+
+  .viewer-controls[hidden] {
+    display: none;
+  }
+
+  /* Two buttons joined into one control. */
+  .viewer-group {
+    display: inline-flex;
+  }
+
+  .viewer-toggle {
+    min-width: var(--target);
+    min-height: var(--target);
+    padding: 0.25rem 0.9rem;
+    border: 0.0625rem solid var(--accent);
+    background: transparent;
+    color: var(--accent);
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .viewer-toggle:first-child {
+    border-radius: var(--radius) 0 0 var(--radius);
+  }
+
+  .viewer-toggle:last-child {
+    margin-left: -0.0625rem;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+
+  .viewer-toggle:hover {
+    background: var(--accent-soft);
+    color: var(--accent-strong);
+  }
+
+  .viewer-controls[aria-busy='true'] .viewer-toggle {
+    cursor: progress;
+  }
+
+  .viewer-toggle[aria-pressed='true'] {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .viewer-status {
+    margin: var(--space-2xs) 0 0;
+    color: var(--muted);
+    font-size: var(--size-small);
+  }
+
+  .viewer-status:empty {
+    display: none;
+  }
+</style>

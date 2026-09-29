@@ -1,0 +1,1123 @@
+{
+  "topics": [
+    {
+      "name": "as_mgh",
+      "slug": "as_mgh",
+      "aliases": [
+        "as_mgh"
+      ],
+      "exported": true,
+      "title": "Create an object that is structured like an mgh object",
+      "source": "R/io_mgh.R",
+      "description": "<p>Create an object that is structured like an mgh object</p>",
+      "usage": "as_mgh(\n  x,\n  v = NULL,\n  ndim1 = NULL,\n  ndim2 = NULL,\n  ndim3 = NULL,\n  nframes,\n  type,\n  dof\n)",
+      "arguments": [
+        {
+          "name": "x",
+          "html": "<p>the vertex-wise values</p>"
+        },
+        {
+          "name": "v",
+          "html": "<p>Version (default = 1)</p>"
+        },
+        {
+          "name": "ndim1",
+          "html": "<p>Width / 1st dimension</p>"
+        },
+        {
+          "name": "ndim2",
+          "html": "<p>Height / 2nd dimension</p>"
+        },
+        {
+          "name": "ndim3",
+          "html": "<p>Depth / 3rd dimension</p>"
+        },
+        {
+          "name": "nframes",
+          "html": "<p>Number of scalar components</p>"
+        },
+        {
+          "name": "type",
+          "html": "<p>Data type, can be UCHAR (0), SHORT (4), INT (1) or FLOAT (3)</p>"
+        },
+        {
+          "name": "dof",
+          "html": "<p>Degrees of freedom</p>"
+        }
+      ],
+      "value": null,
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "bsfbm2mgh",
+      "slug": "bsfbm2mgh",
+      "aliases": [
+        "bsfbm2mgh"
+      ],
+      "exported": true,
+      "title": "Save out an MGH file from a big matrix",
+      "source": "R/io_mgh.R",
+      "description": "<p>Modified version of save_mgh.m (by Heath Pardoe, 09/12/2013)</p>",
+      "usage": "bsfbm2mgh(fbm, fname, filter = NULL)",
+      "arguments": [
+        {
+          "name": "fbm",
+          "html": "<p>a file backed matrix</p>"
+        },
+        {
+          "name": "fname",
+          "html": "<p>file name to be used to save out the data</p>"
+        },
+        {
+          "name": "filter",
+          "html": "<p>a vector of indices of rows to include of fbm</p>"
+        }
+      ],
+      "value": null,
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "fbm_functions_from_qdecr",
+      "slug": "fbm_functions_from_qdecr",
+      "aliases": [
+        "fbm_functions_from_qdecr",
+        "fbm_row_mean",
+        "fbm_col_mean",
+        "fbm_row_is_0",
+        "fbm_col_is_0",
+        "fbm_row_sum",
+        "fbm_col_sum",
+        "fbm_row_sd",
+        "fbm_col_sd"
+      ],
+      "exported": true,
+      "title": "fbm functions from qdecr",
+      "source": "R/FBM_functions.R",
+      "description": "<p>fbm functions from qdecr</p>",
+      "usage": "fbm_row_mean(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)\n\nfbm_col_mean(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)\n\nfbm_row_is_0(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)\n\nfbm_col_is_0(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)\n\nfbm_row_sum(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)\n\nfbm_col_sum(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)\n\nfbm_row_sd(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)\n\nfbm_col_sd(\n  X,\n  ncores = 1,\n  row.ind = bigstatsr::rows_along(X),\n  col.ind = bigstatsr::cols_along(X),\n  row.mask = NULL,\n  col.mask = NULL\n)",
+      "arguments": [
+        {
+          "name": "X",
+          "html": "<p>the FBM (file-backed matrix) object</p>"
+        },
+        {
+          "name": "ncores",
+          "html": "<p>the number of cores to be used</p>"
+        },
+        {
+          "name": "row.ind",
+          "html": "<p>the rows to go over (by default, it goes over all rows)</p>"
+        },
+        {
+          "name": "col.ind",
+          "html": "<p>the columns to go over (by default, it goes over all columns)</p>"
+        },
+        {
+          "name": "row.mask",
+          "html": "<p>a separate mask for the rows (added because this was useful internally)</p>"
+        },
+        {
+          "name": "col.mask",
+          "html": "<p>a separate mask for the columns (added because this was useful internally)</p>"
+        }
+      ],
+      "value": "<p>an mgh object of the corresponding map</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "formula.vw_fastlm",
+      "slug": "formula-vw_fastlm",
+      "aliases": [
+        "formula.vw_fastlm"
+      ],
+      "exported": true,
+      "title": "Grabs the formula from qdecr_fastlm output",
+      "source": "R/summarizing.R",
+      "description": "<p>Grabs the formula from qdecr_fastlm output</p>",
+      "usage": "## S3 method for class 'vw_fastlm'\nformula(x, ...)",
+      "arguments": [
+        {
+          "name": "x",
+          "html": "<p>The output object of a qdecr_fastlm call</p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>Further arguments for <code>formula</code></p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>See above.</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "freeview",
+      "slug": "freeview",
+      "aliases": [
+        "freeview"
+      ],
+      "exported": true,
+      "title": "Opens Freeview",
+      "source": "R/plotting.R",
+      "description": "<p>Opens Freeview to view the surface of a specific stack/contrast</p>",
+      "usage": "freeview(vw, stack = NULL, type = c(\"coef\", \"se\", \"t\", \"p\"), sig = TRUE, ...)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>The output object of a qdecr call (e.g. qdecr_fastlm)</p>"
+        },
+        {
+          "name": "stack",
+          "html": "<p>Either a numeric or a string for your variable (use <code>stacks(vw)</code>)</p>"
+        },
+        {
+          "name": "type",
+          "html": "<p>The type of map to plot (currently for OLS). Default is <code>coef</code>, others are <code>se</code>, <code>t</code> and <code>p</code></p>"
+        },
+        {
+          "name": "sig",
+          "html": "<p>Logical; if TRUE (default), only the significant clusters are shown</p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>any arguments that freeview (on command line) normally takes for manipulating surface files</p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>This function directly calls Freeview so that you can view the surface of a specific variable. As it opens Freeview directly, you will have access to all the functions of Freeview by default. To continue using R, simply close Freeview.</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "hist.vw",
+      "slug": "hist-vw",
+      "aliases": [
+        "hist.vw"
+      ],
+      "exported": true,
+      "title": "Histograms of the vertex measures",
+      "source": "R/plotting.R",
+      "description": "<p>Plots a histogram of the mean vertex measure, either by vertex or by subject</p>",
+      "usage": "## S3 method for class 'vw'\nhist(x, qtype = c(\"vertex\", \"subject\"), xlab = NULL, main = NULL, ...)",
+      "arguments": [
+        {
+          "name": "x",
+          "html": "<p>The output object of a qdecr call (e.g. qdecr_fastlm)</p>"
+        },
+        {
+          "name": "qtype",
+          "html": "<p>A string; either \"vertex\" for vertex-wise means, or \"subject\" for subject-wise means</p>"
+        },
+        {
+          "name": "xlab",
+          "html": "<p>See <code>?hist</code></p>"
+        },
+        {
+          "name": "main",
+          "html": "<p>see <code>?hist</code></p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>Further arguments for <code>hist</code></p>"
+        }
+      ],
+      "value": "<p>see <code>?hist</code></p>",
+      "details": "<p>This function works on top of the base <code>hist</code> function. It simply makes a histogram of the mean vertex values either per vertex or per subject (if you specify <code>qtype = \"subject\"</code>)</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "imp2list",
+      "slug": "imp2list",
+      "aliases": [
+        "imp2list"
+      ],
+      "exported": true,
+      "title": "Convert imputation output to list",
+      "source": "R/imp2list.R",
+      "description": "<p>Converts known imputation objects containing datasets to a <code>list</code> of datasets</p>",
+      "usage": "imp2list(obj)",
+      "arguments": [
+        {
+          "name": "obj",
+          "html": "<p>The imputation object that contains the imputed datasets</p>"
+        }
+      ],
+      "value": "<p>Outputs a list of imputed datasets</p>",
+      "details": "<p>This function attempts to unify imputation object formats in supplying datasets. This is done by extracting the imputed datasets from the imputation object and assembling them into a <code>list</code>. If an unknown object is supplied, the function will throw an error with the request to supply a list of data frames instead.</p>",
+      "sections": [],
+      "note": null,
+      "author": "<p>Sander Lamballais, 2018.</p>",
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "load.annot",
+      "slug": "load-annot",
+      "aliases": [
+        "load.annot"
+      ],
+      "exported": true,
+      "title": "Load an .annot file into memory",
+      "source": "R/io_mgh.R",
+      "description": "<p>Load an .annot file into memory</p>",
+      "usage": "load.annot(input.file)",
+      "arguments": [
+        {
+          "name": "input.file",
+          "html": "<p>full path to the .annot file</p>"
+        }
+      ],
+      "value": "<p>annot object with data and various header elements</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "load.mgh",
+      "slug": "load-mgh",
+      "aliases": [
+        "load.mgh"
+      ],
+      "exported": true,
+      "title": "Load an MGH file into memory",
+      "source": "R/io_mgh.R",
+      "description": "<p>Originally written by Heath Pardoe (09/12/2013)</p>",
+      "usage": "load.mgh(input.file)",
+      "arguments": [
+        {
+          "name": "input.file",
+          "html": "<p>full path to the mgh file</p>"
+        }
+      ],
+      "value": "<p>mgh object with data and various header elements</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "nobs.vw_fastlm",
+      "slug": "nobs-vw_fastlm",
+      "aliases": [
+        "nobs.vw_fastlm"
+      ],
+      "exported": true,
+      "title": "Grabs the number of included participants from qdecr_fastlm output",
+      "source": "R/summarizing.R",
+      "description": "<p>Grabs the number of included participants from qdecr_fastlm output</p>",
+      "usage": "## S3 method for class 'vw_fastlm'\nnobs(object, ...)",
+      "arguments": [
+        {
+          "name": "object",
+          "html": "<p>The output object of a qdecr analysis call</p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>Further arguments for <code>nobs</code></p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>See above.</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "print.vw",
+      "slug": "print-vw",
+      "aliases": [
+        "print.vw"
+      ],
+      "exported": true,
+      "title": "Print for vw objects",
+      "source": "R/summarizing.R",
+      "description": "<p>Prints a nicely formatted output for vw objects</p>",
+      "usage": "## S3 method for class 'vw'\nprint(x, ...)",
+      "arguments": [
+        {
+          "name": "x",
+          "html": "<p>The output object of a qdecr analysis call</p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>Further arguments for <code>print</code></p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>This is a standard print format for output of qdecr functions</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr",
+      "slug": "qdecr",
+      "aliases": [
+        "qdecr"
+      ],
+      "exported": false,
+      "title": "Run vertex-wise analyses",
+      "source": "R/qdecr.R",
+      "description": "<p>Runs vertex-wise analyses using a variety of statistical models</p>",
+      "usage": "qdecr(\n  id,\n  data,\n  vertex = \"qdecr\",\n  margs = NULL,\n  model = c(\"stats::lm\", \"QDECR::megha\", \"RcppEigen::fastLm\", \"stats::glm\",\n    \"survival::coxph\", \"default\"),\n  target = \"fsaverage\",\n  hemi = c(\"lh\", \"rh\"),\n  measure = c(\"thickness\", \"area\", \"area.pial\", \"curv\", \"jacobian_white\", \"pial\",\n    \"pial_lgi\", \"sulc\", \"volume\", \"w_g.pct\", \"white.H\", \"white.K\"),\n  fwhm = ifelse(measure == \"pial_lgi\", 5, 10),\n  mcz_thr = 0.001,\n  cwp_thr = 0.025,\n  mgh = NULL,\n  mask = NULL,\n  mask_path = system.file(\"extdata\", paste0(hemi, \".fsaverage.cortex.mask.mgh\"),\n    package = \"QDECR\"),\n  project,\n  dir_subj = Sys.getenv(\"SUBJECTS_DIR\"),\n  dir_fshome = Sys.getenv(\"FREESURFER_HOME\"),\n  dir_tmp = dir_out,\n  dir_out,\n  dir_out_tree = TRUE,\n  file_out_tree = !dir_out_tree,\n  clean_up = TRUE,\n  clean_up_bm = TRUE,\n  clobber = FALSE,\n  verbose = TRUE,\n  debug = FALSE,\n  n_cores = 1,\n  prep_fun = \"prep_fastlm\",\n  analysis_fun = \"analysis_chunkedlm\",\n  chunk_size = 1000\n)",
+      "arguments": [
+        {
+          "name": "id",
+          "html": "<p>the name of the id variable that matches the dataset to the Freesurfer output</p>"
+        },
+        {
+          "name": "data",
+          "html": "<p>a required argument that contains a data frame, a list of data frames or an imputed object that is supported by the <code>imp2list</code> function (mice, mi, etc.).</p>"
+        },
+        {
+          "name": "vertex",
+          "html": "<p>the preposition to the vertex measure (default: \"qdecr_\")</p>"
+        },
+        {
+          "name": "margs",
+          "html": "<p>the arguments that should be provided to the function of interest (e.g. stats::lm)</p>"
+        },
+        {
+          "name": "model",
+          "html": "<p>the function to grab the arguments from (this will be removed in a later version)</p>"
+        },
+        {
+          "name": "target",
+          "html": "<p>the target template (default = \"fsaverage\")</p>"
+        },
+        {
+          "name": "hemi",
+          "html": "<p>hemisphere to analyze (\"lh\" or \"rh\")</p>"
+        },
+        {
+          "name": "measure",
+          "html": "<p>the vertex-wise measure to use (\"thickness\", \"area\", etc.)</p>"
+        },
+        {
+          "name": "fwhm",
+          "html": "<p>full width half max (default = 10 mm, for pial_lgi it is 5 mm)</p>"
+        },
+        {
+          "name": "mcz_thr",
+          "html": "<p>A numeric value for the Monte Carlo simulation threshold (default: 0.001). Any of the following are accepted (equivalent values separate by <code>/</code>): 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.</p>"
+        },
+        {
+          "name": "cwp_thr",
+          "html": "<p>the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)</p>"
+        },
+        {
+          "name": "mgh",
+          "html": "<p>NOT IMPLEMENTED; path to existing merged mgh file, default is NULL</p>"
+        },
+        {
+          "name": "mask",
+          "html": "<p>mgh file to mask analysis; default is to use the cortex label from the target</p>"
+        },
+        {
+          "name": "mask_path",
+          "html": "<p>path to the mask; default is the cortex mask that is provided with the QDECR package</p>"
+        },
+        {
+          "name": "project",
+          "html": "<p>the base name you want to assign to the output files</p>"
+        },
+        {
+          "name": "dir_subj",
+          "html": "<p>directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR</p>"
+        },
+        {
+          "name": "dir_fshome",
+          "html": "<p>Freesurfer directory; defaults to FREESURFER_HOME</p>"
+        },
+        {
+          "name": "dir_tmp",
+          "html": "<p>directory to store the temporary big matrices; useful for shared memory; defaults to <code>dir_out</code></p>"
+        },
+        {
+          "name": "dir_out",
+          "html": "<p>the directory where to save the data to (defaults to the current directory)</p>"
+        },
+        {
+          "name": "dir_out_tree",
+          "html": "<p>if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out</p>"
+        },
+        {
+          "name": "file_out_tree",
+          "html": "<p>if TRUE, adds the full project name to the output file names. By default it is the inverse of dir_out_tree</p>"
+        },
+        {
+          "name": "clean_up",
+          "html": "<p>NOT IMPLEMENTED; will be used for setting cleaning of other files</p>"
+        },
+        {
+          "name": "clean_up_bm",
+          "html": "<p>if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp</p>"
+        },
+        {
+          "name": "clobber",
+          "html": "<p>if TRUE, ignores already existing directories and writes over them; if FALSE, stops and warns user that a given directory already exists</p>"
+        },
+        {
+          "name": "verbose",
+          "html": "<p>if TRUE, writes out standard log; if FALSE, no output is generated</p>"
+        },
+        {
+          "name": "debug",
+          "html": "<p>NOT IMPLEMENTED; will output the maximal log to allow for easy debugging</p>"
+        },
+        {
+          "name": "n_cores",
+          "html": "<p>the number of cores to be used</p>"
+        },
+        {
+          "name": "prep_fun",
+          "html": "<p>Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)</p>"
+        },
+        {
+          "name": "analysis_fun",
+          "html": "<p>Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)</p>"
+        },
+        {
+          "name": "chunk_size",
+          "html": "<p>Integer; the desired chunk size for the chunked lm</p>"
+        }
+      ],
+      "value": "<p>out</p>",
+      "details": "<p>This function is the worker function of the <code>QDECR</code> package. It allows .mgh format data as input and allows statistical analyses per vertex. A variety of statistical models have been implemented, such as linear regression.</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr_fastlm",
+      "slug": "qdecr_fastlm",
+      "aliases": [
+        "qdecr_fastlm"
+      ],
+      "exported": true,
+      "title": "Vertex-wise linear regression",
+      "source": "R/qdecr_fastlm.R",
+      "description": "<p>Vertex-wise linear regression</p>",
+      "usage": "qdecr_fastlm(\n  formula,\n  data,\n  id,\n  hemi,\n  weights = NULL,\n  dir_out = getwd(),\n  project,\n  n_cores = 1,\n  target = \"fsaverage\",\n  fwhm = ifelse(measure == \"pial_lgi\", 5, 10),\n  mcz_thr = 0.001,\n  cwp_thr = 0.025,\n  mgh = NULL,\n  mask = NULL,\n  mask_path = system.file(\"extdata\", paste0(hemi, \".fsaverage.cortex.mask.mgh\"),\n    package = \"QDECR\"),\n  dir_subj = Sys.getenv(\"SUBJECTS_DIR\"),\n  dir_fshome = Sys.getenv(\"FREESURFER_HOME\"),\n  dir_tmp = dir_out,\n  dir_out_tree = TRUE,\n  file_out_tree = !dir_out_tree,\n  clean_up_bm = TRUE,\n  clean_up = TRUE,\n  clobber = FALSE,\n  verbose = TRUE,\n  save = TRUE,\n  save_data = TRUE,\n  debug = FALSE,\n  custom_measure = NULL,\n  prep_fun = \"prep_fastlm\",\n  analysis_fun = \"analysis_chunkedlm\",\n  chunk_size = 1000\n)",
+      "arguments": [
+        {
+          "name": "formula",
+          "html": "<p>an object of class \"formula\" (or one that can be coerced to that class): a symbolic description of the model to be fitted. See <code>?lm</code>.</p>"
+        },
+        {
+          "name": "data",
+          "html": "<p>a required argument that contains a data frame, a list of data frames or an imputed object that is supported by the <code>imp2list</code> function (mice, mi, etc.).</p>"
+        },
+        {
+          "name": "id",
+          "html": "<p>the name of the id variable that matches the dataset to the Freesurfer output</p>"
+        },
+        {
+          "name": "hemi",
+          "html": "<p>hemisphere to analyze (\"lh\" or \"rh\")</p>"
+        },
+        {
+          "name": "weights",
+          "html": "<p>Optional vector of weights for the observations. See <code>?lm</code>.</p>"
+        },
+        {
+          "name": "dir_out",
+          "html": "<p>the directory where to save the data to (defaults to the current directory)</p>"
+        },
+        {
+          "name": "project",
+          "html": "<p>the base name you want to assign to the output files</p>"
+        },
+        {
+          "name": "n_cores",
+          "html": "<p>the number of cores to be used</p>"
+        },
+        {
+          "name": "target",
+          "html": "<p>the target template (default = \"fsaverage\")</p>"
+        },
+        {
+          "name": "fwhm",
+          "html": "<p>full width half max (default = 10 mm, for pial_lgi it is 5 mm)</p>"
+        },
+        {
+          "name": "mcz_thr",
+          "html": "<p>A numeric value for the Monte Carlo simulation threshold (default: 0.001). Any of the following are accepted (equivalent values separate by <code>/</code>): 13/1.3/0.05, 20/2.0/0.01, 23/2.3/0.005, 30/3.0/0.001, 33/3.3/0.0005, 40/4.0/0.0001.</p>"
+        },
+        {
+          "name": "cwp_thr",
+          "html": "<p>the cluster-wise p-value threshold on top of all correction (default = 0.025, as there are 2 hemispheres)</p>"
+        },
+        {
+          "name": "mgh",
+          "html": "<p>NOT IMPLEMENTED; path to existing merged mgh file, default is NULL</p>"
+        },
+        {
+          "name": "mask",
+          "html": "<p>mgh file to mask analysis; default is to use the cortex label from the target</p>"
+        },
+        {
+          "name": "mask_path",
+          "html": "<p>path to the mask; default is the cortex mask that is provided with the QDECR package</p>"
+        },
+        {
+          "name": "dir_subj",
+          "html": "<p>directory contain the surface-based maps (mgh files); defaults to SUBJECTS_DIR</p>"
+        },
+        {
+          "name": "dir_fshome",
+          "html": "<p>Freesurfer directory; defaults to FREESURFER_HOME</p>"
+        },
+        {
+          "name": "dir_tmp",
+          "html": "<p>directory to store the temporary big matrices; useful for shared memory; defaults to <code>dir_out</code></p>"
+        },
+        {
+          "name": "dir_out_tree",
+          "html": "<p>if TRUE, creates a dir_out/project directory. If FALSE, all output is placed directory into dir_out</p>"
+        },
+        {
+          "name": "file_out_tree",
+          "html": "<p>if TRUE, adds the full project name to the output file names. By default it is the inverse of dir_out_tree</p>"
+        },
+        {
+          "name": "clean_up_bm",
+          "html": "<p>if TRUE, cleans all big matrices (.bk) that were generated in dir_tmp</p>"
+        },
+        {
+          "name": "clean_up",
+          "html": "<p>NOT IMPLEMENTED; will be used for setting cleaning of other files</p>"
+        },
+        {
+          "name": "clobber",
+          "html": "<p>if TRUE, ignores already existing directories and writes over them; if FALSE, stops and warns user that a given directory already exists</p>"
+        },
+        {
+          "name": "verbose",
+          "html": "<p>if TRUE, writes out standard log; if FALSE, no output is generated</p>"
+        },
+        {
+          "name": "save",
+          "html": "<p>if TRUE, saves the output to a .rds file</p>"
+        },
+        {
+          "name": "save_data",
+          "html": "<p>if TRUE, includes the raw data + design matrices in the .rds file</p>"
+        },
+        {
+          "name": "debug",
+          "html": "<p>NOT IMPLEMENTED; will output the maximal log to allow for easy debugging</p>"
+        },
+        {
+          "name": "custom_measure",
+          "html": "<p>a string that starts with \"qdecr_\" followed by the name of a surface file that is not created by FreeSurfer by default (e.g. \"qdecr_cc\" or \"qdecr_test\"). Note that the surface files MUST be located in the surf subdirectory of each individual's FreeSurfer output, and the files must follow the naming conventions of the other .mgh files (e.g. \"lh.test.fwhm10.fsaverage.mgh\")</p>"
+        },
+        {
+          "name": "prep_fun",
+          "html": "<p>Name of the function that needs to be called for the preparation step (do not touch unless you know what you are doing!)</p>"
+        },
+        {
+          "name": "analysis_fun",
+          "html": "<p>Name of the function that needs to be called for the analysis step (do not touch unless you know what you are doing!)</p>"
+        },
+        {
+          "name": "chunk_size",
+          "html": "<p>Integer; the desired chunk size for the chunked lm</p>"
+        }
+      ],
+      "value": "<p>returns an object of classes \"vw_fastlm\" and \"vw\".</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr_fwhm",
+      "slug": "qdecr_fwhm",
+      "aliases": [
+        "qdecr_fwhm"
+      ],
+      "exported": true,
+      "title": "Grabs the estimated fwhm from qdecr_fastlm output",
+      "source": "R/summarizing.R",
+      "description": "<p>Grabs the estimated fwhm from qdecr_fastlm output</p>",
+      "usage": "qdecr_fwhm(vw)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>The output object of a qdecr analysis call</p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>See above.</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr_load",
+      "slug": "qdecr_load",
+      "aliases": [
+        "qdecr_load"
+      ],
+      "exported": true,
+      "title": "Loads files associated with QDECR projects",
+      "source": "R/qdecr_load.R",
+      "description": "<p>Loads files associated with QDECR projects</p>",
+      "usage": "qdecr_load(path, reload = FALSE)",
+      "arguments": [
+        {
+          "name": "path",
+          "html": "<p>Either the path to the directory, or a direct path to the associated .rds file</p>"
+        },
+        {
+          "name": "reload",
+          "html": "<p>If TRUE, also reloads the vertex-wise matrix (which is HUGE!); default is FALSE</p>"
+        }
+      ],
+      "value": "<p>Object of class \"vw\" that was generated by the respective analysis.</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr_prep_mgh",
+      "slug": "qdecr_prep_mgh",
+      "aliases": [
+        "qdecr_prep_mgh"
+      ],
+      "exported": false,
+      "title": "Combine all MGH files into one object",
+      "source": "R/io_mgh.R",
+      "description": "<p>Combine all MGH files into one object</p>",
+      "usage": "qdecr_prep_mgh(\n  input_path,\n  files_list = list.files(input_path),\n  mask,\n  hemi,\n  measure,\n  fwhmc,\n  target,\n  n_cores,\n  dir_tmp,\n  project,\n  backing,\n  verbose\n)",
+      "arguments": [
+        {
+          "name": "input_path",
+          "html": "<p>path to parent directory</p>"
+        },
+        {
+          "name": "files_list",
+          "html": "<p>file names within <code>input.list</code></p>"
+        },
+        {
+          "name": "mask",
+          "html": "<p>mask to be used in later steps (i.e. analysis)</p>"
+        },
+        {
+          "name": "hemi",
+          "html": "<p>\"lh\" or \"rh\"</p>"
+        },
+        {
+          "name": "measure",
+          "html": "<p>vertex measure (e.g. \"thickness\")</p>"
+        },
+        {
+          "name": "fwhmc",
+          "html": "<p>the fwhm value in full notation (i.e. 20, 23, 30, etc)</p>"
+        },
+        {
+          "name": "target",
+          "html": "<p>the target template (usually \"fsaverage\")</p>"
+        },
+        {
+          "name": "n_cores",
+          "html": "<p>the number of cores to be used</p>"
+        },
+        {
+          "name": "dir_tmp",
+          "html": "<p>directory to store the temporary big matrices; useful for shared memory; defaults to <code>dir_out</code></p>"
+        },
+        {
+          "name": "project",
+          "html": "<p>the base name you want to assign to the output files</p>"
+        },
+        {
+          "name": "backing",
+          "html": "<p>the path to the backing file</p>"
+        },
+        {
+          "name": "verbose",
+          "html": "<p>if TRUE, writes out standard log; if FALSE, no output is generated</p>"
+        }
+      ],
+      "value": "<p>matrix with vertex data (columns) for each file (rows)</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr_read",
+      "slug": "qdecr_read",
+      "aliases": [
+        "qdecr_read",
+        "qdecr_read_ocn",
+        "qdecr_read_ocn_mask",
+        "qdecr_read_coef",
+        "qdecr_read_p",
+        "qdecr_read_t",
+        "qdecr_read_se"
+      ],
+      "exported": true,
+      "title": "qdecr_read function family",
+      "source": "R/qdecr_read.R",
+      "description": "<p>qdecr_read function family</p>",
+      "usage": "qdecr_read_ocn(vw, stack)\n\nqdecr_read_ocn_mask(vw, stack)\n\nqdecr_read_coef(vw, stack)\n\nqdecr_read_p(vw, stack)\n\nqdecr_read_t(vw, stack)\n\nqdecr_read_se(vw, stack)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>Output object from a qdecr analysis</p>"
+        },
+        {
+          "name": "stack",
+          "html": "<p>stack number of name of the stack of interest</p>"
+        }
+      ],
+      "value": "<p>an mgh object of the corresponding map</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr_save",
+      "slug": "qdecr_save",
+      "aliases": [
+        "qdecr_save"
+      ],
+      "exported": true,
+      "title": "Saves \"vw\" objects from the QDECR package",
+      "source": "R/qdecr_save.R",
+      "description": "<p>Saves \"vw\" objects from the QDECR package</p>",
+      "usage": "qdecr_save(vw, ...)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>Object of class \"vw\". Potentially other classes related to specific methods, e.g. \"vw_fastlm\"</p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>other arguments</p>"
+        }
+      ],
+      "value": null,
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "qdecr_snap",
+      "slug": "qdecr_snap",
+      "aliases": [
+        "qdecr_snap"
+      ],
+      "exported": true,
+      "title": "Opens Freeview to take snapshots",
+      "source": "R/plotting.R",
+      "description": "<p>Opens Freeview to take snapshots and compiles them into a plot</p>",
+      "usage": "qdecr_snap(\n  vw,\n  stack = NULL,\n  type = c(\"coef\", \"se\", \"t\", \"p\"),\n  ext = \".tiff\",\n  zoom = 1,\n  compose = TRUE,\n  plot_brain = TRUE,\n  save_plot = TRUE,\n  sig = TRUE,\n  ...\n)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>The output object of a qdecr call (e.g. qdecr_fastlm)</p>"
+        },
+        {
+          "name": "stack",
+          "html": "<p>Either a numeric or a string for your variable (use <code>stacks(vw)</code>)</p>"
+        },
+        {
+          "name": "type",
+          "html": "<p>The type of map to plot (currently for OLS). Default is <code>coef</code>, others are <code>se</code>, <code>t</code> and <code>p</code></p>"
+        },
+        {
+          "name": "ext",
+          "html": "<p>Extension of the image files that will be stored on disk</p>"
+        },
+        {
+          "name": "zoom",
+          "html": "<p>Float that determines how far the brains are zoomed in</p>"
+        },
+        {
+          "name": "compose",
+          "html": "<p>Logical; if TRUE, a single compiled image will be made (requires Magick++)</p>"
+        },
+        {
+          "name": "plot_brain",
+          "html": "<p>Logical; if TRUE, returns a graphical device with the composed images</p>"
+        },
+        {
+          "name": "save_plot",
+          "html": "<p>Logical; if TRUE, saves the composed image</p>"
+        },
+        {
+          "name": "sig",
+          "html": "<p>Logical; if TRUE, only the significant clusters are shown</p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>any arguments that freeview (on command line) normally takes for manipulating surface files</p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>This function directly calls Freeview and generates files (by default .tiff) and additionally composes the images and plots them. Magick++ is required for the composing step (see www.qdecr.com).</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "reload",
+      "slug": "reload",
+      "aliases": [
+        "reload"
+      ],
+      "exported": true,
+      "title": "Reloads vertex-wise data for an \"vw\" object",
+      "source": "R/qdecr_load.R",
+      "description": "<p>Reloads vertex-wise data for an \"vw\" object</p>",
+      "usage": "reload(vw, verbose = TRUE)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>An object of class \"vw\"</p>"
+        },
+        {
+          "name": "verbose",
+          "html": "<p>If TRUE, displays all information related to the reloading; default is TRUE</p>"
+        }
+      ],
+      "value": "<p>Object of class \"vw\" where vw$mgh is populated.</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "save.mgh",
+      "slug": "save-mgh",
+      "aliases": [
+        "save.mgh"
+      ],
+      "exported": true,
+      "title": "Save out an MGH file from memory",
+      "source": "R/io_mgh.R",
+      "description": "<p>R translation of save_mgh.m (by Heath Pardoe, 09/12/2013)</p>",
+      "usage": "save.mgh(vol, fname)",
+      "arguments": [
+        {
+          "name": "vol",
+          "html": "<p>MGH object (as from load.mgh)</p>"
+        },
+        {
+          "name": "fname",
+          "html": "<p>file name to be used to save out the data</p>"
+        }
+      ],
+      "value": null,
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "stacks",
+      "slug": "stacks",
+      "aliases": [
+        "stacks"
+      ],
+      "exported": true,
+      "title": "Shows vw stacks",
+      "source": "R/summarizing.R",
+      "description": "<p>Shows the names of the stacks of vw objects</p>",
+      "usage": "stacks(vw)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>The output object of a qdecr analysis call</p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>This function shows the stack/contrast names for all the variables within the qdecr analysis. This functions commonly used for looking more specifically at variables.</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "summary.vw_fastlm",
+      "slug": "summary-vw_fastlm",
+      "aliases": [
+        "summary.vw_fastlm"
+      ],
+      "exported": true,
+      "title": "Summarize qdecr_fastlm clusters",
+      "source": "R/summarizing.R",
+      "description": "<p>Summarizes the significant clusters obtained from qdecr_fastlm</p>",
+      "usage": "## S3 method for class 'vw_fastlm'\nsummary(\n  object,\n  verbose = FALSE,\n  annot = FALSE,\n  file = \"aparc.annot\",\n  regions = 3,\n  ...\n)",
+      "arguments": [
+        {
+          "name": "object",
+          "html": "<p>The output object of a qdecr call (e.g. qdecr_fastlm)</p>"
+        },
+        {
+          "name": "verbose",
+          "html": "<p>Logical; if TRUE, it outputs some information of the steps; default is FALSE</p>"
+        },
+        {
+          "name": "annot",
+          "html": "<p>Logical; if TRUE, <code>file</code> will be read in to obtain information on the top regions in that cluster</p>"
+        },
+        {
+          "name": "file",
+          "html": "<p>string; the name of the file within the target template's label directory if annot = TRUE</p>"
+        },
+        {
+          "name": "regions",
+          "html": "<p>integer; number of regions that should be added if annot = TRUE</p>"
+        },
+        {
+          "name": "...",
+          "html": "<p>Further arguments for <code>summary</code></p>"
+        }
+      ],
+      "value": null,
+      "details": "<p>This function returns an overview of the significant clusters from qdecr_fastlm, and provides information per cluster. Additionally, it is possible to obtain annotated information, given that it is located in the target template's label directory.</p>",
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    },
+    {
+      "name": "unload",
+      "slug": "unload",
+      "aliases": [
+        "unload"
+      ],
+      "exported": true,
+      "title": "Removes vertex-wise data from an \"vw\" object",
+      "source": "R/qdecr_load.R",
+      "description": "<p>Removes vertex-wise data from an \"vw\" object</p>",
+      "usage": "unload(vw)",
+      "arguments": [
+        {
+          "name": "vw",
+          "html": "<p>An object of class \"vw\" where vw$mgh is populated</p>"
+        }
+      ],
+      "value": "<p>Object of class \"vw\" where vw$mgh is empty</p>",
+      "details": null,
+      "sections": [],
+      "note": null,
+      "author": null,
+      "references": null,
+      "seealso": null,
+      "examples": null,
+      "keywords": []
+    }
+  ]
+}
+

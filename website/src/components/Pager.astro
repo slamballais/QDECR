@@ -1,0 +1,30 @@
+---
+/** The previous and next pages in the reading sequence, at the foot of a guide page. */
+import type { PageLink } from '../lib/sequence'
+
+interface Props {
+  prev?: PageLink | undefined
+  next?: PageLink | undefined
+}
+
+const { prev, next } = Astro.props
+---
+
+{
+  (prev || next) && (
+    <nav class="pager" aria-label="Previous and next pages" data-pagefind-ignore="all">
+      {prev && (
+        <a class="pager-link pager-prev" href={prev.href} rel="prev">
+          <span class="pager-dir">Previous</span>
+          <span class="pager-title">{prev.title}</span>
+        </a>
+      )}
+      {next && (
+        <a class="pager-link pager-next" href={next.href} rel="next">
+          <span class="pager-dir">Next</span>
+          <span class="pager-title">{next.title}</span>
+        </a>
+      )}
+    </nav>
+  )
+}

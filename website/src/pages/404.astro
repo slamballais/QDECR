@@ -1,0 +1,34 @@
+---
+// What Netlify serves for any path that matches neither a page nor a redirect in
+// netlify.toml. Most visitors here followed an old link, so it offers the places the old
+// site's pages went and the search.
+import Base from '../layouts/Base.astro'
+---
+
+<Base
+  title="Page not found"
+  description="There is no page at this address on qdecr.com."
+  noindex
+>
+  <div class="shell not-found prose">
+    <h1>Page not found</h1>
+    <p class="lead">There is no page at this address.</p>
+    <p>
+      The site was rebuilt in 2026 and the pages of the old one were redirected to their new
+      places, so a link that brought you here may be older still, or mistyped. Try the search,
+      or start from one of these:
+    </p>
+    <div class="button-row">
+      <a class="button button-primary" href="/get-started">Get started</a>
+      <a class="button" href="/tutorials">Tutorials</a>
+      <a class="button" href="/reference">Reference</a>
+      <a class="button" href="/search">Search</a>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .not-found {
+    padding-block: var(--space-xl) var(--space-l);
+  }
+</style>

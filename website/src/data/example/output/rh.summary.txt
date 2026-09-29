@@ -1,0 +1,3 @@
+    variable cluster n_vertices mean_thickness mean_coefficient     mean_se                     top_region1                       top_region2                      top_region3
+ (Intercept)       1     149926       2.814483       3.22835196 0.100551108   superiorfrontal (7.92%, 100%)          precentral (7.14%, 100%)   superiorparietal (6.82%, 100%)
+         age       1     117846       2.814567      -0.02918288 0.005026116 superiorfrontal (9.63%, 95.59%) superiorparietal (8.67%, 100.00%) inferiorparietal (7.94%, 96.68%)

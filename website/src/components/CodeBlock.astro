@@ -1,0 +1,19 @@
+---
+/**
+ * A highlighted code block for .astro pages, the same as a fenced block in Markdown:
+ * Shiki with the site's classes in place of colours (src/lib/shiki.ts), the language
+ * label and the copy button.
+ */
+import { Code } from 'astro:components'
+import { codeBlock, syntaxTheme } from '../lib/shiki'
+
+interface Props {
+  code: string
+  /** A Shiki language id: r, bash, text, ... */
+  lang?: string
+}
+
+const { code, lang = 'r' } = Astro.props
+---
+
+<Code code={code.replace(/^\n+|\s+$/g, '')} lang={lang as 'r'} theme={syntaxTheme} transformers={[codeBlock()]} />

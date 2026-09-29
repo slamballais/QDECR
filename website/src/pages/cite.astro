@@ -1,0 +1,147 @@
+---
+// How to cite QDECR: the paper, its BibTeX, the version, the methods QDECR builds on, and
+// the publications that cite it (their full list is /cite/publications). The paper's
+// details live in src/data/site.ts, shared with the JSON-LD below.
+import Docs from '../layouts/Docs.astro'
+import CodeBlock from '../components/CodeBlock.astro'
+import OutIcon from '../components/OutIcon.astro'
+import PaperReference from '../components/PaperReference.astro'
+import { site } from '../data/site'
+import { citingWorks as works } from '../lib/citations-data'
+import { packageDescription } from '../lib/description'
+
+const { paper } = site
+const version = packageDescription()['Version']
+const year = paper.published.slice(0, 4)
+
+// The title is written out rather than taken from paper.title: BibTeX needs the braces
+// around QDECR and R, or styles that lower-case titles print "qdecr" and "r".
+const bibtex = `@article{lamballais${year}qdecr,
+  title   = {{QDECR}: A Flexible, Extensible Vertex-Wise Analysis Framework in {R}},
+  author  = {${paper.authors.map((a) => `${a.family}, ${a.given}`).join(' and ')}},
+  journal = {${paper.journal}},
+  volume  = {${paper.volume}},
+  pages   = {${paper.article}},
+  year    = {${year}},
+  doi     = {${paper.doi}},
+}`
+
+// Schema.org's description of the paper, for search engines.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ScholarlyArticle',
+  headline: paper.title,
+  name: paper.title,
+  author: paper.authors.map((a) => ({
+    '@type': 'Person',
+    givenName: a.given,
+    familyName: a.family,
+    name: `${a.given} ${a.family}`,
+    sameAs: `https://orcid.org/${a.orcid}`,
+  })),
+  datePublished: paper.published,
+  identifier: { '@type': 'PropertyValue', propertyID: 'DOI', value: paper.doi },
+  sameAs: paper.url,
+  isPartOf: {
+    '@type': 'PublicationVolume',
+    volumeNumber: paper.volume,
+    isPartOf: { '@type': 'Periodical', name: paper.journal },
+  },
+  about: { '@type': 'SoftwareSourceCode', name: 'QDECR', codeRepository: site.repo, programmingLanguage: 'R' },
+}
+
+const headings = [
+  { depth: 2, slug: 'the-paper', text: 'The paper' },
+  { depth: 2, slug: 'the-version', text: 'The version' },
+  { depth: 2, slug: 'freesurfer-and-the-correction', text: 'FreeSurfer and the correction' },
+  { depth: 2, slug: 'publications', text: 'Publications that cite QDECR' },
+]
+
+// The references for the methods QDECR runs, checked against Crossref for their DOIs.
+const methods = [
+  {
+    text: 'Fischl B. FreeSurfer. NeuroImage. 2012;62(2):774–781.',
+    doi: '10.1016/j.neuroimage.2012.01.021',
+    why: 'FreeSurfer itself, which produces the surfaces and the cluster-wise correction.',
+  },
+  {
+    text: 'Hagler DJ, Saygin AP, Sereno MI. Smoothing and cluster thresholding for cortical surface-based group analysis of fMRI data. NeuroImage. 2006;33(4):1093–1103.',
+    doi: '10.1016/j.neuroimage.2006.07.036',
+    why: 'The Monte Carlo simulations behind the cluster-wise correction.',
+  },
+  {
+    text: 'Greve DN, Fischl B. False positive rates in surface-based anatomical analysis. NeuroImage. 2018;171:6–14.',
+    doi: '10.1016/j.neuroimage.2017.12.072',
+    why: 'How well those simulations control false positives in anatomical data, and at which thresholds.',
+  },
+]
+---
+
+<Docs
+  title="Cite"
+  description="If QDECR helped your research, please cite the paper that describes it. Here is the reference, its BibTeX, and the methods it builds on."
+  source="src/pages/cite.astro"
+  section="Project"
+  headings={headings}
+>
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <h2 id="the-paper">The paper</h2>
+  <PaperReference />
+  <p>
+    The paper is open access. It describes why QDECR was written, to bring R's modelling, imputed
+    data and samples of thousands to surface-based analysis, and how its modules fit together.
+  </p>
+  <CodeBlock lang="bibtex" code={bibtex} />
+
+  <h2 id="the-version">The version</h2>
+  <p>
+    Name the version you ran in your methods, for example "QDECR {version} in R". R tells you which one
+    is installed:
+  </p>
+  <CodeBlock code={'packageVersion("QDECR")'} />
+  <aside class="callout" aria-label="Note">
+    <span class="callout-label">Note</span>
+    <p>
+      In {version}, <code>citation("QDECR")</code> returns a reference built from the package's
+      description rather than the paper. From 0.10.0 it returns the paper.
+    </p>
+  </aside>
+
+  <h2 id="freesurfer-and-the-correction">FreeSurfer and the correction</h2>
+  <p>
+    QDECR fits the models, but the surfaces and the correction for multiple testing are
+    FreeSurfer's. Most journals will expect these too:
+  </p>
+  <ul class="cite-methods">
+    {
+      methods.map((method) => (
+        <li>
+          {method.text} <a href={`https://doi.org/${method.doi}`}>doi:{method.doi}<OutIcon /></a>
+          <span class="cite-why">{method.why}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2 id="publications">Publications that cite QDECR</h2>
+  <p>
+    {works.length} papers and preprints cite the QDECR paper so far. The newest:
+  </p>
+  <ul class="cite-methods">
+    {
+      works.slice(0, 3).map((work) => (
+        <li>
+          {work.doi ? <a href={`https://doi.org/${work.doi}`}>{work.title}<OutIcon /></a> : work.title}
+          <span class="cite-why">
+            {work.venue ? `${work.venue}, ` : ''}
+            {work.year}
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="button-row">
+    <a class="button" href="/cite/publications">All {works.length} publications</a>
+  </div>
+</Docs>

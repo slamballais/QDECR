@@ -1,0 +1,10 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    // TypeScript 6 no longer loads every @types package it finds. The build helpers and
+    // the tests run on Node, so its types are named here.
+    "types": ["node"]
+  },
+  "include": [".astro/types.d.ts", "**/*.ts", "**/*.astro"],
+  "exclude": ["dist"]
+}

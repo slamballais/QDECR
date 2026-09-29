@@ -1,0 +1,29 @@
+---
+// The project's Markdown pages (src/content/pages): /about, /help, /colophon. Like the
+// changelog they stand alone, with "On this page" but no sidebar.
+import type { GetStaticPaths } from 'astro'
+import { getCollection, render, type CollectionEntry } from 'astro:content'
+import Docs from '../layouts/Docs.astro'
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection('pages')
+  return entries.map((entry) => ({ params: { page: entry.id }, props: { entry } }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  entry: CollectionEntry<'pages'>
+}
+
+const { entry } = Astro.props
+const { Content, headings } = await render(entry)
+---
+
+<Docs
+  title={entry.data.title}
+  description={entry.data.description}
+  source={entry.filePath}
+  section="Project"
+  headings={headings}
+>
+  <Content />
+</Docs>

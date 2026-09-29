@@ -1,0 +1,39 @@
+{
+  "name": "qdecr-com",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build --force && pagefind --site dist && node tools/prune-pagefind.mjs",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "node --test \"src/**/*.test.ts\"",
+    "make:logo": "node tools/make-logo.mjs",
+    "make:fonts": "node tools/subset-fonts.mjs",
+    "fetch:citations": "node tools/fetch-citations.ts",
+    "make:reference": "Rscript tools/rd-to-json.R",
+    "serve": "node tools/serve.ts"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/markdown-satteri": "^0.4.2",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@fontsource-variable/newsreader": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@niivue/niivue": "^0.69.0",
+    "@types/node": "^22.20.4",
+    "astro": "^7.3.5",
+    "axe-core": "^4.13.0",
+    "fontkitten": "^1.0.3",
+    "pagefind": "^1.5.2",
+    "satteri": "^0.10.5",
+    "sharp": "^0.35.3",
+    "shiki": "^4.4.3",
+    "smol-toml": "^1.9.0",
+    "subset-font": "^2.9.0",
+    "typescript": "^6.0.3"
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  }
+}

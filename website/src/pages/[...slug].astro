@@ -1,0 +1,37 @@
+---
+// Every page of the guide (src/content/docs): /get-started and /tutorials/<name>, each in
+// the docs layout with the guide's sidebar and links to the pages before and after it.
+import type { GetStaticPaths } from 'astro'
+import { render } from 'astro:content'
+import Docs from '../layouts/Docs.astro'
+import { guidePages, guideSidebar, type GuidePage } from '../lib/guide'
+import { neighbours } from '../lib/sequence'
+
+export const getStaticPaths = (async () => {
+  const pages = await guidePages()
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page, pages } }))
+}) satisfies GetStaticPaths
+
+interface Props {
+  page: GuidePage
+  pages: GuidePage[]
+}
+
+const { page, pages } = Astro.props
+const { entry } = page
+const { Content, headings } = await render(entry)
+const { prev, next } = neighbours(pages, page.id)
+---
+
+<Docs
+  title={entry.data.title}
+  description={entry.data.description}
+  source={entry.filePath}
+  section={page.section}
+  sidebar={{ label: 'Guide', groups: guideSidebar(pages) }}
+  headings={headings}
+  prev={prev}
+  next={next}
+>
+  <Content />
+</Docs>

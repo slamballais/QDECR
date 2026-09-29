@@ -1,0 +1,386 @@
+---
+// The home page: what QDECR is and who it is for, the install and a
+// first analysis, what it finds on real data, what it can do, and how to cite it. Every
+// result shown comes from the example analysis, read from run.json. The
+// poster turns into a 3D viewer of the same map on request (Viewer.astro).
+import { Image, Picture } from 'astro:assets'
+import Base from '../layouts/Base.astro'
+import CodeBlock from '../components/CodeBlock.astro'
+import Viewer from '../components/Viewer.astro'
+import ExampleCredit from '../components/ExampleCredit.astro'
+import PaperReference from '../components/PaperReference.astro'
+import { site } from '../data/site'
+import { packageDescription } from '../lib/description'
+import { exampleRun } from '../lib/example-data'
+import { count, signed } from '../lib/format'
+import posterImage from '../assets/example/lh.age.p.lateral.png'
+import snapshot from '../assets/example/lh.age.coef.png'
+import histogram from '../assets/example/lh.hist-subject.png'
+
+const version = packageDescription()['Version']
+const { dataset, hemispheres, poster } = exampleRun
+
+const install = `install.packages("pak")
+pak::pak("slamballais/QDECR")
+library(QDECR)`
+
+const exampleCode = `out <- qdecr_fastlm(qdecr_thickness ~ age + sex, data = pheno,
+                    id = "id", hemi = "lh", project = "age_sex")
+out
+summary(out, annot = TRUE)
+qdecr_snap(out, "age")`
+
+// The age stack's significant clusters, both hemispheres, for the table.
+const hemisphereNames = { lh: 'Left', rh: 'Right' } as const
+const ageClusters = (['lh', 'rh'] as const).flatMap((hemi) =>
+  hemispheres[hemi].clusters.filter((c) => c.stack === 'age').map((c) => ({ hemi, ...c })),
+)
+// Astro drops the space between an expression and text on the next line, so sentences
+// that end a line on a value are built whole.
+const runDetails = `run with QDECR ${exampleRun.software.qdecr} in ${count(hemispheres.lh.seconds)} seconds a hemisphere on ${exampleRun.model.nCores} cores`
+// Whole years, as the quick start gives them: 6 to 31.
+const ages = `${Math.floor(dataset.age.min)} to ${Math.floor(dataset.age.max)}`
+
+const features = [
+  {
+    title: "R's formulas",
+    text: 'Write the model as you would for lm(): factors, interactions, splines and transformations, fitted at every vertex.',
+    href: '/tutorials/formulas-and-design',
+  },
+  {
+    title: "FreeSurfer's correction",
+    text: 'Clusters are tested against the Monte Carlo simulations FreeSurfer ships, the same correction mri_glmfit-sim applies.',
+    href: '/tutorials/statistics',
+  },
+  {
+    title: 'Imputed data',
+    text: 'Pass the datasets from mice, Amelia or mi as they are. QDECR fits every one and pools them with Rubin’s rules.',
+    href: '/tutorials/imputed-data',
+  },
+  {
+    title: 'Weights',
+    text: 'A weight per subject, as in lm(), for inverse probability weighting or any other weighted regression.',
+    href: '/tutorials/formulas-and-design#weights',
+  },
+  {
+    title: 'Any surface measure',
+    text: 'Thickness, area, volume, curvature, gyrification, or a map of your own on the same surface.',
+    href: '/tutorials/formulas-and-design#the-vertex-measure',
+  },
+  {
+    title: 'Large samples',
+    text: 'The vertex data live in files rather than memory, and the work spreads over as many cores as you give it.',
+    href: '/tutorials/performance',
+  },
+]
+
+// Schema.org's description of the package, for search engines.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareSourceCode',
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  codeRepository: site.repo,
+  programmingLanguage: 'R',
+  version,
+  author: site.paper.authors.map((a) => ({
+    '@type': 'Person',
+    name: `${a.given} ${a.family}`,
+    sameAs: `https://orcid.org/${a.orcid}`,
+  })),
+  citation: { '@type': 'ScholarlyArticle', name: site.paper.title, sameAs: site.paper.url },
+}
+---
+
+<Base source="src/pages/index.astro">
+  <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  <div class="shell home">
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-intro">
+        <h1 id="home-title" class="home-title">Vertex-wise statistics for FreeSurfer, in R</h1>
+        <p class="lead">{site.description}</p>
+        <p>
+          For researchers who have run their scans through FreeSurfer and analyse their data in R: write
+          the model as a formula, and get the significant clusters back.
+        </p>
+        <div class="button-row">
+          <a class="button button-primary" href="/get-started">Get started</a>
+          <a class="button" href="/cite">Read the paper</a>
+        </div>
+        <p class="muted small">
+          Stable. Latest release {version}.{site.nextRelease && ` ${site.nextRelease} in development.`}
+        </p>
+      </div>
+      <figure class="home-poster">
+        <Viewer scale={poster.scale}>
+          <Picture
+            src={posterImage}
+            formats={['avif', 'webp']}
+            widths={[480, 720, 960, 1400]}
+            sizes="(min-width: 60rem) 34rem, calc(100vw - 2rem)"
+            alt="The left hemisphere of the brain seen from the side, inflated so that the folds lie flat, coloured red to yellow over most of its surface."
+            loading="eager"
+            fetchpriority="high"
+          />
+        </Viewer>
+        <figcaption>
+          Where the cortex thins with age, in {dataset.n} people aged {ages}: the <span data-viewer-hemi>left</span> hemisphere's
+          significant cluster, red at p = 10<sup>−{poster.scale.from}</sup> and yellow from p =
+          10<sup>−{poster.scale.to}</sup>. <a href="/tutorials/quick-start">The analysis</a>. <ExampleCredit />
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="home-start" aria-labelledby="home-start">
+      <h2 id="home-start" class="visually-hidden">Install and run</h2>
+      <div>
+        <h3>Install</h3>
+        <p class="muted small">
+          In R, once <a href="/get-started#requirements">FreeSurfer is set up</a>.
+        </p>
+        <CodeBlock code={install} />
+      </div>
+      <div>
+        <h3>Run</h3>
+        <p class="muted small">
+          One hemisphere, with <code>pheno</code> a data frame of your subjects.
+        </p>
+        <CodeBlock code={exampleCode} />
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="home-results">
+      <h2 id="home-results">What it gives you</h2>
+      <p class="prose">
+        One analysis from the <a href="/tutorials/quick-start">quick start</a>: cortical thickness against age
+        and sex in {dataset.n} typically developing participants of ABIDE I, {runDetails}.
+      </p>
+      <div class="gallery">
+        <figure class="gallery-item gallery-wide">
+          <div class="table-wrap" tabindex="0" role="region" aria-label="Significant clusters for age">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Hemisphere</th>
+                  <th scope="col">Vertices</th>
+                  <th scope="col">Area</th>
+                  <th scope="col">Mean coefficient</th>
+                  <th scope="col">Cluster-wise p</th>
+                  <th scope="col">Peak</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  ageClusters.map((c) => (
+                    <tr>
+                      <th scope="row">{hemisphereNames[c.hemi]}</th>
+                      <td>{count(c.nVertices)}</td>
+                      <td>{count(c.sizeMm2)} mm²</td>
+                      <td>{signed(c.meanCoefficient, 3)} mm a year</td>
+                      <td>{c.clusterwiseP}</td>
+                      <td>{c.peak.region}</td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          </div>
+          <figcaption>
+            The significant clusters for age, from <code>summary()</code> and FreeSurfer's cluster
+            table. <a href="/tutorials/inspecting-results">Inspecting results</a>. <ExampleCredit />
+          </figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <Image src={snapshot} alt="Four views of the left hemisphere, blue over most of the cortex." class="gallery-snapshot" />
+          <figcaption>
+            <code>qdecr_snap(out, "age")</code>: the age coefficient on its cluster, blue where the cortex is
+            thinner with age. <a href="/tutorials/plotting">Plotting</a>. <ExampleCredit />
+          </figcaption>
+        </figure>
+        <figure class="gallery-item">
+          <Image
+            src={histogram}
+            widths={[640, 1000]}
+            sizes="(min-width: 48rem) 38rem, calc(100vw - 2rem)"
+            alt="A histogram of each subject's mean thickness, from 2.3 to 3.2 mm."
+            class="gallery-plot"
+          />
+          <figcaption>
+            <code>hist(out, qtype = "subject")</code>: each subject's mean thickness, a first check for a
+            failed surface. <a href="/tutorials/inspecting-results#histograms">Histograms</a>. <ExampleCredit />
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="home-features">
+      <h2 id="home-features">What it does</h2>
+      <ul class="features">
+        {
+          features.map((feature) => (
+            <li>
+              <h3>
+                <a href={feature.href}>{feature.title}</a>
+              </h3>
+              <p>{feature.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="home-section home-cite" aria-labelledby="home-cite">
+      <h2 id="home-cite">Cite QDECR</h2>
+      <p>If QDECR helped your research, please cite the paper that describes it:</p>
+      <PaperReference />
+      <div class="button-row">
+        <a class="button" href="/cite">BibTeX and more</a>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .home {
+    padding-block: var(--space-xl) var(--space-l);
+  }
+
+  /* Text beside the poster on a wide window, above it on a narrow one. */
+  .home-hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 34rem);
+    align-items: center;
+    gap: var(--space-l);
+  }
+
+  @media (max-width: 60rem) {
+    .home-hero {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .home-title {
+    max-width: 18ch;
+    font-size: var(--size-display);
+  }
+
+  .home-intro > :last-child {
+    margin-bottom: 0;
+  }
+
+  /* The poster's own black is the card; the caption sits under it. */
+  .home-poster {
+    margin: 0;
+  }
+
+  .home-poster :global(img) {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-l);
+  }
+
+  .home-poster figcaption {
+    max-width: var(--measure);
+  }
+
+  /* Install and run, side by side where there is room. */
+  .home-start {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 0 var(--space-l);
+    margin-top: var(--space-xl);
+  }
+
+  .home-start h3 {
+    margin: 0 0 var(--space-2xs);
+  }
+
+  .home-start p {
+    margin-bottom: var(--space-xs);
+  }
+
+  .home-section {
+    margin-top: var(--space-xl);
+  }
+
+  .home-section > h2 {
+    margin-top: 0;
+  }
+
+  /* The results: the table across the top, the two pictures under it, side by side where
+   * there is room. */
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-l);
+  }
+
+  @media (max-width: 48rem) {
+    .gallery {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .gallery-item {
+    margin: 0;
+  }
+
+  .gallery-wide {
+    grid-column: 1 / -1;
+  }
+
+  .gallery-item :global(img) {
+    display: block;
+    width: 100%;
+    border-radius: var(--radius);
+  }
+
+  /* qdecr_snap()'s picture is small, 454 pixels across: shown at its own size rather than
+   * stretched soft, and narrower only when the column is. */
+  .gallery-item :global(.gallery-snapshot) {
+    width: auto;
+  }
+
+  /* R's plot is drawn on white; a hairline keeps its edge on the white-ish paper. */
+  .gallery-item :global(.gallery-plot) {
+    border: 0.0625rem solid var(--rule);
+  }
+
+  .gallery-wide .table-wrap {
+    margin-bottom: 0;
+  }
+
+  .gallery-wide td,
+  .gallery-wide th {
+    white-space: nowrap;
+  }
+
+  /* The six features, three to a row where they fit. */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+    gap: var(--space-m) var(--space-l);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .features li + li {
+    margin-top: 0;
+  }
+
+  .features h3 {
+    margin: 0 0 var(--space-2xs);
+    font-size: var(--size-h3);
+  }
+
+  .features p {
+    margin: 0;
+    color: var(--muted);
+  }
+
+  .home-cite :global(.cite-reference) {
+    max-width: var(--measure);
+  }
+</style>

@@ -1,4 +1,4 @@
-# QDECR
+# QDECR <img src="man/figures/logo.png" align="right" height="139" alt="QDECR logo" />
 
 > Vertex-wise analyses in R
 

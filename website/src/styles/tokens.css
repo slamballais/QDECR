@@ -1,0 +1,161 @@
+/*
+ * The design tokens: every colour, face, size and space the site uses. Components read
+ * these and never hard-code a value of their own.
+ *
+ * The palette comes from FreeSurfer's overlay colours, the same ones as the logo (see
+ * tools/make-logo.mjs): the cool end, blue to teal, becomes the text accent; the heat end,
+ * orange, is kept for the brand and for emphasis. Orange is never text on a light page.
+ *
+ * Every text-on-background pairing is held to WCAG AA in both themes by
+ * src/lib/palette.test.ts, which reads this file. Add a pair to src/lib/palette.ts the
+ * day a new one is painted. Colours are six-digit hex so that test can read them.
+ */
+
+:root {
+  color-scheme: light dark;
+
+  /* Neutrals: warm paper, near-black ink. */
+  --paper: #f7f5f0;
+  --surface: #fffdf9; /* raised: cards, the masthead on scroll, popovers */
+  --sunken: #ece8df; /* inset: inline code, the sidebar */
+  --ink: #17191d;
+  --muted: #575b63;
+  --rule: #dcd6ca;
+
+  /* The accent: a deep blue-teal from the cool end of the lattice. Links and buttons. */
+  --accent: #15627c;
+  --accent-strong: #0e4a5e; /* hover and pressed */
+  --accent-soft: #e1edf0; /* the current page, the note callout */
+  --on-accent: #fbfaf7;
+
+  /* Heat. --brand is the logo's orange, for artwork and highlighted results only. --heat
+   * is the same hue deepened until it holds 3:1 on paper, for the focus ring. */
+  --brand: #ff7a1c;
+  --heat: #c4520a;
+
+  /* Callouts. A note uses the accent pair above. */
+  --tip: #1c6a50;
+  --tip-bg: #e0efe8;
+  --warn: #9a4700;
+  --warn-bg: #fbe9d9;
+
+  /* The home page's poster and 3D viewer: Freeview draws on black, so the frame is black
+   * in both themes, and what sits on it is white. */
+  --poster-bg: #000000;
+  --on-poster: #ffffff;
+
+  /* Code blocks sit on the logo's black in both themes, with the lattice and heat
+   * colours for syntax, so a page of code reads as the same world as the logo. */
+  --code-bg: #101317;
+  --code-ink: #e8e4da;
+  --code-muted: #949ba4;
+  --syntax-keyword: #ff8a3d;
+  --syntax-string: #3cc3a2;
+  --syntax-number: #ffb14e;
+  --syntax-function: #72a9ef;
+
+  --shadow: rgb(23 25 29 / 0.08);
+
+  /* Type. All three are self-hosted from Fontsource (imported in Base.astro): Newsreader,
+   * the logo's wordmark, for headings; IBM Plex Sans for text; IBM Plex Mono for code,
+   * where most of a docs page's attention goes. */
+  --serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
+  --sans: 'IBM Plex Sans Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  /* A modular scale, fluid at the top end only. The vw term is small on purpose: zoom
+   * should move these, not the window width. */
+  --size-display: clamp(2.4rem, 1.9rem + 2.4vw, 3.6rem);
+  --size-h1: clamp(2rem, 1.7rem + 1.4vw, 2.75rem);
+  --size-h2: clamp(1.5rem, 1.35rem + 0.7vw, 1.9rem);
+  --size-h3: 1.25rem;
+  --size-body: 1.0625rem;
+  --size-small: 0.9375rem;
+  --size-code: 0.875rem;
+
+  /* Widths. --measure is a comfortable line of text; --page the widest the shell gets,
+   * room for a sidebar, the text and an "on this page" column. */
+  --measure: 42rem;
+  --page: 80rem;
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-s: 0.875rem;
+  --space-m: 1.5rem;
+  --space-l: 2.5rem;
+  --space-xl: 4.5rem;
+
+  --radius: 0.375rem;
+  --radius-l: 0.75rem;
+  /* Around 44px, the comfortable touch target. */
+  --target: 2.75rem;
+}
+
+/*
+ * Dark mode follows the system unless the toggle stored a choice, which public/theme.js
+ * writes to data-theme on the root before first paint. The block is written twice,
+ * behind the media query and behind the attribute, because CSS cannot say "either" in one
+ * selector; the palette test checks the two copies match. Both are for screens only:
+ * a printer drops the dark paper and would print the off-white ink on white.
+ */
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --paper: #0d0f12;
+    --surface: #15181c;
+    --sunken: #1d2126;
+    --ink: #ebe7de;
+    --muted: #a3a7ae;
+    --rule: #2b3036;
+    --accent: #63b9d2;
+    --accent-strong: #8fd0e2;
+    --accent-soft: #142c35;
+    --on-accent: #0d0f12;
+    --brand: #ff7a1c;
+    --heat: #ff7a1c;
+    --tip: #5ccaa5;
+    --tip-bg: #11281f;
+    --warn: #ffa35a;
+    --warn-bg: #2c1c0e;
+    --poster-bg: #000000;
+    --on-poster: #ffffff;
+    --code-bg: #050608;
+    --code-ink: #e8e4da;
+    --code-muted: #949ba4;
+    --syntax-keyword: #ff8a3d;
+    --syntax-string: #3cc3a2;
+    --syntax-number: #ffb14e;
+    --syntax-function: #72a9ef;
+    --shadow: rgb(0 0 0 / 0.5);
+  }
+}
+
+@media screen {
+  :root[data-theme='dark'] {
+    --paper: #0d0f12;
+    --surface: #15181c;
+    --sunken: #1d2126;
+    --ink: #ebe7de;
+    --muted: #a3a7ae;
+    --rule: #2b3036;
+    --accent: #63b9d2;
+    --accent-strong: #8fd0e2;
+    --accent-soft: #142c35;
+    --on-accent: #0d0f12;
+    --brand: #ff7a1c;
+    --heat: #ff7a1c;
+    --tip: #5ccaa5;
+    --tip-bg: #11281f;
+    --warn: #ffa35a;
+    --warn-bg: #2c1c0e;
+    --poster-bg: #000000;
+    --on-poster: #ffffff;
+    --code-bg: #050608;
+    --code-ink: #e8e4da;
+    --code-muted: #949ba4;
+    --syntax-keyword: #ff8a3d;
+    --syntax-string: #3cc3a2;
+    --syntax-number: #ffb14e;
+    --syntax-function: #72a9ef;
+    --shadow: rgb(0 0 0 / 0.5);
+  }
+}

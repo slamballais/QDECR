@@ -1,0 +1,27 @@
+---
+// What changed in each release, rendered from the package's NEWS.md (the changelog
+// collection in content.config.ts). Release notes are written there, never here.
+import { getEntry, render } from 'astro:content'
+import Docs from '../layouts/Docs.astro'
+
+const news = await getEntry('changelog', 'news')
+if (!news) throw new Error('NEWS.md was not loaded')
+const { Content } = await render(news)
+const headings = news.data.releases.map((release) => ({
+  depth: 2,
+  slug: release.id,
+  text: release.name ? `${release.version} ${release.name}` : release.version,
+}))
+---
+
+<Docs
+  title="Changelog"
+  description="What changed in each release of QDECR, newest first, from the NEWS file that ships with the package."
+  source="../NEWS.md"
+  section="Project"
+  headings={headings}
+>
+  <div class="changelog">
+    <Content />
+  </div>
+</Docs>

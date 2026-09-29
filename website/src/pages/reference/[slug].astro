@@ -1,0 +1,123 @@
+---
+// One help page of the package, from reference.json (tools/rd-to-json.R). The text
+// sections are HTML the converter wrote from the Rd files in this repository, so they are
+// set as HTML; usage and examples are highlighted as R.
+import type { GetStaticPaths } from 'astro'
+import Docs from '../../layouts/Docs.astro'
+import CodeBlock from '../../components/CodeBlock.astro'
+import { referenceSidebar, topics } from '../../lib/reference-data'
+import type { Topic } from '../../lib/reference'
+import { headingId } from '../../lib/toc'
+
+export const getStaticPaths = (() => topics.map((topic) => ({ params: { slug: topic.slug }, props: { topic } }))) satisfies GetStaticPaths
+
+interface Props {
+  topic: Topic
+}
+
+const { topic } = Astro.props
+
+// Many descriptions only repeat the title ("Vertex-wise linear regression"); those are
+// left out rather than printed twice.
+const plain = (html: string) => html.replace(/<[^>]+>/g, '').trim().replace(/\.$/, '').toLowerCase()
+const description = topic.description && plain(topic.description) !== plain(topic.title) ? topic.description : null
+const others = topic.aliases.filter((alias) => alias !== topic.name)
+
+// The text sections that follow the arguments, in the order R's own help prints them,
+// each only when the page has it.
+const section = (title: string, html: string | null) => (html ? [{ id: headingId(title), title, html }] : [])
+const textSections = [
+  ...section('Value', topic.value),
+  ...section('Details', topic.details),
+  ...topic.sections.flatMap((custom) => section(custom.title, custom.html)),
+  ...section('Note', topic.note),
+  ...section('References', topic.references),
+  ...section('See also', topic.seealso),
+  ...section('Author', topic.author),
+]
+
+const headings = [
+  ...(topic.usage ? [{ depth: 2, slug: 'usage', text: 'Usage' }] : []),
+  ...(topic.arguments.length ? [{ depth: 2, slug: 'arguments', text: 'Arguments' }] : []),
+  ...textSections.map(({ id, title }) => ({ depth: 2, slug: id, text: title })),
+  ...(topic.examples ? [{ depth: 2, slug: 'examples', text: 'Examples' }] : []),
+]
+---
+
+<Docs
+  title={topic.name}
+  description={topic.title}
+  source={topic.source ? `../${topic.source}` : undefined}
+  section="Reference"
+  sidebar={{ label: 'Reference', groups: referenceSidebar }}
+  headings={headings}
+  codeTitle
+>
+  {
+    !topic.exported && (
+      <aside class="callout" aria-label="Note">
+        <span class="callout-label">Internal</span>
+        <p>
+          The package does not export this function. It is documented for reference, and can
+          be called as <code>QDECR:::{topic.name}()</code>.
+        </p>
+      </aside>
+    )
+  }
+  {
+    others.length > 0 && (
+      <p class="ref-covers">
+        This page covers{' '}
+        {others.map((alias, i) => (
+          <>
+            {i > 0 && (i === others.length - 1 ? ' and ' : ', ')}
+            <code>{alias}</code>
+          </>
+        ))}
+        .
+      </p>
+    )
+  }
+  {description && <div class="ref-text" set:html={description} />}
+  {
+    topic.usage && (
+      <>
+        <h2 id="usage">Usage</h2>
+        <CodeBlock code={topic.usage} />
+      </>
+    )
+  }
+  {
+    topic.arguments.length > 0 && (
+      <>
+        <h2 id="arguments">Arguments</h2>
+        <dl class="ref-arguments">
+          {topic.arguments.map((argument) => (
+            <>
+              <dt>
+                <code>{argument.name}</code>
+              </dt>
+              <dd set:html={argument.html ?? ''} />
+            </>
+          ))}
+        </dl>
+      </>
+    )
+  }
+  {
+    textSections.map((text) => (
+      <>
+        <h2 id={text.id}>{text.title}</h2>
+        <div class="ref-text" set:html={text.html} />
+      </>
+    ))
+  }
+  {
+    topic.examples && (
+      <>
+        <h2 id="examples">Examples</h2>
+        <CodeBlock code={topic.examples} />
+      </>
+    )
+  }
+</Docs>

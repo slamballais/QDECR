@@ -1,0 +1,62 @@
+---
+/**
+ * The layout of the documentation pages (the guide and the reference): the section's
+ * sidebar, the page, and "On this page". It wraps Base, which supplies the masthead and
+ * footer.
+ *
+ * Three columns on a wide window. Below 72rem "On this page" moves under the page title
+ * as a disclosure; below 52rem the sidebar does the same above the page. The column
+ * widths are in rem and the text column shrinks, so at 320px (400% zoom) it is a single
+ * column with nothing scrolling sideways.
+ */
+import Base from './Base.astro'
+import Sidebar from '../components/Sidebar.astro'
+import Toc from '../components/Toc.astro'
+import Pager from '../components/Pager.astro'
+import type { SidebarGroup } from '../lib/sidebar'
+import { buildToc, type Heading } from '../lib/toc'
+import { servedPath } from '../lib/path'
+import type { PageLink } from '../lib/sequence'
+
+interface Props {
+  title: string
+  description: string
+  /** The page's source file, relative to website/, for "Edit this page". */
+  source?: string | undefined
+  /** The section the page belongs to, shown above its title and in search results. */
+  section: string
+  /** The section's pages. A page that stands alone, like the changelog, has none. */
+  sidebar?: { label: string; groups: SidebarGroup[] } | undefined
+  /** The page's headings, for "On this page". */
+  headings?: Heading[]
+  prev?: PageLink | undefined
+  next?: PageLink | undefined
+  /** Set the title as code: a function name in the reference. */
+  codeTitle?: boolean
+}
+
+const { title, description, source, section, sidebar, headings = [], prev, next, codeTitle = false } = Astro.props
+const path = servedPath(Astro.url.pathname)
+const toc = buildToc(headings)
+---
+
+<Base title={title} description={description} source={source} section={section} codeTitle={codeTitle}>
+  <!-- Anything a page adds to <head>, such as its JSON-LD, passed through to Base. -->
+  <slot name="head" slot="head" />
+  <div class={sidebar ? 'shell docs' : 'shell docs docs-alone'}>
+    {sidebar && <Sidebar label={sidebar.label} groups={sidebar.groups} path={path} />}
+    <article class="docs-page" data-pagefind-meta={`section:${section}`}>
+      <header class="docs-header">
+        <p class="docs-section" data-pagefind-ignore>{section}</p>
+        <h1>{codeTitle ? <code>{title}</code> : title}</h1>
+        <p class="lead">{description}</p>
+      </header>
+      <Toc items={toc} variant="narrow" />
+      <div class="docs-body">
+        <slot />
+      </div>
+      <Pager prev={prev} next={next} />
+    </article>
+    <Toc items={toc} variant="wide" />
+  </div>
+</Base>

@@ -1,0 +1,7 @@
+           id  age    sex site
+1 NYU_0051036 8.04 female  NYU
+2 NYU_0051038 8.26 female  NYU
+3 NYU_0051039 8.50 female  NYU
+4 NYU_0051040 8.52 female  NYU
+5 NYU_0051041 8.90 female  NYU
+6 NYU_0051042 8.91 female  NYU

@@ -1,0 +1,31 @@
+---
+/**
+ * Light/dark switch. Without a stored choice the page follows the system setting through
+ * CSS alone; a press stores an override that public/theme.js applies before first paint.
+ * The mark shown is the theme a press switches to: a moon on paper, a sun in the dark.
+ * The label says the same in words and is kept current by the script.
+ */
+---
+
+<button
+  class="theme-toggle icon-button"
+  type="button"
+  aria-label="Switch to the dark theme"
+  title="Switch to the dark theme"
+>
+  <svg class="icon-moon" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <path
+      d="M20.5 14.6A8.8 8.8 0 0 1 9.4 3.5a8.8 8.8 0 1 0 11.1 11.1Z"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linejoin="round"></path>
+  </svg>
+  <svg class="icon-sun" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+    <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="2"></circle>
+    <path
+      d="M12 1.8v2.6M12 19.6v2.6M4.6 4.6l1.9 1.9M17.5 17.5l1.9 1.9M1.8 12h2.6M19.6 12h2.6M4.6 19.4l1.9-1.9M17.5 6.5l1.9-1.9"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"></path>
+  </svg>
+</button>

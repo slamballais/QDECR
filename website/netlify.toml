@@ -1,0 +1,208 @@
+# How Netlify builds and serves qdecr.com. The site's base directory in Netlify is
+# website/, so this file is read from here and every path below is relative to it.
+# src/lib/netlify.test.ts holds this file to the rules the site depends on.
+
+[build]
+  # npm run build is astro build --force, then Pagefind, then a prune of Pagefind's unused
+  # interfaces. --force re-renders every page: Astro caches rendered Markdown in
+  # node_modules/.astro, which Netlify keeps between builds, and a change to one of the
+  # site's Markdown plugins (astro.config.mjs) does not invalidate that cache.
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # The floor in package.json's "engines". Pinned rather than left to Netlify's default,
+  # which moves under the site without a commit.
+  NODE_VERSION = "22.18.0"
+
+# ---------- redirects ----------
+#
+# Netlify serves dist/404.html for anything that matches neither a file nor a rule below.
+
+# The canonical host is the apex. This reverses the 2021 setup, and links
+# to www.qdecr.com live on in papers and READMEs, so the rules stay for good. The http
+# one takes an old http:// link to the apex in one hop rather than two.
+[[redirects]]
+  from = "https://www.qdecr.com/*"
+  to = "https://qdecr.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://www.qdecr.com/*"
+  to = "https://qdecr.com/:splat"
+  status = 301
+  force = true
+
+# Every page and file of the 2021 R Markdown site, to where its content lives now. Each
+# rule is forced: build.format 'file' writes /about as about.html, so without force Netlify
+# would find a file at /about.html and serve it rather than redirect.
+[[redirects]]
+  from = "/01-getting-started.html"
+  to = "/get-started"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/02-quick-start.html"
+  to = "/tutorials/quick-start"
+  status = 301
+  force = true
+
+# "Using QDECR" was mostly about formulas; its imputation and performance sections moved
+# to tutorials of their own, which the formulas tutorial links to.
+[[redirects]]
+  from = "/03-using-qdecr.html"
+  to = "/tutorials/formulas-and-design"
+  status = 301
+  force = true
+
+# The post-processing vignette was renumbered from 03 to 04 in 2021, and the old site
+# already redirected the one to the other.
+[[redirects]]
+  from = "/03-post-processing.html"
+  to = "/tutorials/inspecting-results"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/04-post-processing.html"
+  to = "/tutorials/inspecting-results"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about.html"
+  to = "/about"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contribution.html"
+  to = "/help#contributing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/code-of-conduct.html"
+  to = "/help#code-of-conduct"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ohbm2020.html"
+  to = "/about#archive"
+  status = 301
+  force = true
+
+# The OHBM posters and brochure, kept in the site under /archive/. Named one by one rather
+# than as /data/*: the old folder also held two portraits that are not carried over.
+[[redirects]]
+  from = "/data/qdecr_lmm.pdf"
+  to = "/archive/qdecr_lmm.pdf"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/data/qdecr_ohbm2019_poster.pdf"
+  to = "/archive/qdecr_ohbm2019_poster.pdf"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/data/qdecr_ohbm_brochure.pdf"
+  to = "/archive/qdecr_ohbm_brochure.pdf"
+  status = 301
+  force = true
+
+# The old site linked to this name, but the file was only ever uploaded as
+# qdecr_ohbm_brochure.pdf, so the link had been a 404 since 2019.
+[[redirects]]
+  from = "/data/qdecr_ohbm2019_brochure.pdf"
+  to = "/archive/qdecr_ohbm_brochure.pdf"
+  status = 301
+  force = true
+
+# Netlify served the old pages without their .html as well, and the OHBM 2020 poster
+# prints qdecr.com/ohbm2020, so the same pages again without the extension. /about is a
+# page of the new site and needs no rule. Forced like the rest; nothing is built at these
+# paths today, but a rule that holds regardless is the safer kind.
+[[redirects]]
+  from = "/01-getting-started"
+  to = "/get-started"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/02-quick-start"
+  to = "/tutorials/quick-start"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/03-using-qdecr"
+  to = "/tutorials/formulas-and-design"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/03-post-processing"
+  to = "/tutorials/inspecting-results"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/04-post-processing"
+  to = "/tutorials/inspecting-results"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/contribution"
+  to = "/help#contributing"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/code-of-conduct"
+  to = "/help#code-of-conduct"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/ohbm2020"
+  to = "/about#archive"
+  status = 301
+  force = true
+
+# ---------- headers ----------
+
+# Everything comes from this origin: pages, fonts, the theme script, the search index. So
+# the policy allows same-origin only and nothing inline; the build refuses a page with an
+# inline script or style attribute (src/lib/inline.ts) so this holds without having to
+# check by hand. Widen it here per need, never with 'unsafe-inline'.
+#
+# - script-src 'wasm-unsafe-eval': Pagefind's search runs as WebAssembly, which browsers
+#   treat as eval unless this allows it. It does not allow JavaScript eval.
+# - img-src data:: the home page's 3D viewer (NiiVue, bundled, loaded on request) draws
+#   its font and its lighting from images it carries inside its script as data: URLs. An
+#   image cannot run code, so this lets nothing else in. Its surfaces come from /viewer/,
+#   this origin, and it runs no workers, so nothing else is widened for it.
+# - The JSON-LD blocks are data, not scripts, and need nothing here.
+#
+# HSTS is set by Netlify itself.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'none'"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Everything under /_astro/ carries a content hash in its name, so it can be cached for a
+# year. Netlify's default is max-age=0 with a revalidation on every request.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

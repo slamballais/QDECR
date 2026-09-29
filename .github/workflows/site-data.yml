@@ -1,0 +1,152 @@
+# Regenerates the website's data files and opens a pull request when either changed:
+#
+# - website/src/data/reference.json, from the help pages in man/ (tools/rd-to-json.R),
+#   whenever man/ changes on master;
+# - website/src/data/citations.json, the publications citing the paper, from OpenAlex
+#   (tools/fetch-citations.ts), once a month.
+#
+# Both need things Netlify's build should not (R, and a call to an outside service), so
+# they run here and the JSON is committed. The job never merges: a change
+# reaches qdecr.com once its pull request is reviewed and merged, and Netlify builds it.
+#
+# Needs one setting made by hand: Settings → Actions → General → "Allow GitHub Actions to
+# create and approve pull requests". And GitHub switches off scheduled workflows in a
+# public repository after 60 days without a commit; re-enable it from the Actions tab if
+# the monthly run stops.
+
+name: Site data
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'man/**'
+      - 'NAMESPACE'
+      - 'website/tools/rd-to-json.R'
+  schedule:
+    # 05:23 UTC on the 2nd. Off the hour: GitHub delays or drops scheduled runs under load,
+    # and the top of the hour is when the load is.
+    - cron: '23 5 2 * *'
+  workflow_dispatch:
+
+# Declaring any permission sets the rest to none.
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: site-data
+
+defaults:
+  run:
+    # Named explicitly so pipes fail with the command that failed (-o pipefail).
+    shell: bash
+    working-directory: website
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      # master, even for a manual run started from another branch: the pull request goes
+      # to master.
+      - uses: actions/checkout@v7
+        with:
+          ref: master
+
+      - uses: actions/setup-node@v7
+        with:
+          # As pinned in website/netlify.toml and package.json.
+          node-version: 22.18.0
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          # Prebuilt binaries from Posit's package manager: seconds, not a compile.
+          use-public-rspm: true
+
+      - run: Rscript -e 'install.packages("jsonlite")'
+
+      - run: npm ci
+
+      - name: Regenerate the reference from man/
+        run: npm run --silent make:reference | tee "$RUNNER_TEMP/log.txt"
+
+      # OpenAlex being down should not hold back a reference update, so a failure here is
+      # reported in the pull request (and fails the job at the end) rather than stopping it.
+      - name: Fetch the citing publications
+        id: citations
+        continue-on-error: true
+        run: npm run --silent fetch:citations | tee -a "$RUNNER_TEMP/log.txt"
+
+      - name: See what changed
+        id: diff
+        run: |
+          if git diff --quiet HEAD -- src/data/; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+            git diff --stat HEAD -- src/data/ | tee -a "$RUNNER_TEMP/log.txt"
+          fi
+
+      # New data that breaks the tests or the build still gets its pull request, which says
+      # so; the job fails at the end so it is not missed either.
+      - name: Test
+        id: test
+        if: steps.diff.outputs.changed == 'true'
+        continue-on-error: true
+        run: npm test
+
+      - name: Build
+        id: build
+        if: steps.diff.outputs.changed == 'true'
+        continue-on-error: true
+        run: npm run build
+
+      # One branch and one open pull request at a time: a run that finds more while the
+      # last one is unmerged rewrites the branch and the description.
+      - name: Open or update the pull request
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TEST: ${{ steps.test.outcome }}
+          BUILD: ${{ steps.build.outcome }}
+          CITATIONS: ${{ steps.citations.outcome }}
+        run: |
+          branch=site-data
+          verdict() { [ "$1" = success ] && echo passed || echo failed; }
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898283+github-actions[bot]@users.noreply.github.com'
+          git switch --force-create "$branch"
+          git add src/data/reference.json src/data/citations.json
+          git commit --quiet --message 'Refresh the website reference and citations'
+          git push --force --quiet origin "$branch"
+
+          body="$RUNNER_TEMP/body.md"
+          {
+            echo 'The website data changed. It goes live on qdecr.com when this is merged.'
+            echo
+            echo '```'
+            cat "$RUNNER_TEMP/log.txt"
+            echo '```'
+            echo
+            echo "- Tests $(verdict "$TEST")"
+            echo "- Build $(verdict "$BUILD")"
+            [ "$CITATIONS" = success ] || echo '- The OpenAlex fetch failed; the citations are unchanged.'
+            echo
+            echo "From run $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID."
+          } > "$body"
+
+          number=$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh pr edit "$number" --body-file "$body"
+          else
+            gh pr create --base master --head "$branch" \
+              --title 'Refresh the website reference and citations' --body-file "$body"
+          fi
+
+      - name: Fail if something above failed
+        if: steps.citations.outcome == 'failure' || steps.test.outcome == 'failure' || steps.build.outcome == 'failure'
+        run: |
+          echo '::error::The OpenAlex fetch, the tests or the build failed; see the log above and the pull request.'
+          exit 1

@@ -1,0 +1,54 @@
+---
+// Every help page in the package, in the groups it is read in (src/lib/reference.ts).
+import Docs from '../layouts/Docs.astro'
+import { groups, referenceSidebar, topicHref } from '../lib/reference-data'
+import type { Topic } from '../lib/reference'
+import { headingId } from '../lib/toc'
+
+// A help page can document several functions; the others are named under its title.
+const others = (topic: Topic) => topic.aliases.filter((alias) => alias !== topic.name)
+const headings = groups.map((group) => ({ depth: 2, slug: headingId(group.label), text: group.label }))
+---
+
+<Docs
+  title="Reference"
+  description="Every help page in the package, generated from the package's own documentation, so it always matches the release."
+  source="tools/rd-to-json.R"
+  section="Reference"
+  sidebar={{ label: 'Reference', groups: referenceSidebar }}
+  headings={headings}
+>
+  {
+    groups.map((group) => (
+      <section class="ref-group">
+        <h2 id={headingId(group.label)}>{group.label}</h2>
+        <dl class="ref-index">
+          {group.topics.map((topic) => (
+            <>
+              <dt>
+                <a href={topicHref(topic)}>
+                  <code>{topic.name}</code>
+                </a>
+                {!topic.exported && <span class="badge">internal</span>}
+              </dt>
+              <dd>
+                {topic.title}
+                {others(topic).length > 0 && (
+                  <span class="ref-also">
+                    Covers{' '}
+                    {others(topic).map((alias, i) => (
+                      <>
+                        {i > 0 && ', '}
+                        <code>{alias}</code>
+                      </>
+                    ))}
+                  </span>
+                )}
+              </dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    ))
+  }
+</Docs>

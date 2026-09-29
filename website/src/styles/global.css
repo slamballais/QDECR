@@ -1,0 +1,1357 @@
+/*
+ * The site's base styles: elements, the page frame, and the primitives pages are built
+ * from (buttons, callouts, badges, code blocks). Values come from tokens.css.
+ *
+ * Every size is in rem so the page honours the reader's browser font size, and every
+ * width is fluid, from 320px up, so the layout survives 400% zoom without scrolling
+ * sideways. A fixed pixel width here is a bug. The one place the site uses gradients or
+ * glow is the logo; the pages around it get none.
+ */
+
+/* ---------- base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--size-body);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  /* A long function name or an unbroken path must not push the page sideways. */
+  overflow-wrap: break-word;
+  /* At least the window's height, so a short page's footer sits at the bottom. */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+main {
+  flex: 1;
+}
+
+/* The hidden attribute wins over any display a component sets. */
+[hidden] {
+  display: none !important;
+}
+
+/* Read by screen readers, not shown: status messages such as "Copied". */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The skip link moves focus here; the page itself needs no ring for that. */
+main:focus {
+  outline: none;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/*
+ * Motion is limited to colour, and even that goes for readers who ask for less.
+ */
+a,
+button,
+.button {
+  transition:
+    color 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * One focus ring for everything, in heat: the one place orange marks something a reader
+ * does rather than something the brand says. --heat is deepened in the light theme so it
+ * holds 3:1 against every background (palette.test.ts).
+ */
+:focus-visible {
+  outline: 0.1875rem solid var(--heat);
+  outline-offset: 0.125rem;
+  border-radius: 0.125rem;
+}
+
+/* ---------- the frame ---------- */
+
+.shell {
+  width: 100%;
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--space-m);
+}
+
+@media (max-width: 30rem) {
+  .shell {
+    padding-inline: var(--space-s);
+  }
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: -9999px;
+  z-index: 10;
+  padding: var(--space-xs) var(--space-s);
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+}
+
+.skip-link:focus {
+  left: var(--space-xs);
+  top: var(--space-xs);
+}
+
+/* ---------- type ---------- */
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--serif);
+  font-weight: 600;
+  /* Newsreader's optical sizes: tighter, crisper letters as the size goes up. */
+  font-optical-sizing: auto;
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  margin: var(--space-l) 0 var(--space-s);
+  text-wrap: balance;
+  /* Room under the masthead when a heading is the target of a #link. */
+  scroll-margin-top: var(--space-m);
+}
+
+h1 {
+  font-size: var(--size-h1);
+  margin-top: 0;
+}
+
+h2 {
+  font-size: var(--size-h2);
+}
+
+h3 {
+  font-size: var(--size-h3);
+}
+
+h4 {
+  font-family: var(--sans);
+  font-size: var(--size-body);
+}
+
+p,
+ul,
+ol,
+dl,
+blockquote,
+figure,
+table,
+pre {
+  margin: 0 0 var(--space-m);
+}
+
+ul,
+ol {
+  padding-inline-start: 1.4em;
+}
+
+li + li {
+  margin-top: var(--space-2xs);
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 0.0625rem;
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--accent-strong);
+  text-decoration-thickness: 0.125rem;
+}
+
+strong {
+  font-weight: 600;
+}
+
+small,
+.small {
+  font-size: var(--size-small);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.lead {
+  font-size: 1.25rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+hr {
+  border: 0;
+  border-top: 0.0625rem solid var(--rule);
+  margin: var(--space-l) 0;
+}
+
+blockquote {
+  margin-inline: 0;
+  padding-inline-start: var(--space-m);
+  border-inline-start: 0.1875rem solid var(--rule);
+  color: var(--muted);
+}
+
+/* A comfortable line of running text. Pages put their prose in this. */
+.prose {
+  max-width: var(--measure);
+}
+
+/* ---------- code ---------- */
+
+code,
+kbd,
+pre,
+samp {
+  font-family: var(--mono);
+  /* Plex Mono is large on the body; this sets it to the same visual size. */
+  font-size: 0.9em;
+}
+
+:not(pre) > code {
+  padding: 0.1em 0.3em;
+  border-radius: 0.25rem;
+  background: var(--sunken);
+  /* Function names like qdecr_fastlm() may break at underscores rather than overflow. */
+  overflow-wrap: anywhere;
+}
+
+kbd {
+  padding: 0.05em 0.35em;
+  border: 0.0625rem solid var(--rule);
+  border-bottom-width: 0.125rem;
+  border-radius: 0.25rem;
+  background: var(--surface);
+}
+
+/*
+ * A code block (src/lib/shiki.ts writes the markup): the logo's black, a header row with
+ * the language label and the copy button, and R's output (lines starting #>) and comments
+ * in the muted tone. The header is a row of its own rather than floated over the code, so
+ * the button never covers the end of a first line on a phone. Long lines scroll inside
+ * the block, never the page; the <pre> is focusable by keyboard for that reason. The
+ * syntax colours are the lattice and heat colours of the logo.
+ */
+.code-block {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  margin: 0 0 var(--space-m);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+  color: var(--code-ink);
+}
+
+.code-block pre {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: var(--space-2xs) var(--space-m) var(--space-s);
+  overflow-x: auto;
+  font-size: var(--size-code);
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+/* No label and no working button: no header row, so the code needs the top padding. */
+.code-block:not(:has(.code-lang, .code-copy:not([hidden]))) pre {
+  padding-top: var(--space-s);
+}
+
+.code-block pre code {
+  font-size: inherit;
+}
+
+.code-lang {
+  grid-column: 1;
+  padding: var(--space-2xs) var(--space-m) 0;
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--code-muted);
+}
+
+.code-copy {
+  grid-column: 2;
+  min-height: var(--target);
+  padding: 0 var(--space-m);
+  border: 0;
+  border-radius: 0 var(--radius) 0 var(--radius);
+  background: transparent;
+  color: var(--code-muted);
+  font-family: var(--sans);
+  font-size: var(--size-small);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.code-copy:hover {
+  color: var(--code-ink);
+}
+
+.code-block .output,
+.code-block .tok-comment {
+  color: var(--code-muted);
+}
+
+.code-block .tok-keyword {
+  color: var(--syntax-keyword);
+}
+
+.code-block .tok-string {
+  color: var(--syntax-string);
+}
+
+.code-block .tok-number {
+  color: var(--syntax-number);
+}
+
+.code-block .tok-function {
+  color: var(--syntax-function);
+}
+
+/* ---------- buttons and icon links ---------- */
+
+/*
+ * Buttons are for the site's own pages; links that leave it get an icon. A button is a
+ * link that looks like a control, at least 44px tall. The primary one is filled.
+ */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: var(--target);
+  padding: 0.5rem 1.1rem;
+  border: 0.125rem solid var(--accent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: var(--accent-strong);
+  border-color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+.button-primary {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.button-primary:hover {
+  background: var(--accent-strong);
+  color: var(--on-accent);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin: 0 0 var(--space-m);
+}
+
+/* A square 44px target around a 1.25rem glyph: the GitHub link, the theme toggle. */
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: var(--target);
+  height: var(--target);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  color: var(--ink);
+  background: var(--sunken);
+}
+
+.icon-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.out-icon {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-inline-start: 0.2em;
+  vertical-align: 0.05em;
+}
+
+/* The toggle shows the theme a press switches to: a moon on paper, a sun in the dark. */
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .theme-toggle .icon-sun {
+    display: block;
+  }
+
+  :root:not([data-theme='light']) .theme-toggle .icon-moon {
+    display: none;
+  }
+}
+
+:root[data-theme='dark'] .theme-toggle .icon-sun {
+  display: block;
+}
+
+:root[data-theme='dark'] .theme-toggle .icon-moon {
+  display: none;
+}
+
+/* ---------- callouts and badges ---------- */
+
+/*
+ * Three kinds, told apart by the word in the label as well as by colour: note (the accent),
+ * tip (teal-green) and warning (orange). The body stays in ink.
+ */
+.callout {
+  margin: 0 0 var(--space-m);
+  padding: var(--space-s) var(--space-m);
+  border-inline-start: 0.25rem solid var(--callout-edge);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--callout-bg);
+  --callout-edge: var(--accent);
+  --callout-bg: var(--accent-soft);
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.callout-label {
+  display: block;
+  margin-bottom: var(--space-2xs);
+  color: var(--callout-edge);
+  font-size: var(--size-small);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.callout-tip {
+  --callout-edge: var(--tip);
+  --callout-bg: var(--tip-bg);
+}
+
+.callout-warning {
+  --callout-edge: var(--warn);
+  --callout-bg: var(--warn-bg);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.1em 0.55em;
+  border: 0.0625rem solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+
+.badge-accent {
+  border-color: transparent;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* ---------- tables and figures ---------- */
+
+/* Wide tables scroll inside this wrapper, not the page. */
+.table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 0 0 var(--space-m);
+}
+
+table {
+  border-collapse: collapse;
+  font-size: var(--size-small);
+  font-variant-numeric: tabular-nums;
+}
+
+.table-wrap table {
+  margin: 0;
+}
+
+th,
+td {
+  padding: var(--space-xs) var(--space-s);
+  border-bottom: 0.0625rem solid var(--rule);
+  text-align: start;
+  vertical-align: top;
+}
+
+th {
+  font-weight: 600;
+}
+
+figure {
+  margin-inline: 0;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+figcaption {
+  margin-top: var(--space-xs);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+/* ---------- masthead ---------- */
+
+.masthead {
+  border-bottom: 0.0625rem solid var(--rule);
+}
+
+/*
+ * One row on a wide window: home, sections, tools. Below 60rem the sections take a row of
+ * their own under the other two and wrap as they need to.
+ */
+.masthead-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-m);
+  padding-block: var(--space-xs);
+}
+
+.masthead-home {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: var(--target);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.masthead-home:hover {
+  color: var(--ink);
+}
+
+.masthead-mark {
+  width: 1.9rem;
+  height: auto;
+  flex: none;
+}
+
+/* The wordmark is set as the logo sets it: Newsreader SemiBold, slightly tracked. */
+.masthead-name {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.masthead-nav {
+  flex: 1;
+}
+
+.masthead-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-2xs);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.masthead-nav li + li {
+  margin-top: 0;
+}
+
+.masthead-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  padding-inline: 0.6rem;
+  border-radius: var(--radius);
+  color: var(--ink);
+  font-size: var(--size-small);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.masthead-nav a:hover {
+  color: var(--accent);
+  background: var(--sunken);
+}
+
+.masthead-nav a[aria-current] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.masthead-tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  margin-inline-start: auto;
+}
+
+@media (max-width: 60rem) {
+  .masthead-row {
+    padding-block: var(--space-2xs);
+  }
+
+  .masthead-tools {
+    order: 2;
+  }
+
+  .masthead-nav {
+    order: 3;
+    flex-basis: 100%;
+    /* The links' own padding would indent the row; pull it back onto the text edge. */
+    margin-inline-start: -0.6rem;
+  }
+}
+
+/* ---------- docs layout ---------- */
+
+/*
+ * Sidebar, page and "On this page" (layouts/Docs.astro). The page column never grows past
+ * the measure; the side columns are in rem, so they grow with the reader's font size and
+ * the breakpoints move with them.
+ */
+.docs {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, var(--measure)) 13rem;
+  grid-template-areas: 'sidebar page toc';
+  justify-content: space-between;
+  column-gap: var(--space-l);
+  padding-top: var(--space-l);
+}
+
+.sidebar {
+  grid-area: sidebar;
+}
+
+.docs-page {
+  grid-area: page;
+  min-width: 0;
+}
+
+.toc-wide {
+  grid-area: toc;
+}
+
+/* Both side columns stay in view while the page scrolls, and scroll on their own if they
+ * are taller than the window. */
+.sidebar-wide,
+.toc-wide {
+  position: sticky;
+  top: var(--space-m);
+  align-self: start;
+  max-height: calc(100vh - 2 * var(--space-m));
+  overflow-y: auto;
+  scrollbar-width: thin;
+  /* Room for the focus ring, which the overflow would otherwise clip. */
+  padding: 0.25rem;
+  margin: -0.25rem;
+}
+
+.sidebar-narrow,
+.toc-narrow {
+  display: none;
+}
+
+@media (max-width: 72rem) {
+  .docs {
+    grid-template-columns: 14rem minmax(0, var(--measure));
+    grid-template-areas: 'sidebar page';
+    justify-content: start;
+  }
+
+  .toc-wide {
+    display: none;
+  }
+
+  .toc-narrow {
+    display: block;
+  }
+}
+
+@media (max-width: 52rem) {
+  .docs {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: 'sidebar' 'page';
+    padding-top: var(--space-s);
+  }
+
+  .sidebar-wide {
+    display: none;
+  }
+
+  .sidebar-narrow {
+    display: block;
+    margin-bottom: var(--space-m);
+  }
+}
+
+/* A page with no section around it (the changelog): the text and "On this page". */
+.docs-alone {
+  grid-template-columns: minmax(0, var(--measure)) 13rem;
+  grid-template-areas: 'page toc';
+  justify-content: start;
+}
+
+@media (max-width: 72rem) {
+  .docs-alone {
+    grid-template-columns: minmax(0, var(--measure));
+    grid-template-areas: 'page';
+  }
+}
+
+/* The disclosures that stand in for the side columns on a narrow window. */
+.sidebar-narrow,
+.toc-narrow {
+  border: 0.0625rem solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.sidebar-narrow > summary,
+.toc-narrow > summary {
+  display: flex;
+  align-items: center;
+  min-height: var(--target);
+  padding-inline: var(--space-s);
+  font-size: var(--size-small);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sidebar-narrow > summary::-webkit-details-marker,
+.toc-narrow > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* A flex summary loses the browser's triangle, so it gets a chevron: down when closed,
+ * up when open. It turns without animation (motion is limited to colour). */
+.sidebar-narrow > summary::after,
+.toc-narrow > summary::after {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-inline-start: auto;
+  border-right: 0.125rem solid currentColor;
+  border-bottom: 0.125rem solid currentColor;
+  transform: translateY(-0.15rem) rotate(45deg);
+}
+
+.sidebar-narrow[open] > summary::after,
+.toc-narrow[open] > summary::after {
+  transform: translateY(0.15rem) rotate(-135deg);
+}
+
+.sidebar-narrow > nav,
+.toc-narrow > nav {
+  padding: 0 var(--space-s) var(--space-s);
+}
+
+.toc-narrow {
+  margin-bottom: var(--space-l);
+}
+
+.docs-header {
+  margin-bottom: var(--space-l);
+}
+
+.docs-header .lead {
+  margin-bottom: 0;
+}
+
+/* The small tracked capitals that label a part of the page: the section above a title,
+ * the sidebar's groups, "On this page", a search result's section. */
+.docs-section,
+.sidebar-label,
+.toc-heading,
+.search-results .search-section {
+  color: var(--muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.docs-section {
+  margin: 0 0 var(--space-xs);
+  font-size: var(--size-small);
+}
+
+.docs-header h1 code {
+  padding: 0;
+  background: none;
+  font-size: 0.85em;
+}
+
+.docs-body > :first-child {
+  margin-top: 0;
+}
+
+/* The sidebar's lists. */
+.sidebar-search {
+  margin-bottom: var(--space-m);
+}
+
+.sidebar-search input,
+.search-form input {
+  width: 100%;
+  min-height: var(--target);
+  padding: 0 var(--space-s);
+  border: 0.0625rem solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--size-small);
+}
+
+.sidebar-search input::placeholder,
+.search-form input::placeholder {
+  color: var(--muted);
+  opacity: 1;
+}
+
+.sidebar-group + .sidebar-group {
+  margin-top: var(--space-m);
+}
+
+.sidebar-label {
+  margin: 0 0 var(--space-2xs);
+}
+
+.sidebar-label a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.sidebar-label a:hover,
+.sidebar-label a[aria-current] {
+  color: var(--accent);
+}
+
+.sidebar-items {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+  font-size: var(--size-small);
+}
+
+.sidebar-items li + li {
+  margin-top: 0;
+}
+
+.sidebar-items a {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  min-height: 2.25rem;
+  padding: 0.3rem var(--space-xs);
+  border-radius: var(--radius);
+  color: var(--ink);
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+/* Numbered lists count their steps in the margin of each link. */
+ol.sidebar-items a::before {
+  counter-increment: step;
+  content: counter(step);
+  flex: none;
+  min-width: 1.1rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.sidebar-items a:hover {
+  color: var(--accent);
+  background: var(--sunken);
+}
+
+.sidebar-items a[aria-current] {
+  color: var(--accent);
+  background: var(--accent-soft);
+  font-weight: 600;
+}
+
+.sidebar-items a[aria-current]::before {
+  color: var(--accent);
+}
+
+.sidebar-items code {
+  padding: 0;
+  background: none;
+  font-size: 0.875rem;
+}
+
+/* "On this page". */
+.toc-heading {
+  margin: 0 0 var(--space-xs);
+}
+
+.toc ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--size-small);
+}
+
+.toc ul ul {
+  padding-inline-start: var(--space-s);
+}
+
+.toc li + li,
+.toc ul ul {
+  margin-top: 0;
+}
+
+.toc a {
+  display: block;
+  padding: 0.3rem 0;
+  color: var(--muted);
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  color: var(--accent);
+}
+
+/* Where the lists are used with fingers, every link is a full 44px target: on any touch
+ * screen, whatever its width (a tablet in landscape gets the wide layout), and in the
+ * narrow disclosures, which are what a phone shows. With a mouse the wide columns keep
+ * their tighter rhythm. */
+.sidebar-narrow .sidebar-items a,
+.toc-narrow a {
+  min-height: var(--target);
+  display: flex;
+  align-items: center;
+}
+
+@media (pointer: coarse) {
+  .sidebar-items a,
+  .sidebar-label a,
+  .toc a {
+    min-height: var(--target);
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Previous and next, at the foot of the page. */
+.pager {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  gap: var(--space-s);
+  margin-top: var(--space-xl);
+}
+
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-s) var(--space-m);
+  border: 0.0625rem solid var(--rule);
+  border-radius: var(--radius);
+  text-decoration: none;
+}
+
+.pager-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.pager-next {
+  grid-column: -2;
+  text-align: end;
+}
+
+.pager-dir {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.pager-title {
+  font-weight: 600;
+}
+
+/* The changelog: a release's name set beside its number, quieter. */
+.release-name {
+  margin-inline-start: 0.3em;
+  color: var(--muted);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.changelog h2 {
+  padding-top: var(--space-m);
+  border-top: 0.0625rem solid var(--rule);
+}
+
+.changelog h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* The reference: the index of help pages, and a help page's arguments. Both are
+ * definition lists set as two columns where there is room and stacked where there is
+ * not; function names never wrap mid-word into the description. */
+.ref-index,
+.ref-arguments {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0, 1fr);
+  gap: var(--space-xs) var(--space-m);
+  margin: 0 0 var(--space-m);
+}
+
+.ref-index dt,
+.ref-arguments dt {
+  font-weight: 600;
+}
+
+.ref-index dd,
+.ref-arguments dd {
+  margin: 0;
+}
+
+.ref-arguments dd > :last-child,
+.ref-text > :last-child {
+  margin-bottom: 0;
+}
+
+.ref-index dt code,
+.ref-arguments dt code {
+  padding: 0;
+  background: none;
+  overflow-wrap: anywhere;
+}
+
+.ref-index .badge {
+  margin-inline-start: var(--space-2xs);
+  font-weight: 400;
+}
+
+.ref-also {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.ref-arguments {
+  padding-bottom: var(--space-s);
+}
+
+.ref-arguments dt,
+.ref-arguments dd {
+  padding-top: var(--space-xs);
+  border-top: 0.0625rem solid var(--rule);
+}
+
+@media (max-width: 36rem) {
+  .ref-index,
+  .ref-arguments {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0;
+  }
+
+  .ref-index dd {
+    margin-bottom: var(--space-s);
+  }
+
+  .ref-arguments dd {
+    padding-top: 0;
+    padding-bottom: var(--space-xs);
+    border-top: 0;
+  }
+}
+
+/* The tutorials index. */
+.tutorial-list {
+  padding-inline-start: 1.6em;
+}
+
+.tutorial-list li + li {
+  margin-top: var(--space-m);
+}
+
+.tutorial-list li::marker {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.tutorial-list a {
+  font-family: var(--serif);
+  font-size: var(--size-h3);
+  font-weight: 600;
+}
+
+.tutorial-list p {
+  margin: var(--space-2xs) 0 0;
+  color: var(--muted);
+}
+
+/* ---------- search ---------- */
+
+.search-page {
+  padding-block: var(--space-l) 0;
+}
+
+.search-form label {
+  display: block;
+  margin-bottom: var(--space-xs);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.search-row input {
+  flex: 1 1 12rem;
+  font-size: var(--size-body);
+}
+
+.search-status {
+  min-height: 1.65em;
+  margin-top: var(--space-s);
+}
+
+.search-results {
+  padding: 0;
+  list-style: none;
+}
+
+.search-results li + li {
+  margin-top: var(--space-m);
+}
+
+.search-results a {
+  font-weight: 600;
+}
+
+.search-results p {
+  margin: var(--space-2xs) 0 0;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.search-results mark {
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---------- footer ---------- */
+
+.site-footer {
+  margin-top: var(--space-xl);
+  padding-block: var(--space-l);
+  border-top: 0.0625rem solid var(--rule);
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s) var(--space-l);
+}
+
+.footer-grid ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 var(--space-m);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer-grid li + li {
+  margin-top: 0;
+}
+
+/* Text links in the footer are still 44px tall targets. */
+.footer-grid a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target);
+  color: var(--muted);
+}
+
+.footer-grid a:hover,
+.footer-grid a[aria-current] {
+  color: var(--accent);
+}
+
+.footer-meta {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+/* ---------- print ---------- */
+
+/* Paper gets the light tokens (tokens.css scopes dark mode to screens), no navigation,
+ * and code blocks that wrap rather than get cut off at the page edge. */
+@media print {
+  .docs {
+    display: block;
+  }
+
+  .masthead-nav,
+  .masthead-tools,
+  .skip-link,
+  .footer-grid nav,
+  .footer-out,
+  .code-copy,
+  .sidebar,
+  .toc,
+  .pager {
+    display: none;
+  }
+
+  /* No black panel on paper: code prints as ink in a ruled box. */
+  .code-block {
+    border: 0.0625rem solid var(--rule);
+    background: none;
+    color: var(--ink);
+  }
+
+  .code-block * {
+    color: inherit !important;
+  }
+
+  .code-block pre {
+    white-space: pre-wrap;
+  }
+}
+
+/* The glossary: each term above its definition, the groups apart. */
+.glossary {
+  margin: 0 0 var(--space-l);
+}
+
+.glossary dt {
+  margin-top: var(--space-m);
+  font-weight: 600;
+  /* Room above a term when a link to its anchor scrolls it to the top. */
+  scroll-margin-top: var(--space-m);
+}
+
+.glossary dd {
+  margin: var(--space-2xs) 0 0;
+}
+
+.glossary dd > :last-child {
+  margin-bottom: 0;
+}
+
+.glossary-also {
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+/* Cite: the reference set apart, and lists of references with a quieter line under each. */
+.cite-reference {
+  padding: var(--space-s) var(--space-m);
+  border-inline-start: 0.25rem solid var(--accent);
+  background: var(--surface);
+}
+
+.cite-methods,
+.publications {
+  padding-inline-start: 0;
+  list-style: none;
+}
+
+.cite-methods li + li,
+.publications li + li {
+  margin-top: var(--space-s);
+}
+
+.cite-why,
+.publication-meta {
+  display: block;
+  color: var(--muted);
+  font-size: var(--size-small);
+}
+
+.publication-title {
+  display: block;
+  font-weight: 600;
+}
+
+.publication-meta .badge {
+  margin-inline-start: var(--space-2xs);
+}

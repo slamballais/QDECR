@@ -1,0 +1,454 @@
+{
+  "paper": {
+    "openalex": "W3158050040",
+    "doi": "10.3389/fninf.2021.561689"
+  },
+  "works": [
+    {
+      "id": "W7135183655",
+      "doi": "10.1016/j.biopsych.2026.03.989",
+      "title": "Genetic Susceptibility to Schizophrenia and the Onset of Brain Developmental Change During Adolescence",
+      "year": 2026,
+      "authors": [
+        "Bing Xu",
+        "Annet Dijkzeul",
+        "Yingzhe Zhang",
+        "Isabel K. Schuurmans",
+        "Charlotte AM Cecil",
+        "Phil Hyoun Lee",
+        "Ryan L. Muetzel",
+        "Henning W. Tiemeier"
+      ],
+      "venue": "Biological Psychiatry",
+      "type": "article"
+    },
+    {
+      "id": "W7147711061",
+      "doi": "10.1093/ijnp/pyag016",
+      "title": "Structural and functional neuroimaging correlates of suicidal ideation in treatment-resistant major depressive disorder",
+      "year": 2026,
+      "authors": [
+        "Patricia Burhunduli",
+        "Katie L. Vandeloo",
+        "Zhuo Fang",
+        "Pierre Blier",
+        "Jennifer Lynne Phillips"
+      ],
+      "venue": "The International Journal of Neuropsychopharmacology",
+      "type": "article"
+    },
+    {
+      "id": "W4415724738",
+      "doi": "10.1038/s41398-025-03617-8",
+      "title": "Brain maps of general cognitive functioning: neuroimaging and neurobiological signatures",
+      "year": 2025,
+      "authors": [
+        "Joanna E. Moodie",
+        "Colin R. Buchanan",
+        "Anna Elisabeth Fürtjes",
+        "Eleanor L.S. Conole",
+        "Aleks Stolicyn",
+        "Janie Corley",
+        "Karen J. Ferguson",
+        "Maria del Carmen Valdés Hernández",
+        "Susana Muñoz Maniega",
+        "Tom C. Russ",
+        "Michelle Luciano",
+        "Heather Clare Whalley",
+        "Mark E. Bastin",
+        "Joanna Marguerite Wardlaw",
+        "Ian J. Deary",
+        "Simon R. Cox"
+      ],
+      "venue": "Translational Psychiatry",
+      "type": "article"
+    },
+    {
+      "id": "W4411507540",
+      "doi": "10.1016/j.bbr.2025.115707",
+      "title": "Brain structure and function and social exclusion reactivity in the Cyberball game",
+      "year": 2025,
+      "authors": [
+        "Rosa H. Mulder",
+        "Bing Xu",
+        "Mònica López-Vicente",
+        "Marian H. Bakermans-Kranenburg",
+        "Marinus H. van IJzendoorn",
+        "Henning W. Tiemeier",
+        "Ryan L. Muetzel"
+      ],
+      "venue": "Behavioural Brain Research",
+      "type": "article"
+    },
+    {
+      "id": "W4415597401",
+      "doi": "10.1101/2025.10.26.684698",
+      "title": "skiftiTools: An R package for reading, writing, analysing, and visualising, tract-based spatial statistics (TBSS) derived diffusion MR images",
+      "year": 2025,
+      "authors": [
+        "Jetro J. Tuulari",
+        "Aaron Barron",
+        "Ashmeet Jolly",
+        "Ilkka Suuronen",
+        "Hilyatushalihah Kholis Audah",
+        "Aylin Rosberg",
+        "Isabella Lucia Chiara Mariani Wigley",
+        "Elena Vartiainen",
+        "Silja Luotonen",
+        "Elmo P. Pulli",
+        "Hasse Karlsson",
+        "Riikka Korja",
+        "Linnéa Karlsson",
+        "Antti Airola",
+        "Jakob Seidlitz",
+        "Richard A. I. Bethlehem",
+        "Harri Merisaari"
+      ],
+      "venue": "bioRxiv (Cold Spring Harbor Laboratory)",
+      "type": "preprint"
+    },
+    {
+      "id": "W4405641072",
+      "doi": "10.1101/2024.12.17.628670",
+      "title": "Brain maps of general cognitive function and spatial correlations with neurobiological cortical profiles",
+      "year": 2024,
+      "authors": [
+        "Joanna E. Moodie",
+        "Colin R. Buchanan",
+        "Anna Elisabeth Fürtjes",
+        "Eleanor L.S. Conole",
+        "Aleks Stolicyn",
+        "Janie Corley",
+        "Karen J. Ferguson",
+        "Maria del Carmen Valdés Hernández",
+        "Susana Muñoz Maniega",
+        "Tom C. Russ",
+        "Michelle Luciano",
+        "Heather Clare Whalley",
+        "Mark E. Bastin",
+        "Joanna Marguerite Wardlaw",
+        "Ian J. Deary",
+        "Simon R. Cox"
+      ],
+      "venue": "bioRxiv (Cold Spring Harbor Laboratory)",
+      "type": "preprint"
+    },
+    {
+      "id": "W4403213674",
+      "doi": "10.1016/j.ajcnut.2024.08.018",
+      "title": "Diet quality during pregnancy, adolescent brain morphology, and cognitive performance in a population-based cohort",
+      "year": 2024,
+      "authors": [
+        "Yuchan Mou",
+        "Pauline W. Jansen",
+        "Hong Juan Sun",
+        "Tonya J.H. White",
+        "Trudy Voortman"
+      ],
+      "venue": "American Journal of Clinical Nutrition",
+      "type": "article"
+    },
+    {
+      "id": "W4402177345",
+      "doi": "10.1016/j.biopsycho.2024.108859",
+      "title": "Examining associations between brain morphology in late childhood and early alcohol or tobacco use initiation in adolescence: Findings from a large prospective cohort",
+      "year": 2024,
+      "authors": [
+        "Olga D. Boer",
+        "Ingmar H. A. Franken",
+        "Ryan L. Muetzel",
+        "Janna Cousijn",
+        "Hanan El Marroun"
+      ],
+      "venue": "Biological Psychology",
+      "type": "article"
+    },
+    {
+      "id": "W4404029273",
+      "doi": "10.1016/j.bbi.2024.11.010",
+      "title": "Sex-specific associations between maternal prenatal inflammation and offspring cortical morphology in youth: A harmonised study across four birth cohorts",
+      "year": 2024,
+      "authors": [
+        "Anni Niskanen",
+        "Aaron Barron",
+        "Hatim Azaryah",
+        "Martta Kerkelä",
+        "Elmo P. Pulli",
+        "Jetro J. Tuulari",
+        "Minna M. Lukkarinen",
+        "Linnéa Karlsson",
+        "Ryan L. Muetzel",
+        "Cristina Campoy",
+        "Andrés Catena",
+        "Henning W. Tiemeier",
+        "Golam Mohammed Khandaker",
+        "Hasse Karlsson",
+        "Juha M. Veijola",
+        "Lassi Björnholm"
+      ],
+      "venue": "Brain Behavior and Immunity",
+      "type": "article"
+    },
+    {
+      "id": "W4403915028",
+      "doi": "10.1162/imag_a_00372",
+      "title": "VertexWiseR: A package for simplified vertex-wise analyses of whole-brain and hippocampal surfaces in R",
+      "year": 2024,
+      "authors": [
+        "Charly Hugo Alexandre Billaud",
+        "Junhong Yu"
+      ],
+      "venue": "Imaging Neuroscience",
+      "type": "article"
+    },
+    {
+      "id": "W4379376208",
+      "doi": "10.1007/s12519-023-00732-8",
+      "title": "Brain structure underlying the empathizing–systemizing difference in children with autism spectrum disorder",
+      "year": 2023,
+      "authors": [
+        "Ning Pan",
+        "Li‐Zi Lin",
+        "Xin Wang",
+        "Lei Shi",
+        "Xiaoyu Xu",
+        "Yuying Jin",
+        "Si Tan",
+        "Xiaojing Song",
+        "Jing Jin",
+        "Xiuhong Li"
+      ],
+      "venue": "World Journal of Pediatrics",
+      "type": "article"
+    },
+    {
+      "id": "W4375954885",
+      "doi": "10.1007/s10654-023-01012-5",
+      "title": "Dietary patterns, brain morphology and cognitive performance in children: Results from a prospective population-based study",
+      "year": 2023,
+      "authors": [
+        "Yuchan Mou",
+        "Elisabet Blok",
+        "Mónica Barroso",
+        "Pauline W. Jansen",
+        "Tonya J.H. White",
+        "Trudy Voortman"
+      ],
+      "venue": "European Journal of Epidemiology",
+      "type": "article"
+    },
+    {
+      "id": "W4384068781",
+      "doi": "10.1038/s41398-023-02528-w",
+      "title": "Physical symptoms and brain morphology: a population neuroimaging study in 12,286 pre-adolescents",
+      "year": 2023,
+      "authors": [
+        "Fernando Estévez‐López",
+        "Hannah Hayoung Kim",
+        "Mònica López-Vicente",
+        "Jeroen S. Legerstee",
+        "Manon H. J. Hillegers",
+        "Henning W. Tiemeier",
+        "Ryan L. Muetzel"
+      ],
+      "venue": "Translational Psychiatry",
+      "type": "article"
+    },
+    {
+      "id": "W4312071328",
+      "doi": "10.1016/j.jpsychires.2022.12.018",
+      "title": "10-Year trajectories of depressive symptoms and subsequent brain health in middle-aged adults",
+      "year": 2022,
+      "authors": [
+        "Isabel K. Schuurmans",
+        "Sander Lamballais",
+        "Runyu Zou",
+        "Ryan L. Muetzel",
+        "Manon H. J. Hillegers",
+        "Charlotte A. M. Cecil",
+        "Annemarie Ida Luik"
+      ],
+      "venue": "Journal of Psychiatric Research",
+      "type": "article"
+    },
+    {
+      "id": "W4289317516",
+      "doi": "10.1001/jamanetworkopen.2022.24701",
+      "title": "Association of Maternal Tobacco Use During Pregnancy With Preadolescent Brain Morphology Among Offspring",
+      "year": 2022,
+      "authors": [
+        "Runyu Zou",
+        "Olga D. Boer",
+        "Janine F. Felix",
+        "Ryan L. Muetzel",
+        "Ingmar H. A. Franken",
+        "Charlotte A. M. Cecil",
+        "Hanan El Marroun"
+      ],
+      "venue": "JAMA Network Open",
+      "type": "article"
+    },
+    {
+      "id": "W4281677564",
+      "doi": "10.21203/rs.3.rs-1622356/v1",
+      "title": "Associations of dietary patterns with brain morphology in children: Results from a prospective population-based study",
+      "year": 2022,
+      "authors": [
+        "Yuchan Mou",
+        "Elisabet Blok",
+        "Monica Barroso",
+        "Pauline W. Jansen",
+        "Tonya J.H. White",
+        "Trudy Voortman"
+      ],
+      "venue": "Research Square",
+      "type": "preprint"
+    },
+    {
+      "id": "W4225394107",
+      "doi": "10.1101/2022.05.03.22274414",
+      "title": "Attention Deficit Hyperactivity Disorder Symptoms and Brain Morphology: Examining Confounding Bias",
+      "year": 2022,
+      "authors": [
+        "Lorenza Dall’Aglio",
+        "Hannah Hayoung Kim",
+        "Sander Lamballais",
+        "Jeremy Alexander Labrecque",
+        "Ryan L. Muetzel",
+        "Henning W. Tiemeier"
+      ],
+      "venue": "medRxiv",
+      "type": "preprint"
+    },
+    {
+      "id": "W4308637228",
+      "doi": "10.7554/elife.78002",
+      "title": "Attention-deficit hyperactivity disorder symptoms and brain morphology: Examining confounding bias",
+      "year": 2022,
+      "authors": [
+        "Lorenza Dall’Aglio",
+        "Hannah Hayoung Kim",
+        "Sander Lamballais",
+        "Jeremy Alexander Labrecque",
+        "Ryan L. Muetzel",
+        "Henning W. Tiemeier"
+      ],
+      "venue": "eLife",
+      "type": "article"
+    },
+    {
+      "id": "W4311175617",
+      "doi": "10.1002/jcv2.12114",
+      "title": "Differences in cortical morphology and child internalizing or externalizing problems: Accounting for the co‐occurrence",
+      "year": 2022,
+      "authors": [
+        "Yingzhe Zhang",
+        "Bing Xu",
+        "Hannah Hayoung Kim",
+        "Ryan L. Muetzel",
+        "Scott Delaney",
+        "Henning W. Tiemeier"
+      ],
+      "venue": "JCPP Advances",
+      "type": "article"
+    },
+    {
+      "id": "W4310281878",
+      "doi": "10.1001/jamanetworkopen.2022.44049",
+      "title": "Poverty, Cortical Structure, and Psychopathologic Characteristics in Adolescence",
+      "year": 2022,
+      "authors": [
+        "Hannah Hayoung Kim",
+        "Katie A. McLaughlin",
+        "Lori Beth Chibnik",
+        "Karestan Chase Koenen",
+        "Henning W. Tiemeier"
+      ],
+      "venue": "JAMA Network Open",
+      "type": "article"
+    },
+    {
+      "id": "W4283815276",
+      "doi": "10.1186/s13229-022-00504-7",
+      "title": "The longitudinal bidirectional relationship between autistic traits and brain morphology from childhood to adolescence: a population-based cohort study",
+      "year": 2022,
+      "authors": [
+        "Melisa Durkut",
+        "Elisabet Blok",
+        "Anna Suleri",
+        "Tonya J.H. White"
+      ],
+      "venue": "Molecular Autism",
+      "type": "article"
+    },
+    {
+      "id": "W4281923042",
+      "doi": "10.1101/2022.05.25.493390",
+      "title": "Variation in glutamate and GABA genes and their association with brain structure and chemistry in autism",
+      "year": 2022,
+      "authors": [
+        "Jilly Naaijen",
+        "Martina Arenella",
+        "Helge J. Zöllner",
+        "Nicolaas A.J. Puts",
+        "David J Lythgoe",
+        "Daniel Brandeis",
+        "Sarah Durston",
+        "Geert Poelmans",
+        "I. Hyun Ruisch",
+        "Jan K. Buitelaar"
+      ],
+      "venue": "bioRxiv (Cold Spring Harbor Laboratory)",
+      "type": "preprint"
+    },
+    {
+      "id": "W4285129253",
+      "doi": "10.2139/ssrn.4122065",
+      "title": "Variation in Glutamate and GABA Genes and Their Association with Brain Structure and Chemistry in Autism",
+      "year": 2022,
+      "authors": [
+        "Jilly Naaijen",
+        "Martina Arenella",
+        "Helge J. Zöllner",
+        "Nicolaas A.J. Puts",
+        "David J. Lythgoe",
+        "Daniel Brandeis",
+        "Sarah Durston",
+        "Geert Poelmans",
+        "I. Hyun Ruisch",
+        "Jan K. Buitelaar"
+      ],
+      "venue": "SSRN Electronic Journal",
+      "type": "preprint"
+    },
+    {
+      "id": "W3161864457",
+      "doi": "10.20944/preprints202105.0324.v1",
+      "title": "Brain Morphology and Physical Symptoms: A Population-Neuroimaging Study in 13,250 Pre-Adolescents",
+      "year": 2021,
+      "authors": [
+        "Fernando Estévez‐López",
+        "Hannah Hayoung Kim",
+        "Mònica López-Vicente",
+        "Jeroen S. Legerstee",
+        "Manon H. J. Hillegers",
+        "Henning W. Tiemeier",
+        "Ryan L. Muetzel"
+      ],
+      "venue": "Preprints.org",
+      "type": "preprint"
+    },
+    {
+      "id": "W3158050040",
+      "doi": "10.3389/fninf.2021.561689",
+      "title": "QDECR: A Flexible, Extensible Vertex-Wise Analysis Framework in R",
+      "year": 2021,
+      "authors": [
+        "Sander Lamballais",
+        "Ryan L. Muetzel"
+      ],
+      "venue": "Frontiers in Neuroinformatics",
+      "type": "article"
+    }
+  ]
+}
