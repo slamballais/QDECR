@@ -17,7 +17,7 @@ Run them from the repository root, in this order, inside Ubuntu:
 | `setup-r.sh`          |                    | Installs pak, QDECR from GitHub, magick and jsonlite into the user's R library.                                                                                              |
 | `download.sh`         | R                  | Fetches ABIDE's phenotype file, picks the subjects (`select-subjects.R`), fetches their 198 thickness maps (130 MB), links fsaverage in.                                     |
 | `run.sh`              | the licence        | Runs `run.R` for each hemisphere on a virtual display: the analysis, then `print`, `summary`, `hist` and `qdecr_snap`, keeping what R printed.                               |
-| `export.sh`           | a run              | Runs `export.R`: writes `run.json`, the printed output, the figures and the viewer's downsampled maps into the site, and reports their sizes.                                 |
+| `export.sh`           | a run              | Runs `export.R`: writes `run.json`, the printed output, the figures and the viewer's files into the site, and reports their sizes.                                          |
 
 `env.sh` holds the paths they share; set `QDECR_EXAMPLE_ROOT` to put everything somewhere
 other than `~/qdecr-example`.
@@ -43,8 +43,11 @@ put it at `~/license.txt` before `setup-freesurfer.sh`, which copies it). Nothin
   page's poster: the age stack's −log10(p) on its significant clusters, in Freeview's
   heat colours from 3 to 10, drawn at 1200 by 900 twice over and trimmed, lateral and
   medial, as `<hemi>.age.p.<view>.png`.
-- `public/viewer/`: fsaverage6's inflated surface and curvature, and the age stack's
-  t-statistic and cluster maps on it, for the viewer.
+- `public/viewer/`: for the home page's 3D viewer, per hemisphere fsaverage6's inflated
+  surface (`<hemi>.inflated.mz3`), where its sulci are (`<hemi>.sulci.mz3`, the sign of
+  the curvature, which is all the viewer draws), and the poster's map on it
+  (`<hemi>.age.p.mz3`), as gzipped MZ3, which NiiVue reads: about 0.9 MB a hemisphere.
+  The export empties the folder first, so nothing it no longer writes lingers.
 
 ## Credit
 

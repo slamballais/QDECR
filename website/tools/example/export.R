@@ -16,11 +16,12 @@
 #   run's log, head() of the data frame, print(out), stacks(out), summary(out, annot =
 #   TRUE), and FreeSurfer's own cluster summary for the age stack.
 # - src/assets/example/: the histograms and the qdecr_snap() images as PNG.
-# - public/viewer/: for the interactive viewer, the inflated surface
-#   and curvature of fsaverage6, and the age stack's t-statistic and cluster maps on it.
-#   fsaverage6's 40,962 vertices are the first 40,962 of fsaverage (the icosahedra nest),
-#   so a map is downsampled by taking its first 40,962 values; the script checks the
-#   nesting on the spheres before relying on it.
+# - public/viewer/: for the home page's viewer, per hemisphere the
+#   inflated surface of fsaverage6, where its sulci are, and the poster's map on it (the
+#   age stack's -log10(p) on its significant clusters), as gzipped MZ3, the compact format
+#   NiiVue reads. fsaverage6's 40,962 vertices are the first 40,962 of fsaverage (the
+#   icosahedra nest), so a map is downsampled by taking its first 40,962 values; the
+#   script checks the nesting on the spheres before relying on it.
 #
 # Every derived file carries ABIDE's CC BY-NC-SA licence: the credit is
 # in run.json for the pages to print, and as LICENCE.txt beside the figures and the
@@ -45,6 +46,9 @@ output_dir <- file.path(data_dir, "output")
 assets_dir <- file.path(website, "src", "assets", "example")
 viewer_dir <- file.path(website, "public", "viewer")
 for (d in c(data_dir, output_dir, assets_dir, viewer_dir)) dir.create(d, showWarnings = FALSE, recursive = TRUE)
+# Everything in public/viewer/ is the export's, so it starts empty: a file the export
+# no longer writes would otherwise stay in the site.
+unlink(list.files(viewer_dir, full.names = TRUE))
 
 hemis <- c("lh", "rh")
 runs <- lapply(hemis, function(h) jsonlite::read_json(file.path(staged, paste0(h, ".run.json"))))
@@ -143,9 +147,9 @@ software <- list(
 # ---------- each hemisphere ----------
 
 # FreeSurfer's binary triangle format: a three-byte magic number, a "created by" line
-# and an empty one, then the counts and the coordinates, all big-endian. Only the
-# vertices are needed here, to check that fsaverage6 nests in fsaverage.
-read_vertices <- function(path) {
+# and an empty one, then the counts, the coordinates and the triangles (by vertex, from
+# 0), all big-endian.
+read_surface <- function(path) {
   bytes <- readBin(path, "raw", file.size(path))
   stopifnot(identical(as.integer(bytes[1:3]), c(255L, 255L, 254L)))
   newline <- as.raw(10)
@@ -153,15 +157,41 @@ read_vertices <- function(path) {
   con <- rawConnection(bytes[-seq_len(header_end)])
   on.exit(close(con))
   n_vertices <- readBin(con, "integer", size = 4, endian = "big")
-  readBin(con, "integer", size = 4, endian = "big")
-  matrix(readBin(con, "numeric", n = n_vertices * 3, size = 4, endian = "big"), ncol = 3, byrow = TRUE)
+  n_faces <- readBin(con, "integer", size = 4, endian = "big")
+  list(
+    vertices = matrix(readBin(con, "numeric", n = n_vertices * 3, size = 4, endian = "big"), ncol = 3, byrow = TRUE),
+    faces = matrix(readBin(con, "integer", n = n_faces * 3, size = 4, endian = "big"), ncol = 3, byrow = TRUE)
+  )
 }
 
-gzip_to <- function(from, to) {
-  bytes <- readBin(from, "raw", file.size(from))
-  con <- gzfile(to, "wb")
+# FreeSurfer's curvature format: a three-byte magic number, the counts of vertices, of
+# faces and of values per vertex (1), then a big-endian float per vertex.
+read_curvature <- function(path) {
+  con <- file(path, "rb")
   on.exit(close(con))
-  writeBin(bytes, con)
+  stopifnot(identical(as.integer(readBin(con, "raw", 3)), c(255L, 255L, 255L)))
+  counts <- readBin(con, "integer", n = 3, size = 4, endian = "big")
+  stopifnot(counts[3] == 1)
+  readBin(con, "numeric", n = counts[1], size = 4, endian = "big")
+}
+
+# MZ3, Surf Ice's mesh format, which NiiVue reads: a 16-byte header (the magic number
+# "MZ", a bit field of what follows, the counts of triangles and vertices, and a count of
+# bytes to skip, 0), then the triangles as 0-based int32 triples, the vertices as float32
+# triples, and one float32 value per vertex, each part optional and all little-endian,
+# the whole gzipped. A file of values alone is a map for a mesh loaded from another.
+write_mz3 <- function(path, n_vertices, faces = NULL, vertices = NULL, values = NULL) {
+  stopifnot(is.null(vertices) || nrow(vertices) == n_vertices, is.null(values) || length(values) == n_vertices)
+  # The bits for triangles (1), vertices (2) and values (8). Summed from a mask: in R, `!`
+  # binds more loosely than `*` and `+`, so 1L * !is.null(faces) + ... would negate the rest.
+  attributes <- sum(c(1L, 2L, 8L)[c(!is.null(faces), !is.null(vertices), !is.null(values))])
+  con <- gzfile(path, "wb")
+  on.exit(close(con))
+  writeBin(c(23117L, attributes), con, size = 2, endian = "little")
+  writeBin(c(if (is.null(faces)) 0L else nrow(faces), as.integer(n_vertices), 0L), con, size = 4, endian = "little")
+  if (!is.null(faces)) writeBin(as.integer(t(faces)), con, size = 4, endian = "little")
+  if (!is.null(vertices)) writeBin(as.numeric(t(vertices)), con, size = 4, endian = "little")
+  if (!is.null(values)) writeBin(as.numeric(values), con, size = 4, endian = "little")
 }
 
 # The number of a stack by its name, as qdecr_snap() and the file names count them.
@@ -192,9 +222,14 @@ read_cluster_summary <- function(path) {
 # full one, which leaves the map almost all red. Lateral and medial views, as
 # <hemi>.age.p.<view>.png beside the figures. Needs a display, which export.sh provides.
 hero_scale <- c(3, 10)
-render_hero <- function(hemi, out, age) {
+# The map the poster draws and the viewer shows: -log10(p), 0 off the clusters.
+age_on_clusters <- function(out, age) {
   p <- qdecr_read_p(out, age)
   p$x[!qdecr_read_ocn_mask(out, age)] <- 0
+  p
+}
+render_hero <- function(hemi, out, age) {
+  p <- age_on_clusters(out, age)
   overlay <- tempfile(fileext = ".mgh")
   commands <- tempfile(fileext = ".txt")
   on.exit(unlink(c(overlay, commands)))
@@ -277,25 +312,19 @@ export_hemisphere <- function(hemi) {
     )
   }
 
-  # -- the viewer's maps, on fsaverage6 --
-  sphere7 <- read_vertices(file.path(fshome, "subjects", "fsaverage", "surf", paste0(hemi, ".sphere")))
-  sphere6 <- read_vertices(file.path(fshome, "subjects", "fsaverage6", "surf", paste0(hemi, ".sphere")))
+  # -- the viewer's files, on fsaverage6 --
+  surf <- function(subject, name) file.path(fshome, "subjects", subject, "surf", paste0(hemi, ".", name))
+  sphere7 <- read_surface(surf("fsaverage", "sphere"))$vertices
+  sphere6 <- read_surface(surf("fsaverage6", "sphere"))$vertices
   stopifnot(nrow(sphere6) == n6, isTRUE(all.equal(sphere7[seq_len(n6), ], sphere6)))
-  for (surface in c("inflated", "curv")) {
-    file.copy(
-      file.path(fshome, "subjects", "fsaverage6", "surf", paste0(hemi, ".", surface)),
-      file.path(viewer_dir, paste0(hemi, ".", surface)),
-      overwrite = TRUE
-    )
-  }
-  # The t-statistic map, and the cluster map (each vertex numbered by its cluster).
-  maps <- list(t = qdecr_read_t(out, age), clusters = qdecr_read_ocn(out, age))
-  for (map in names(maps)) {
-    temp <- tempfile(fileext = ".mgh")
-    save.mgh(as_mgh(maps[[map]]$x[seq_len(n6)]), temp)
-    gzip_to(temp, file.path(viewer_dir, paste0(hemi, ".age.", map, ".mgz")))
-    unlink(temp)
-  }
+  inflated <- read_surface(surf("fsaverage6", "inflated"))
+  write_mz3(file.path(viewer_dir, paste0(hemi, ".inflated.mz3")), n6, faces = inflated$faces, vertices = inflated$vertices)
+  # Freeview draws the folds in two greys, by the sign of the curvature (positive in a
+  # sulcus), and so does the viewer, so the sign is all it needs: 1 in a sulcus, 0 on a
+  # gyrus. A few kilobytes gzipped, where the curvature itself is 160.
+  sulci <- as.numeric(read_curvature(surf("fsaverage6", "curv")) > 0)
+  write_mz3(file.path(viewer_dir, paste0(hemi, ".sulci.mz3")), n6, values = sulci)
+  write_mz3(file.path(viewer_dir, paste0(hemi, ".age.p.mz3")), n6, values = age_on_clusters(out, age)$x[seq_len(n6)])
 
   describe <- as.data.frame(out$describe$data, stringsAsFactors = FALSE)
   list(
