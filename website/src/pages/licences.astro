@@ -1,0 +1,77 @@
+---
+// The licences of the code and fonts the site sends to the browser, in full. The list is
+// src/data/licences.ts, which the build holds to what its bundle actually carries
+// (src/integrations/licence-guard.ts); each text is read from the shipped package itself.
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import Docs from '../layouts/Docs.astro'
+import OutIcon from '../components/OutIcon.astro'
+import { noticeGroups, type Notice } from '../data/licences'
+import { headingId } from '../lib/toc'
+
+function licenceText(notice: Notice): string {
+  if ('text' in notice) return notice.text
+  const file = join(process.cwd(), 'node_modules', notice.packages[0]!, notice.file)
+  // Some files wrap their text at the width of an editor and some never do; either way
+  // the page wraps it, so only the ends are trimmed.
+  return readFileSync(file, 'utf8').replace(/\r\n/g, '\n').trim()
+}
+
+const groups = noticeGroups.map((group) => ({
+  ...group,
+  id: headingId(group.title),
+  notices: group.notices.map((notice) => ({ ...notice, id: headingId(notice.name), body: licenceText(notice) })),
+}))
+const headings = groups.flatMap((group) => [
+  { depth: 2, slug: group.id, text: group.title },
+  ...group.notices.map((notice) => ({ depth: 3, slug: notice.id, text: notice.name })),
+])
+---
+
+<Docs
+  title="Licences"
+  description="The licences of the code and fonts qdecr.com sends to your browser: the 3D viewer's, the search's and the type's."
+  source="src/data/licences.ts"
+  section="Project"
+  headings={headings}
+>
+  <p>
+    Some of the code this site sends to your browser, and all of its fonts, are other people’s work, shared
+    under licences that ask for their notice to travel with it. Bundling strips those notices from the
+    code, so they are printed here instead. The site itself is described on the <a href="/colophon">Colophon</a>.
+  </p>
+  {
+    groups.map((group) => (
+      <>
+        <h2 id={group.id}>{group.title}</h2>
+        {group.notices.map((notice) => (
+          <section aria-labelledby={notice.id}>
+            <h3 id={notice.id}>{notice.name}</h3>
+            <p class="licence-meta muted">
+              <a href={notice.url}>
+                {notice.url.replace(/^https:\/\/(github\.com\/)?/, '').replace(/\/$/, '')}
+                <OutIcon />
+              </a>{' '}
+              · {notice.licence}
+            </p>
+            <pre class="licence-text">{notice.body}</pre>
+          </section>
+        ))}
+      </>
+    ))
+  }
+</Docs>
+
+<style>
+  /* Licence files are plain text with their own line breaks; wrapped here so none of them
+     makes the page scroll sideways on a phone. */
+  .licence-text {
+    padding: var(--space-s) var(--space-m);
+    border-radius: var(--radius);
+    background: var(--sunken);
+    font-size: var(--size-code);
+    line-height: 1.5;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+</style>

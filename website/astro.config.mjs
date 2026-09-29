@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config'
 import cspGuard from './src/integrations/csp-guard.ts'
+import licenceGuard from './src/integrations/licence-guard.ts'
 import noZarrCodecs from './src/integrations/no-zarr-codecs.ts'
 import ogImages from './src/integrations/og-images.ts'
 import sitemap from './src/integrations/sitemap.ts'
@@ -21,6 +22,8 @@ export default defineConfig({
   integrations: [
     // Fails the build on any inline script or style the CSP in netlify.toml would block.
     cspGuard(),
+    // Fails the build on code in the browser's bundle whose licence /licences does not print.
+    licenceGuard(),
     // Keeps NiiVue's Zarr decoders, which the viewer never loads, out of the bundle.
     noZarrCodecs(),
     // Draws each page's share card from its title (tools/og.mjs).

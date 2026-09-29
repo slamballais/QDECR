@@ -11,7 +11,7 @@ The site is a static site made with [Astro](https://astro.build/): every page is
 - The [reference](/reference) is generated from the package's own help pages, and the [changelog](/changelog) from its `NEWS.md`, so neither can drift from the release they describe.
 - The list of [publications](/cite/publications) comes from [OpenAlex](https://openalex.org/), refreshed monthly.
 - Code is highlighted with [Shiki](https://shiki.style/) when the site is built, and search runs on [Pagefind](https://pagefind.app/), whose index is built at the same time.
-- The 3D viewer on the home page is [NiiVue](https://niivue.com/), served from this site with the rest of its code (its licence is below). It draws fsaverage6, a brain surface that comes with [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/), with the same map as the picture it replaces.
+- The 3D viewer on the home page is [NiiVue](https://niivue.com/), served from this site with the rest of its code. It draws fsaverage6, a brain surface that comes with [FreeSurfer](https://surfer.nmr.mgh.harvard.edu/), with the same map as the picture it replaces.
 - [Netlify](https://www.netlify.com/) serves the site.
 
 ## Type and colour
@@ -36,17 +36,6 @@ No analytics, no cookies, and no requests to any other site: fonts, scripts, the
 
 The site works at any width from 320 pixels up and at 400% zoom, with a keyboard, and without motion when your system asks for less.
 
-## NiiVue's licence
+## Licences
 
-The viewer's code includes NiiVue, which is shared under this licence:
-
-> BSD 2-Clause License
->
-> Copyright (c) 2021, Niivue
->
-> Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
->
-> 1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-> 2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
->
-> THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+The code and fonts this site sends to your browser from other projects, NiiVue and the libraries it uses, Pagefind, and the three typefaces, come with licences of their own, printed in full on [Licences](/licences).
