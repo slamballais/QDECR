@@ -11,12 +11,13 @@ import PaperReference from '../components/PaperReference.astro'
 import { site } from '../data/site'
 import { packageDescription } from '../lib/description'
 import { exampleRun } from '../lib/example-data'
-import poster from '../assets/example/lh.age.p.lateral.png'
+import { count, signed } from '../lib/format'
+import posterImage from '../assets/example/lh.age.p.lateral.png'
 import snapshot from '../assets/example/lh.age.coef.png'
 import histogram from '../assets/example/lh.hist-subject.png'
 
 const version = packageDescription()['Version']
-const { dataset, hemispheres } = exampleRun
+const { dataset, hemispheres, poster } = exampleRun
 
 const install = `install.packages("pak")
 pak::pak("slamballais/QDECR")
@@ -33,14 +34,11 @@ const hemisphereNames = { lh: 'Left', rh: 'Right' } as const
 const ageClusters = (['lh', 'rh'] as const).flatMap((hemi) =>
   hemispheres[hemi].clusters.filter((c) => c.stack === 'age').map((c) => ({ hemi, ...c })),
 )
-const count = (n: number) => Math.round(n).toLocaleString('en-GB')
 // Astro drops the space between an expression and text on the next line, so sentences
 // that end a line on a value are built whole.
 const runDetails = `run with QDECR ${exampleRun.software.qdecr} in ${count(hemispheres.lh.seconds)} seconds a hemisphere on ${exampleRun.model.nCores} cores`
 // Whole years, as the quick start gives them: 6 to 31.
 const ages = `${Math.floor(dataset.age.min)} to ${Math.floor(dataset.age.max)}`
-// A true minus sign, not a hyphen.
-const signed = (n: number, digits: number) => n.toFixed(digits).replace('-', '−')
 
 const features = [
   {
@@ -115,7 +113,7 @@ const jsonLd = {
       </div>
       <figure class="home-poster">
         <Picture
-          src={poster}
+          src={posterImage}
           formats={['avif', 'webp']}
           widths={[480, 720, 960, 1400]}
           sizes="(min-width: 60rem) 34rem, calc(100vw - 2rem)"
@@ -124,8 +122,9 @@ const jsonLd = {
           fetchpriority="high"
         />
         <figcaption>
-          Where the cortex thins with age, in {dataset.n} people aged {ages}: the left hemisphere's significant cluster, red at p = 0.001 and
-          yellow from p = 10<sup>−10</sup>. <a href="/tutorials/quick-start">The analysis</a>. <ExampleCredit />
+          Where the cortex thins with age, in {dataset.n} people aged {ages}: the left hemisphere's
+          significant cluster, red at p = 10<sup>−{poster.scale.from}</sup> and yellow from p =
+          10<sup>−{poster.scale.to}</sup>. <a href="/tutorials/quick-start">The analysis</a>. <ExampleCredit />
         </figcaption>
       </figure>
     </section>

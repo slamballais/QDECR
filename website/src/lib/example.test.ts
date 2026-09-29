@@ -58,6 +58,7 @@ const run = {
     nCores: 4,
   },
   hemispheres: { lh: hemisphere('lh'), rh: hemisphere('rh') },
+  poster: { scale: { from: 3, to: 10 } },
   credit: {
     licence: 'CC BY-NC-SA 3.0',
     abide: { url: 'https://fcon_1000.projects.nitrc.org/indi/abide/', cite: 'Di Martino et al. (2014)' },
@@ -104,6 +105,10 @@ test('the credit ABIDE requires is part of the run: the licence, both projects, 
   assert.throws(() => parseExampleRun({ ...run, credit: { ...run.credit, licence: 'CC BY 4.0' } }), /CC BY-NC-SA/)
   const { funding: _funding, ...credit } = run.credit
   assert.throws(() => parseExampleRun({ ...run, credit }), /funding/)
+})
+
+test("the poster's colour scale runs upward, from where colour starts to where it saturates", () => {
+  assert.throws(() => parseExampleRun({ ...run, poster: { scale: { from: 10, to: 3 } } }), /poster/)
 })
 
 test('clusters are numbered from 1 within their stack, in order', () => {

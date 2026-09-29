@@ -216,6 +216,12 @@
       ]
     }
   },
+  "poster": {
+    "scale": {
+      "from": 3,
+      "to": 10
+    }
+  },
   "credit": {
     "licence": "CC BY-NC-SA 3.0",
     "abide": {

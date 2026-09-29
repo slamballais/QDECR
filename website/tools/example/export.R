@@ -8,7 +8,7 @@
 #
 # - src/data/example/run.json: the run as src/lib/example.ts reads it, and nothing the
 #   schema does not name, since it is strict: the sample, the software, the model, the
-#   credit, and per hemisphere the stacks and the significant clusters with their size,
+#   poster's colour scale, the credit, and per hemisphere the stacks and the significant clusters with their size,
 #   cluster-wise p-value, peak and regions. The site's tables and figure captions come
 #   from here. The names are the glossary's (src/data/glossary.md).
 # - src/data/example/subjects.csv: the data frame the analysis read.
@@ -351,6 +351,7 @@ run <- list(
   software = software,
   model = model,
   hemispheres = hemispheres,
+  poster = list(scale = list(from = hero_scale[1], to = hero_scale[2])),
   credit = credit
 )
 jsonlite::write_json(run, file.path(data_dir, "run.json"), auto_unbox = TRUE, pretty = TRUE, digits = NA, na = "null")

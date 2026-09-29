@@ -145,6 +145,16 @@ export const exampleRunSchema = z.strictObject({
   /** Both hemispheres: the analysis is whole-brain, and cwp_thr splits 0.05 over the two. */
   hemispheres: z.strictObject({ lh: hemisphere, rh: hemisphere }),
   /**
+   * The home page's poster: the age stack's −log10(p) on its significant clusters, which
+   * export.R has Freeview draw. The colour scale, in −log10(p): red from `from`, yellow
+   * from `to` on. The caption says it, so it comes from the export that drew it.
+   */
+  poster: z.strictObject({
+    scale: z
+      .strictObject({ from: z.number().min(0), to: z.number() })
+      .refine((s) => s.to > s.from, { message: 'the scale must run upward, from where colour starts to where it saturates' }),
+  }),
+  /**
    * What every page showing the run has to print: the data's licence,
    * which is not the site's, the two projects that collected and preprocessed them with
    * the papers they ask to be cited, and the funding ABIDE asks to be acknowledged.
