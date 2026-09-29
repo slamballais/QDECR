@@ -7,6 +7,7 @@ import { satteri } from '@astrojs/markdown-satteri'
 import { callouts } from './src/lib/callouts.ts'
 import { tables } from './src/lib/tables.ts'
 import { figures } from './src/lib/figures.ts'
+import { externalLinks } from './src/lib/external-links.ts'
 import { exampleOutput } from './src/lib/example-output.ts'
 import { readFileSync } from 'node:fs'
 import { codeBlock, syntaxTheme } from './src/lib/shiki.ts'
@@ -36,17 +37,20 @@ export default defineConfig({
   },
   trailingSlash: 'never',
   markdown: {
-    // Sätteri is Astro's default Markdown processor; it is named here only to add four
+    // Sätteri is Astro's default Markdown processor; it is named here only to add five
     // plugins: GitHub's "> [!NOTE]" blockquotes rendered as the site's note, tip and warning
     // boxes (src/lib/callouts.ts); tables wrapped so a wide one scrolls on its own
     // (src/lib/tables.ts); a lone image set as a figure with its caption and, for the
-    // example data, its credit (src/lib/figures.ts); and code blocks marked output=<file>
-    // filled with what R printed in the example analysis (src/lib/example-output.ts).
+    // example data, its credit (src/lib/figures.ts); code blocks marked output=<file>
+    // filled with what R printed in the example analysis (src/lib/example-output.ts); and
+    // the out icon on links that leave the site, as the .astro pages have it
+    // (src/lib/external-links.ts).
     processor: satteri({
       mdastPlugins: [
         callouts(),
         tables(),
         figures(),
+        externalLinks(),
         exampleOutput({ read: (name) => readFileSync(new URL(name, exampleOutputDir), 'utf8') }),
       ],
     }),

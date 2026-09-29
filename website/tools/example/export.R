@@ -65,6 +65,8 @@ credit <- list(
     )
   ),
   pcp = list(
+    # http, not https: the site's certificate is issued for another host, so an https link
+    # shows the reader a certificate error (checked 29 Sep 2026).
     url = "http://preprocessed-connectomes-project.org/abide/",
     cite = paste(
       "Craddock C, Benhajali Y, Chu C, et al. (2013). The Neuro Bureau Preprocessing Initiative:",
