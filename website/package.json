@@ -23,6 +23,7 @@
     "@niivue/niivue": "^0.69.0",
     "@types/node": "^22.20.4",
     "astro": "^7.3.5",
+    "axe-core": "^4.13.0",
     "fontkitten": "^1.0.3",
     "pagefind": "^1.5.2",
     "satteri": "^0.10.5",
