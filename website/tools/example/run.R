@@ -16,8 +16,9 @@ hemi <- args[1]
 root <- Sys.getenv("QDECR_EXAMPLE_ROOT")
 if (!nzchar(root)) stop("QDECR_EXAMPLE_ROOT is not set: run this through run.sh, or source env.sh first.")
 results <- file.path(root, "results")
-site <- file.path(results, "site")
-dir.create(site, showWarnings = FALSE, recursive = TRUE)
+# What the site takes is staged in results/site/, for export.R.
+staged <- file.path(results, "site")
+dir.create(staged, showWarnings = FALSE, recursive = TRUE)
 
 suppressPackageStartupMessages(library(QDECR))
 # The cluster summary is a wide table; keep its rows whole in the saved text.
@@ -51,17 +52,17 @@ seconds <- as.numeric(difftime(Sys.time(), started, units = "secs"))
 
 # ---------- what R prints ----------
 # print() writes through message(), so it is captured from the message stream.
-save_text <- function(lines, name) writeLines(lines, file.path(site, paste0(hemi, ".", name, ".txt")))
+save_text <- function(lines, name) writeLines(lines, file.path(staged, paste0(hemi, ".", name, ".txt")))
 save_text(capture.output(print(out), type = "message"), "print")
 save_text(capture.output(print(stacks(out))), "stacks")
 clusters <- summary(out, annot = TRUE)
 save_text(capture.output(print(clusters, row.names = FALSE)), "summary")
-write.csv(clusters, file.path(site, paste0(hemi, ".summary.csv")), row.names = FALSE)
+write.csv(clusters, file.path(staged, paste0(hemi, ".summary.csv")), row.names = FALSE)
 
 # ---------- the histograms ----------
 # hist(out) as a reader sees it, at print resolution.
 figure <- function(name, draw) {
-  png(file.path(site, paste0(hemi, ".", name, ".png")), width = 1800, height = 1200, res = 220, type = "cairo")
+  png(file.path(staged, paste0(hemi, ".", name, ".png")), width = 1800, height = 1200, res = 220, type = "cairo")
   on.exit(dev.off())
   draw()
 }
@@ -72,22 +73,25 @@ figure("hist-subject", function() hist(out, qtype = "subject"))
 # qdecr_snap() opens Freeview on the inflated surface with the stack's map on its
 # significant clusters, screenshots four views and composes them into one image, which
 # it writes as TIFF next to the output directory. The site takes the composed image as
-# PNG. A stack with no significant cluster makes qdecr_snap() stop, which is recorded
-# rather than fatal: the right hemisphere's sex effect may well be empty.
-snapshot <- function(stack, type) {
+# PNG. The age stack's snapshots are the site's main figures, so anything wrong with
+# them stops the run; a stack with no significant cluster makes qdecr_snap() stop, and
+# for the sex stack that is recorded rather than fatal, since its effect may well be
+# empty in one hemisphere.
+snapshot <- function(stack, type, required) {
   name <- paste0(hemi, ".", stack, ".", type)
   image <- tryCatch(
     qdecr_snap(out, stack = stack, type = type, plot_brain = FALSE),
     error = function(e) {
+      if (required) stop("No snapshot for ", name, ": ", conditionMessage(e), call. = FALSE)
       message("No snapshot for ", name, ": ", conditionMessage(e))
       NULL
     }
   )
-  if (!is.null(image)) magick::image_write(image, file.path(site, paste0(name, ".png")), format = "png")
+  if (!is.null(image)) magick::image_write(image, file.path(staged, paste0(name, ".png")), format = "png")
 }
-snapshot("age", "coef")
-snapshot("age", "t")
-snapshot("sexmale", "coef")
+snapshot("age", "coef", required = TRUE)
+snapshot("age", "t", required = TRUE)
+snapshot("sexmale", "coef", required = FALSE)
 
 # ---------- the record ----------
 # What export.R needs beyond the output directory: how long the fit took, on how many
@@ -104,7 +108,7 @@ jsonlite::write_json(
     freesurfer = readLines(file.path(Sys.getenv("FREESURFER_HOME"), "build-stamp.txt"), n = 1),
     blas = sessionInfo()$BLAS
   ),
-  file.path(site, paste0(hemi, ".run.json")),
+  file.path(staged, paste0(hemi, ".run.json")),
   auto_unbox = TRUE, pretty = TRUE
 )
 save_text(capture.output(sessionInfo()), "sessionInfo")

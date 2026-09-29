@@ -1,22 +1,28 @@
 // The example analysis: the results of the one real run every output on the site comes
 // from, as tools/example/export.R writes them to src/data/example/run.json.
-// The shape is checked when the JSON is read, so that a re-export from a changed script
-// fails the build here rather than leave a page showing the wrong numbers. Kept apart
-// from example-data.ts, which imports the JSON (like reference.ts beside reference-data.ts).
+// The shape is checked when the JSON is read, strictly (a key the schema does not know
+// is an error too), so that a re-export from a changed script fails the build here
+// rather than leave a page showing the wrong numbers. Kept apart from example-data.ts,
+// which imports the JSON (like reference.ts beside reference-data.ts). The names follow
+// the glossary (src/data/glossary.md): smoothness, cluster-forming threshold,
+// cluster-wise p-value, cluster map.
 
 import { z } from 'astro/zod'
 
 /** The example's model: cortical thickness on age and sex, on controls only. */
 export const EXAMPLE_FORMULA = 'qdecr_thickness ~ age + sex'
 
-const stack = z.object({
+/** ABIDE I is shared under this licence, which every derived figure carries. */
+export const EXAMPLE_LICENCE = 'CC BY-NC-SA 3.0'
+
+const stack = z.strictObject({
   /** Its number in stacks(out), which names the files: stack2.coef.mgh. */
   number: z.number().int().min(1),
   /** The column of the design matrix, as R names it: "(Intercept)", "age", "sexmale". */
   name: z.string(),
 })
 
-const region = z.object({
+const region = z.strictObject({
   /** A region of the Desikan-Killiany atlas (aparc), as FreeSurfer names it. */
   name: z.string(),
   /** How much of the cluster lies in the region, in percent. */
@@ -25,7 +31,7 @@ const region = z.object({
   ofRegion: z.number().min(0).max(100),
 })
 
-const cluster = z.object({
+const cluster = z.strictObject({
   /** The stack the cluster belongs to, by name. */
   stack: z.string(),
   /** Its number within the stack, from 1, as mri_surfcluster numbers them. */
@@ -34,9 +40,9 @@ const cluster = z.object({
   /** Its area on the white surface. */
   sizeMm2: z.number().min(0),
   /** The cluster-wise p-value, from FreeSurfer's simulations. */
-  cwp: z.number().min(0).max(1),
+  clusterwiseP: z.number().min(0).max(1),
   /** The vertex with the strongest signal: the −log10(p) there, its number, and its region. */
-  peak: z.object({ value: z.number(), vertex: z.number().int().min(0), region: z.string() }),
+  peak: z.strictObject({ value: z.number(), vertex: z.number().int().min(0), region: z.string() }),
   /** The mean of the measure over the cluster, and of the model's coefficient and its SE. */
   meanThickness: z.number(),
   meanCoefficient: z.number(),
@@ -46,17 +52,17 @@ const cluster = z.object({
 })
 
 const hemisphere = z
-  .object({
+  .strictObject({
     /** The project's full name, which is its output directory: lh.age_sex.thickness. */
     project: z.string(),
-    vertices: z.object({
+    vertices: z.strictObject({
       /** Vertices per hemisphere of fsaverage. */
       loaded: z.number().int().min(1),
-      /** Those inside the cortex mask, where the model was fitted. */
+      /** Those inside the mask, where the model was fitted. */
       analysed: z.number().int().min(1),
     }),
-    /** The estimated smoothness of the residuals, in mm, which picks the simulation. */
-    fwhmEstimate: z.number().min(1).max(30),
+    /** The smoothness of the residuals, as a FWHM in mm, which picks the simulation. */
+    smoothness: z.number().min(1).max(30),
     /** How long the analysis took, from the call to the result. */
     seconds: z.number().min(0),
     stacks: z.array(stack).min(1),
@@ -79,27 +85,27 @@ const hemisphere = z
     }
   })
 
-export const exampleRunSchema = z.object({
+export const exampleRunSchema = z.strictObject({
   /** The day the analysis ran, YYYY-MM-DD. */
   date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   dataset: z
-    .object({
+    .strictObject({
       name: z.string(),
       /** The one ABIDE site the controls come from. */
       site: z.string(),
       /** Subjects in the analysis. */
       n: z.number().int().min(1),
-      sex: z.object({ female: z.number().int().min(0), male: z.number().int().min(0) }),
+      sex: z.strictObject({ female: z.number().int().min(0), male: z.number().int().min(0) }),
       /** Age at scan, in years. */
-      age: z.object({ min: z.number(), max: z.number(), mean: z.number(), median: z.number() }),
+      age: z.strictObject({ min: z.number(), max: z.number(), mean: z.number(), median: z.number() }),
       /** Subjects left out, with the reason, so a page can say so. */
-      excluded: z.array(z.object({ id: z.string(), reason: z.string() })),
+      excluded: z.array(z.strictObject({ id: z.string(), reason: z.string() })),
     })
     .refine((d) => d.sex.female + d.sex.male === d.n, {
       message: 'the sexes do not add up to n',
       path: ['sex'],
     }),
-  software: z.object({
+  software: z.strictObject({
     qdecr: z.string(),
     r: z.string(),
     /** FreeSurfer's build stamp, which names the release and the build. */
@@ -107,27 +113,29 @@ export const exampleRunSchema = z.object({
     os: z.string(),
     platform: z.string(),
   }),
-  model: z.object({
+  model: z.strictObject({
     formula: z.literal(EXAMPLE_FORMULA, { message: `the formula must be ${EXAMPLE_FORMULA}` }),
     measure: z.string(),
-    /** The smoothing of the maps read, in mm. */
+    /** The smoothing of the maps read, as a FWHM in mm. */
     fwhm: z.number().min(0),
-    /** The cluster-forming threshold as FreeSurfer names it: 30 for p < 0.001. */
-    mczThr: z.number(),
-    /** The cluster-wise threshold. */
-    cwpThr: z.number().min(0).max(1),
+    /** The cluster-forming threshold, a vertex-wise p-value: mcz_thr, 0.001 by default. */
+    clusterFormingThreshold: z.number().min(0).max(1),
+    /** The cluster-wise threshold: cwp_thr, 0.025 by default. */
+    clusterwiseThreshold: z.number().min(0).max(1),
     nCores: z.number().int().min(1),
   }),
   /** Both hemispheres: the analysis is whole-brain, and cwp_thr splits 0.05 over the two. */
-  hemispheres: z.object({ lh: hemisphere, rh: hemisphere }),
+  hemispheres: z.strictObject({ lh: hemisphere, rh: hemisphere }),
   /**
    * What every page showing the run has to print: the data's licence,
-   * which is not the site's, and the two projects that collected and preprocessed them.
+   * which is not the site's, the two projects that collected and preprocessed them with
+   * the papers they ask to be cited, and the funding ABIDE asks to be acknowledged.
    */
-  credit: z.object({
-    licence: z.literal('CC BY-NC-SA 3.0', { message: 'ABIDE is shared under CC BY-NC-SA 3.0' }),
-    abide: z.url(),
-    pcp: z.url(),
+  credit: z.strictObject({
+    licence: z.literal(EXAMPLE_LICENCE, { message: `ABIDE is shared under ${EXAMPLE_LICENCE}` }),
+    abide: z.strictObject({ url: z.url(), cite: z.string() }),
+    pcp: z.strictObject({ url: z.url(), cite: z.string() }),
+    funding: z.string(),
   }),
 })
 

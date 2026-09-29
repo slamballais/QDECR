@@ -36,6 +36,8 @@ put it at `~/license.txt` before `setup-freesurfer.sh`, which copies it). Nothin
   sample, the software, the model, and per hemisphere the stacks and every significant
   cluster with its size, cluster-wise p-value, peak and regions.
 - `src/data/example/subjects.csv`: the data frame the analysis read (id, age, sex, site).
+  Four columns of ABIDE's phenotype file, shared under the same licence, so that the
+  tutorials can show the data frame as it was. The downloaded surface maps stay out.
 - `src/data/example/output/`: what R printed, for the site's output blocks.
 - `src/assets/example/`: the histograms and the `qdecr_snap()` images.
 - `public/viewer/`: fsaverage6's inflated surface and curvature, and the age stack's
@@ -46,4 +48,7 @@ put it at `~/license.txt` before `setup-freesurfer.sh`, which copies it). Nothin
 The data are from the [Autism Brain Imaging Data Exchange](https://fcon_1000.projects.nitrc.org/indi/abide/)
 (ABIDE I), preprocessed and shared by the [Preprocessed Connectomes Project](http://preprocessed-connectomes-project.org/abide/),
 under [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/). Everything
-derived from them here carries that licence, whatever the site's own.
+derived from them here carries that licence, whatever the site's own; `export.R` writes
+it as `LICENCE.txt` beside the figures and the viewer's files, and into `run.json` with
+the two papers to cite and the funding ABIDE asks to be acknowledged, which the
+Colophon prints.

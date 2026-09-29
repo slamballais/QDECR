@@ -72,6 +72,9 @@ members=(
   './freesurfer/lib/vtk/*'
   './freesurfer/subjects/fsaverage/surf/*'
   './freesurfer/subjects/fsaverage/label/*'
+  # The viewer's mesh (export.R uses fsaverage6) and the coarser fsaverage5, kept so
+  # that the viewer can move to the smaller one, should its size budget call for it,
+  # without another pass over the tarball.
   './freesurfer/subjects/fsaverage6/surf/*'
   './freesurfer/subjects/fsaverage6/label/*'
   './freesurfer/subjects/fsaverage5/surf/*'

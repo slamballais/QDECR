@@ -6,10 +6,11 @@
 # export.sh calls it. From results/ (run.sh) and data/ (download.sh) under
 # QDECR_EXAMPLE_ROOT it writes, relative to website/:
 #
-# - src/data/example/run.json: the run as src/lib/example.ts reads it: the sample, the
-#   software, the model, and per hemisphere the stacks and the significant clusters with
-#   their size, cluster-wise p-value, peak and regions. The site's tables and figures
-#   captions come from here.
+# - src/data/example/run.json: the run as src/lib/example.ts reads it, and nothing the
+#   schema does not name, since it is strict: the sample, the software, the model, the
+#   credit, and per hemisphere the stacks and the significant clusters with their size,
+#   cluster-wise p-value, peak and regions. The site's tables and figure captions come
+#   from here. The names are the glossary's (src/data/glossary.md).
 # - src/data/example/subjects.csv: the data frame the analysis read.
 # - src/data/example/output/: what R printed, as text, for the site's output blocks: the
 #   run's log, print(out), stacks(out), summary(out, annot = TRUE), and FreeSurfer's own
@@ -21,8 +22,9 @@
 #   so a map is downsampled by taking its first 40,962 values; the script checks the
 #   nesting on the spheres before relying on it.
 #
-# Every derived file carries ABIDE's CC BY-NC-SA licence; the credit is
-# in run.json for the pages to print.
+# Every derived file carries ABIDE's CC BY-NC-SA licence: the credit is
+# in run.json for the pages to print, and as LICENCE.txt beside the figures and the
+# viewer's files.
 
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) != 1) stop("usage: export.R <repository root>")
@@ -30,10 +32,12 @@ repo <- args[1]
 root <- Sys.getenv("QDECR_EXAMPLE_ROOT")
 if (!nzchar(root)) stop("QDECR_EXAMPLE_ROOT is not set: run this through export.sh, or source env.sh first.")
 fshome <- Sys.getenv("FREESURFER_HOME")
+if (!nzchar(fshome)) stop("FREESURFER_HOME is not set: run this through export.sh, or source env.sh first.")
 
 suppressPackageStartupMessages(library(QDECR))
 
 results <- file.path(root, "results")
+# What run.R staged for the site.
 staged <- file.path(results, "site")
 website <- file.path(repo, "website")
 data_dir <- file.path(website, "src", "data", "example")
@@ -45,6 +49,50 @@ for (d in c(data_dir, output_dir, assets_dir, viewer_dir)) dir.create(d, showWar
 hemis <- c("lh", "rh")
 runs <- lapply(hemis, function(h) jsonlite::read_json(file.path(staged, paste0(h, ".run.json"))))
 names(runs) <- hemis
+
+# ---------- the credit ----------
+# ABIDE I's terms: non-commercial research use under CC BY-NC-SA, the dataset named,
+# and its funding acknowledged; the PCP asks for its abstract to be cited.
+
+credit <- list(
+  licence = "CC BY-NC-SA 3.0",
+  abide = list(
+    url = "https://fcon_1000.projects.nitrc.org/indi/abide/",
+    cite = paste(
+      "Di Martino A, Yan C-G, Li Q, et al. (2014). The autism brain imaging data exchange:",
+      "towards a large-scale evaluation of the intrinsic brain architecture in autism.",
+      "Molecular Psychiatry 19, 659-667. https://doi.org/10.1038/mp.2013.78"
+    )
+  ),
+  pcp = list(
+    url = "http://preprocessed-connectomes-project.org/abide/",
+    cite = paste(
+      "Craddock C, Benhajali Y, Chu C, et al. (2013). The Neuro Bureau Preprocessing Initiative:",
+      "open sharing of preprocessed neuroimaging data and derivatives.",
+      "Frontiers in Neuroinformatics, Neuroinformatics 2013. https://doi.org/10.3389/conf.fninf.2013.09.00041"
+    )
+  ),
+  funding = paste(
+    "Primary support for the work by Adriana Di Martino was provided by the NIMH (K23MH087770)",
+    "and the Leon Levy Foundation. Primary support for the work by Michael P. Milham and the INDI",
+    "team was provided by gifts from Joseph P. Healy and the Stavros Niarchos Foundation to the",
+    "Child Mind Institute, as well as by an NIMH award to MPM (R03MH096321)."
+  )
+)
+
+credit_text <- c(
+  "The files in this directory are derived from ABIDE I, as preprocessed by the",
+  "Preprocessed Connectomes Project, and carry that data's licence, CC BY-NC-SA 3.0,",
+  "whatever the site's own.",
+  "",
+  paste0("ABIDE: ", credit$abide$url),
+  paste0("  ", credit$abide$cite),
+  paste0("PCP: ", credit$pcp$url),
+  paste0("  ", credit$pcp$cite),
+  "",
+  credit$funding
+)
+for (d in c(assets_dir, viewer_dir)) writeLines(credit_text, file.path(d, "LICENCE.txt"))
 
 # ---------- the sample ----------
 
@@ -112,15 +160,20 @@ gzip_to <- function(from, to) {
 # The number of a stack by its name, as qdecr_snap() and the file names count them.
 stack_number <- function(out, name) which(stacks(out) == name)
 
-# mri_surfcluster's summary table for a stack: comment lines, then one row per cluster.
-# A stack with no cluster has no rows, which read.table reports as an error.
+# mri_surfcluster's summary table for a stack: comment lines, then one row per cluster,
+# none for a stack without clusters. Only a malformed row is an error.
+cluster_summary_columns <- c(
+  "cluster", "max", "vtxMax", "sizeMm2", "mniX", "mniY", "mniZ",
+  "cwp", "cwpLow", "cwpHi", "nVtxs", "wghtVtx", "annot"
+)
 read_cluster_summary <- function(path) {
-  columns <- c("cluster", "max", "vtxMax", "sizeMm2", "mniX", "mniY", "mniZ", "cwp", "cwpLow", "cwpHi", "nVtxs", "wghtVtx", "annot")
-  rows <- tryCatch(
-    read.table(path, comment.char = "#", header = FALSE, stringsAsFactors = FALSE, col.names = columns),
-    error = function(e) NULL
-  )
-  if (is.null(rows)) as.data.frame(setNames(replicate(length(columns), logical(0), simplify = FALSE), columns)) else rows
+  lines <- readLines(path)
+  rows <- lines[!grepl("^#", lines) & nzchar(trimws(lines))]
+  if (length(rows) == 0) {
+    empty <- as.data.frame(setNames(replicate(length(cluster_summary_columns), logical(0), simplify = FALSE), cluster_summary_columns))
+    return(empty)
+  }
+  read.table(text = rows, header = FALSE, stringsAsFactors = FALSE, col.names = cluster_summary_columns)
 }
 
 clean_log <- function(path) {
@@ -155,24 +208,25 @@ export_hemisphere <- function(hemi) {
   # QDECR's summary gives the means over each cluster and the regions it lies in;
   # mri_surfcluster's gives the size, the cluster-wise p-value and the peak. The
   # regions come from the same internal function summary() uses, whole rather than as
-  # the strings it prints.
+  # the strings it prints. Both list the clusters in the same order: stack by stack,
+  # numbered as the cluster map numbers them.
   summary_rows <- summary(out, annot = FALSE)
   regions <- QDECR:::qdecr_clusters(out)
   clusters <- list()
   for (i in seq_len(nrow(summary_rows))) {
     row <- summary_rows[i, ]
     stack <- stack_number(out, row$variable)
-    fs <- read_cluster_summary(out$stack$cluster.summary[[stack]])
-    fs <- fs[fs$cluster == row$cluster, ]
-    stopifnot(nrow(fs) == 1, fs$nVtxs == row$n_vertices)
+    summary_fs <- read_cluster_summary(out$stack$cluster.summary[[stack]])
+    summary_fs <- summary_fs[summary_fs$cluster == row$cluster, ]
+    stopifnot(nrow(summary_fs) == 1, summary_fs$nVtxs == row$n_vertices)
     top <- head(regions[[i]], 3)
     clusters[[i]] <- list(
       stack = row$variable,
       cluster = row$cluster,
       nVertices = row$n_vertices,
-      sizeMm2 = round(fs$sizeMm2, 1),
-      cwp = fs$cwp,
-      peak = list(value = round(fs$max, 3), vertex = fs$vtxMax, region = fs$annot),
+      sizeMm2 = round(summary_fs$sizeMm2, 1),
+      clusterwiseP = summary_fs$cwp,
+      peak = list(value = round(summary_fs$max, 3), vertex = summary_fs$vtxMax, region = summary_fs$annot),
       meanThickness = signif(row$mean_thickness, 4),
       meanCoefficient = signif(row$mean_coefficient, 4),
       meanSe = signif(row$mean_se, 4),
@@ -191,10 +245,11 @@ export_hemisphere <- function(hemi) {
       overwrite = TRUE
     )
   }
-  for (map in c("t", "ocn")) {
-    full <- if (map == "t") qdecr_read_t(out, age) else qdecr_read_ocn(out, age)
+  # The t-statistic map, and the cluster map (each vertex numbered by its cluster).
+  maps <- list(t = qdecr_read_t(out, age), clusters = qdecr_read_ocn(out, age))
+  for (map in names(maps)) {
     temp <- tempfile(fileext = ".mgh")
-    save.mgh(as_mgh(full$x[seq_len(n6)]), temp)
+    save.mgh(as_mgh(maps[[map]]$x[seq_len(n6)]), temp)
     gzip_to(temp, file.path(viewer_dir, paste0(hemi, ".age.", map, ".mgz")))
     unlink(temp)
   }
@@ -206,12 +261,10 @@ export_hemisphere <- function(hemi) {
       loaded = as.integer(describe$value[describe$name == "Vertices loaded"]),
       analysed = sum(out$post$final_mask)
     ),
-    fwhmEstimate = as.numeric(out$post$fwhm_est),
+    smoothness = as.numeric(out$post$fwhm_est),
     seconds = run$seconds,
     stacks = data.frame(number = seq_along(stacks(out)), name = stacks(out)),
-    clusters = clusters,
-    # Not in the schema, for the record: the call as QDECR printed it.
-    call = out$describe$call[out$describe$call[, "name"] == "qdecr_fastlm call", "value"]
+    clusters = clusters
   )
 }
 
@@ -221,15 +274,31 @@ names(hemispheres) <- hemis
 # ---------- the model ----------
 
 lh <- qdecr_load(file.path(results, runs$lh$project))
-mcz <- as.numeric(sub(".*\\.th(\\d+)\\..*", "\\1", lh$stack$cluster.summary[[1]]))
-call <- hemispheres$lh$call
-cwp <- if (grepl("cwp_thr *= *", call)) as.numeric(sub(".*cwp_thr *= *([0-9.]+).*", "\\1", call)) else 0.025
+
+# FreeSurfer codes the cluster-forming threshold in the file names as th13 to th40, the
+# p-values QDECR accepts for mcz_thr (R/qdecr_check.R).
+cluster_forming_thresholds <- c("13" = 0.05, "20" = 0.01, "23" = 0.005, "30" = 0.001, "33" = 0.0005, "40" = 0.0001)
+threshold_code <- sub(".*\\.th(\\d+)\\..*", "\\1", lh$stack$cluster.summary[[1]])
+cluster_forming <- cluster_forming_thresholds[[threshold_code]]
+
+# The result does not store cwp_thr: QDECR keeps it only in the call, which the result
+# holds as text. So it is read back from there: a number, or the default when the call
+# left it out. A variable in its place is not a number, and that stops the export rather
+# than record a guess.
+call_text <- lh$describe$call[lh$describe$call[, "name"] == "qdecr_fastlm call", "value"]
+clusterwise <- if (grepl("cwp_thr *= *", call_text)) {
+  suppressWarnings(as.numeric(sub(".*cwp_thr *= *([^,)]+).*", "\\1", call_text)))
+} else {
+  0.025
+}
+if (is.na(clusterwise)) stop("cwp_thr in the call is not a number: ", call_text)
+
 model <- list(
   formula = paste(deparse(formula(lh)), collapse = ""),
   measure = lh$input$measure,
   fwhm = lh$input$fwhm,
-  mczThr = mcz,
-  cwpThr = cwp,
+  clusterFormingThreshold = cluster_forming,
+  clusterwiseThreshold = clusterwise,
   nCores = lh$input$n_cores
 )
 
@@ -239,12 +308,7 @@ run <- list(
   software = software,
   model = model,
   hemispheres = hemispheres,
-  credit = list(
-    licence = "CC BY-NC-SA 3.0",
-    abide = "https://fcon_1000.projects.nitrc.org/indi/abide/",
-    pcp = "http://preprocessed-connectomes-project.org/abide/",
-    note = "Every figure and number derived from these data carries ABIDE's licence."
-  )
+  credit = credit
 )
 jsonlite::write_json(run, file.path(data_dir, "run.json"), auto_unbox = TRUE, pretty = TRUE, digits = NA)
 
