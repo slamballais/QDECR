@@ -75,8 +75,10 @@ members=(
   './freesurfer/subjects/fsaverage/surf/*'
   './freesurfer/subjects/fsaverage/label/*'
   # mri_surfcluster reads the subject's Talairach transform, for the MNI coordinates of
-  # each cluster's peak in its summary, and exits without it.
+  # each cluster's peak in its summary, and the header of the orig volume to correct
+  # it with, and exits without either.
   './freesurfer/subjects/fsaverage/mri/transforms/talairach.xfm'
+  './freesurfer/subjects/fsaverage/mri/orig.mgz'
   # The viewer's mesh (export.R uses fsaverage6) and the coarser fsaverage5, kept so
   # that the viewer can move to the smaller one, should its size budget call for it,
   # without another pass over the tarball.
