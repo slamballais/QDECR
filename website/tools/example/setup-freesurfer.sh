@@ -55,7 +55,9 @@ fi
 
 # Members are named ./freesurfer/...; the two leading parts are dropped so that
 # $FREESURFER_HOME/bin/mris_fwhm is where FreeSurfer's own setup expects it. The list
-# is kept in the install, in slim-install.txt, which also marks the extraction as done.
+# is kept in the install, in slim-install.txt, which also marks the extraction as done:
+# when the list here differs from the recorded one, the extraction runs again, so a
+# member added to this script reaches an existing install too.
 members=(
   './freesurfer/SetUpFreeSurfer.sh'
   './freesurfer/FreeSurferEnv.sh'
@@ -72,6 +74,9 @@ members=(
   './freesurfer/lib/vtk/*'
   './freesurfer/subjects/fsaverage/surf/*'
   './freesurfer/subjects/fsaverage/label/*'
+  # mri_surfcluster reads the subject's Talairach transform, for the MNI coordinates of
+  # each cluster's peak in its summary, and exits without it.
+  './freesurfer/subjects/fsaverage/mri/transforms/talairach.xfm'
   # The viewer's mesh (export.R uses fsaverage6) and the coarser fsaverage5, kept so
   # that the viewer can move to the smaller one, should its size budget call for it,
   # without another pass over the tarball.
@@ -83,12 +88,13 @@ members=(
   './freesurfer/average/mult-comp-cor/fsaverage/rh/cortex/*/abs/*'
 )
 record="$FREESURFER_HOME/slim-install.txt"
-if [ ! -f "$record" ]; then
+wanted=$(printf '  %s\n' "${members[@]}")
+if [ ! -f "$record" ] || [ "$(tail -n +2 "$record")" != "$wanted" ]; then
   echo "Extracting the slim install into $FREESURFER_HOME (one pass over the tarball, a few minutes)"
   tar -xzf "$tarball" -C "$FREESURFER_HOME" --strip-components=2 --wildcards "${members[@]}"
   {
     echo "A slim FreeSurfer install made by tools/example/setup-freesurfer.sh on $(date -I), from $FS_TARBALL:"
-    printf '  %s\n' "${members[@]}"
+    echo "$wanted"
   } > "$record"
 fi
 echo "FreeSurfer build: $(cat "$FREESURFER_HOME/build-stamp.txt")"
