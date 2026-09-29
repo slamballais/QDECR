@@ -10,7 +10,8 @@
     "test": "node --test \"src/**/*.test.ts\"",
     "make:logo": "node tools/make-logo.mjs",
     "fetch:citations": "node tools/fetch-citations.ts",
-    "make:reference": "Rscript tools/rd-to-json.R"
+    "make:reference": "Rscript tools/rd-to-json.R",
+    "serve": "node tools/serve.ts"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
