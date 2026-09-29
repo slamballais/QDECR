@@ -15,6 +15,9 @@ export const EXAMPLE_FORMULA = 'qdecr_thickness ~ age + sex'
 /** ABIDE I is shared under this licence, which every derived figure carries. */
 export const EXAMPLE_LICENCE = 'CC BY-NC-SA 3.0'
 
+/** Where the site credits the data in full: the licence, the papers, the funding. */
+export const EXAMPLE_CREDIT_HREF = '/colophon#the-example-data'
+
 const stack = z.strictObject({
   /** Its number in stacks(out), which names the files: stack2.coef.mgh. */
   number: z.number().int().min(1),

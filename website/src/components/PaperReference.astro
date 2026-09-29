@@ -1,0 +1,19 @@
+---
+/**
+ * The QDECR paper as a reference in Vancouver style, its DOI linked: on the Cite page and
+ * in the home page's citation box. The details are in src/data/site.ts.
+ */
+import OutIcon from './OutIcon.astro'
+import { site } from '../data/site'
+
+const { paper } = site
+const year = paper.published.slice(0, 4)
+// One string each, because Astro drops the spaces between expressions on separate lines.
+const initials = (given: string) => given.replace(/[^A-Z]/g, '')
+const authorsAndTitle = `${paper.authors.map((a) => `${a.family} ${initials(a.given)}`).join(', ')}. ${paper.title}.`
+const yearVolumeArticle = `. ${year};${paper.volume}:${paper.article}. `
+---
+
+<p class="cite-reference">
+  {`${authorsAndTitle} `}<em>{paper.journal}</em>{yearVolumeArticle}<a href={paper.url}>doi:{paper.doi}<OutIcon /></a>
+</p>

@@ -10,15 +10,16 @@
 
 import { defineMdastPlugin } from 'satteri'
 import type { Image, PhrasingContent } from 'mdast'
-import { EXAMPLE_LICENCE } from './example.ts'
+import { EXAMPLE_CREDIT_HREF, EXAMPLE_LICENCE } from './example.ts'
 
 /** Where tools/example/export.R writes the figures. */
 const EXAMPLE_ASSET = /(^|\/)assets\/example\//
 
-/** The credit, linking to the Colophon's section on the example data. */
+/** The credit, linking to the Colophon's section on the example data. ExampleCredit.astro
+ * says the same for the .astro pages. */
 const credit = (): PhrasingContent[] => [
   { type: 'text', value: 'Data: ABIDE I, ' },
-  { type: 'link', url: '/colophon#the-example-data', children: [{ type: 'text', value: EXAMPLE_LICENCE }] },
+  { type: 'link', url: EXAMPLE_CREDIT_HREF, children: [{ type: 'text', value: EXAMPLE_LICENCE }] },
   { type: 'text', value: '.' },
 ]
 

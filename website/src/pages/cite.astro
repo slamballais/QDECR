@@ -5,6 +5,7 @@
 import Docs from '../layouts/Docs.astro'
 import CodeBlock from '../components/CodeBlock.astro'
 import OutIcon from '../components/OutIcon.astro'
+import PaperReference from '../components/PaperReference.astro'
 import { site } from '../data/site'
 import { citingWorks as works } from '../lib/citations-data'
 import { packageDescription } from '../lib/description'
@@ -12,11 +13,6 @@ import { packageDescription } from '../lib/description'
 const { paper } = site
 const version = packageDescription()['Version']
 const year = paper.published.slice(0, 4)
-// The reference in Vancouver style, as one string: Astro drops the spaces between
-// expressions on separate lines.
-const initials = (given: string) => given.replace(/[^A-Z]/g, '')
-const authorsAndTitle = `${paper.authors.map((a) => `${a.family} ${initials(a.given)}`).join(', ')}. ${paper.title}.`
-const yearVolumeArticle = `. ${year};${paper.volume}:${paper.article}. `
 
 // The title is written out rather than taken from paper.title: BibTeX needs the braces
 // around QDECR and R, or styles that lower-case titles print "qdecr" and "r".
@@ -91,9 +87,7 @@ const methods = [
   <script is:inline slot="head" type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
   <h2 id="the-paper">The paper</h2>
-  <p class="cite-reference">
-    {`${authorsAndTitle} `}<em>{paper.journal}</em>{yearVolumeArticle}<a href={paper.url}>doi:{paper.doi}<OutIcon /></a>
-  </p>
+  <PaperReference />
   <p>
     The paper is open access. It describes why QDECR was written, to bring R's modelling, imputed
     data and samples of thousands to surface-based analysis, and how its modules fit together.
