@@ -85,7 +85,7 @@ Version 0.8.0 is the first update after public release. It fixes a bunch of mist
 
 # QDECR 0.7.0: OHBM
 
-Version 0.7.0 is the first version that is publically released. It is also the version that was presented at OHBM 2019 and was thus named "OHBM". As we do not have any formal news for versions before 0.7.0, we will keep it brief.
+Version 0.7.0 is the first version that is publicly released. It is also the version that was presented at OHBM 2019 and was thus named "OHBM". As we do not have any formal news for versions before 0.7.0, we will keep it brief.
 
 ## New functions and features
 
