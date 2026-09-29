@@ -146,6 +146,10 @@ Estimated smoothness is 34, which is really high. Reduced to 30.
 
 Not an error. FreeSurfer's simulations go up to 30 mm, so QDECR uses the smoothest one there is. Smoothness this high often means the data were smoothed heavily beforehand, or that something is systematically wrong with some subjects' data; look at `hist(out, qtype = "subject")` for outliers.
 
+### The analysis hangs, using no CPU
+
+QDECR stops making progress part-way through a stage, with several R processes alive but idle. The worker processes talk to the main one over local network connections, and this is what it looks like when one of those connections stalls. We have seen it in WSL with mirrored networking, which has a known fault of this kind: [keep WSL's default NAT mode](/get-started#windows-through-wsl2), or run with `n_cores = 1`, which needs no worker for most steps. Elsewhere, a firewall or security software that interferes with connections to `localhost` is the thing to look at. Stop R, delete the files left in `dir_tmp`, and run again.
+
 ## Frequently asked questions
 
 ### Do I need to know R?

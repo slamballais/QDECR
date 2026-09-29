@@ -89,6 +89,7 @@ sudo apt install r-base r-base-dev libcurl4-openssl-dev libmagick++-dev \
 memory=24GB
 ```
 
+- **Keep WSL's default networking.** R's worker processes talk to each other over local network connections, and WSL's mirrored networking mode (`networkingMode=mirrored` in `.wslconfig`) has a known fault that stalls such connections under load: an analysis with `n_cores` above 1 then hangs, idle, part-way through. In NAT mode, the default, it runs through. If you need mirrored mode for other work, run QDECR with `n_cores = 1`.
 - On Windows 11, Freeview's windows open on the Windows desktop by themselves, so `freeview()` and `qdecr_snap()` work as they do on Linux.
 - An R installed on the Windows side cannot run QDECR, even pointed at the same files.
 
