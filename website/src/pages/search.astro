@@ -25,8 +25,8 @@ import Base from '../layouts/Base.astro'
       <p>Search runs in the browser and needs JavaScript. The guide's sidebar lists every page.</p>
     </noscript>
   </div>
+  {/* Inside <Base>: a script after it would be written after </html>, which is invalid. */}
+  <script>
+    import '../scripts/search'
+  </script>
 </Base>
-
-<script>
-  import '../scripts/search'
-</script>
