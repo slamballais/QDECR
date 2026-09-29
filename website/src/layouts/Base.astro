@@ -5,12 +5,10 @@
  * table of contents) wrap this one rather than repeat it.
  */
 
-// Self-hosted fonts (Fontsource): no requests to a font CDN. Plex Sans and Newsreader are
-// variable, so one file per style covers every weight; Plex Mono comes in the two weights
-// code uses.
-import '@fontsource-variable/ibm-plex-sans'
-import '@fontsource-variable/ibm-plex-sans/wght-italic.css'
-import '@fontsource-variable/newsreader/opsz.css'
+// Self-hosted fonts: no requests to a font CDN. Plex Sans and Newsreader are variable, cut
+// down to the weights and sizes the site uses (tools/subset-fonts.mjs writes fonts.css and
+// the files); Plex Mono comes from Fontsource in the two weights code uses.
+import '../styles/fonts.css'
 import '@fontsource/ibm-plex-mono/400.css'
 import '@fontsource/ibm-plex-mono/600.css'
 // The latin files of the text and heading faces, preloaded from <head>. Without this the
@@ -18,8 +16,8 @@ import '@fontsource/ibm-plex-mono/600.css'
 // later, and a moment of fallback type. `?url` resolves to the same hashed file the
 // stylesheet references, so nothing is fetched twice. The mono stays lazy: many pages
 // open with prose, not code.
-import plexSansUrl from '@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2?url'
-import newsreaderUrl from '@fontsource-variable/newsreader/files/newsreader-latin-opsz-normal.woff2?url'
+import plexSansUrl from '../assets/fonts/ibm-plex-sans-latin-wght-normal.woff2?url'
+import newsreaderUrl from '../assets/fonts/newsreader-latin-opsz-normal.woff2?url'
 import tokensCss from '../styles/tokens.css?raw'
 import '../styles/tokens.css'
 import '../styles/global.css'

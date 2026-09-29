@@ -9,6 +9,7 @@
     "check": "astro check",
     "test": "node --test \"src/**/*.test.ts\"",
     "make:logo": "node tools/make-logo.mjs",
+    "make:fonts": "node tools/subset-fonts.mjs",
     "fetch:citations": "node tools/fetch-citations.ts",
     "make:reference": "Rscript tools/rd-to-json.R",
     "serve": "node tools/serve.ts"
@@ -28,6 +29,7 @@
     "sharp": "^0.35.3",
     "shiki": "^4.4.3",
     "smol-toml": "^1.9.0",
+    "subset-font": "^2.9.0",
     "typescript": "^6.0.3"
   },
   "engines": {
