@@ -3,9 +3,7 @@
     {
       "name": "as_mgh",
       "slug": "as_mgh",
-      "aliases": [
-        "as_mgh"
-      ],
+      "aliases": ["as_mgh"],
       "exported": true,
       "title": "Create an object that is structured like an mgh object",
       "source": "R/io_mgh.R",
@@ -58,9 +56,7 @@
     {
       "name": "bsfbm2mgh",
       "slug": "bsfbm2mgh",
-      "aliases": [
-        "bsfbm2mgh"
-      ],
+      "aliases": ["bsfbm2mgh"],
       "exported": true,
       "title": "Save out an MGH file from a big matrix",
       "source": "R/io_mgh.R",
@@ -93,17 +89,7 @@
     {
       "name": "fbm_functions_from_qdecr",
       "slug": "fbm_functions_from_qdecr",
-      "aliases": [
-        "fbm_functions_from_qdecr",
-        "fbm_row_mean",
-        "fbm_col_mean",
-        "fbm_row_is_0",
-        "fbm_col_is_0",
-        "fbm_row_sum",
-        "fbm_col_sum",
-        "fbm_row_sd",
-        "fbm_col_sd"
-      ],
+      "aliases": ["fbm_functions_from_qdecr", "fbm_row_mean", "fbm_col_mean", "fbm_row_is_0", "fbm_col_is_0", "fbm_row_sum", "fbm_col_sum", "fbm_row_sd", "fbm_col_sd"],
       "exported": true,
       "title": "fbm functions from qdecr",
       "source": "R/FBM_functions.R",
@@ -148,9 +134,7 @@
     {
       "name": "formula.vw_fastlm",
       "slug": "formula-vw_fastlm",
-      "aliases": [
-        "formula.vw_fastlm"
-      ],
+      "aliases": ["formula.vw_fastlm"],
       "exported": true,
       "title": "Grabs the formula from qdecr_fastlm output",
       "source": "R/summarizing.R",
@@ -179,9 +163,7 @@
     {
       "name": "freeview",
       "slug": "freeview",
-      "aliases": [
-        "freeview"
-      ],
+      "aliases": ["freeview"],
       "exported": true,
       "title": "Opens Freeview",
       "source": "R/plotting.R",
@@ -222,9 +204,7 @@
     {
       "name": "hist.vw",
       "slug": "hist-vw",
-      "aliases": [
-        "hist.vw"
-      ],
+      "aliases": ["hist.vw"],
       "exported": true,
       "title": "Histograms of the vertex measures",
       "source": "R/plotting.R",
@@ -265,9 +245,7 @@
     {
       "name": "imp2list",
       "slug": "imp2list",
-      "aliases": [
-        "imp2list"
-      ],
+      "aliases": ["imp2list"],
       "exported": true,
       "title": "Convert imputation output to list",
       "source": "R/imp2list.R",
@@ -292,9 +270,7 @@
     {
       "name": "load.annot",
       "slug": "load-annot",
-      "aliases": [
-        "load.annot"
-      ],
+      "aliases": ["load.annot"],
       "exported": true,
       "title": "Load an .annot file into memory",
       "source": "R/io_mgh.R",
@@ -319,9 +295,7 @@
     {
       "name": "load.mgh",
       "slug": "load-mgh",
-      "aliases": [
-        "load.mgh"
-      ],
+      "aliases": ["load.mgh"],
       "exported": true,
       "title": "Load an MGH file into memory",
       "source": "R/io_mgh.R",
@@ -346,9 +320,7 @@
     {
       "name": "nobs.vw_fastlm",
       "slug": "nobs-vw_fastlm",
-      "aliases": [
-        "nobs.vw_fastlm"
-      ],
+      "aliases": ["nobs.vw_fastlm"],
       "exported": true,
       "title": "Grabs the number of included participants from qdecr_fastlm output",
       "source": "R/summarizing.R",
@@ -377,9 +349,7 @@
     {
       "name": "print.vw",
       "slug": "print-vw",
-      "aliases": [
-        "print.vw"
-      ],
+      "aliases": ["print.vw"],
       "exported": true,
       "title": "Print for vw objects",
       "source": "R/summarizing.R",
@@ -408,9 +378,7 @@
     {
       "name": "qdecr",
       "slug": "qdecr",
-      "aliases": [
-        "qdecr"
-      ],
+      "aliases": ["qdecr"],
       "exported": false,
       "title": "Run vertex-wise analyses",
       "source": "R/qdecr.R",
@@ -551,9 +519,7 @@
     {
       "name": "qdecr_fastlm",
       "slug": "qdecr_fastlm",
-      "aliases": [
-        "qdecr_fastlm"
-      ],
+      "aliases": ["qdecr_fastlm"],
       "exported": true,
       "title": "Vertex-wise linear regression",
       "source": "R/qdecr_fastlm.R",
@@ -698,9 +664,7 @@
     {
       "name": "qdecr_fwhm",
       "slug": "qdecr_fwhm",
-      "aliases": [
-        "qdecr_fwhm"
-      ],
+      "aliases": ["qdecr_fwhm"],
       "exported": true,
       "title": "Grabs the estimated fwhm from qdecr_fastlm output",
       "source": "R/summarizing.R",
@@ -725,9 +689,7 @@
     {
       "name": "qdecr_load",
       "slug": "qdecr_load",
-      "aliases": [
-        "qdecr_load"
-      ],
+      "aliases": ["qdecr_load"],
       "exported": true,
       "title": "Loads files associated with QDECR projects",
       "source": "R/qdecr_load.R",
@@ -756,9 +718,7 @@
     {
       "name": "qdecr_prep_mgh",
       "slug": "qdecr_prep_mgh",
-      "aliases": [
-        "qdecr_prep_mgh"
-      ],
+      "aliases": ["qdecr_prep_mgh"],
       "exported": false,
       "title": "Combine all MGH files into one object",
       "source": "R/io_mgh.R",
@@ -827,15 +787,7 @@
     {
       "name": "qdecr_read",
       "slug": "qdecr_read",
-      "aliases": [
-        "qdecr_read",
-        "qdecr_read_ocn",
-        "qdecr_read_ocn_mask",
-        "qdecr_read_coef",
-        "qdecr_read_p",
-        "qdecr_read_t",
-        "qdecr_read_se"
-      ],
+      "aliases": ["qdecr_read", "qdecr_read_ocn", "qdecr_read_ocn_mask", "qdecr_read_coef", "qdecr_read_p", "qdecr_read_t", "qdecr_read_se"],
       "exported": true,
       "title": "qdecr_read function family",
       "source": "R/qdecr_read.R",
@@ -864,9 +816,7 @@
     {
       "name": "qdecr_save",
       "slug": "qdecr_save",
-      "aliases": [
-        "qdecr_save"
-      ],
+      "aliases": ["qdecr_save"],
       "exported": true,
       "title": "Saves \"vw\" objects from the QDECR package",
       "source": "R/qdecr_save.R",
@@ -895,9 +845,7 @@
     {
       "name": "qdecr_snap",
       "slug": "qdecr_snap",
-      "aliases": [
-        "qdecr_snap"
-      ],
+      "aliases": ["qdecr_snap"],
       "exported": true,
       "title": "Opens Freeview to take snapshots",
       "source": "R/plotting.R",
@@ -958,9 +906,7 @@
     {
       "name": "reload",
       "slug": "reload",
-      "aliases": [
-        "reload"
-      ],
+      "aliases": ["reload"],
       "exported": true,
       "title": "Reloads vertex-wise data for an \"vw\" object",
       "source": "R/qdecr_load.R",
@@ -989,9 +935,7 @@
     {
       "name": "save.mgh",
       "slug": "save-mgh",
-      "aliases": [
-        "save.mgh"
-      ],
+      "aliases": ["save.mgh"],
       "exported": true,
       "title": "Save out an MGH file from memory",
       "source": "R/io_mgh.R",
@@ -1020,9 +964,7 @@
     {
       "name": "stacks",
       "slug": "stacks",
-      "aliases": [
-        "stacks"
-      ],
+      "aliases": ["stacks"],
       "exported": true,
       "title": "Shows vw stacks",
       "source": "R/summarizing.R",
@@ -1047,9 +989,7 @@
     {
       "name": "summary.vw_fastlm",
       "slug": "summary-vw_fastlm",
-      "aliases": [
-        "summary.vw_fastlm"
-      ],
+      "aliases": ["summary.vw_fastlm"],
       "exported": true,
       "title": "Summarize qdecr_fastlm clusters",
       "source": "R/summarizing.R",
@@ -1094,9 +1034,7 @@
     {
       "name": "unload",
       "slug": "unload",
-      "aliases": [
-        "unload"
-      ],
+      "aliases": ["unload"],
       "exported": true,
       "title": "Removes vertex-wise data from an \"vw\" object",
       "source": "R/qdecr_load.R",
@@ -1120,4 +1058,3 @@
     }
   ]
 }
-

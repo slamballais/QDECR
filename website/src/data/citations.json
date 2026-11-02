@@ -14,7 +14,7 @@
         "Annet Dijkzeul",
         "Yingzhe Zhang",
         "Isabel K. Schuurmans",
-        "Charlotte AM Cecil",
+        "Charlotte A. M. Cecil",
         "Phil Hyoun Lee",
         "Ryan L. Muetzel",
         "Henning W. Tiemeier"
@@ -53,7 +53,7 @@
         "Maria del Carmen Valdés Hernández",
         "Susana Muñoz Maniega",
         "Tom C. Russ",
-        "Michelle Luciano",
+        "Michelle Luciano A",
         "Heather Clare Whalley",
         "Mark E. Bastin",
         "Joanna Marguerite Wardlaw",
@@ -61,7 +61,7 @@
         "Simon R. Cox"
       ],
       "venue": "Translational Psychiatry",
-      "type": "article"
+      "type": "review"
     },
     {
       "id": "W4411507540",
@@ -123,7 +123,7 @@
         "Maria del Carmen Valdés Hernández",
         "Susana Muñoz Maniega",
         "Tom C. Russ",
-        "Michelle Luciano",
+        "Michelle Luciano A",
         "Heather Clare Whalley",
         "Mark E. Bastin",
         "Joanna Marguerite Wardlaw",
@@ -229,7 +229,7 @@
       "authors": [
         "Yuchan Mou",
         "Elisabet Blok",
-        "Mónica Barroso",
+        "Monica Barroso",
         "Pauline W. Jansen",
         "Tonya J.H. White",
         "Trudy Voortman"
@@ -287,38 +287,6 @@
       ],
       "venue": "JAMA Network Open",
       "type": "article"
-    },
-    {
-      "id": "W4281677564",
-      "doi": "10.21203/rs.3.rs-1622356/v1",
-      "title": "Associations of dietary patterns with brain morphology in children: Results from a prospective population-based study",
-      "year": 2022,
-      "authors": [
-        "Yuchan Mou",
-        "Elisabet Blok",
-        "Monica Barroso",
-        "Pauline W. Jansen",
-        "Tonya J.H. White",
-        "Trudy Voortman"
-      ],
-      "venue": "Research Square",
-      "type": "preprint"
-    },
-    {
-      "id": "W4225394107",
-      "doi": "10.1101/2022.05.03.22274414",
-      "title": "Attention Deficit Hyperactivity Disorder Symptoms and Brain Morphology: Examining Confounding Bias",
-      "year": 2022,
-      "authors": [
-        "Lorenza Dall’Aglio",
-        "Hannah Hayoung Kim",
-        "Sander Lamballais",
-        "Jeremy Alexander Labrecque",
-        "Ryan L. Muetzel",
-        "Henning W. Tiemeier"
-      ],
-      "venue": "medRxiv",
-      "type": "preprint"
     },
     {
       "id": "W4308637228",
@@ -384,26 +352,6 @@
     {
       "id": "W4281923042",
       "doi": "10.1101/2022.05.25.493390",
-      "title": "Variation in glutamate and GABA genes and their association with brain structure and chemistry in autism",
-      "year": 2022,
-      "authors": [
-        "Jilly Naaijen",
-        "Martina Arenella",
-        "Helge J. Zöllner",
-        "Nicolaas A.J. Puts",
-        "David J Lythgoe",
-        "Daniel Brandeis",
-        "Sarah Durston",
-        "Geert Poelmans",
-        "I. Hyun Ruisch",
-        "Jan K. Buitelaar"
-      ],
-      "venue": "bioRxiv (Cold Spring Harbor Laboratory)",
-      "type": "preprint"
-    },
-    {
-      "id": "W4285129253",
-      "doi": "10.2139/ssrn.4122065",
       "title": "Variation in Glutamate and GABA Genes and Their Association with Brain Structure and Chemistry in Autism",
       "year": 2022,
       "authors": [
@@ -418,7 +366,7 @@
         "I. Hyun Ruisch",
         "Jan K. Buitelaar"
       ],
-      "venue": "SSRN Electronic Journal",
+      "venue": "bioRxiv (Cold Spring Harbor Laboratory)",
       "type": "preprint"
     },
     {
